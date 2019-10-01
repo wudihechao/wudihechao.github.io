@@ -1071,6 +1071,7 @@ pre .javascript .function {
   margin: 0 auto;
   max-width: 96px;
   padding: 2px;
+  border-radius: 50%;
 }
 .site-author-name {
   color: #f5f5f5;
@@ -1098,7 +1099,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #a224ff;
+  background: #707421;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -1917,6 +1918,47 @@ article:last-child .post-eof {
   align-self: center;
   height: 30px;
 }
+#reward-container {
+  margin: 20px auto;
+  padding: 10px 0;
+  text-align: center;
+  width: 90%;
+}
+#reward-button {
+  background: #f44336;
+  border: 0;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  letter-spacing: normal;
+  line-height: 2;
+  margin: 0;
+  outline: 0;
+  padding: 0 15px;
+  text-indent: 0;
+  text-shadow: none;
+  text-transform: none;
+  vertical-align: text-top;
+}
+#reward-button span:hover {
+  background: #f7877f;
+}
+#qr {
+  padding-top: 20px;
+}
+#qr a {
+  border: 0;
+}
+#qr img {
+  display: inline-block;
+  margin: 0.8em 2em 0 2em;
+  max-width: 100%;
+  width: 180px;
+}
+#qr p {
+  text-align: center;
+}
 .post-copyright {
   background-color: #f9f9f9;
   border-left: 3px solid #ff1700;
@@ -2352,10 +2394,24 @@ embed {
   }
 }
 .sidebar {
-  left: -320px;
+  right: -320px;
 }
 .sidebar.sidebar-active {
-  left: 0;
+  right: 0;
+}
+.sidebar-toggle,
+.back-to-top {
+  left: auto;
+  right: 30px;
+}
+@media (max-width: 991px) {
+  .sidebar-toggle,
+  .back-to-top {
+    right: 20px;
+  }
+}
+.book-mark-link {
+  left: 30px;
 }
 .sidebar {
   transition: all 0.4s;
