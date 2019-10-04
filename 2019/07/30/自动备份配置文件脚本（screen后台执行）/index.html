@@ -55,18 +55,21 @@
   };
 </script>
 
-  <meta name="description" content="BOHC is just a blog of hechao.">
-<meta name="keywords" content="linux OPS">
-<meta property="og:type" content="website">
-<meta property="og:title" content="BOHC!">
-<meta property="og:url" content="http://hewanyue.com/archives/2019/index.html">
+  <meta name="description" content="&amp;emsp;&amp;emsp;Linux中配置文件很多，各种需要设置的各种参数很多，有些自定义选项为了方便使用，都会自己修改使用，不过有时候配置文件或者用户参数属性不小心误删掉或者日后想找回当时的参数设置，没有备份肯定是不行的，所以闲暇之余自己写了一个专门备份/etc目录的脚本，以备不时之需。&amp;emsp;&amp;emsp;下面贴代码~">
+<meta name="keywords" content="backup,script">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自动备份配置文件脚本（screen后台执行）">
+<meta property="og:url" content="http://hewanyue.com/2019/07/30/自动备份配置文件脚本（screen后台执行）/index.html">
 <meta property="og:site_name" content="BOHC!">
-<meta property="og:description" content="BOHC is just a blog of hechao.">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;Linux中配置文件很多，各种需要设置的各种参数很多，有些自定义选项为了方便使用，都会自己修改使用，不过有时候配置文件或者用户参数属性不小心误删掉或者日后想找回当时的参数设置，没有备份肯定是不行的，所以闲暇之余自己写了一个专门备份/etc目录的脚本，以备不时之需。&amp;emsp;&amp;emsp;下面贴代码~">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190730112136602.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2019-10-04T08:53:06.729Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="BOHC!">
-<meta name="twitter:description" content="BOHC is just a blog of hechao.">
-  <link rel="canonical" href="http://hewanyue.com/archives/2019/">
+<meta name="twitter:title" content="自动备份配置文件脚本（screen后台执行）">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;Linux中配置文件很多，各种需要设置的各种参数很多，有些自定义选项为了方便使用，都会自己修改使用，不过有时候配置文件或者用户参数属性不小心误删掉或者日后想找回当时的参数设置，没有备份肯定是不行的，所以闲暇之余自己写了一个专门备份/etc目录的脚本，以备不时之需。&amp;emsp;&amp;emsp;下面贴代码~">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190730112136602.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
+  <link rel="canonical" href="http://hewanyue.com/2019/07/30/自动备份配置文件脚本（screen后台执行）/">
 
 
 <script id="page-configurations">
@@ -74,13 +77,13 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false,
+    isPost: true,
     isPage: false,
-    isArchive: true
+    isArchive: false
   };
 </script>
 
-  <title>Archive | BOHC!</title>
+  <title>自动备份配置文件脚本（screen后台执行） | BOHC!</title>
   
 
 
@@ -264,24 +267,6 @@
 
     
 
-  
-    
-    
-  
-    
-    
-  
-    
-    
-  
-    
-    
-  
-    
-    
-  
-  
-
 </nav>
   <div class="site-search">
     <div class="popup search-popup">
@@ -319,244 +304,200 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        
-        
-        
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="http://hewanyue.com/2019/07/30/自动备份配置文件脚本（screen后台执行）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chao He">
+      <meta itemprop="description" content="BOHC is just a blog of hechao.">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BOHC!">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">自动备份配置文件脚本（screen后台执行）
+
           
-        
-        <span class="collection-header">Um..! 7 posts in total. Keep on posting.</span>
-      </div>
-      
+        </h2>
 
-      
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
 
-  
-  
+              
+                
+              
 
+              <time title="Created: 2019-07-30 11:08:16" itemprop="dateCreated datePublished" datetime="2019-07-30T11:08:16+08:00">2019-07-30</time>
+            </span>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/linux基础/" itemprop="url" rel="index"><span itemprop="name">linux基础</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span id="/2019/07/30/自动备份配置文件脚本（screen后台执行）/" class="post-meta-item leancloud_visitors" data-flag-title="自动备份配置文件脚本（screen后台执行）" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+              <span>℃</span>
+            </span>
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+          
   
+  <span class="post-meta-item">
     
-    <div class="collection-year">
-      <h2 class="collection-header">2019</h2>
-    </div>
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-10-04T16:56:05+08:00"
-              content="2019-10-04">
-          10-04
-        </time>
-      </div>
-
-      <h3 class="post-title">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
         
-          <a class="post-title-link" href="/2019/10/04/我的一键个性化系统脚本/" itemprop="url">
-            <span itemprop="name">我的一键个性化系统脚本</span>
-          </a>
-        
-      </h3>
-
-    </header>
-  </article>
-
-
-
+      
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2019/07/30/自动备份配置文件脚本（screen后台执行）/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2019/07/30/自动备份配置文件脚本（screen后台执行）/" itemprop="commentCount"></span></a>
+  </span>
   
   
 
-  
+        </div>
+      </header>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-10-04T16:30:31+08:00"
-              content="2019-10-04">
-          10-04
-        </time>
-      </div>
+      
+        <p>&emsp;&emsp;Linux中配置文件很多，各种需要设置的各种参数很多，有些自定义选项为了方便使用，都会自己修改使用，不过有时候配置文件或者用户参数属性不小心误删掉或者日后想找回当时的参数设置，没有备份肯定是不行的，所以闲暇之余自己写了一个专门备份/etc目录的脚本，以备不时之需。<br>&emsp;&emsp;下面贴代码~</p><a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">echo &quot;Backup is start!&quot;                        #显示备份开始</span><br><span class="line"></span><br><span class="line">ScreenName=$&quot;backup&quot;                           #设置变量定义窗口名</span><br><span class="line">screen -dmS $ScreenName                        #创建一个出于断开模式下的窗口并指定名字</span><br><span class="line">screen -S $ScreenName -p 0 -X stuff $&quot;\cp -ap /etc /date/back`date +%F`&quot;</span><br><span class="line">                                               #向窗口传递命令备份/etc目录且命名为当前日期</span><br><span class="line">screen -S $ScreenName -p 0 -X stuff $&apos;\n&apos;      #执行命令，相当于回车</span><br><span class="line"></span><br><span class="line">echo &quot;backing up，please wait~&quot;                #等待备份完成，并提示等待</span><br><span class="line"></span><br><span class="line">screen -S $ScreenName -p 0 -X stuff $&apos;exit&apos;    #备份完后传递退出窗口命令</span><br><span class="line">screen -S $ScreenName -p 0 -X stuff $&apos;\n&apos;      #执行命令</span><br><span class="line"></span><br><span class="line">echo &quot;Backup is finshed!&quot;                      #提示备份完成，脚本结束。</span><br></pre></td></tr></table></figure>
 
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2019/10/04/VIM编辑器的整理总结/" itemprop="url">
-            <span itemprop="name">VIM编辑器的整理总结</span>
-          </a>
-        
-      </h3>
+<p>&emsp;&emsp;之前写的脚本总是在创建完screen就停住了，之后的命令没法自动执行，必须Ctrl+A+D暂离screen之后才可以继续执行，不过这样就没法实现自动的初衷了。后来转换思路打算用screen -X的选项从原shell向screen中传递命令却总是失败，后来是参考了大神关于screen传递命令的方法（<a href="https://blog.csdn.net/u011606714/article/details/53471532" target="_blank" rel="noopener">原文链接</a>），才创建成功的。<br><img src="https://img-blog.csdnimg.cn/20190730112136602.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;此脚本原理大体如下：<br>&emsp;&emsp;脚本中执行screen命令，相当于打开了新的shell，而脚本上的命令都在老shell上，要让备份cp命令在screen上的新shell上跑起来，必须采用向新screen传递命令的方法，才可以实现后台备份，无需担心断网断电的问题。</p>
+<figure class="highlight plain"><figcaption><span>-S $ScreenName -p 0 -X stuff $'cp -ap</span><a href="/etc">/date/back`date +%F`'```</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&amp;emsp;&amp;emsp;这条命令单独执行，只会传递在screen中输出cp命令却并不执行，需要</span><br><span class="line">```screen -S $ScreenName -p 0 -X stuff $&apos;\n&apos;</span><br></pre></td></tr></table></figure>
 
-    </header>
-  </article>
-
-
-
-  
-  
-
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-09-30T17:33:59+08:00"
-              content="2019-09-30">
-          09-30
-        </time>
-      </div>
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2019/09/30/hello-world/" itemprop="url">
-            <span itemprop="name">Hello World</span>
-          </a>
-        
-      </h3>
-
-    </header>
-  </article>
-
-
-
-  
-  
-
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-08-01T14:37:13+08:00"
-              content="2019-08-01">
-          08-01
-        </time>
-      </div>
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2019/08/01/由闷骚书生与假正经小姐的古典爱情故事说起/" itemprop="url">
-            <span itemprop="name">由闷骚书生与假正经小姐的古典爱情故事说起</span>
-          </a>
-        
-      </h3>
-
-    </header>
-  </article>
-
-
-
-  
-  
-
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-07-30T11:08:16+08:00"
-              content="2019-07-30">
-          07-30
-        </time>
-      </div>
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2019/07/30/自动备份配置文件脚本（screen后台执行）/" itemprop="url">
-            <span itemprop="name">自动备份配置文件脚本（screen后台执行）</span>
-          </a>
-        
-      </h3>
-
-    </header>
-  </article>
-
-
-
-  
-  
-
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-07-16T19:55:14+08:00"
-              content="2019-07-16">
-          07-16
-        </time>
-      </div>
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2019/07/16/不忘初心，方得始终/" itemprop="url">
-            <span itemprop="name">不忘初心，方得始终</span>
-          </a>
-        
-      </h3>
-
-    </header>
-  </article>
-
-
-
-  
-  
-
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-05-05T17:27:40+08:00"
-              content="2019-05-05">
-          05-05
-        </time>
-      </div>
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2019/05/05/Linux下find命令的一般用法。/" itemprop="url">
-            <span itemprop="name">Linux下find命令的一般用法。</span>
-          </a>
-        
-      </h3>
-
-    </header>
-  </article>
-
-
-
+<p>&emsp;&emsp;命令执行时cp命令才会生效。exit命令亦是如此。<br>&emsp;&emsp;各位大佬如果还有别的更好的方法可以实现功能，希望可以多多交流，不吝赐教。</p>
 
     </div>
+
+    
+    
+    
+    <div style="text-align:center;color: #ccc;font-size:14px;">---------------- The End ----------------</div>
+        
+      
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    Donate
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechat-qcode.jpg" alt="Chao He WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+
+  </div>
+</div>
+
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Chao He</li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="http://hewanyue.com/2019/07/30/%E8%87%AA%E5%8A%A8%E5%A4%87%E4%BB%BD%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%84%9A%E6%9C%AC%EF%BC%88screen%E5%90%8E%E5%8F%B0%E6%89%A7%E8%A1%8C%EF%BC%89/" title="自动备份配置文件脚本（screen后台执行）">http:&#x2F;&#x2F;hewanyue.com&#x2F;2019&#x2F;07&#x2F;30&#x2F;自动备份配置文件脚本（screen后台执行）&#x2F;</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank">&lt;i class=&quot;fa fa-fw fa-creative-commons&quot;&gt;&lt;&#x2F;i&gt;BY-NC-SA</a> unless stating additionally.</li>
+</ul>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/backup/" rel="tag"><i class="fa fa-tag"></i>
+            
+              <a href="/tags/script/" rel="tag"><i class="fa fa-tag"></i>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/07/16/不忘初心，方得始终/" rel="next" title="不忘初心，方得始终">
+                  <i class="fa fa-chevron-left"></i> 不忘初心，方得始终
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/08/01/由闷骚书生与假正经小姐的古典爱情故事说起/" rel="prev" title="由闷骚书生与假正经小姐的古典爱情故事说起">
+                  由闷骚书生与假正经小姐的古典爱情故事说起 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
   </div>
   
   
   
+  </article>
 
-  
-
+  </div>
 
 
           </div>
           
+    
+    <div class="comments" id="comments"></div>
+  
 
         </div>
           
@@ -571,6 +512,11 @@
 
   <aside class="sidebar">
     <div class="sidebar-inner">
+        
+        
+        
+        
+      
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">

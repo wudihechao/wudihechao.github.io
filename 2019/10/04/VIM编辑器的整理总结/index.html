@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+
+
+
+
+<script type="text/javascript" src="/js/src/dytitle.js"></script>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":true,"show_result":true,"style":"default"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="&amp;emsp;&amp;emsp;VIM是linux中功能强大的文本编辑工具，因为功能强大，所以各种参数快捷键也很复杂，为方便记忆，特整理如下：vim命令基本格式与参数  vim [OPTION] FILE  常见参数：  +#  :打开文件后，让光标处于第#行，(+ 默认为行尾)。  +/PATTERN  :打开文件后，让光标处于第一个被PATTERN匹配到的行的行首。  -b file  :以二进制方式">
+<meta name="keywords" content="linux,vim编辑器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VIM编辑器的整理总结">
+<meta property="og:url" content="http://hewanyue.com/2019/10/04/VIM编辑器的整理总结/index.html">
+<meta property="og:site_name" content="BOHC!">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;VIM是linux中功能强大的文本编辑工具，因为功能强大，所以各种参数快捷键也很复杂，为方便记忆，特整理如下：vim命令基本格式与参数  vim [OPTION] FILE  常见参数：  +#  :打开文件后，让光标处于第#行，(+ 默认为行尾)。  +/PATTERN  :打开文件后，让光标处于第一个被PATTERN匹配到的行的行首。  -b file  :以二进制方式">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190725151050805.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190725164028382.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190725164051873.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190725164631359.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190725164716327.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2019072516485054.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190725165202595.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/201907251652183.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190725165234682.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190725165250630.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2019-10-04T08:40:48.149Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="VIM编辑器的整理总结">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;VIM是linux中功能强大的文本编辑工具，因为功能强大，所以各种参数快捷键也很复杂，为方便记忆，特整理如下：vim命令基本格式与参数  vim [OPTION] FILE  常见参数：  +#  :打开文件后，让光标处于第#行，(+ 默认为行尾)。  +/PATTERN  :打开文件后，让光标处于第一个被PATTERN匹配到的行的行首。  -b file  :以二进制方式">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190725151050805.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
+  <link rel="canonical" href="http://hewanyue.com/2019/10/04/VIM编辑器的整理总结/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>VIM编辑器的整理总结 | BOHC!</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  <div class="container use-motion">
+    <div class="headband"></div>
+<a href="https://github.com/wudihechao/" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">BOHC!</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">blog of hechao!</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+      
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-home&quot;&gt;&lt;&#x2F;i&gt;&lt;br&gt;Home</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+      
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/about/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-user&quot;&gt;&lt;&#x2F;i&gt;&lt;br&gt;About</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+      
+      
+        
+      
+        
+      
+        
+          
+        
+      
+    
+
+    <a href="/tags/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-tags&quot;&gt;&lt;&#x2F;i&gt;&lt;br&gt;Tags&lt;span class=&quot;badge&quot;&gt;8&lt;&#x2F;span&gt;</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+      
+      
+        
+      
+        
+          
+        
+      
+        
+      
+    
+
+    <a href="/categories/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-th&quot;&gt;&lt;&#x2F;i&gt;&lt;br&gt;Categories&lt;span class=&quot;badge&quot;&gt;2&lt;&#x2F;span&gt;</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+      
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/archives/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-archive&quot;&gt;&lt;&#x2F;i&gt;&lt;br&gt;Archives&lt;span class=&quot;badge&quot;&gt;7&lt;&#x2F;span&gt;</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+      </li>
+    
+  </ul>
+
+    
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/wudihechao" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank">&lt;svg width=&quot;80&quot; height=&quot;80&quot; viewBox=&quot;0 0 250 250&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z&quot;&gt;&lt;&#x2F;path&gt;&lt;path d=&quot;M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2&quot; fill=&quot;currentColor&quot; style=&quot;transform-origin: 130px 106px;&quot; class=&quot;octo-arm&quot;&gt;&lt;&#x2F;path&gt;&lt;path d=&quot;M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z&quot; fill=&quot;currentColor&quot; class=&quot;octo-body&quot;&gt;&lt;&#x2F;path&gt;&lt;&#x2F;svg&gt;</a>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="http://hewanyue.com/2019/10/04/VIM编辑器的整理总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chao He">
+      <meta itemprop="description" content="BOHC is just a blog of hechao.">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BOHC!">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">VIM编辑器的整理总结
+
+          
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              
+                
+              
+
+              <time title="Created: 2019-10-04 16:30:31" itemprop="dateCreated datePublished" datetime="2019-10-04T16:30:31+08:00">2019-10-04</time>
+            </span>
+          
+
+          
+            <span id="/2019/10/04/VIM编辑器的整理总结/" class="post-meta-item leancloud_visitors" data-flag-title="VIM编辑器的整理总结" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+              <span>℃</span>
+            </span>
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2019/10/04/VIM编辑器的整理总结/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2019/10/04/VIM编辑器的整理总结/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>&emsp;&emsp;VIM是linux中功能强大的文本编辑工具，因为功能强大，所以各种参数快捷键也很复杂，为方便记忆，特整理如下：</p><h3 id="vim命令基本格式与参数"><a href="#vim命令基本格式与参数" class="headerlink" title="vim命令基本格式与参数"></a>vim命令基本格式与参数</h3><p>  <code>vim [OPTION] FILE</code><br>  常见参数：<br>  +#  :打开文件后，让光标处于第#行，(+ 默认为行尾)。<br>  +/PATTERN  :打开文件后，让光标处于第一个被PATTERN匹配到的行的行首。<br>  -b file  :以二进制方式打开文件。<br>  -d file1/file2  :比较多个文件的不同。<br>  -m file  :以只读方式打开文件。<br>  -e file 或 ex file  :直接进入ex模式（扩展命令模式或叫做末行模式）。</p><a id="more"></a>
+
+<h3 id="vim的几种工作模式"><a href="#vim的几种工作模式" class="headerlink" title="vim的几种工作模式"></a>vim的几种工作模式</h3><p><img src="https://img-blog.csdnimg.cn/20190725151050805.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="VIM几种模式及切换"></p>
+<h3 id="command模式下的光标跳转："><a href="#command模式下的光标跳转：" class="headerlink" title="command模式下的光标跳转："></a>command模式下的光标跳转：</h3><p>字符间跳转：h 左；j下；k 上；l 右。<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;#command 可以执行#次命令。<br>单词间跳转：w：下一个单词的词首；<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;e：当前或下一个单词的词尾。<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;b：当前或前一个单词的词首。<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;#command 可以执行#次命令。<br>当前页跳转：H：跳转至页首。<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;M：跳转至页中间行。<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;L：跳转至页底。<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;zt：将光别所在行移到屏幕顶端；<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;zz：将光标所在行移到屏幕中间；<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;zb：将光标所在行移到屏幕低端。<br>行首行尾跳转：^:跳转至行首的第一个非空的字符；<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;0:跳转至行首；<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;$:跳转至行尾。<br>行间移动：#G :移动至第#行行首。（相当于扩展命令模式下 #）<br>&emsp;&emsp;&emsp;&emsp;&emsp;   G  ：移至最后一行行首。<br>&emsp;&emsp;&emsp;1G 或gg:移至第一行行首。<br>句间移动   :  ) : 下一句；<br>&emsp;&emsp;&emsp;&emsp;&emsp;( : 上一句。<br>段间移动   :  } : 下一段；<br>&emsp;&emsp;&emsp;&emsp;&emsp;{ : 上一段。<br>翻屏操作：Ctrl+f  向文件尾部翻一屏（向前翻屏）；<br>&emsp;&emsp;&emsp;&emsp;&emsp;Ctrl+b 向文件首部翻一屏（向后翻屏）；<br>&emsp;&emsp;&emsp;&emsp;&emsp;Ctrl+d 向文件尾部翻半屏（向下翻屏）；<br>&emsp;&emsp;&emsp;&emsp;&emsp;Ctrl+u 向文件尾部翻半屏（向上翻屏）；</p>
+<h3 id="command模式下的字符编辑："><a href="#command模式下的字符编辑：" class="headerlink" title="command模式下的字符编辑："></a>command模式下的字符编辑：</h3><p> <strong>x</strong>  ： 删除（可认为是剪切，并非真的删除）光标处的字符；<br><strong>#x</strong>：删除光标处起始的#个字符；<br><strong>p</strong> ：在光标所在处的后面插入储存的字符；<br><strong>xp</strong>：交换光标所在处的字符及后面字符的位置；<br><strong>~</strong> ： 转换大小写；<br><strong>J</strong> ： 删除当前行后的换行符；</p>
+<h5 id="替换命令"><a href="#替换命令" class="headerlink" title="替换命令"></a>替换命令</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">r ： 替换光标所在处的字符（只能替换一个字符）；</span><br><span class="line">R： 切换为REPLACE模式，可持续替换多个字符。</span><br></pre></td></tr></table></figure>
+
+<h5 id="删除命令"><a href="#删除命令" class="headerlink" title="删除命令"></a>删除命令</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">d ： 删除命令（可结合光标跳转字符，实现范围删除）；</span><br><span class="line">d$:  从光标所在处，删除到行尾；</span><br><span class="line">d^:  从光标所在处，删除到非空行首；</span><br><span class="line">d0:  从光标所在处，删除到行首；</span><br><span class="line">dw:  从光标所在处，删除到下一个单词的词首；</span><br><span class="line">de:  从光标所在处，删除到下一个单词的词尾；</span><br><span class="line">db:  从光标所在处，删除到前一个单词的词首；</span><br><span class="line">dd:  删除光标所在的行；</span><br><span class="line">#dd：多行删除；</span><br><span class="line">D ： 从当前光标位置一直删除到行尾，等同于d$。</span><br></pre></td></tr></table></figure>
+
+<h5 id="改变命令"><a href="#改变命令" class="headerlink" title="改变命令"></a>改变命令</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">c ： 改变命令（与d命令类似，执行删除后进入插入模式）；</span><br><span class="line">c$:  从光标所在处，删除到行尾，并进入插入模式；</span><br><span class="line">c^:  从光标所在处，删除到非空行首，并进入插入模式；</span><br><span class="line">c0:  从光标所在处，删除到行首，并进入插入模式；</span><br><span class="line">cw:  从光标所在处，删除到下一个单词的词首，并进入插入模式；</span><br><span class="line">ce:  从光标所在处，删除到下一个单词的词尾，并进入插入模式；</span><br><span class="line">cb:  从光标所在处，删除到前一个单词的词首，并进入插入模式；</span><br><span class="line">cc:  删除光标所在的行，并进入插入模式；</span><br><span class="line">#cc：多行删除，并进入插入模式；</span><br><span class="line">C ： 从当前光标位置一直删除到行尾，并进入插入模式，等同于c$。</span><br></pre></td></tr></table></figure>
+
+<h5 id="复制命令"><a href="#复制命令" class="headerlink" title="复制命令"></a>复制命令</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">y ： 复制(yank)命令（可结合光标跳转字符，实现范围复制）；</span><br><span class="line">y$:  从光标所在处，复制到行尾；</span><br><span class="line">y^:  从光标所在处，复制到非空行首；</span><br><span class="line">y0:  从光标所在处，复制到行首；</span><br><span class="line">yw:  从光标所在处，复制到下一个单词的词首；</span><br><span class="line">ye:  从光标所在处，复制到下一个单词的词尾；</span><br><span class="line">yb:  从光标所在处，复制到前一个单词的词首；</span><br><span class="line">yy:  复制光标所在的行；</span><br><span class="line">#yy：多行复制； </span><br><span class="line">Y ： 从当前光标位置一直复制到行尾，等同于y$。</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>命令模式下常用用法汇总</th>
+<th>效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>#ihello[ESC]</td>
+<td>插入“hello”#次</td>
+</tr>
+<tr>
+<td>0y$</td>
+<td>复制本行</td>
+</tr>
+<tr>
+<td>gU</td>
+<td>变为大写</td>
+</tr>
+<tr>
+<td>gu</td>
+<td>变为小写</td>
+</tr>
+<tr>
+<td>di”</td>
+<td>当光标在” “之间时，则删除” “的内容</td>
+</tr>
+<tr>
+<td>yi(</td>
+<td>当光标在( )之间时，则复制( )的内容</td>
+</tr>
+<tr>
+<td>vi[</td>
+<td>当光标在[ ]之间时，则选中[ ]的内容</td>
+</tr>
+<tr>
+<td>dtx</td>
+<td>删除字符直到遇到光标之后的第一个x字符</td>
+</tr>
+<tr>
+<td>ytx</td>
+<td>复制字符直到遇到光标之后的第一个x字符</td>
+</tr>
+<tr>
+<td>##### 撤销更改命令</td>
+<td></td>
+</tr>
+<tr>
+<td><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">u ： 撤销命令（可撤销最近的更改）；</span><br><span class="line">#u： 撤销多次之前的更改； </span><br><span class="line">U ： 撤销光标落在这行后的所有此行的修改。</span><br><span class="line">Ctrl+r:重做最后的撤销，取消撤销。</span><br><span class="line">. ： 重复前一个操作。</span><br><span class="line">#.： 重复前一个操作#次。</span><br></pre></td></tr></table></figure></td>
+<td></td>
+</tr>
+</tbody></table>
+<p><img src="https://img-blog.csdnimg.cn/20190725164028382.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="vim寄存器"><br><img src="https://img-blog.csdnimg.cn/20190725164051873.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="vim标记和宏"><br><img src="https://img-blog.csdnimg.cn/20190725164631359.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="扩展命令模式下地址定界"><br><img src="https://img-blog.csdnimg.cn/20190725164716327.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="扩展命令模式下查找"><br><img src="https://img-blog.csdnimg.cn/2019072516485054.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="扩展命令模式模式下查找替换"></p>
+<h1 id="调整文本颜色"><a href="#调整文本颜色" class="headerlink" title="调整文本颜色"></a>调整文本颜色</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ctrl+v[[031mCOLORCtrl+v[[0m    输出红色COLOR</span><br></pre></td></tr></table></figure>
+
+<h1 id="取消高亮显示"><a href="#取消高亮显示" class="headerlink" title="取消高亮显示"></a>取消高亮显示</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set nohlsearch    取消搜索后的高亮显示</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20190725165202595.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="使用多个窗口"><br><img src="https://img-blog.csdnimg.cn/201907251652183.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="可视化模式"><br><img src="https://img-blog.csdnimg.cn/20190725165234682.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="编辑二进制文件"><br><img src="https://img-blog.csdnimg.cn/20190725165250630.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="定制vim工作特性"></p>
+
+    </div>
+
+    
+    
+    
+    <div style="text-align:center;color: #ccc;font-size:14px;">---------------- The End ----------------</div>
+        
+      
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    Donate
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechat-qcode.jpg" alt="Chao He WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+
+  </div>
+</div>
+
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Chao He</li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="http://hewanyue.com/2019/10/04/VIM%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E6%95%B4%E7%90%86%E6%80%BB%E7%BB%93/" title="VIM编辑器的整理总结">http:&#x2F;&#x2F;hewanyue.com&#x2F;2019&#x2F;10&#x2F;04&#x2F;VIM编辑器的整理总结&#x2F;</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank">&lt;i class=&quot;fa fa-fw fa-creative-commons&quot;&gt;&lt;&#x2F;i&gt;BY-NC-SA</a> unless stating additionally.</li>
+</ul>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/linux/" rel="tag"><i class="fa fa-tag"></i>
+            
+              <a href="/tags/vim编辑器/" rel="tag"><i class="fa fa-tag"></i>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/09/30/hello-world/" rel="next" title="Hello World">
+                  <i class="fa fa-chevron-left"></i> Hello World
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/10/04/我的一键个性化系统脚本/" rel="prev" title="我的一键个性化系统脚本">
+                  我的一键个性化系统脚本 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="comments"></div>
+  
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#vim命令基本格式与参数"><span class="nav-number">1.</span> <span class="nav-text">vim命令基本格式与参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vim的几种工作模式"><span class="nav-number">2.</span> <span class="nav-text">vim的几种工作模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#command模式下的光标跳转："><span class="nav-number">3.</span> <span class="nav-text">command模式下的光标跳转：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#command模式下的字符编辑："><span class="nav-number">4.</span> <span class="nav-text">command模式下的字符编辑：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#替换命令"><span class="nav-number">4.0.1.</span> <span class="nav-text">替换命令</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#删除命令"><span class="nav-number">4.0.2.</span> <span class="nav-text">删除命令</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#改变命令"><span class="nav-number">4.0.3.</span> <span class="nav-text">改变命令</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#复制命令"><span class="nav-number">4.0.4.</span> <span class="nav-text">复制命令</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#调整文本颜色"><span class="nav-number"></span> <span class="nav-text">调整文本颜色</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#取消高亮显示"><span class="nav-number"></span> <span class="nav-text">取消高亮显示</span></a></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/touxiang.jpg"
+      alt="Chao He">
+  <p class="site-author-name" itemprop="name">Chao He</p>
+  <div class="site-description" itemprop="description">BOHC is just a blog of hechao.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span>
+        
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+      
+        
+      
+        <a href="https://github.com/wudihechao" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;wudihechao" rel="noopener" target="_blank">&lt;i class=&quot;fa fa-fw fa-github&quot;&gt;&lt;&#x2F;i&gt;</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+      
+        
+      
+        <a href="mailto:wudihechao@163.com" title="E-Mail &amp;rarr; mailto:wudihechao@163.com" rel="noopener" target="_blank">&lt;i class=&quot;fa fa-fw fa-envelope&quot;&gt;&lt;&#x2F;i&gt;</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+      
+        
+      
+        <a href="https://weibo.com/wudihechao" title="Weibo &amp;rarr; https:&#x2F;&#x2F;weibo.com&#x2F;wudihechao" rel="noopener" target="_blank">&lt;i class=&quot;fa fa-fw fa-weibo&quot;&gt;&lt;&#x2F;i&gt;</a>
+      </span>
+    
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    
+  
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank">&lt;img src=&quot;&#x2F;images&#x2F;cc-by-nc-sa.svg&quot; alt=&quot;Creative Commons&quot;&gt;</a>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+      
+
+      
+      
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hechao</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/muse.js?v=7.4.0"></script>
+<script src="/js/next-boot.js?v=7.4.0"></script>
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'AVtPtVan0Ky5u33XhUzJlFKp-gzGzoHsz',
+    appKey: 'nx3XTnRJmaMQR3aLWYiigkgJ',
+    placeholder: 'Just Say Something~!',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: '' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
+
+</body>
+</html>
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+  <script type="text/javascript" src="/js/src/dytitle.js"></script>
