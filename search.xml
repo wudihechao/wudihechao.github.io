@@ -13,4 +13,13 @@
         <tag>初心不负</tag>
       </tags>
   </entry>
+  <entry>
+    <title><![CDATA[Linux下find命令的一般用法。]]></title>
+    <url>%2F2019%2F05%2F05%2FLinux%E4%B8%8Bfind%E5%91%BD%E4%BB%A4%E7%9A%84%E4%B8%80%E8%88%AC%E7%94%A8%E6%B3%95%E3%80%82%2F</url>
+    <content type="text"><![CDATA[find和locate介绍在linux中，查找文件一般使用locate和find，locate是根据事先构建好的缩影库或者数据库中的数据查找文件名（非实时，速度快，模糊查找），而find作为一个实时查找命令，通过遍历指定起始路径下文件系统层级结构完成文件查找，功能更加强大（实时查找，速度略慢，精确查找）。 find 命令一般用法find [OPTIONS] [查找起始路径] [查找条件] [处理动作][查找起始路径] ：制定具体搜索目标起始路径；默认为当前目录。[查找条件]：指定的查找标准，可以根据文件名，大小，类型，从属关系，时间戳，权限等标准进行；默认为找出指定目录下的所有文件。[处理动作]：对符合查找条件的文件做出的操作，例如删除等操作；默认为输出至标准输出。 查找条件 根据文件名查找：-name，-iname（不区分文件名中的大小写） ps：不支持正则表达式，支持globe风格的通配符如*、?、[]、[^] **根据文件大小查找**：-size (+/-) #UNIT 常用单位：c、k、M、G#UNIT :(#-1,#] 为精确查找#大小的文件（大于#-1大小的文件数值显示为#也符合）-#UNIT:[0,#-1] 为查找小于等于#-1大小的文件+#UNTI:(#,∞)为查找大于#大小的文件 **根据文件类型查找**： -type [文件类型] f：普通文件 d：目录文件 l：符号链接文件 b：块设备文件 c：字符设备文件 p：管道文件 s：套接字文件 **根据从属关系查找**： -user USERNAME 或 -uid UID -group GROUPNAME 或 -gid GID 查找无属主属组文件：-nouser , -nogroup **根据时间戳查找**： 以“天”为单位：-atime(访问时间)，-mtime(修改时间)（指文件内容修改），-ctime(改变时间)（指权限及从属关系等修改） 以“分钟”为单位：-amin(访问时间)，-mmin(修改时间)（指文件内容修改），-cmin(改变时间)（指权限及从属关系等修改） -atime (+/-) # ，其中#为以现在开始向过去计时的某时间数值。 #：[#，#-1) -#：(#,0] +#：(-∞,#-1) ![ #：[#，#-1) -#：(#,0] +#：(-∞,#-1)](https://img-blog.csdnimg.cn/20190505164447686.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70) 根据权限查找 -perm mode 指明确定权限； -perm /mode 任何一类用户(u,g,o)的权限中的任何一项(r,w,x)符合条件即满足； -perm -mode 每一个用户(u,g,o)的权限中的每一项(r,w,x)都同时符合条件即满足。 权限 二进制 八进制 - - - 0 0 0 0 - - x 0 0 1 1 - w - 0 1 0 2 - w x 0 1 1 3 r - - 1 0 0 4 r - x 1 0 1 5 r w - 1 1 0 6 r w x 1 1 1 7 mode形式 &emsp;可以为 -perm /220 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;也可以为-perm /u+w,g+w 或 -perm /u=w,g=w 组合条件查找：同时满足：与：-a，-and;默认满足任一：或：-o，-or不满足：非：-not，! #]find /… ! A -a ! B →→ #]find /… ! ( A -o B ) 或 #]find /… -not ( A -o B )#]find /… ! A -o ! B →→ #]find /… ! ( A -a B ) 或 #]find /… -not ( A -a B ) 处理动作 -print：输出至标准输出；默认动作-ls：类似对查找到的文件执行“ls-l”-delete：删除查找到的文件-fls /PATH/TO/SOMEFILE 将查找到的文件信息长格式保存至指定路径。-ok COMMAND {} ; 对找到的每个文件执行COMMAND命令（可能需要确认）-exec COMMAND {} ; 对找到的每个文件执行COMMAND命定（无需确认）ps：find传递查找到的文件路径之后面的命令时。实现查找出所有符合的文件路径，并一次性传递给后面的命令。但是有些命令不能接受过长的参数，此时命令执行会失效，可用管道find /… | xargs COMMAND执行。]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>find命令</tag>
+      </tags>
+  </entry>
 </search>
