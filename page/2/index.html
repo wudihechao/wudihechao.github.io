@@ -306,232 +306,6 @@
   
   
   <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="http://hewanyue.com/2019/09/18/关于mariadb10-4-8二进制安装及源码编译后设置密码无效的一些发现/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Chao He">
-      <meta itemprop="description" content="BOHC is just a blog of hechao.">
-      <meta itemprop="image" content="/images/touxiang.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="BOHC!">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-            
-            <a href="/2019/09/18/%E5%85%B3%E4%BA%8Emariadb10-4-8%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E8%A3%85%E5%8F%8A%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91%E5%90%8E%E8%AE%BE%E7%BD%AE%E5%AF%86%E7%A0%81%E6%97%A0%E6%95%88%E7%9A%84%E4%B8%80%E4%BA%9B%E5%8F%91%E7%8E%B0/" class="post-title-link" itemprop="url">关于mariadb10.4.8二进制安装及源码编译后设置密码无效的一些发现</a>
-          
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              
-                
-              
-
-              <time title="Created: 2019-09-18 19:35:12" itemprop="dateCreated datePublished" datetime="2019-09-18T19:35:12+08:00">2019-09-18</time>
-            </span>
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/数据库/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            <span id="/2019/09/18/关于mariadb10-4-8二进制安装及源码编译后设置密码无效的一些发现/" class="post-meta-item leancloud_visitors" data-flag-title="关于mariadb10.4.8二进制安装及源码编译后设置密码无效的一些发现" title="Views">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">Views: </span>
-              <span class="leancloud-visitors-count"></span>
-              <span>℃</span>
-            </span>
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-        
-      
-      <span class="post-meta-item-text">Valine: </span>
-    
-    <a title="valine" href="/2019/09/18/关于mariadb10-4-8二进制安装及源码编译后设置密码无效的一些发现/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2019/09/18/关于mariadb10-4-8二进制安装及源码编译后设置密码无效的一些发现/" itemprop="commentCount"></span></a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>&emsp;&emsp;之前安装了最新版的mariadb10.4.8后，无论是二进制编译安装还是源码编译安装，设定完密码之后启动mysqld服务，结果都不需要密码就可以登陆进去，无论怎么执行<strong>mysql_secure_installation</strong>数据库初始化脚本或者<strong>mysql_secure_installation</strong>安全加固脚本，进入mysql都无需密码，用命令直接设置密码也无效，都是直接一敲mysql就可以进入数据库了。my.cnf配置文件查看了无数遍，也没发现任何蛛丝马迹。今天终于在无意中查看mysql数据库权限时意外有所收获，写出来与大家分享，让大家少走弯路。<br>&emsp;&emsp;当我进入mysql数据库，打开user表时，查看了下用户没有任何问题。<br><strong>MariaDB [mysql]> select user,host,password from user;</strong><br>+———-+————+———————————————————–+<br>| user &emsp;&emsp;| host &emsp;&emsp;    |  &emsp;  password            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;      |<br>+———-+————+———————————————————–+<br>| &emsp;root&emsp; | localhost | <em>54D9A58CB44735F80AC5AD29961814D6D12B8746  |<br>| &emsp;root &emsp;| 127.0.0.1 | <em>54D9A58CB44735F80AC5AD29961814D6D12B8746  |<br>| &emsp;root&emsp; | ::1 &emsp;&emsp;&emsp; | *54D9A58CB44735F80AC5AD29961814D6D12B8746 |<br>+———-+————+———————————————————–+<br>3 rows in set (0.001 sec)<br>|user  | host    |password   |<br>|–|–|–|<br>|root  | localhost | *54D9A58CB44735F80AC5AD29961814D6D12B8746 |<br>|root  | 127.0.0.1 | *54D9A58CB44735F80AC5AD29961814D6D12B8746 |<br>|root  |::1| *54D9A58CB44735F80AC5AD29961814D6D12B8746 |<br><img src="https://img-blog.csdnimg.cn/20190918203111766.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;可当我突发奇想打算看看他们这几个用户有什么权限上的区别时，就发现问题了：<br>*</em>MariaDB [mysql]> show grants for ‘root’@’localhost’;**<br>+—————————————————————————————————————+<br>| &emsp;Grants for root@localhost&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; |<br>+—————————————————————————————————————+<br>| GRANT ALL PRIVILEGES ON *.</em> TO ‘root’@’localhost’ IDENTIFIED VIA mysql_native_password USING ‘invalid’ OR unix_socket WITH GRANT OPTION &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|<br>| GRANT PROXY ON ‘’@’%’ TO ‘root’@’localhost’ WITH GRANT OPTION                                                                           &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|<br>+—————————————————————————————————————+<br>2 rows in set (0.000 sec)<br><strong>MariaDB [mysql]> show grants for ‘root’@’127.0.0.1’;</strong><br>ERROR 1141 (42000): There is no such grant defined for user ‘root’ on host ‘127.0.0.1’<br><strong>MariaDB [mysql]> show grants for ‘root’@’::1’;</strong><br>ERROR 1141 (42000): There is no such grant defined for user ‘root’ on host ‘::1’<br>MariaDB [mysql]><br><img src="https://img-blog.csdnimg.cn/20190918202258915.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;root用户竟然查不到权限，这就很奇怪了。在之前的mariadb10.2.27上尝试了下，都是正常的，如下图所示：<br><img src="https://img-blog.csdnimg.cn/20190918202923735.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;于是我就尝试对那两个异常的用户账号授权。<br><img src="https://img-blog.csdnimg.cn/20190918210814239.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;竟然也无法授权。这种情况跟我之前尝试过的直接用insert命令向user表中加的user条目情况有点相似。当时我用</p>
-          <!--noindex-->
-          
-            <div class="post-button">
-              <a class="btn" href="/2019/09/18/关于mariadb10-4-8二进制安装及源码编译后设置密码无效的一些发现/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-        <article itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="http://hewanyue.com/2019/09/15/二进制安装及源码编译安装mariadb数据库/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Chao He">
-      <meta itemprop="description" content="BOHC is just a blog of hechao.">
-      <meta itemprop="image" content="/images/touxiang.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="BOHC!">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-            
-            <a href="/2019/09/15/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E8%A3%85%E5%8F%8A%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85mariadb%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-title-link" itemprop="url">二进制安装及源码编译安装mariadb数据库</a>
-          
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              
-                
-              
-
-              <time title="Created: 2019-09-15 10:29:05" itemprop="dateCreated datePublished" datetime="2019-09-15T10:29:05+08:00">2019-09-15</time>
-            </span>
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/数据库/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            <span id="/2019/09/15/二进制安装及源码编译安装mariadb数据库/" class="post-meta-item leancloud_visitors" data-flag-title="二进制安装及源码编译安装mariadb数据库" title="Views">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">Views: </span>
-              <span class="leancloud-visitors-count"></span>
-              <span>℃</span>
-            </span>
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-        
-      
-      <span class="post-meta-item-text">Valine: </span>
-    
-    <a title="valine" href="/2019/09/15/二进制安装及源码编译安装mariadb数据库/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2019/09/15/二进制安装及源码编译安装mariadb数据库/" itemprop="commentCount"></span></a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>&emsp;&emsp;MariaDB数据库管理系统是MySQL的一个分支，主要由开源社区在维护，采用GPL授权许可 MariaDB的目的是完全兼容MySQL，包括API和命令行，使之能轻松成为MySQL的代替品。在存储引擎方面，使用XtraDB（英语：XtraDB）来代替MySQL的InnoDB。 MariaDB由MySQL的创始人Michael Widenius（英语：Michael Widenius）主导开发，他早前曾以10亿美元的价格，将自己创建的公司MySQL AB卖给了SUN，此后，随着SUN被甲骨文收购，MySQL的所有权也落入Oracle的手中。MariaDB名称来自Michael Widenius的女儿Maria的名字。<br>&emsp;&emsp;MariaDB基于事务的Maria存储引擎，替换了MySQL的MyISAM存储引擎，它使用了Percona的 XtraDB，InnoDB的变体，分支的开发者希望提供访问即将到来的MySQL 5.4 InnoDB性能。这个版本还包括了 PrimeBase XT (PBXT) 和 FederatedX存储引擎。<br>&emsp;&emsp;开发这个分支的原因之一是：甲骨文公司收购了MySQL后，有将MySQL闭源的潜在风险，因此社区采用分支的方式来避开这个风险。 过去一年中，大型互联网用户以及Linux发行商纷纷抛弃MySQL，转投MariaDB阵营。MariaDB是目前最受关注的MySQL数据库衍生版，也被视为开源数据库MySQL的替代品。<br>&emsp;&emsp;MariaDB虽然被视为MySQL数据库的替代品，但它在扩展功能、存储引擎以及一些新的功能改进方面都强过MySQL。而且从MySQL迁移到MariaDB也是非常简单的：<br>&emsp;&emsp;1、数据和表定义文件（.frm）是二进制兼容的<br>&emsp;&emsp;2、所有客户端API、协议和结构都是完全一致的<br>&emsp;&emsp;3、所有文件名、二进制、路径、端口等都是一致的<br>&emsp;&emsp;4、所有的MySQL连接器，比如PHP、Perl、Python、Java、.NET、MyODBC、Ruby以及MySQL C connector等在MariaDB中都保持不变<br>&emsp;&emsp;5、mysql-client包在MariaDB服务器中也能够正常运行<br>&emsp;&emsp;6、共享的客户端库与MySQL也是二进制兼容的<br>也就是说，在大多数情况下，你完全可以卸载MySQL然后安装MariaDB，然后就可以像之前一样正常的运行。(以上摘自百度百科)<br>&emsp;&emsp;作为目前比较热门的开源数据库软件，一般常见有三种安装方式：yum或rpm包安装、二进制安装以及源码包安装，包安装过于简单，也很难符合一般企业定制需要，故不做叙述，本文详细讲述后两种安装方式。</p>
-          <!--noindex-->
-          
-            <div class="post-button">
-              <a class="btn" href="/2019/09/15/二进制安装及源码编译安装mariadb数据库/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-        <article itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="http://hewanyue.com/2019/09/06/部署自动化安装及cobber-Http-TFTP-PXE-kickstart无人职守批量安装精简版Linux系统/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -843,6 +617,238 @@
           
             <div class="post-button">
               <a class="btn" href="/2019/08/22/for循环实现的小脚本/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+        <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block home">
+    <link itemprop="mainEntityOfPage" href="http://hewanyue.com/2019/08/14/CentOS7磁盘分区及文件系统/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chao He">
+      <meta itemprop="description" content="BOHC is just a blog of hechao.">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BOHC!">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+            
+            <a href="/2019/08/14/CentOS7%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA%E5%8F%8A%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">CentOS7磁盘分区及文件系统</a>
+          
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              
+                
+              
+
+              <time title="Created: 2019-08-14 22:27:33" itemprop="dateCreated datePublished" datetime="2019-08-14T22:27:33+08:00">2019-08-14</time>
+            </span>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/linux基础/" itemprop="url" rel="index"><span itemprop="name">linux基础</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span id="/2019/08/14/CentOS7磁盘分区及文件系统/" class="post-meta-item leancloud_visitors" data-flag-title="CentOS7磁盘分区及文件系统" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+              <span>℃</span>
+            </span>
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2019/08/14/CentOS7磁盘分区及文件系统/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2019/08/14/CentOS7磁盘分区及文件系统/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>&emsp;&emsp;一般来说，硬盘上的空间，想要被我们利用，都要经过几个步骤：</strong></p><ul>
+<li>1设备识别</li>
+<li>2磁盘分区</li>
+<li>3创建文件系统（并标记文件系统）</li>
+<li>4挂载新的文件系统</li>
+<li>5在/etc/fstab文件中创建新条目<br>&emsp;</li>
+</ul><p><strong>&emsp;&emsp;只有当设备被挂载到文件系统中，才可以被我们访问且使用。</strong><br>&emsp;</p>
+          <!--noindex-->
+          
+            <div class="post-button">
+              <a class="btn" href="/2019/08/14/CentOS7磁盘分区及文件系统/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+        <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block home">
+    <link itemprop="mainEntityOfPage" href="http://hewanyue.com/2019/08/11/我的一键个性化系统脚本/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chao He">
+      <meta itemprop="description" content="BOHC is just a blog of hechao.">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BOHC!">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+            
+            <a href="/2019/08/11/%E6%88%91%E7%9A%84%E4%B8%80%E9%94%AE%E4%B8%AA%E6%80%A7%E5%8C%96%E7%B3%BB%E7%BB%9F%E8%84%9A%E6%9C%AC/" class="post-title-link" itemprop="url">我的一键个性化系统脚本</a>
+          
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              
+                
+              
+
+              <time title="Created: 2019-08-11 14:36:15" itemprop="dateCreated datePublished" datetime="2019-08-11T14:36:15+08:00">2019-08-11</time>
+            </span>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/linux基础/" itemprop="url" rel="index"><span itemprop="name">linux基础</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span id="/2019/08/11/我的一键个性化系统脚本/" class="post-meta-item leancloud_visitors" data-flag-title="我的一键个性化系统脚本" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+              <span>℃</span>
+            </span>
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2019/08/11/我的一键个性化系统脚本/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2019/08/11/我的一键个性化系统脚本/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>&emsp;&emsp;经常要把虚拟机上的系统搞崩，总是各种报错，有次yum安装gcc程序都报错，一旦折腾半天解决不了，只好选择最笨却最有效的方法——还原vrm虚拟机的快照！可是还原快照到干净系统，就导致之前做的喜欢的配置又都没了 还要去慢慢设置开机图案、别名以及各种环境变量比较麻烦，于是就费了点时间，写了下面这个脚本，每次都可以一键实现让新系统恢复自己当初个性化的各种设置。<br>&emsp;&emsp;先传效果图：<br><img src="https://img-blog.csdnimg.cn/20190811201614786.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+          <!--noindex-->
+          
+            <div class="post-button">
+              <a class="btn" href="/2019/08/11/我的一键个性化系统脚本/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
