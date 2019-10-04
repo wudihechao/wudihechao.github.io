@@ -208,7 +208,7 @@
       
     
 
-    <a href="/tags/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-tags&quot;&gt;&lt;&#x2F;i&gt;&lt;br&gt;Tags&lt;span class=&quot;badge&quot;&gt;0&lt;&#x2F;span&gt;</a>
+    <a href="/tags/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-tags&quot;&gt;&lt;&#x2F;i&gt;&lt;br&gt;Tags&lt;span class=&quot;badge&quot;&gt;1&lt;&#x2F;span&gt;</a>
 
   </li>
       
@@ -230,7 +230,7 @@
       
     
 
-    <a href="/archives/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-archive&quot;&gt;&lt;&#x2F;i&gt;&lt;br&gt;Archives&lt;span class=&quot;badge&quot;&gt;1&lt;&#x2F;span&gt;</a>
+    <a href="/archives/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-archive&quot;&gt;&lt;&#x2F;i&gt;&lt;br&gt;Archives&lt;span class=&quot;badge&quot;&gt;2&lt;&#x2F;span&gt;</a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -320,10 +320,10 @@
         
           <div class="tag-cloud">
             <div class="tag-cloud-title">
-              No tags
+              1 tag in total
             </div>
             <div class="tag-cloud-tags">
-              
+              <a href="/tags/初心不负/" style="font-size: 13px; color: #9733ee">初心不负</a>
             </div>
           </div>
         
@@ -393,8 +393,21 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-count">2</span>
           <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
         </a>
       </div>
     
@@ -556,7 +569,7 @@
 <script>
 NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
   var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
+  var guest = 'nick,mail';
   guest = guest.split(',').filter(item => {
     return GUEST.includes(item);
   });
