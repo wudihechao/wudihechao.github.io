@@ -64,7 +64,7 @@
 <meta property="og:description" content="一、多实例1、概述&emsp;&emsp; MySQL多实例就是在一台机器上开启多个不同的服务端口（如：3306,3307），运行多个MySQL服务进程，通过不同的socket监听不同的服务端口来提供各自的服务2.1、优点1）有效利用服务器资源&emsp;&emsp; 当单个服务器资源过剩时，可以充分利用剩余的资源来提供更多的服务；2）节约服务器资源">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190925114000429.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
-<meta property="og:updated_time" content="2019-10-05T11:51:20.989Z">
+<meta property="og:updated_time" content="2019-10-05T11:53:55.134Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql多实例实现主从级联复制及读写分离">
 <meta name="twitter:description" content="一、多实例1、概述&emsp;&emsp; MySQL多实例就是在一台机器上开启多个不同的服务端口（如：3306,3307），运行多个MySQL服务进程，通过不同的socket监听不同的服务端口来提供各自的服务2.1、优点1）有效利用服务器资源&emsp;&emsp; 当单个服务器资源过剩时，可以充分利用剩余的资源来提供更多的服务；2）节约服务器资源">
@@ -416,8 +416,10 @@
 <p>&emsp;&emsp; （4）端口不能相同</p>
 <p>&emsp;&emsp; （5）socket文件的生成路径不能相同<br>5、配置搭建<br>&emsp;&emsp; 实现目标：<img src="https://img-blog.csdnimg.cn/20190925114000429.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp; 1、源码编译安装或者二进制安装或者yum安装mysql或mariadb客户端以及server端,若没有创建mysql用户、组则创建。</p>
 <p>&emsp;&emsp; 2、在指定路径下创建3个数据库目录</p>
-<p>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>-p</span><a href="/data/mysql330&#123;789&#125;````">link</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&emsp;&emsp; 挂载在不同的三块硬盘上</span><br><span class="line"></span><br><span class="line">&emsp;&emsp; ````mount /dev/sdb /data/mysql3307</span><br></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp; <figure class="highlight plain"><figcaption><span>/dev/sdc</span><a href="/data/mysql3308````">link</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&emsp;&emsp; ````mount /dev/sdd /data/mysql3309</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><figcaption><span>-p</span><a href="/data/mysql330&#123;789&#125;````">link</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">挂载在不同的三块硬盘上</span><br><span class="line"></span><br><span class="line">````mount /dev/sdb /data/mysql3307</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><figcaption><span>/dev/sdc</span><a href="/data/mysql3308````">link</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">````mount /dev/sdd /data/mysql3309</span><br></pre></td></tr></table></figure>
+
 <p>&emsp;&emsp; 3、用server端带的初始化脚本生成三个数据库</p>
 <p>&emsp;&emsp; <figure class="highlight plain"><figcaption><span>--datadir</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&emsp;&emsp; ````scripts/mariadb-install-db --datadir=/data/mysql3308/ --user=mysql</span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp; <figure class="highlight plain"><figcaption><span>--datadir</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&emsp;&emsp; 4、准备三个配置文件</span><br><span class="line"></span><br><span class="line">&emsp;&emsp; ````cp /etc/my.cnf /data/mysql3307/my.cnf</span><br></pre></td></tr></table></figure></p>
