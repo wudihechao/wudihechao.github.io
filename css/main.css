@@ -377,7 +377,7 @@ code {
 code {
   overflow-wrap: break-word;
   word-wrap: break-word;
-  background: #d05;
+  background: #008b8b;
   border-radius: 4px;
   color: #eee;
   padding: 2px 4px;
@@ -411,7 +411,7 @@ pre code {
   padding: 0;
 }
 .highlight figcaption {
-  background: #d05;
+  background: #008b8b;
   border-bottom: 1px solid #e9e9e9;
   color: #c5c8c6;
   line-height: 1em;
@@ -1203,7 +1203,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #ff839d;
+  background: #adcc8e;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
