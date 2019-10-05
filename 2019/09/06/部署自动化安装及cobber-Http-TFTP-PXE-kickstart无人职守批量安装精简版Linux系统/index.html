@@ -29,7 +29,7 @@
     version: '7.4.0',
     exturl: false,
     sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
-    copycode: {"enable":true,"show_result":true,"style":"mac"},
+    copycode: {"enable":true,"show_result":true,"style":"default"},
     back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
@@ -55,20 +55,20 @@
   };
 </script>
 
-  <meta name="description" content="&emsp;&emsp;为了简化每台服务器的系统的装机过程和统一服务器配置，可以采用一键自动化安装系统的方式，实现新机器接上网线开机便可批量安装相同配置的系统，便于以后统一管理。&emsp;&emsp;想要实现自动化安装系统，&emsp;&emsp;1.搭建dhcp服务器，给新机器网卡分配IP地址，并引导机器去搭建好的tftp站点下载引导程序及内核文件；&emsp;&emsp;2.搭建tftp服务">
+  <meta name="description" content="&amp;emsp;&amp;emsp;为了简化每台服务器的系统的装机过程和统一服务器配置，可以采用一键自动化安装系统的方式，实现新机器接上网线开机便可批量安装相同配置的系统，便于以后统一管理。&amp;emsp;&amp;emsp;想要实现自动化安装系统，&amp;emsp;&amp;emsp;1.搭建dhcp服务器，给新机器网卡分配IP地址，并引导机器去搭建好的tftp站点下载引导程序及内核文件；&amp;emsp;&amp;emsp;2.搭建tftp服务">
 <meta name="keywords" content="linux,cobber,kickstart,pxe">
 <meta property="og:type" content="article">
 <meta property="og:title" content="部署自动化安装及cobber(Http+TFTP+PXE+kickstart无人职守批量安装精简版Linux系统)">
 <meta property="og:url" content="http://hewanyue.com/2019/09/06/部署自动化安装及cobber-Http-TFTP-PXE-kickstart无人职守批量安装精简版Linux系统/index.html">
 <meta property="og:site_name" content="BOHC!">
-<meta property="og:description" content="&emsp;&emsp;为了简化每台服务器的系统的装机过程和统一服务器配置，可以采用一键自动化安装系统的方式，实现新机器接上网线开机便可批量安装相同配置的系统，便于以后统一管理。&emsp;&emsp;想要实现自动化安装系统，&emsp;&emsp;1.搭建dhcp服务器，给新机器网卡分配IP地址，并引导机器去搭建好的tftp站点下载引导程序及内核文件；&emsp;&emsp;2.搭建tftp服务">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;为了简化每台服务器的系统的装机过程和统一服务器配置，可以采用一键自动化安装系统的方式，实现新机器接上网线开机便可批量安装相同配置的系统，便于以后统一管理。&amp;emsp;&amp;emsp;想要实现自动化安装系统，&amp;emsp;&amp;emsp;1.搭建dhcp服务器，给新机器网卡分配IP地址，并引导机器去搭建好的tftp站点下载引导程序及内核文件；&amp;emsp;&amp;emsp;2.搭建tftp服务">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190907144353849.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190907154338532.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
 <meta property="og:updated_time" content="2019-10-04T11:01:49.317Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="部署自动化安装及cobber(Http+TFTP+PXE+kickstart无人职守批量安装精简版Linux系统)">
-<meta name="twitter:description" content="&emsp;&emsp;为了简化每台服务器的系统的装机过程和统一服务器配置，可以采用一键自动化安装系统的方式，实现新机器接上网线开机便可批量安装相同配置的系统，便于以后统一管理。&emsp;&emsp;想要实现自动化安装系统，&emsp;&emsp;1.搭建dhcp服务器，给新机器网卡分配IP地址，并引导机器去搭建好的tftp站点下载引导程序及内核文件；&emsp;&emsp;2.搭建tftp服务">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;为了简化每台服务器的系统的装机过程和统一服务器配置，可以采用一键自动化安装系统的方式，实现新机器接上网线开机便可批量安装相同配置的系统，便于以后统一管理。&amp;emsp;&amp;emsp;想要实现自动化安装系统，&amp;emsp;&amp;emsp;1.搭建dhcp服务器，给新机器网卡分配IP地址，并引导机器去搭建好的tftp站点下载引导程序及内核文件；&amp;emsp;&amp;emsp;2.搭建tftp服务">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190907144353849.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
   <link rel="canonical" href="http://hewanyue.com/2019/09/06/部署自动化安装及cobber-Http-TFTP-PXE-kickstart无人职守批量安装精简版Linux系统/">
 
@@ -169,7 +169,7 @@
       
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i><br>Home</a>
+    <a href="/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-home&quot;&gt;&lt;&#x2F;i&gt;&lt;br&gt;Home</a>
 
   </li>
       
@@ -189,7 +189,7 @@
       
     
 
-    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i><br>About</a>
+    <a href="/about/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-user&quot;&gt;&lt;&#x2F;i&gt;&lt;br&gt;About</a>
 
   </li>
       
@@ -211,7 +211,7 @@
       
     
 
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i><br>Tags<span class="badge">22</span></a>
+    <a href="/tags/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-tags&quot;&gt;&lt;&#x2F;i&gt;&lt;br&gt;Tags&lt;span class=&quot;badge&quot;&gt;22&lt;&#x2F;span&gt;</a>
 
   </li>
       
@@ -233,7 +233,7 @@
       
     
 
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i><br>Categories<span class="badge">3</span></a>
+    <a href="/categories/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-th&quot;&gt;&lt;&#x2F;i&gt;&lt;br&gt;Categories&lt;span class=&quot;badge&quot;&gt;3&lt;&#x2F;span&gt;</a>
 
   </li>
       
@@ -255,7 +255,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i><br>Archives<span class="badge">15</span></a>
+    <a href="/archives/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-archive&quot;&gt;&lt;&#x2F;i&gt;&lt;br&gt;Archives&lt;span class=&quot;badge&quot;&gt;15&lt;&#x2F;span&gt;</a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -296,7 +296,7 @@
     
   <div class="reading-progress-bar"></div>
 
-  <a href="https://github.com/wudihechao" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+  <a href="https://github.com/wudihechao" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank">&lt;svg width=&quot;80&quot; height=&quot;80&quot; viewBox=&quot;0 0 250 250&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z&quot;&gt;&lt;&#x2F;path&gt;&lt;path d=&quot;M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2&quot; fill=&quot;currentColor&quot; style=&quot;transform-origin: 130px 106px;&quot; class=&quot;octo-arm&quot;&gt;&lt;&#x2F;path&gt;&lt;path d=&quot;M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z&quot; fill=&quot;currentColor&quot; class=&quot;octo-body&quot;&gt;&lt;&#x2F;path&gt;&lt;&#x2F;svg&gt;</a>
 
 
     <main id="main" class="main">
@@ -400,22 +400,22 @@
       
         <p>&emsp;&emsp;为了简化每台服务器的系统的装机过程和统一服务器配置，可以采用一键自动化安装系统的方式，实现新机器接上网线开机便可批量安装相同配置的系统，便于以后统一管理。<br>&emsp;&emsp;想要实现自动化安装系统，<br>&emsp;&emsp;1.搭建dhcp服务器，给新机器网卡分配IP地址，并引导机器去搭建好的tftp站点下载引导程序及内核文件；<br>&emsp;&emsp;2.搭建tftp服务器，提供引导程序及内核文件；复制内核文件至服务器目录；<br>&emsp;&emsp;3.搭建http服务器，提供应答kickstart文件、系统安装包程序的下载；挂载光盘或拷贝安装包至目录文件；<br>&emsp;&emsp;4生成ks应答kickstart文件（放置于ftp服务器中）；<br>&emsp;&emsp;5.复制光盘中的/cdrom/isolinux/isolinux.cfg文件至目录pxelinux.cfg/，改名为pxelinux.cfg/fault文件，即为安装菜单（之后目录pxelinux.cfg/整体放入tftp服务器中）。</p><a id="more"></a>
 <p>&emsp;&emsp;<br><strong>演示环境：CentOS7 Kernel Version:    3.10.0-957.el7.x86_64 本机IP:192.168.32.7</strong></p>
-<h2 id="1-配置DHCP服务器"><a href="#1-配置DHCP服务器" class="headerlink" title="1. 配置DHCP服务器"></a>1. 配置DHCP服务器</h2><p>&emsp;&emsp;1.首先安装dhcp服务。<figure class="highlight plain"><figcaption><span>install dhcp````</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&emsp;&emsp;2.启动dhcp服务。但直接启动，会报错，如下图所示，须先修改dhcpd的配置文件。![在这里插入图片描述](https://img-blog.csdnimg.cn/20190907104911953.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70)</span><br><span class="line">&emsp;&emsp;打开/etc/dhcp/dhcpd.conf配置文件后发现，配置文件是空的，难怪报错，有一行“see /usr/share/doc/dhcpd.conf.example”，原来要我们参考这个模版来自己写配置文件。![在这里插入图片描述](https://img-blog.csdnimg.cn/20190907104923202.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70)&emsp;&emsp;于是先复制模版至原配置文件目录。![在这里插入图片描述](https://img-blog.csdnimg.cn/20190907104932714.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70)&emsp;&emsp;选择覆盖，再打开配置文件。![在这里插入图片描述](https://img-blog.csdnimg.cn/20190907104941287.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70)&emsp;&emsp;修改⑴网段⑵租期时长⑶网关⑷DNS⑸DNS域后缀⑹提供资源下载站点IP⑺需要下载的引导文件</span><br><span class="line">![在这里插入图片描述](https://img-blog.csdnimg.cn/20190907104948374.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70)</span><br><span class="line">&emsp;&emsp;此时重启DHCP服务成功，查看DHCP服务状态，已经启动（状态信息的提示，是指另一块网卡没有被DHCP服务器网段分配地址，分配一个就足够了，可以无视）。</span><br><span class="line">![在这里插入图片描述](https://img-blog.csdnimg.cn/20190907110332532.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70)</span><br><span class="line">## 2.搭建tftp服务器</span><br><span class="line">&emsp;&emsp;1.首先安装tftp服务端````yum install tftp-server -y</span><br></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;2.生成pxelinux.0引导程序，并放入tftp服务器<br>&emsp;&emsp;&emsp;⑴先确定引导程序所在的安装包；<br>&emsp;&emsp;&emsp;<figure class="highlight plain"><figcaption><span>search pxelinux````</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&emsp;&emsp;&emsp;⑵安装syslinux.x86_64；</span><br><span class="line">&emsp;&emsp;&emsp;````yum install syslinux.x86_64</span><br></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;&emsp;⑶找到引导程序pxelinux.0的所在路径；<br>&emsp;&emsp;&emsp;<figure class="highlight plain"><figcaption><span>-ql syslinux.x86_64|grep pxelinux.0````</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&emsp;&emsp;&emsp;⑷将引导程序pxelinux.0及菜单背景模版文件menu.c32拷贝到服务器</span><br><span class="line">&emsp;&emsp;&emsp;````cp /usr/share/syslinux/pxelinux.0 /usr/share/syslinux/menu.c32 /var/lib/tftpboot/</span><br></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;3.将准备好的内核文件和initrd.img文件拷贝到服务器<br>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>/cdrom6/isolinux/vmlinuz</span><a href="/cdrom6/isolinux/initrd.img">/var/lib/tftpboot/6/````</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&emsp;&emsp;````cp /cdrom7/isolinux/vmlinuz  /cdrom7/isolinux/initrd.img  /var/lib/tftpboot/7/</span><br></pre></td></tr></table></figure></p>
+<h2 id="1-配置DHCP服务器"><a href="#1-配置DHCP服务器" class="headerlink" title="1. 配置DHCP服务器"></a>1. 配置DHCP服务器</h2><p>&emsp;&emsp;1.首先安装dhcp服务。<figure class="highlight plain"><figcaption><span>install dhcp````</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&amp;emsp;&amp;emsp;2.启动dhcp服务。但直接启动，会报错，如下图所示，须先修改dhcpd的配置文件。![在这里插入图片描述](https://img-blog.csdnimg.cn/20190907104911953.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70)</span><br><span class="line">&amp;emsp;&amp;emsp;打开/etc/dhcp/dhcpd.conf配置文件后发现，配置文件是空的，难怪报错，有一行“see /usr/share/doc/dhcpd.conf.example”，原来要我们参考这个模版来自己写配置文件。![在这里插入图片描述](https://img-blog.csdnimg.cn/20190907104923202.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70)&amp;emsp;&amp;emsp;于是先复制模版至原配置文件目录。![在这里插入图片描述](https://img-blog.csdnimg.cn/20190907104932714.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70)&amp;emsp;&amp;emsp;选择覆盖，再打开配置文件。![在这里插入图片描述](https://img-blog.csdnimg.cn/20190907104941287.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70)&amp;emsp;&amp;emsp;修改⑴网段⑵租期时长⑶网关⑷DNS⑸DNS域后缀⑹提供资源下载站点IP⑺需要下载的引导文件</span><br><span class="line">![在这里插入图片描述](https://img-blog.csdnimg.cn/20190907104948374.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70)</span><br><span class="line">&amp;emsp;&amp;emsp;此时重启DHCP服务成功，查看DHCP服务状态，已经启动（状态信息的提示，是指另一块网卡没有被DHCP服务器网段分配地址，分配一个就足够了，可以无视）。</span><br><span class="line">![在这里插入图片描述](https://img-blog.csdnimg.cn/20190907110332532.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70)</span><br><span class="line">## 2.搭建tftp服务器</span><br><span class="line">&amp;emsp;&amp;emsp;1.首先安装tftp服务端````yum install tftp-server -y</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;2.生成pxelinux.0引导程序，并放入tftp服务器<br>&emsp;&emsp;&emsp;⑴先确定引导程序所在的安装包；<br>&emsp;&emsp;&emsp;<figure class="highlight plain"><figcaption><span>search pxelinux````</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&amp;emsp;&amp;emsp;&amp;emsp;⑵安装syslinux.x86_64；</span><br><span class="line">&amp;emsp;&amp;emsp;&amp;emsp;````yum install syslinux.x86_64</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;&emsp;⑶找到引导程序pxelinux.0的所在路径；<br>&emsp;&emsp;&emsp;<figure class="highlight plain"><figcaption><span>-ql syslinux.x86_64|grep pxelinux.0````</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&amp;emsp;&amp;emsp;&amp;emsp;⑷将引导程序pxelinux.0及菜单背景模版文件menu.c32拷贝到服务器</span><br><span class="line">&amp;emsp;&amp;emsp;&amp;emsp;````cp /usr/share/syslinux/pxelinux.0 /usr/share/syslinux/menu.c32 /var/lib/tftpboot/</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;3.将准备好的内核文件和initrd.img文件拷贝到服务器<br>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>/cdrom6/isolinux/vmlinuz</span><a href="/cdrom6/isolinux/initrd.img">/var/lib/tftpboot/6/````</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&amp;emsp;&amp;emsp;````cp /cdrom7/isolinux/vmlinuz  /cdrom7/isolinux/initrd.img  /var/lib/tftpboot/7/</span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;最终效果如下：<br><img src="https://img-blog.csdnimg.cn/20190907144353849.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<h2 id="3-搭建http服务器"><a href="#3-搭建http服务器" class="headerlink" title="3.搭建http服务器"></a>3.搭建http服务器</h2><p>&emsp;&emsp;1.首先安装httpd服务端<figure class="highlight plain"><figcaption><span>install httpd -y````</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&emsp;&emsp;2.启动httpd服务````systemctl start httpd</span><br></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;3.查看httpd服务状态是否启动<figure class="highlight plain"><figcaption><span>status httpd````</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&emsp;&emsp;4.创建安装包文件目录````mkdir -pv /var/www/html/CentOS/&#123;6,7&#125;/os/x86_64/</span><br></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;5.挂载光盘安装包至目录或拷贝安装文件至目录<br>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>/dev/sr0</span><a href="/var/www/html/CentOS/7/os/x86_64/````">link</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&emsp;&emsp;````mount /dev/sr1 /var/www/html/CentOS/6/os/x86_64/</span><br></pre></td></tr></table></figure></p>
+<h2 id="3-搭建http服务器"><a href="#3-搭建http服务器" class="headerlink" title="3.搭建http服务器"></a>3.搭建http服务器</h2><p>&emsp;&emsp;1.首先安装httpd服务端<figure class="highlight plain"><figcaption><span>install httpd -y````</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&amp;emsp;&amp;emsp;2.启动httpd服务````systemctl start httpd</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;3.查看httpd服务状态是否启动<figure class="highlight plain"><figcaption><span>status httpd````</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&amp;emsp;&amp;emsp;4.创建安装包文件目录````mkdir -pv /var/www/html/CentOS/&#123;6,7&#125;/os/x86_64/</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;5.挂载光盘安装包至目录或拷贝安装文件至目录<br>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>/dev/sr0</span><a href="/var/www/html/CentOS/7/os/x86_64/````">link</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&amp;emsp;&amp;emsp;````mount /dev/sr1 /var/www/html/CentOS/6/os/x86_64/</span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;效果图如下：<br><img src="https://img-blog.csdnimg.cn/20190907154338532.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;6.挂载光盘安装包至目录或拷贝安装文件至目录</p>
-<h2 id="4-生成kickstart应答文件"><a href="#4-生成kickstart应答文件" class="headerlink" title="4.生成kickstart应答文件"></a>4.生成kickstart应答文件</h2><p>&emsp;&emsp;ks文件的生成一般有两种方法：<br>&emsp;&emsp;①：之前手动安装后系统自动生成的的记录文件/root/anaconda-ks.cfg文件是可以直接复制过来修改使用的。<br>&emsp;&emsp;②：用kickstart工具生成。<br>我们这里采用第二种。执行<figure class="highlight plain"><figcaption><span>- Passive，来转发图形化界面）</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&emsp;&emsp;第一步，选择语言，键盘布局，时区，设置root口令（是否加密存储），安装完成后重启，命令行模式安装；</span><br><span class="line">![在这里插入图片描述](https://img-blog.csdnimg.cn/20190907171743550.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70)</span><br><span class="line">&emsp;&emsp;第二步，选择选择系统安装方式，通过HTTP服务站点安装，输入已经搭好的服务器IP和安装包路径；</span><br><span class="line">![在这里插入图片描述](https://img-blog.csdnimg.cn/20190907171805775.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70)</span><br><span class="line">&emsp;&emsp;第三步，选择安装grub引导安装程序，（先不对grub进行加密了，据说会有加密方式不符的话会有报错），加内核参数net.innames=0实现不更改网卡名称；</span><br><span class="line">![在这里插入图片描述](https://img-blog.csdnimg.cn/20190907171813994.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70)</span><br><span class="line">&emsp;&emsp;第四步，清除原有分区，清除分区标签，设置新分区表；</span><br><span class="line">![在这里插入图片描述](https://img-blog.csdnimg.cn/20190907171820601.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70)</span><br><span class="line">&emsp;&emsp;第五步，设置网卡名eth0，及获取IP方式为DHCP；</span><br><span class="line">![在这里插入图片描述](https://img-blog.csdnimg.cn/2019090717182994.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70)</span><br><span class="line">&emsp;&emsp;第六步，默认关闭SELINUX策略和防火墙；</span><br><span class="line">![在这里插入图片描述](https://img-blog.csdnimg.cn/20190907171836698.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70)</span><br><span class="line">&emsp;&emsp;第七步，选择需要的系统服务；</span><br><span class="line">&emsp;&emsp;第八步，附加装机前后脚本；</span><br><span class="line">![在这里插入图片描述](https://img-blog.csdnimg.cn/20190907173136895.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70)</span><br><span class="line">&emsp;&emsp;第九步，将ks应答文件复制到http服务器</span><br><span class="line">&emsp;&emsp;````mkdir -p /var/www/html/ksdir/;cp ~/centos7-ks.cfg /var/www/html/ksdir/</span><br></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;（CentOS6的KS同样方式生成）<br>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>~/centos6-ks.cfg</span><a href="/var/www/html/ksdir/````">link</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">## 5.创建安装菜单</span><br><span class="line">&emsp;&emsp;菜单文件的一般有两种方法：</span><br><span class="line">&emsp;&emsp;①：复制修改光盘中的菜单文件/cdrom/isolinux/lisolinux.cfg文件是可以直接复制过来修改使用的。</span><br><span class="line">&emsp;&emsp;①：VIM手工输入。</span><br></pre></td></tr></table></figure></p>
+<h2 id="4-生成kickstart应答文件"><a href="#4-生成kickstart应答文件" class="headerlink" title="4.生成kickstart应答文件"></a>4.生成kickstart应答文件</h2><p>&emsp;&emsp;ks文件的生成一般有两种方法：<br>&emsp;&emsp;①：之前手动安装后系统自动生成的的记录文件/root/anaconda-ks.cfg文件是可以直接复制过来修改使用的。<br>&emsp;&emsp;②：用kickstart工具生成。<br>我们这里采用第二种。执行<figure class="highlight plain"><figcaption><span>- Passive，来转发图形化界面）</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&amp;emsp;&amp;emsp;第一步，选择语言，键盘布局，时区，设置root口令（是否加密存储），安装完成后重启，命令行模式安装；</span><br><span class="line">![在这里插入图片描述](https://img-blog.csdnimg.cn/20190907171743550.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70)</span><br><span class="line">&amp;emsp;&amp;emsp;第二步，选择选择系统安装方式，通过HTTP服务站点安装，输入已经搭好的服务器IP和安装包路径；</span><br><span class="line">![在这里插入图片描述](https://img-blog.csdnimg.cn/20190907171805775.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70)</span><br><span class="line">&amp;emsp;&amp;emsp;第三步，选择安装grub引导安装程序，（先不对grub进行加密了，据说会有加密方式不符的话会有报错），加内核参数net.innames=0实现不更改网卡名称；</span><br><span class="line">![在这里插入图片描述](https://img-blog.csdnimg.cn/20190907171813994.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70)</span><br><span class="line">&amp;emsp;&amp;emsp;第四步，清除原有分区，清除分区标签，设置新分区表；</span><br><span class="line">![在这里插入图片描述](https://img-blog.csdnimg.cn/20190907171820601.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70)</span><br><span class="line">&amp;emsp;&amp;emsp;第五步，设置网卡名eth0，及获取IP方式为DHCP；</span><br><span class="line">![在这里插入图片描述](https://img-blog.csdnimg.cn/2019090717182994.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70)</span><br><span class="line">&amp;emsp;&amp;emsp;第六步，默认关闭SELINUX策略和防火墙；</span><br><span class="line">![在这里插入图片描述](https://img-blog.csdnimg.cn/20190907171836698.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70)</span><br><span class="line">&amp;emsp;&amp;emsp;第七步，选择需要的系统服务；</span><br><span class="line">&amp;emsp;&amp;emsp;第八步，附加装机前后脚本；</span><br><span class="line">![在这里插入图片描述](https://img-blog.csdnimg.cn/20190907173136895.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70)</span><br><span class="line">&amp;emsp;&amp;emsp;第九步，将ks应答文件复制到http服务器</span><br><span class="line">&amp;emsp;&amp;emsp;````mkdir -p /var/www/html/ksdir/;cp ~/centos7-ks.cfg /var/www/html/ksdir/</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;（CentOS6的KS同样方式生成）<br>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>~/centos6-ks.cfg</span><a href="/var/www/html/ksdir/````">link</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">## 5.创建安装菜单</span><br><span class="line">&amp;emsp;&amp;emsp;菜单文件的一般有两种方法：</span><br><span class="line">&amp;emsp;&amp;emsp;①：复制修改光盘中的菜单文件/cdrom/isolinux/lisolinux.cfg文件是可以直接复制过来修改使用的。</span><br><span class="line">&amp;emsp;&amp;emsp;①：VIM手工输入。</span><br></pre></td></tr></table></figure></p>
 <p>default menu.c32<br>timeout 600<br>menu title Auto Install CentOS<br>label linux 7<br>        mennu label Install CentOS^7<br>        menu default<br>        kernel 7/vmlinuz<br>        append initrd=7/initrd.img ks=<a href="http://192.168.32.7/ksdir/centos7-ks.cfg" target="_blank" rel="noopener">http://192.168.32.7/ksdir/centos7-ks.cfg</a><br>label linux 6<br>        mennu label Install CentOS^6<br>        kernel 6/vmlinuz<br>        append initrd=6/initrd.img ks=<a href="http://192.168.32.7/ksdir/centos6-ks.cfg" target="_blank" rel="noopener">http://192.168.32.7/ksdir/centos6-ks.cfg</a><br>label linux local<br>        mennu label Boot from ^local drive<br>        localboot Oxffff</p>
 <pre><code>![在这里插入图片描述](https://img-blog.csdnimg.cn/20190907192047527.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70)
-&emsp;&emsp;再将菜单文件存入tftp服务器中 **/linux.cfg目录** 下 **重命名**为fault文件。tftp服务器最终目录机构如下图所示：
+&amp;emsp;&amp;emsp;再将菜单文件存入tftp服务器中 **/linux.cfg目录** 下 **重命名**为fault文件。tftp服务器最终目录机构如下图所示：
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20190907192456310.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70)
-&emsp;&emsp;至此，基于PXE网卡，无人职守批量安装CentOS系统的配置就完成了。
+&amp;emsp;&amp;emsp;至此，基于PXE网卡，无人职守批量安装CentOS系统的配置就完成了。
 </code></pre>
     </div>
 
@@ -429,7 +429,7 @@
       
         <div id="reward-container">
   <div>It's very nice of you to support me.</div>
-  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById("qr"); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
     Donate
   </button>
   <div id="qr" style="display: none;">
@@ -452,10 +452,10 @@
     <strong>Post author:  </strong>Chao He</li>
   <li class="post-copyright-link">
     <strong>Post link: </strong>
-    <a href="http://hewanyue.com/2019/09/06/%E9%83%A8%E7%BD%B2%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%89%E8%A3%85%E5%8F%8Acobber-Http-TFTP-PXE-kickstart%E6%97%A0%E4%BA%BA%E8%81%8C%E5%AE%88%E6%89%B9%E9%87%8F%E5%AE%89%E8%A3%85%E7%B2%BE%E7%AE%80%E7%89%88Linux%E7%B3%BB%E7%BB%9F/" title="部署自动化安装及cobber(Http+TFTP+PXE+kickstart无人职守批量安装精简版Linux系统)">http://hewanyue.com/2019/09/06/部署自动化安装及cobber-Http-TFTP-PXE-kickstart无人职守批量安装精简版Linux系统/</a>
+    <a href="http://hewanyue.com/2019/09/06/%E9%83%A8%E7%BD%B2%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%89%E8%A3%85%E5%8F%8Acobber-Http-TFTP-PXE-kickstart%E6%97%A0%E4%BA%BA%E8%81%8C%E5%AE%88%E6%89%B9%E9%87%8F%E5%AE%89%E8%A3%85%E7%B2%BE%E7%AE%80%E7%89%88Linux%E7%B3%BB%E7%BB%9F/" title="部署自动化安装及cobber(Http+TFTP+PXE+kickstart无人职守批量安装精简版Linux系统)">http:&#x2F;&#x2F;hewanyue.com&#x2F;2019&#x2F;09&#x2F;06&#x2F;部署自动化安装及cobber-Http-TFTP-PXE-kickstart无人职守批量安装精简版Linux系统&#x2F;</a>
   </li>
   <li class="post-copyright-license">
-    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.</li>
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank">&lt;i class=&quot;fa fa-fw fa-creative-commons&quot;&gt;&lt;&#x2F;i&gt;BY-NC-SA</a> unless stating additionally.</li>
 </ul>
 </div>
 
@@ -606,7 +606,7 @@
       
         
       
-        <a href="https://github.com/wudihechao" title="GitHub &rarr; https://github.com/wudihechao" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+        <a href="https://github.com/wudihechao" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;wudihechao" rel="noopener" target="_blank">&lt;i class=&quot;fa fa-fw fa-github&quot;&gt;&lt;&#x2F;i&gt;</a>
       </span>
     
       <span class="links-of-author-item">
@@ -615,7 +615,7 @@
       
         
       
-        <a href="mailto:wudihechao@163.com" title="E-Mail &rarr; mailto:wudihechao@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+        <a href="mailto:wudihechao@163.com" title="E-Mail &amp;rarr; mailto:wudihechao@163.com" rel="noopener" target="_blank">&lt;i class=&quot;fa fa-fw fa-envelope&quot;&gt;&lt;&#x2F;i&gt;</a>
       </span>
     
       <span class="links-of-author-item">
@@ -624,14 +624,14 @@
       
         
       
-        <a href="https://weibo.com/1050367191" title="Weibo &rarr; https://weibo.com/1050367191" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i></a>
+        <a href="https://weibo.com/1050367191" title="Weibo &amp;rarr; https:&#x2F;&#x2F;weibo.com&#x2F;1050367191" rel="noopener" target="_blank">&lt;i class=&quot;fa fa-fw fa-weibo&quot;&gt;&lt;&#x2F;i&gt;</a>
       </span>
     
   </div>
   <div class="cc-license motion-element" itemprop="license">
     
   
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank">&lt;img src=&quot;&#x2F;images&#x2F;cc-by-nc-sa.svg&quot; alt=&quot;Creative Commons&quot;&gt;</a>
   </div>
 
 
