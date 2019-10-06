@@ -1244,7 +1244,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #c962ff;
+  background: #ff34ff;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2606,10 +2606,24 @@ embed {
   }
 }
 .sidebar {
-  left: -320px;
+  right: -320px;
 }
 .sidebar.sidebar-active {
-  left: 0;
+  right: 0;
+}
+.sidebar-toggle,
+.back-to-top {
+  left: auto;
+  right: 30px;
+}
+@media (max-width: 991px) {
+  .sidebar-toggle,
+  .back-to-top {
+    right: 20px;
+  }
+}
+.book-mark-link {
+  left: 30px;
 }
 .sidebar {
   transition: all 0.4s;
@@ -2704,7 +2718,6 @@ h3,
 h4,
 h5,
 h6 {
-  border-left: 4px solid #a166ab;
   margin-left: -36px;
   padding-left: 32px;
 }
@@ -2768,7 +2781,7 @@ img.img-topic {
   padding-left: 5px;
   padding-top: 2.5px;
   padding-bottom: 2.5px;
-  background-color: rgba(0,0,0,0.75);
+  background-color: rgba(0,0,0,0.5);
   border-radius: 5px;
   box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.35);
 }
