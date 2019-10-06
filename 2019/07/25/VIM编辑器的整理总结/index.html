@@ -91,49 +91,6 @@
     isArchive: false
   };
 </script>
-// .headband {
-//     height: 1.5px;
-//     background-image: linear-gradient(90deg, #F79533 0%, #F37055 15%, #EF4E7B 30%, #A166AB 44%, #5073B8 58%, #1098AD 72%, #07B39B 86%, #6DBA82 100%);
-// }
-
-// 页面顶部行高
-.header {
-    line-height: 1.5;
-}
-
-// // 页面背景色
-// .container {
-//     background-color: rgba(0, 0, 0, 0.75);
-// }
-
-// 页面留白更改
-.header-inner {
-    padding-top: 35px;
-    padding-bottom: 0px;
-}
-.posts-expand {
-    padding-top: 50px;
-}
-.posts-expand .post-meta {
-    margin: 5px 0px 0px 0px;
-}
-.post-button {
-    margin-top: 0px;
-}
-// 顶栏宽度
-.container .header-inner {
-    width: 100%;
-}
-// 渐变菜带，CSS代码copy自https://githubuniverse.com
-// .site-meta {
-//     background-image: linear-gradient(90deg, #F79533 0%, #F37055 15%, #EF4E7B 30%, #A166AB 44%, #5073B8 58%, #1098AD 72%, #07B39B 86%, #6DBA82 100%);
-// }
-
-//缩略图指定宽度值显示。
-img.img-topic {
-    width: 75%;
-}
-
 
   <title>VIM编辑器的整理总结 | BOHC!</title>
   
@@ -418,6 +375,116 @@ img.img-topic {
   </span>
   
   
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              
+              <span>2.7k</span>
+            </span>
+          
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              
+              <span>2 mins.</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>&emsp;&emsp;VIM是linux中功能强大的文本编辑工具，因为功能强大，所以各种参数快捷键也很复杂，为方便记忆，特整理如下：</p><h3 id="vim命令基本格式与参数"><a href="#vim命令基本格式与参数" class="headerlink" title="vim命令基本格式与参数"></a>vim命令基本格式与参数</h3><p>  <code>vim [OPTION] FILE</code><br>  常见参数：<br>  +#  :打开文件后，让光标处于第#行，(+ 默认为行尾)。<br>  +/PATTERN  :打开文件后，让光标处于第一个被PATTERN匹配到的行的行首。<br>  -b file  :以二进制方式打开文件。<br>  -d file1/file2  :比较多个文件的不同。<br>  -m file  :以只读方式打开文件。<br>  -e file 或 ex file  :直接进入ex模式（扩展命令模式或叫做末行模式）。</p><a id="more"></a>
+
+<h3 id="vim的几种工作模式"><a href="#vim的几种工作模式" class="headerlink" title="vim的几种工作模式"></a>vim的几种工作模式</h3><p><img src="https://img-blog.csdnimg.cn/20190725151050805.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="VIM几种模式及切换"></p>
+<h3 id="command模式下的光标跳转："><a href="#command模式下的光标跳转：" class="headerlink" title="command模式下的光标跳转："></a>command模式下的光标跳转：</h3><p>字符间跳转：h 左；j下；k 上；l 右。<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;#command 可以执行#次命令。<br>单词间跳转：w：下一个单词的词首；<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;e：当前或下一个单词的词尾。<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;b：当前或前一个单词的词首。<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;#command 可以执行#次命令。<br>当前页跳转：H：跳转至页首。<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;M：跳转至页中间行。<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;L：跳转至页底。<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;zt：将光别所在行移到屏幕顶端；<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;zz：将光标所在行移到屏幕中间；<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;zb：将光标所在行移到屏幕低端。<br>行首行尾跳转：^:跳转至行首的第一个非空的字符；<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;0:跳转至行首；<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;$:跳转至行尾。<br>行间移动：#G :移动至第#行行首。（相当于扩展命令模式下 #）<br>&emsp;&emsp;&emsp;&emsp;&emsp;   G  ：移至最后一行行首。<br>&emsp;&emsp;&emsp;1G 或gg:移至第一行行首。<br>句间移动   :  ) : 下一句；<br>&emsp;&emsp;&emsp;&emsp;&emsp;( : 上一句。<br>段间移动   :  } : 下一段；<br>&emsp;&emsp;&emsp;&emsp;&emsp;{ : 上一段。<br>翻屏操作：Ctrl+f  向文件尾部翻一屏（向前翻屏）；<br>&emsp;&emsp;&emsp;&emsp;&emsp;Ctrl+b 向文件首部翻一屏（向后翻屏）；<br>&emsp;&emsp;&emsp;&emsp;&emsp;Ctrl+d 向文件尾部翻半屏（向下翻屏）；<br>&emsp;&emsp;&emsp;&emsp;&emsp;Ctrl+u 向文件尾部翻半屏（向上翻屏）；</p>
+<h3 id="command模式下的字符编辑："><a href="#command模式下的字符编辑：" class="headerlink" title="command模式下的字符编辑："></a>command模式下的字符编辑：</h3><p> <strong>x</strong>  ： 删除（可认为是剪切，并非真的删除）光标处的字符；<br><strong>#x</strong>：删除光标处起始的#个字符；<br><strong>p</strong> ：在光标所在处的后面插入储存的字符；<br><strong>xp</strong>：交换光标所在处的字符及后面字符的位置；<br><strong>~</strong> ： 转换大小写；<br><strong>J</strong> ： 删除当前行后的换行符；</p>
+<h5 id="替换命令"><a href="#替换命令" class="headerlink" title="替换命令"></a>替换命令</h5><figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">r ： 替换光标所在处的字符（只能替换一个字符）；</span><br><span class="line">R： 切换为<span class="built_in">REPLACE</span>模式，可持续替换多个字符。</span><br></pre></td></tr></table></figure>
+
+<h5 id="删除命令"><a href="#删除命令" class="headerlink" title="删除命令"></a>删除命令</h5><figure class="highlight ldif"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">d ： 删除命令（可结合光标跳转字符，实现范围删除）；</span></span><br><span class="line"><span class="attribute">d$</span>:  从光标所在处，删除到行尾；</span><br><span class="line"><span class="attribute">d^</span>:  从光标所在处，删除到非空行首；</span><br><span class="line"><span class="attribute">d0</span>:  从光标所在处，删除到行首；</span><br><span class="line"><span class="attribute">dw</span>:  从光标所在处，删除到下一个单词的词首；</span><br><span class="line"><span class="attribute">de</span>:  从光标所在处，删除到下一个单词的词尾；</span><br><span class="line"><span class="attribute">db</span>:  从光标所在处，删除到前一个单词的词首；</span><br><span class="line"><span class="attribute">dd</span>:  删除光标所在的行；</span><br><span class="line"><span class="comment">#dd：多行删除；</span></span><br><span class="line"><span class="attribute">D ： 从当前光标位置一直删除到行尾，等同于d$。</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="改变命令"><a href="#改变命令" class="headerlink" title="改变命令"></a>改变命令</h5><figure class="highlight ldif"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">c ： 改变命令（与d命令类似，执行删除后进入插入模式）；</span></span><br><span class="line"><span class="attribute">c$</span>:  从光标所在处，删除到行尾，并进入插入模式；</span><br><span class="line"><span class="attribute">c^</span>:  从光标所在处，删除到非空行首，并进入插入模式；</span><br><span class="line"><span class="attribute">c0</span>:  从光标所在处，删除到行首，并进入插入模式；</span><br><span class="line"><span class="attribute">cw</span>:  从光标所在处，删除到下一个单词的词首，并进入插入模式；</span><br><span class="line"><span class="attribute">ce</span>:  从光标所在处，删除到下一个单词的词尾，并进入插入模式；</span><br><span class="line"><span class="attribute">cb</span>:  从光标所在处，删除到前一个单词的词首，并进入插入模式；</span><br><span class="line"><span class="attribute">cc</span>:  删除光标所在的行，并进入插入模式；</span><br><span class="line"><span class="comment">#cc：多行删除，并进入插入模式；</span></span><br><span class="line"><span class="attribute">C ： 从当前光标位置一直删除到行尾，并进入插入模式，等同于c$。</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="复制命令"><a href="#复制命令" class="headerlink" title="复制命令"></a>复制命令</h5><figure class="highlight ldif"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">y ： 复制(yank)命令（可结合光标跳转字符，实现范围复制）；</span></span><br><span class="line"><span class="attribute">y$</span>:  从光标所在处，复制到行尾；</span><br><span class="line"><span class="attribute">y^</span>:  从光标所在处，复制到非空行首；</span><br><span class="line"><span class="attribute">y0</span>:  从光标所在处，复制到行首；</span><br><span class="line"><span class="attribute">yw</span>:  从光标所在处，复制到下一个单词的词首；</span><br><span class="line"><span class="attribute">ye</span>:  从光标所在处，复制到下一个单词的词尾；</span><br><span class="line"><span class="attribute">yb</span>:  从光标所在处，复制到前一个单词的词首；</span><br><span class="line"><span class="attribute">yy</span>:  复制光标所在的行；</span><br><span class="line"><span class="comment">#yy：多行复制； </span></span><br><span class="line"><span class="attribute">Y ： 从当前光标位置一直复制到行尾，等同于y$。</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>命令模式下常用用法汇总</th>
+<th>效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>#ihello[ESC]</td>
+<td>插入“hello”#次</td>
+</tr>
+<tr>
+<td>0y$</td>
+<td>复制本行</td>
+</tr>
+<tr>
+<td>gU</td>
+<td>变为大写</td>
+</tr>
+<tr>
+<td>gu</td>
+<td>变为小写</td>
+</tr>
+<tr>
+<td>di”</td>
+<td>当光标在” “之间时，则删除” “的内容</td>
+</tr>
+<tr>
+<td>yi(</td>
+<td>当光标在( )之间时，则复制( )的内容</td>
+</tr>
+<tr>
+<td>vi[</td>
+<td>当光标在[ ]之间时，则选中[ ]的内容</td>
+</tr>
+<tr>
+<td>dtx</td>
+<td>删除字符直到遇到光标之后的第一个x字符</td>
+</tr>
+<tr>
+<td>ytx</td>
+<td>复制字符直到遇到光标之后的第一个x字符</td>
+</tr>
+<tr>
+<td>##### 撤销更改命令</td>
+<td></td>
+</tr>
+<tr>
+<td><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">u</span> <span class="string">： 撤销命令（可撤销最近的更改）；</span></span><br><span class="line"><span class="comment">#u： 撤销多次之前的更改； </span></span><br><span class="line"><span class="attr">U</span> <span class="string">： 撤销光标落在这行后的所有此行的修改。</span></span><br><span class="line"><span class="meta">Ctrl+r</span>:<span class="string">重做最后的撤销，取消撤销。</span></span><br><span class="line"><span class="meta">.</span> <span class="string">： 重复前一个操作。</span></span><br><span class="line"><span class="comment">#.： 重复前一个操作#次。</span></span><br></pre></td></tr></table></figure></td>
+<td></td>
+</tr>
+</tbody></table>
+<p><img src="https://img-blog.csdnimg.cn/20190725164028382.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="vim寄存器"><br><img src="https://img-blog.csdnimg.cn/20190725164051873.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="vim标记和宏"><br><img src="https://img-blog.csdnimg.cn/20190725164631359.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="扩展命令模式下地址定界"><br><img src="https://img-blog.csdnimg.cn/20190725164716327.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="扩展命令模式下查找"><br><img src="https://img-blog.csdnimg.cn/2019072516485054.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="扩展命令模式模式下查找替换"></p>
+<h1 id="调整文本颜色"><a href="#调整文本颜色" class="headerlink" title="调整文本颜色"></a>调整文本颜色</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ctrl+v[[<span class="number">031</span>mCOLORCtrl+v[[<span class="number">0</span>m    输出红色COLOR</span><br></pre></td></tr></table></figure>
+
+<h1 id="取消高亮显示"><a href="#取消高亮显示" class="headerlink" title="取消高亮显示"></a>取消高亮显示</h1><figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> nohlsearch    取消搜索后的高亮显示</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20190725165202595.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="使用多个窗口"><br><img src="https://img-blog.csdnimg.cn/201907251652183.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="可视化模式"><br><img src="https://img-blog.csdnimg.cn/20190725165234682.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="编辑二进制文件"><br><img src="https://img-blog.csdnimg.cn/20190725165250630.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="定制vim工作特性"></p>
+
+    </div>
+
+    
+    
+    
+      
+
 language: zh-Hans
 st {
     margin-top: 60px;
@@ -533,116 +600,6 @@ img.img-topic {
     width: 100%;
 }
 
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              
-              <span>2.7k</span>
-            </span>
-          
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              
-              <span>2 mins.</span>
-            </span>
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-        <p>&emsp;&emsp;VIM是linux中功能强大的文本编辑工具，因为功能强大，所以各种参数快捷键也很复杂，为方便记忆，特整理如下：</p><h3 id="vim命令基本格式与参数"><a href="#vim命令基本格式与参数" class="headerlink" title="vim命令基本格式与参数"></a>vim命令基本格式与参数</h3><p>  <code>vim [OPTION] FILE</code><br>  常见参数：<br>  +#  :打开文件后，让光标处于第#行，(+ 默认为行尾)。<br>  +/PATTERN  :打开文件后，让光标处于第一个被PATTERN匹配到的行的行首。<br>  -b file  :以二进制方式打开文件。<br>  -d file1/file2  :比较多个文件的不同。<br>  -m file  :以只读方式打开文件。<br>  -e file 或 ex file  :直接进入ex模式（扩展命令模式或叫做末行模式）。</p><a id="more"></a>
-
-<h3 id="vim的几种工作模式"><a href="#vim的几种工作模式" class="headerlink" title="vim的几种工作模式"></a>vim的几种工作模式</h3><p><img src="https://img-blog.csdnimg.cn/20190725151050805.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="VIM几种模式及切换"></p>
-<h3 id="command模式下的光标跳转："><a href="#command模式下的光标跳转：" class="headerlink" title="command模式下的光标跳转："></a>command模式下的光标跳转：</h3><p>字符间跳转：h 左；j下；k 上；l 右。<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;#command 可以执行#次命令。<br>单词间跳转：w：下一个单词的词首；<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;e：当前或下一个单词的词尾。<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;b：当前或前一个单词的词首。<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;#command 可以执行#次命令。<br>当前页跳转：H：跳转至页首。<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;M：跳转至页中间行。<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;L：跳转至页底。<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;zt：将光别所在行移到屏幕顶端；<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;zz：将光标所在行移到屏幕中间；<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;zb：将光标所在行移到屏幕低端。<br>行首行尾跳转：^:跳转至行首的第一个非空的字符；<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;0:跳转至行首；<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;$:跳转至行尾。<br>行间移动：#G :移动至第#行行首。（相当于扩展命令模式下 #）<br>&emsp;&emsp;&emsp;&emsp;&emsp;   G  ：移至最后一行行首。<br>&emsp;&emsp;&emsp;1G 或gg:移至第一行行首。<br>句间移动   :  ) : 下一句；<br>&emsp;&emsp;&emsp;&emsp;&emsp;( : 上一句。<br>段间移动   :  } : 下一段；<br>&emsp;&emsp;&emsp;&emsp;&emsp;{ : 上一段。<br>翻屏操作：Ctrl+f  向文件尾部翻一屏（向前翻屏）；<br>&emsp;&emsp;&emsp;&emsp;&emsp;Ctrl+b 向文件首部翻一屏（向后翻屏）；<br>&emsp;&emsp;&emsp;&emsp;&emsp;Ctrl+d 向文件尾部翻半屏（向下翻屏）；<br>&emsp;&emsp;&emsp;&emsp;&emsp;Ctrl+u 向文件尾部翻半屏（向上翻屏）；</p>
-<h3 id="command模式下的字符编辑："><a href="#command模式下的字符编辑：" class="headerlink" title="command模式下的字符编辑："></a>command模式下的字符编辑：</h3><p> <strong>x</strong>  ： 删除（可认为是剪切，并非真的删除）光标处的字符；<br><strong>#x</strong>：删除光标处起始的#个字符；<br><strong>p</strong> ：在光标所在处的后面插入储存的字符；<br><strong>xp</strong>：交换光标所在处的字符及后面字符的位置；<br><strong>~</strong> ： 转换大小写；<br><strong>J</strong> ： 删除当前行后的换行符；</p>
-<h5 id="替换命令"><a href="#替换命令" class="headerlink" title="替换命令"></a>替换命令</h5><figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">r ： 替换光标所在处的字符（只能替换一个字符）；</span><br><span class="line">R： 切换为<span class="built_in">REPLACE</span>模式，可持续替换多个字符。</span><br></pre></td></tr></table></figure>
-
-<h5 id="删除命令"><a href="#删除命令" class="headerlink" title="删除命令"></a>删除命令</h5><figure class="highlight ldif"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">d ： 删除命令（可结合光标跳转字符，实现范围删除）；</span></span><br><span class="line"><span class="attribute">d$</span>:  从光标所在处，删除到行尾；</span><br><span class="line"><span class="attribute">d^</span>:  从光标所在处，删除到非空行首；</span><br><span class="line"><span class="attribute">d0</span>:  从光标所在处，删除到行首；</span><br><span class="line"><span class="attribute">dw</span>:  从光标所在处，删除到下一个单词的词首；</span><br><span class="line"><span class="attribute">de</span>:  从光标所在处，删除到下一个单词的词尾；</span><br><span class="line"><span class="attribute">db</span>:  从光标所在处，删除到前一个单词的词首；</span><br><span class="line"><span class="attribute">dd</span>:  删除光标所在的行；</span><br><span class="line"><span class="comment">#dd：多行删除；</span></span><br><span class="line"><span class="attribute">D ： 从当前光标位置一直删除到行尾，等同于d$。</span></span><br></pre></td></tr></table></figure>
-
-<h5 id="改变命令"><a href="#改变命令" class="headerlink" title="改变命令"></a>改变命令</h5><figure class="highlight ldif"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">c ： 改变命令（与d命令类似，执行删除后进入插入模式）；</span></span><br><span class="line"><span class="attribute">c$</span>:  从光标所在处，删除到行尾，并进入插入模式；</span><br><span class="line"><span class="attribute">c^</span>:  从光标所在处，删除到非空行首，并进入插入模式；</span><br><span class="line"><span class="attribute">c0</span>:  从光标所在处，删除到行首，并进入插入模式；</span><br><span class="line"><span class="attribute">cw</span>:  从光标所在处，删除到下一个单词的词首，并进入插入模式；</span><br><span class="line"><span class="attribute">ce</span>:  从光标所在处，删除到下一个单词的词尾，并进入插入模式；</span><br><span class="line"><span class="attribute">cb</span>:  从光标所在处，删除到前一个单词的词首，并进入插入模式；</span><br><span class="line"><span class="attribute">cc</span>:  删除光标所在的行，并进入插入模式；</span><br><span class="line"><span class="comment">#cc：多行删除，并进入插入模式；</span></span><br><span class="line"><span class="attribute">C ： 从当前光标位置一直删除到行尾，并进入插入模式，等同于c$。</span></span><br></pre></td></tr></table></figure>
-
-<h5 id="复制命令"><a href="#复制命令" class="headerlink" title="复制命令"></a>复制命令</h5><figure class="highlight ldif"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">y ： 复制(yank)命令（可结合光标跳转字符，实现范围复制）；</span></span><br><span class="line"><span class="attribute">y$</span>:  从光标所在处，复制到行尾；</span><br><span class="line"><span class="attribute">y^</span>:  从光标所在处，复制到非空行首；</span><br><span class="line"><span class="attribute">y0</span>:  从光标所在处，复制到行首；</span><br><span class="line"><span class="attribute">yw</span>:  从光标所在处，复制到下一个单词的词首；</span><br><span class="line"><span class="attribute">ye</span>:  从光标所在处，复制到下一个单词的词尾；</span><br><span class="line"><span class="attribute">yb</span>:  从光标所在处，复制到前一个单词的词首；</span><br><span class="line"><span class="attribute">yy</span>:  复制光标所在的行；</span><br><span class="line"><span class="comment">#yy：多行复制； </span></span><br><span class="line"><span class="attribute">Y ： 从当前光标位置一直复制到行尾，等同于y$。</span></span><br></pre></td></tr></table></figure>
-
-<table>
-<thead>
-<tr>
-<th>命令模式下常用用法汇总</th>
-<th>效果</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>#ihello[ESC]</td>
-<td>插入“hello”#次</td>
-</tr>
-<tr>
-<td>0y$</td>
-<td>复制本行</td>
-</tr>
-<tr>
-<td>gU</td>
-<td>变为大写</td>
-</tr>
-<tr>
-<td>gu</td>
-<td>变为小写</td>
-</tr>
-<tr>
-<td>di”</td>
-<td>当光标在” “之间时，则删除” “的内容</td>
-</tr>
-<tr>
-<td>yi(</td>
-<td>当光标在( )之间时，则复制( )的内容</td>
-</tr>
-<tr>
-<td>vi[</td>
-<td>当光标在[ ]之间时，则选中[ ]的内容</td>
-</tr>
-<tr>
-<td>dtx</td>
-<td>删除字符直到遇到光标之后的第一个x字符</td>
-</tr>
-<tr>
-<td>ytx</td>
-<td>复制字符直到遇到光标之后的第一个x字符</td>
-</tr>
-<tr>
-<td>##### 撤销更改命令</td>
-<td></td>
-</tr>
-<tr>
-<td><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">u</span> <span class="string">： 撤销命令（可撤销最近的更改）；</span></span><br><span class="line"><span class="comment">#u： 撤销多次之前的更改； </span></span><br><span class="line"><span class="attr">U</span> <span class="string">： 撤销光标落在这行后的所有此行的修改。</span></span><br><span class="line"><span class="meta">Ctrl+r</span>:<span class="string">重做最后的撤销，取消撤销。</span></span><br><span class="line"><span class="meta">.</span> <span class="string">： 重复前一个操作。</span></span><br><span class="line"><span class="comment">#.： 重复前一个操作#次。</span></span><br></pre></td></tr></table></figure></td>
-<td></td>
-</tr>
-</tbody></table>
-<p><img src="https://img-blog.csdnimg.cn/20190725164028382.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="vim寄存器"><br><img src="https://img-blog.csdnimg.cn/20190725164051873.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="vim标记和宏"><br><img src="https://img-blog.csdnimg.cn/20190725164631359.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="扩展命令模式下地址定界"><br><img src="https://img-blog.csdnimg.cn/20190725164716327.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="扩展命令模式下查找"><br><img src="https://img-blog.csdnimg.cn/2019072516485054.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="扩展命令模式模式下查找替换"></p>
-<h1 id="调整文本颜色"><a href="#调整文本颜色" class="headerlink" title="调整文本颜色"></a>调整文本颜色</h1><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ctrl+v[[<span class="number">031</span>mCOLORCtrl+v[[<span class="number">0</span>m    输出红色COLOR</span><br></pre></td></tr></table></figure>
-
-<h1 id="取消高亮显示"><a href="#取消高亮显示" class="headerlink" title="取消高亮显示"></a>取消高亮显示</h1><figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> nohlsearch    取消搜索后的高亮显示</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://img-blog.csdnimg.cn/20190725165202595.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="使用多个窗口"><br><img src="https://img-blog.csdnimg.cn/201907251652183.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="可视化模式"><br><img src="https://img-blog.csdnimg.cn/20190725165234682.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="编辑二进制文件"><br><img src="https://img-blog.csdnimg.cn/20190725165250630.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="定制vim工作特性"></p>
-
-    </div>
-
-    
-    
-    
-      
 
     <div style="text-align:center;color: #ccc;font-size:14px;">---------------- The End ----------------</div>
         
@@ -852,37 +809,6 @@ img.img-topic {
     <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
   </div>
 
-
-// 自定义的侧栏时间样式
-#days {
-    display: block;
-    color: rgb(7, 179, 155);
-    font-size: 13px;
-    margin-top: 15px;
-}
-// 右下角侧栏按钮样式
-.sidebar-toggle {
-    right: 10px;
-    bottom: 80px;
-    background-color: rgba(247, 149, 51, 0.75);
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.35);
-}
-.page-post-detail .sidebar-toggle-line {
-    background: rgb(7, 179, 155);
-}
-// 右下角返回顶部按钮样式
-.back-to-top {
-    line-height: 1.5;
-    right: 10px;
-    padding-right: 5px;
-    padding-left: 5px;
-    padding-top: 2.5px;
-    padding-bottom: 2.5px;
-    background-color: rgba(247, 149, 51, 0.75);
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.35);
-}
 
 // 侧栏
 .sidebar {
