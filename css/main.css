@@ -1244,7 +1244,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #4dd932;
+  background: #fff2e2;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2059,13 +2059,13 @@ article:last-child .post-eof {
   align-self: center;
   height: 30px;
 }
-reward-container {
+#reward-container {
   margin: 20px auto;
   padding: 10px 0;
   text-align: center;
   width: 90%;
 }
-reward-button {
+#reward-button {
   background: #f44336;
   border: 0;
   border-radius: 5px;
@@ -2082,25 +2082,25 @@ reward-button {
   text-transform: none;
   vertical-align: text-top;
 }
-reward-button span:hover {
+#reward-button span:hover {
   background: #f7877f;
 }
-qr {
+#qr {
   padding-top: 20px;
 }
-qr a {
+#qr a {
   border: 0;
 }
-qr img {
+#qr #  img {
   display: inline-block;
   margin: 0.8em 2em 0 2em;
   max-width: 100%;
   width: 180px;
 }
-qr p {
+#qr #  p {
   text-align: center;
 }
-qr > div:hover p {
+#qr > div:hover p {
   animation: roll 0.1s infinite linear;
 }
 @-moz-keyframes roll {
