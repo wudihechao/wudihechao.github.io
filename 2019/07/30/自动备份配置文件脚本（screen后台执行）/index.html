@@ -379,6 +379,52 @@
   </span>
   
   
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              
+              <span>1.4k</span>
+            </span>
+          
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              
+              <span>1 mins.</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>&emsp;&emsp;Linux中配置文件很多，各种需要设置的各种参数很多，有些自定义选项为了方便使用，都会自己修改使用，不过有时候配置文件或者用户参数属性不小心误删掉或者日后想找回当时的参数设置，没有备份肯定是不行的，所以闲暇之余自己写了一个专门备份/etc目录的脚本，以备不时之需。<br>&emsp;&emsp;下面贴代码~</p><a id="more"></a>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Backup is start!"</span>                        <span class="comment">#显示备份开始</span></span><br><span class="line"></span><br><span class="line">ScreenName=$<span class="string">"backup"</span>                           <span class="comment">#设置变量定义窗口名</span></span><br><span class="line">screen -dmS <span class="variable">$ScreenName</span>                        <span class="comment">#创建一个出于断开模式下的窗口并指定名字</span></span><br><span class="line">screen -S <span class="variable">$ScreenName</span> -p 0 -X stuff $<span class="string">"\cp -ap /etc /date/back`date +%F`"</span></span><br><span class="line">                                               <span class="comment">#向窗口传递命令备份/etc目录且命名为当前日期</span></span><br><span class="line">screen -S <span class="variable">$ScreenName</span> -p 0 -X stuff $<span class="string">'\n'</span>      <span class="comment">#执行命令，相当于回车</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"backing up，please wait~"</span>                <span class="comment">#等待备份完成，并提示等待</span></span><br><span class="line"></span><br><span class="line">screen -S <span class="variable">$ScreenName</span> -p 0 -X stuff $<span class="string">'exit'</span>    <span class="comment">#备份完后传递退出窗口命令</span></span><br><span class="line">screen -S <span class="variable">$ScreenName</span> -p 0 -X stuff $<span class="string">'\n'</span>      <span class="comment">#执行命令</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Backup is finshed!"</span>                      <span class="comment">#提示备份完成，脚本结束。</span></span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;之前写的脚本总是在创建完screen就停住了，之后的命令没法自动执行，必须Ctrl+A+D暂离screen之后才可以继续执行，不过这样就没法实现自动的初衷了。后来转换思路打算用screen -X的选项从原shell向screen中传递命令却总是失败，后来是参考了大神关于screen传递命令的方法（<a href="https://blog.csdn.net/u011606714/article/details/53471532" target="_blank" rel="noopener">原文链接</a>），才创建成功的。<br><img src="https://img-blog.csdnimg.cn/20190730112136602.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;此脚本原理大体如下：<br>&emsp;&emsp;脚本中执行screen命令，相当于打开了新的shell，而脚本上的命令都在老shell上，要让备份cp命令在screen上的新shell上跑起来，必须采用向新screen传递命令的方法，才可以实现后台备份，无需担心断网断电的问题。</p>
+<figure class="highlight plain"><figcaption><span>-S $ScreenName -p 0 -X stuff $'cp -ap</span><a href="/etc">/date/back`date +%F`'```</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&emsp;&emsp;这条命令单独执行，只会传递在screen中输出cp命令却并不执行，需要</span><br><span class="line">```screen -S $ScreenName -p 0 -X stuff $&apos;\n&apos;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;命令执行时cp命令才会生效。exit命令亦是如此。<br>&emsp;&emsp;各位大佬如果还有别的更好的方法可以实现功能，希望可以多多交流，不吝赐教。</p>
+
+    </div>
+
+    
+    
+    
+      
+
 language: zh-Hans
 st {
     margin-top: 60px;
@@ -494,52 +540,6 @@ img.img-topic {
     width: 100%;
 }
 
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              
-              <span>1.4k</span>
-            </span>
-          
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              
-              <span>1 mins.</span>
-            </span>
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-        <p>&emsp;&emsp;Linux中配置文件很多，各种需要设置的各种参数很多，有些自定义选项为了方便使用，都会自己修改使用，不过有时候配置文件或者用户参数属性不小心误删掉或者日后想找回当时的参数设置，没有备份肯定是不行的，所以闲暇之余自己写了一个专门备份/etc目录的脚本，以备不时之需。<br>&emsp;&emsp;下面贴代码~</p><a id="more"></a>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Backup is start!"</span>                        <span class="comment">#显示备份开始</span></span><br><span class="line"></span><br><span class="line">ScreenName=$<span class="string">"backup"</span>                           <span class="comment">#设置变量定义窗口名</span></span><br><span class="line">screen -dmS <span class="variable">$ScreenName</span>                        <span class="comment">#创建一个出于断开模式下的窗口并指定名字</span></span><br><span class="line">screen -S <span class="variable">$ScreenName</span> -p 0 -X stuff $<span class="string">"\cp -ap /etc /date/back`date +%F`"</span></span><br><span class="line">                                               <span class="comment">#向窗口传递命令备份/etc目录且命名为当前日期</span></span><br><span class="line">screen -S <span class="variable">$ScreenName</span> -p 0 -X stuff $<span class="string">'\n'</span>      <span class="comment">#执行命令，相当于回车</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"backing up，please wait~"</span>                <span class="comment">#等待备份完成，并提示等待</span></span><br><span class="line"></span><br><span class="line">screen -S <span class="variable">$ScreenName</span> -p 0 -X stuff $<span class="string">'exit'</span>    <span class="comment">#备份完后传递退出窗口命令</span></span><br><span class="line">screen -S <span class="variable">$ScreenName</span> -p 0 -X stuff $<span class="string">'\n'</span>      <span class="comment">#执行命令</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Backup is finshed!"</span>                      <span class="comment">#提示备份完成，脚本结束。</span></span><br></pre></td></tr></table></figure>
-
-<p>&emsp;&emsp;之前写的脚本总是在创建完screen就停住了，之后的命令没法自动执行，必须Ctrl+A+D暂离screen之后才可以继续执行，不过这样就没法实现自动的初衷了。后来转换思路打算用screen -X的选项从原shell向screen中传递命令却总是失败，后来是参考了大神关于screen传递命令的方法（<a href="https://blog.csdn.net/u011606714/article/details/53471532" target="_blank" rel="noopener">原文链接</a>），才创建成功的。<br><img src="https://img-blog.csdnimg.cn/20190730112136602.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;此脚本原理大体如下：<br>&emsp;&emsp;脚本中执行screen命令，相当于打开了新的shell，而脚本上的命令都在老shell上，要让备份cp命令在screen上的新shell上跑起来，必须采用向新screen传递命令的方法，才可以实现后台备份，无需担心断网断电的问题。</p>
-<figure class="highlight plain"><figcaption><span>-S $ScreenName -p 0 -X stuff $'cp -ap</span><a href="/etc">/date/back`date +%F`'```</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&emsp;&emsp;这条命令单独执行，只会传递在screen中输出cp命令却并不执行，需要</span><br><span class="line">```screen -S $ScreenName -p 0 -X stuff $&apos;\n&apos;</span><br></pre></td></tr></table></figure>
-
-<p>&emsp;&emsp;命令执行时cp命令才会生效。exit命令亦是如此。<br>&emsp;&emsp;各位大佬如果还有别的更好的方法可以实现功能，希望可以多多交流，不吝赐教。</p>
-
-    </div>
-
-    
-    
-    
-      
 
     <div style="text-align:center;color: #ccc;font-size:14px;">---------------- The End ----------------</div>
         

@@ -380,6 +380,70 @@
   </span>
   
   
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              
+              <span>5.6k</span>
+            </span>
+          
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              
+              <span>5 mins.</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>&emsp;&emsp;MariaDB数据库管理系统是MySQL的一个分支，主要由开源社区在维护，采用GPL授权许可 MariaDB的目的是完全兼容MySQL，包括API和命令行，使之能轻松成为MySQL的代替品。在存储引擎方面，使用XtraDB（英语：XtraDB）来代替MySQL的InnoDB。 MariaDB由MySQL的创始人Michael Widenius（英语：Michael Widenius）主导开发，他早前曾以10亿美元的价格，将自己创建的公司MySQL AB卖给了SUN，此后，随着SUN被甲骨文收购，MySQL的所有权也落入Oracle的手中。MariaDB名称来自Michael Widenius的女儿Maria的名字。<br>&emsp;&emsp;MariaDB基于事务的Maria存储引擎，替换了MySQL的MyISAM存储引擎，它使用了Percona的 XtraDB，InnoDB的变体，分支的开发者希望提供访问即将到来的MySQL 5.4 InnoDB性能。这个版本还包括了 PrimeBase XT (PBXT) 和 FederatedX存储引擎。<br>&emsp;&emsp;开发这个分支的原因之一是：甲骨文公司收购了MySQL后，有将MySQL闭源的潜在风险，因此社区采用分支的方式来避开这个风险。 过去一年中，大型互联网用户以及Linux发行商纷纷抛弃MySQL，转投MariaDB阵营。MariaDB是目前最受关注的MySQL数据库衍生版，也被视为开源数据库MySQL的替代品。<br>&emsp;&emsp;MariaDB虽然被视为MySQL数据库的替代品，但它在扩展功能、存储引擎以及一些新的功能改进方面都强过MySQL。而且从MySQL迁移到MariaDB也是非常简单的：<br>&emsp;&emsp;1、数据和表定义文件（.frm）是二进制兼容的<br>&emsp;&emsp;2、所有客户端API、协议和结构都是完全一致的<br>&emsp;&emsp;3、所有文件名、二进制、路径、端口等都是一致的<br>&emsp;&emsp;4、所有的MySQL连接器，比如PHP、Perl、Python、Java、.NET、MyODBC、Ruby以及MySQL C connector等在MariaDB中都保持不变<br>&emsp;&emsp;5、mysql-client包在MariaDB服务器中也能够正常运行<br>&emsp;&emsp;6、共享的客户端库与MySQL也是二进制兼容的<br>也就是说，在大多数情况下，你完全可以卸载MySQL然后安装MariaDB，然后就可以像之前一样正常的运行。(以上摘自百度百科)<br>&emsp;&emsp;作为目前比较热门的开源数据库软件，一般常见有三种安装方式：yum或rpm包安装、二进制安装以及源码包安装，包安装过于简单，也很难符合一般企业定制需要，故不做叙述，本文详细讲述后两种安装方式。</p><a id="more"></a>
+<h4 id="二进制安装"><a href="#二进制安装" class="headerlink" title="二进制安装"></a>二进制安装</h4><p>1.先<strong>创建mysql用户及mysql组</strong>，并制定家目录为/data/mysql<br>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>-r -g 306 mysql   #指定属组gid为306````</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&emsp;&emsp;````useradd -r -g 306 -u 306 -d /data/mysql mysql    #指定属主uid为306，家目录为/data/mysql</span><br></pre></td></tr></table></figure></p>
+<p>2.<strong>准备数据目录(mysq用户家目录)</strong>,并修正权限<br>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>/data/mysql;chown mysql:mysql</span><a href="/data/mysql````">link</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">3.去官网下载mariadb 二进制tar包（链接是CentOS7X86_64的10.4.8稳定版） </span><br><span class="line">&emsp;&emsp;http://ftp.igh.cnrs.fr/pub/mariadb//mariadb-10.4.8/bintar-linux-systemd-x86_64/mariadb-10.4.8-linux-systemd-x86_64.tar.gz</span><br><span class="line">4.**解压tar包**指/usr/local目录下,递归改属主为root、属组为mysql，并在/usr/local目录下创建一个名为mysql的软链接指向解压好的mariadb目录</span><br><span class="line">&emsp;&emsp;````tar xzf mariadb-10.4.8-linux-systemd-x86_64.tar.gz -c /usr/local</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>/usr/local````</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&emsp;&emsp;````ln -sv mariadb-10.4.8-linux-systemd-x86_64 mysql</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>-R root:mysql</span><a href="/usr/local/mysql/````">link</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">5.**创建配置文件**,并修改</span><br><span class="line">&emsp;&emsp;````mkdir /etc/mysql/</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>/etc/my.cnf</span><a href="/etc/mysql/my.cnf````">link</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&emsp;&emsp;````sed -ri &apos;/datadir=\//s@(.*=).*@\1\/data\/mysql@&apos; /etc/mysql/my.cnf    #修改配置文件，指定数据库储存路径</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>-ri '/datadir/a\innodb_file_per-table</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">6.**创建数据库文件**</span><br><span class="line">&emsp;&emsp;````/usr/local/scripts/mysql_install_db --datadir=/data/mysql --user=mysql</span><br></pre></td></tr></table></figure></p>
+<p>7.<strong>创建服务脚本并启动服务</strong><br>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>/usr/local/support-files/mysql.server</span><a href="/etc/rc.d/init.d/mysqld````">link</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&emsp;&emsp;````chkconfig --add mysqld</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>mysqld start````</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">8.**增加PATH环境变量**路径,并生效。</span><br><span class="line">&emsp;&emsp;````echo &apos;PATH=/usr/local/mysql/bin:$PATH&apos; >/etc/profile.d/mysql.sh</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>/etc/profile.d/mysql.sh````</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">9.**运行安全初始化脚本**，设置root口令、禁用匿名登陆、禁用远程主机登陆、删除test数据库，并立即生效(根据提示操作)。</span><br><span class="line">&emsp;&emsp;````ln -s /var/lib/mysql/mysql.sock /tmp</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&emsp;&emsp;至此，二进制安装mariadb数据库就完成了~</span><br><span class="line"></span><br><span class="line">#### 源码编译安装</span><br><span class="line">1.先**创建mysql用户及mysql组**，并制定家目录为/data/mysql</span><br><span class="line">&emsp;&emsp;````groupadd -r -g 306 mysql   #指定属组gid为306</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>-r -g 306 -u 306 -d</span><a href="/data/mysql">mysql    #指定属主uid为306，家目录为/data/mysql````</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2.**准备数据目录(mysq用户家目录)**,并修正权限</span><br><span class="line">&emsp;&emsp;````mkdir /data/mysql;chown mysql:mysql /data/mysql</span><br></pre></td></tr></table></figure></p>
+<p>3.去官网<strong>下载mariadb 源码tar包</strong>（链接是CentOS7X86_64的10.4.8稳定版）<br>&emsp;&emsp;<a href="http://ftp.igh.cnrs.fr/pub/mariadb//mariadb-10.4.8/source/mariadb-10.4.8.tar.gz" target="_blank" rel="noopener">http://ftp.igh.cnrs.fr/pub/mariadb//mariadb-10.4.8/source/mariadb-10.4.8.tar.gz</a><br>4.<strong>解压源码包</strong>，并进入源码包目录<br>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>xvf mariadb-10.4.8.tar.gz````</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&emsp;&emsp;````cd mariadb-10.4.8/l</span><br></pre></td></tr></table></figure></p>
+<p>5.<strong>CMAKE编译</strong>源码包<br>&emsp;&emsp;需要的依赖包有cmake openssldevel ncurses-devel bison bison-devel zlib-devel libcurl-devel libarchive-devel boostdevel gcc gcc-c++   gnutls-devel libxml2-devel  libevent-devel libaio-devel ，一口气yum装上。<br>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>install cmake openssldevel ncurses-devel bison bison-devel zlib-devel libcurl-devel libarchive-devel boostdevel gcc gcc-c++   gnutls-devel libxml2-devel  libevent-devel libaio-devel ````</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">然后编译</span><br></pre></td></tr></table></figure></p>
+<p>cmake . <br>-DCMAKE_INSTALL_PREFIX=/data/apps/mysql <br>-DMYSQL_DATADIR=/data/mysql/ <br>-DSYSCONFDIR=/etc/ <br>-DMYSQL_USER=mysql <br>-DWITH_INNOBASE_STORAGE_ENGINE=1 <br>-DWITH_ARCHIVE_STORAGE_ENGINE=1 <br>-DWITH_BLACKHOLE_STORAGE_ENGINE=1 <br>-DWITH_PARTITION_STORAGE_ENGINE=1 <br>-DWITHOUT_MROONGA_STORAGE_ENGINE=1 <br>-DWITH_DEBUG=0 <br>-DWITH_READLINE=1 <br>-DWITH_SSL=system <br>-DWITH_ZLIB=system <br>-DWITH_LIBWRAP=0 <br>-DENABLED_LOCAL_INFILE=1 <br>-DMYSQL_UNIX_ADDR=/data/mysql/mysql.sock <br>-DDEFAULT_CHARSET=utf8 <br>-DDEFAULT_COLLATION=utf8_general_ci</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">6.</span>**安装**</span><br><span class="line">&emsp;&emsp;<span class="string">``</span><span class="string">``</span><span class="built_in">make</span> -j <span class="number">4</span> && <span class="built_in">make</span> install</span><br></pre></td></tr></table></figure>
+
+<p>7.<strong>创建配置文件</strong>,并修改<br>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>/etc/mysql/````</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&emsp;&emsp;````cp /etc/my.cnf /etc/mysql/my.cnf</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>-ri '/datadir</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&emsp;&emsp;````sed -ri &apos;/datadir/a\innodb_file_per-table=on\nskip_name_resolve=on&apos; /etc/mysql/my.cnf     #设置每个表独立文件 和 禁用主机名解析</span><br></pre></td></tr></table></figure></p>
+<p>8.<strong>创建数据库文件</strong><br>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>-R root:mysql</span><a href="/data/apps/mysql/````">link</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&emsp;&emsp;````/usr/local/scripts/mysql_install_db --datadir=/data/mysql --user=mysql</span><br></pre></td></tr></table></figure></p>
+<p>9.<strong>创建服务脚本并启动服务</strong><br>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>/data/apps/mysql/support-files/mysql.server</span><a href="/etc/rc.d/init.d/mysqld````">link</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&emsp;&emsp;````chkconfig --add mysqld</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>mysqld start````</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">10.**增加PATH环境变量**路径,并生效。</span><br><span class="line">&emsp;&emsp;````echo &apos;PATH=/data/apps/mysql/bin:$PATH&apos; >/etc/profile.d/mysql.sh</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>/etc/profile.d/mysql.sh````</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">11.**运行安全初始化脚本**，设置root口令、禁用匿名登陆、禁用远程主机登陆、删除test数据库，并立即生效(根据提示操作)。</span><br><span class="line">&emsp;&emsp;````/data/apps/mysql/bin/mysql_secure_installation</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://img-blog.csdnimg.cn/20190915210957797.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;报错：<strong>Can’t connect to local MySQL server through socket ‘/data/mysql/mysql.sock’ (2)</strong><br>&emsp;&emsp;用ll看了下/data/mysql/mysql.sock确实不存在，而我记得我配置文件/etc/mysql/my.cnf中定义的sosck是在   下<br><img src="https://img-blog.csdnimg.cn/20190915211426790.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;那就把/var/lib/mysql/mysql.sock文件创建一个软链接至/data/mysql/目录<br>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>-s</span><a href="/var/lib/mysql/mysql.sock">/data/mysql/````</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&emsp;&emsp;再次尝试安全初始化脚本。</span><br><span class="line">&emsp;&emsp;````/data/apps/mysql/bin/mysql_secure_installation</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;果然成功了。<br>&emsp;&emsp;至此，源码编译安装mariadb数据库就完成了~</p>
+
+    </div>
+
+    
+    
+    
+      
+
 language: zh-Hans
 st {
     margin-top: 60px;
@@ -495,70 +559,6 @@ img.img-topic {
     width: 100%;
 }
 
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              
-              <span>5.6k</span>
-            </span>
-          
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              
-              <span>5 mins.</span>
-            </span>
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-        <p>&emsp;&emsp;MariaDB数据库管理系统是MySQL的一个分支，主要由开源社区在维护，采用GPL授权许可 MariaDB的目的是完全兼容MySQL，包括API和命令行，使之能轻松成为MySQL的代替品。在存储引擎方面，使用XtraDB（英语：XtraDB）来代替MySQL的InnoDB。 MariaDB由MySQL的创始人Michael Widenius（英语：Michael Widenius）主导开发，他早前曾以10亿美元的价格，将自己创建的公司MySQL AB卖给了SUN，此后，随着SUN被甲骨文收购，MySQL的所有权也落入Oracle的手中。MariaDB名称来自Michael Widenius的女儿Maria的名字。<br>&emsp;&emsp;MariaDB基于事务的Maria存储引擎，替换了MySQL的MyISAM存储引擎，它使用了Percona的 XtraDB，InnoDB的变体，分支的开发者希望提供访问即将到来的MySQL 5.4 InnoDB性能。这个版本还包括了 PrimeBase XT (PBXT) 和 FederatedX存储引擎。<br>&emsp;&emsp;开发这个分支的原因之一是：甲骨文公司收购了MySQL后，有将MySQL闭源的潜在风险，因此社区采用分支的方式来避开这个风险。 过去一年中，大型互联网用户以及Linux发行商纷纷抛弃MySQL，转投MariaDB阵营。MariaDB是目前最受关注的MySQL数据库衍生版，也被视为开源数据库MySQL的替代品。<br>&emsp;&emsp;MariaDB虽然被视为MySQL数据库的替代品，但它在扩展功能、存储引擎以及一些新的功能改进方面都强过MySQL。而且从MySQL迁移到MariaDB也是非常简单的：<br>&emsp;&emsp;1、数据和表定义文件（.frm）是二进制兼容的<br>&emsp;&emsp;2、所有客户端API、协议和结构都是完全一致的<br>&emsp;&emsp;3、所有文件名、二进制、路径、端口等都是一致的<br>&emsp;&emsp;4、所有的MySQL连接器，比如PHP、Perl、Python、Java、.NET、MyODBC、Ruby以及MySQL C connector等在MariaDB中都保持不变<br>&emsp;&emsp;5、mysql-client包在MariaDB服务器中也能够正常运行<br>&emsp;&emsp;6、共享的客户端库与MySQL也是二进制兼容的<br>也就是说，在大多数情况下，你完全可以卸载MySQL然后安装MariaDB，然后就可以像之前一样正常的运行。(以上摘自百度百科)<br>&emsp;&emsp;作为目前比较热门的开源数据库软件，一般常见有三种安装方式：yum或rpm包安装、二进制安装以及源码包安装，包安装过于简单，也很难符合一般企业定制需要，故不做叙述，本文详细讲述后两种安装方式。</p><a id="more"></a>
-<h4 id="二进制安装"><a href="#二进制安装" class="headerlink" title="二进制安装"></a>二进制安装</h4><p>1.先<strong>创建mysql用户及mysql组</strong>，并制定家目录为/data/mysql<br>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>-r -g 306 mysql   #指定属组gid为306````</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&emsp;&emsp;````useradd -r -g 306 -u 306 -d /data/mysql mysql    #指定属主uid为306，家目录为/data/mysql</span><br></pre></td></tr></table></figure></p>
-<p>2.<strong>准备数据目录(mysq用户家目录)</strong>,并修正权限<br>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>/data/mysql;chown mysql:mysql</span><a href="/data/mysql````">link</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">3.去官网下载mariadb 二进制tar包（链接是CentOS7X86_64的10.4.8稳定版） </span><br><span class="line">&emsp;&emsp;http://ftp.igh.cnrs.fr/pub/mariadb//mariadb-10.4.8/bintar-linux-systemd-x86_64/mariadb-10.4.8-linux-systemd-x86_64.tar.gz</span><br><span class="line">4.**解压tar包**指/usr/local目录下,递归改属主为root、属组为mysql，并在/usr/local目录下创建一个名为mysql的软链接指向解压好的mariadb目录</span><br><span class="line">&emsp;&emsp;````tar xzf mariadb-10.4.8-linux-systemd-x86_64.tar.gz -c /usr/local</span><br></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>/usr/local````</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&emsp;&emsp;````ln -sv mariadb-10.4.8-linux-systemd-x86_64 mysql</span><br></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>-R root:mysql</span><a href="/usr/local/mysql/````">link</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">5.**创建配置文件**,并修改</span><br><span class="line">&emsp;&emsp;````mkdir /etc/mysql/</span><br></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>/etc/my.cnf</span><a href="/etc/mysql/my.cnf````">link</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&emsp;&emsp;````sed -ri &apos;/datadir=\//s@(.*=).*@\1\/data\/mysql@&apos; /etc/mysql/my.cnf    #修改配置文件，指定数据库储存路径</span><br></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>-ri '/datadir/a\innodb_file_per-table</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">6.**创建数据库文件**</span><br><span class="line">&emsp;&emsp;````/usr/local/scripts/mysql_install_db --datadir=/data/mysql --user=mysql</span><br></pre></td></tr></table></figure></p>
-<p>7.<strong>创建服务脚本并启动服务</strong><br>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>/usr/local/support-files/mysql.server</span><a href="/etc/rc.d/init.d/mysqld````">link</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&emsp;&emsp;````chkconfig --add mysqld</span><br></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>mysqld start````</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">8.**增加PATH环境变量**路径,并生效。</span><br><span class="line">&emsp;&emsp;````echo &apos;PATH=/usr/local/mysql/bin:$PATH&apos; >/etc/profile.d/mysql.sh</span><br></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>/etc/profile.d/mysql.sh````</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">9.**运行安全初始化脚本**，设置root口令、禁用匿名登陆、禁用远程主机登陆、删除test数据库，并立即生效(根据提示操作)。</span><br><span class="line">&emsp;&emsp;````ln -s /var/lib/mysql/mysql.sock /tmp</span><br></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&emsp;&emsp;至此，二进制安装mariadb数据库就完成了~</span><br><span class="line"></span><br><span class="line">#### 源码编译安装</span><br><span class="line">1.先**创建mysql用户及mysql组**，并制定家目录为/data/mysql</span><br><span class="line">&emsp;&emsp;````groupadd -r -g 306 mysql   #指定属组gid为306</span><br></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>-r -g 306 -u 306 -d</span><a href="/data/mysql">mysql    #指定属主uid为306，家目录为/data/mysql````</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2.**准备数据目录(mysq用户家目录)**,并修正权限</span><br><span class="line">&emsp;&emsp;````mkdir /data/mysql;chown mysql:mysql /data/mysql</span><br></pre></td></tr></table></figure></p>
-<p>3.去官网<strong>下载mariadb 源码tar包</strong>（链接是CentOS7X86_64的10.4.8稳定版）<br>&emsp;&emsp;<a href="http://ftp.igh.cnrs.fr/pub/mariadb//mariadb-10.4.8/source/mariadb-10.4.8.tar.gz" target="_blank" rel="noopener">http://ftp.igh.cnrs.fr/pub/mariadb//mariadb-10.4.8/source/mariadb-10.4.8.tar.gz</a><br>4.<strong>解压源码包</strong>，并进入源码包目录<br>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>xvf mariadb-10.4.8.tar.gz````</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&emsp;&emsp;````cd mariadb-10.4.8/l</span><br></pre></td></tr></table></figure></p>
-<p>5.<strong>CMAKE编译</strong>源码包<br>&emsp;&emsp;需要的依赖包有cmake openssldevel ncurses-devel bison bison-devel zlib-devel libcurl-devel libarchive-devel boostdevel gcc gcc-c++   gnutls-devel libxml2-devel  libevent-devel libaio-devel ，一口气yum装上。<br>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>install cmake openssldevel ncurses-devel bison bison-devel zlib-devel libcurl-devel libarchive-devel boostdevel gcc gcc-c++   gnutls-devel libxml2-devel  libevent-devel libaio-devel ````</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">然后编译</span><br></pre></td></tr></table></figure></p>
-<p>cmake . <br>-DCMAKE_INSTALL_PREFIX=/data/apps/mysql <br>-DMYSQL_DATADIR=/data/mysql/ <br>-DSYSCONFDIR=/etc/ <br>-DMYSQL_USER=mysql <br>-DWITH_INNOBASE_STORAGE_ENGINE=1 <br>-DWITH_ARCHIVE_STORAGE_ENGINE=1 <br>-DWITH_BLACKHOLE_STORAGE_ENGINE=1 <br>-DWITH_PARTITION_STORAGE_ENGINE=1 <br>-DWITHOUT_MROONGA_STORAGE_ENGINE=1 <br>-DWITH_DEBUG=0 <br>-DWITH_READLINE=1 <br>-DWITH_SSL=system <br>-DWITH_ZLIB=system <br>-DWITH_LIBWRAP=0 <br>-DENABLED_LOCAL_INFILE=1 <br>-DMYSQL_UNIX_ADDR=/data/mysql/mysql.sock <br>-DDEFAULT_CHARSET=utf8 <br>-DDEFAULT_COLLATION=utf8_general_ci</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">6.</span>**安装**</span><br><span class="line">&emsp;&emsp;<span class="string">``</span><span class="string">``</span><span class="built_in">make</span> -j <span class="number">4</span> && <span class="built_in">make</span> install</span><br></pre></td></tr></table></figure>
-
-<p>7.<strong>创建配置文件</strong>,并修改<br>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>/etc/mysql/````</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&emsp;&emsp;````cp /etc/my.cnf /etc/mysql/my.cnf</span><br></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>-ri '/datadir</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&emsp;&emsp;````sed -ri &apos;/datadir/a\innodb_file_per-table=on\nskip_name_resolve=on&apos; /etc/mysql/my.cnf     #设置每个表独立文件 和 禁用主机名解析</span><br></pre></td></tr></table></figure></p>
-<p>8.<strong>创建数据库文件</strong><br>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>-R root:mysql</span><a href="/data/apps/mysql/````">link</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&emsp;&emsp;````/usr/local/scripts/mysql_install_db --datadir=/data/mysql --user=mysql</span><br></pre></td></tr></table></figure></p>
-<p>9.<strong>创建服务脚本并启动服务</strong><br>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>/data/apps/mysql/support-files/mysql.server</span><a href="/etc/rc.d/init.d/mysqld````">link</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&emsp;&emsp;````chkconfig --add mysqld</span><br></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>mysqld start````</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">10.**增加PATH环境变量**路径,并生效。</span><br><span class="line">&emsp;&emsp;````echo &apos;PATH=/data/apps/mysql/bin:$PATH&apos; >/etc/profile.d/mysql.sh</span><br></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>/etc/profile.d/mysql.sh````</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">11.**运行安全初始化脚本**，设置root口令、禁用匿名登陆、禁用远程主机登陆、删除test数据库，并立即生效(根据提示操作)。</span><br><span class="line">&emsp;&emsp;````/data/apps/mysql/bin/mysql_secure_installation</span><br></pre></td></tr></table></figure></p>
-<p><img src="https://img-blog.csdnimg.cn/20190915210957797.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;报错：<strong>Can’t connect to local MySQL server through socket ‘/data/mysql/mysql.sock’ (2)</strong><br>&emsp;&emsp;用ll看了下/data/mysql/mysql.sock确实不存在，而我记得我配置文件/etc/mysql/my.cnf中定义的sosck是在   下<br><img src="https://img-blog.csdnimg.cn/20190915211426790.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;那就把/var/lib/mysql/mysql.sock文件创建一个软链接至/data/mysql/目录<br>&emsp;&emsp;<figure class="highlight plain"><figcaption><span>-s</span><a href="/var/lib/mysql/mysql.sock">/data/mysql/````</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&emsp;&emsp;再次尝试安全初始化脚本。</span><br><span class="line">&emsp;&emsp;````/data/apps/mysql/bin/mysql_secure_installation</span><br></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;果然成功了。<br>&emsp;&emsp;至此，源码编译安装mariadb数据库就完成了~</p>
-
-    </div>
-
-    
-    
-    
-      
 
     <div style="text-align:center;color: #ccc;font-size:14px;">---------------- The End ----------------</div>
         
