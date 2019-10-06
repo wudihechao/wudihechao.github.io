@@ -7,9 +7,9 @@
       <tags>
         <tag>多实例</tag>
         <tag>mysql</tag>
+        <tag>mariadb</tag>
         <tag>MHA</tag>
         <tag>高可用</tag>
-        <tag>mariadb</tag>
       </tags>
   </entry>
   <entry>
