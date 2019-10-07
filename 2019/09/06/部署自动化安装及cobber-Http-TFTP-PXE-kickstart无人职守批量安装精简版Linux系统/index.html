@@ -428,7 +428,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>&emsp;&emsp;为了简化每台服务器的系统的装机过程和统一服务器配置，可以采用一键自动化安装系统的方式，实现新机器接上网线开机便可批量安装相同配置的系统，便于以后统一管理。<br>&emsp;&emsp;想要实现自动化安装系统，<br>&emsp;&emsp;1.搭建dhcp服务器，给新机器网卡分配IP地址，并引导机器去搭建好的tftp站点下载引导程序及内核文件；<br>&emsp;&emsp;2.搭建tftp服务器，提供引导程序及内核文件；复制内核文件至服务器目录；<br>&emsp;&emsp;3.搭建http服务器，提供应答kickstart文件、系统安装包程序的下载；挂载光盘或拷贝安装包至目录文件；<br>&emsp;&emsp;4生成ks应答kickstart文件（放置于ftp服务器中）；<br>&emsp;&emsp;5.复制光盘中的/cdrom/isolinux/isolinux.cfg文件至目录pxelinux.cfg/，改名为pxelinux.cfg/fault文件，即为安装菜单（之后目录pxelinux.cfg/整体放入tftp服务器中）。</p>
+        <p>&emsp;&emsp;为了简化每台服务器的系统的装机过程和统一服务器配置，可以采用一键自动化安装系统的方式，实现新机器接上网线开机便可批量安装相同配置的系统，便于以后统一管理。<br>&emsp;&emsp;想要实现自动化安装系统，<br>&emsp;&emsp;1.搭建dhcp服务器，给新机器网卡分配IP地址，并引导机器去搭建好的tftp站点下载引导程序及内核文件；<br>&emsp;&emsp;2.搭建tftp服务器，提供引导程序及内核文件；复制内核文件至服务器目录；<br>&emsp;&emsp;3.搭建http服务器，提供应答kickstart文件、系统安装包程序的下载；挂载光盘或拷贝安装包至目录文件；<br>&emsp;&emsp;4生成ks应答kickstart文件（放置于ftp服务器中）；<br>&emsp;&emsp;5.复制光盘中的/cdrom/isolinux/isolinux.cfg文件至目录pxelinux.cfg/，改名为pxelinux.cfg/fault文件，即为安装菜单（之后目录pxelinux.cfg/整体放入tftp服务器中）。</p><a id="more"></a>
 <p>&emsp;&emsp;<br><strong>演示环境：CentOS7 Kernel Version:    3.10.0-957.el7.x86_64 本机IP:192.168.32.7</strong></p>
 <h2 id="1-配置DHCP服务器"><a href="#1-配置DHCP服务器" class="headerlink" title="1. 配置DHCP服务器"></a>1. 配置DHCP服务器</h2><p>&emsp;&emsp;1.首先安装dhcp服务。</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum <span class="keyword">install</span> dhcp</span><br></pre></td></tr></table></figure>
