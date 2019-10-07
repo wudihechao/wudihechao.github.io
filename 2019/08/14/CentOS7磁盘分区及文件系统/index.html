@@ -56,13 +56,13 @@
   };
 </script>
 
-  <meta name="description" content="&emsp;&emsp;一般来说，硬盘上的空间，想要被我们利用，都要经过几个步骤： 1设备识别 2磁盘分区 3创建文件系统（并标记文件系统） 4挂载新的文件系统 5在/etc/fstab文件中创建新条目&emsp;">
+  <meta name="description" content="&emsp;&emsp;一般来说，硬盘上的空间，想要被我们利用，都要经过几个步骤：  1设备识别 2磁盘分区 3创建文件系统（并标记文件系统） 4挂载新的文件系统 5在/etc/fstab文件中创建新条目&emsp;  &emsp;&emsp;只有当设备被挂载到文件系统中，才可以被我们访问且使用。&emsp; 1 设备识别 新插入硬盘设备，没法被系统立马识别到，需要手动扫描，才可以发现并识别新设备">
 <meta name="keywords" content="linux,filesystem">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CentOS7磁盘分区及文件系统">
 <meta property="og:url" content="http://hewanyue.com/2019/08/14/CentOS7磁盘分区及文件系统/index.html">
 <meta property="og:site_name" content="BOHC!">
-<meta property="og:description" content="&emsp;&emsp;一般来说，硬盘上的空间，想要被我们利用，都要经过几个步骤： 1设备识别 2磁盘分区 3创建文件系统（并标记文件系统） 4挂载新的文件系统 5在/etc/fstab文件中创建新条目&emsp;">
+<meta property="og:description" content="&emsp;&emsp;一般来说，硬盘上的空间，想要被我们利用，都要经过几个步骤：  1设备识别 2磁盘分区 3创建文件系统（并标记文件系统） 4挂载新的文件系统 5在/etc/fstab文件中创建新条目&emsp;  &emsp;&emsp;只有当设备被挂载到文件系统中，才可以被我们访问且使用。&emsp; 1 设备识别 新插入硬盘设备，没法被系统立马识别到，需要手动扫描，才可以发现并识别新设备">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190815093309132.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190815095231719.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
@@ -70,7 +70,7 @@
 <meta property="og:updated_time" content="2019-10-07T02:48:13.479Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CentOS7磁盘分区及文件系统">
-<meta name="twitter:description" content="&emsp;&emsp;一般来说，硬盘上的空间，想要被我们利用，都要经过几个步骤： 1设备识别 2磁盘分区 3创建文件系统（并标记文件系统） 4挂载新的文件系统 5在/etc/fstab文件中创建新条目&emsp;">
+<meta name="twitter:description" content="&emsp;&emsp;一般来说，硬盘上的空间，想要被我们利用，都要经过几个步骤：  1设备识别 2磁盘分区 3创建文件系统（并标记文件系统） 4挂载新的文件系统 5在/etc/fstab文件中创建新条目&emsp;  &emsp;&emsp;只有当设备被挂载到文件系统中，才可以被我们访问且使用。&emsp; 1 设备识别 新插入硬盘设备，没法被系统立马识别到，需要手动扫描，才可以发现并识别新设备">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190815093309132.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
   <link rel="canonical" href="http://hewanyue.com/2019/08/14/CentOS7磁盘分区及文件系统/">
 
@@ -414,14 +414,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><strong>&emsp;&emsp;一般来说，硬盘上的空间，想要被我们利用，都要经过几个步骤：</strong></p><ul>
+        <p><strong>&emsp;&emsp;一般来说，硬盘上的空间，想要被我们利用，都要经过几个步骤：</strong></p>
+<ul>
 <li>1设备识别</li>
 <li>2磁盘分区</li>
 <li>3创建文件系统（并标记文件系统）</li>
 <li>4挂载新的文件系统</li>
 <li>5在/etc/fstab文件中创建新条目<br>&emsp;</li>
-</ul><a id="more"></a>
-
+</ul>
 <p><strong>&emsp;&emsp;只有当设备被挂载到文件系统中，才可以被我们访问且使用。</strong><br>&emsp;</p>
 <h2 id="1-设备识别"><a href="#1-设备识别" class="headerlink" title="1 设备识别"></a>1 设备识别</h2><p> 新插入硬盘设备，没法被系统立马识别到，需要手动扫描，才可以发现并识别新设备<br><code>echo "- - -" > /sys/class/scsi_host/host0/scan</code><br>/sys/class/scsi_host/        目录下面有几个host 就扫描几次。<br>&emsp;<br>&emsp;</p>
 <h2 id="2-磁盘分区"><a href="#2-磁盘分区" class="headerlink" title="2 磁盘分区"></a>2 磁盘分区</h2><h3 id="2-1为什么要分区"><a href="#2-1为什么要分区" class="headerlink" title="2.1为什么要分区"></a>2.1为什么要分区</h3><ul>

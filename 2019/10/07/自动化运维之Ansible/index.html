@@ -68,7 +68,7 @@
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191007171304635.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191007191809637.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191007213354915.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
-<meta property="og:updated_time" content="2019-10-07T14:01:41.266Z">
+<meta property="og:updated_time" content="2019-10-07T14:03:23.120Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自动化运维之Ansible">
 <meta name="twitter:description" content="企业实际应用场景分析 Dev开发环境&emsp;&emsp;使用者：程序员&emsp;&emsp;功能：程序员开发软件，测试BUG的环境&emsp;&emsp;管理者：程序员 测试环境&emsp;&emsp;使用者：QA测试工程师&emsp;&emsp;功能：测试经过Dev环境测试通过的软件的功能&emsp;&emsp;管理者：运维&emsp;&emsp;说明：测试环境往往有多套,测试环境满足测试">
@@ -427,20 +427,20 @@
 <li>Fabric：python，agentless</li>
 <li>Chef：ruby，国内应用少</li>
 <li>Cfengine</li>
-<li>func
-        <div id="aplayer-mJctfUjs" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
+<li>func<h3 id="Ansible简介"><a href="#Ansible简介" class="headerlink" title="Ansible简介"></a>Ansible简介</h3>
+        <div id="aplayer-fwXIWGBL" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
             <pre class="aplayer-lrc-content"></pre>
         </div>
         <script>
           var ap = new APlayer({
-            element: document.getElementById("aplayer-mJctfUjs"),
+            element: document.getElementById("aplayer-fwXIWGBL"),
             narrow: false,
             autoplay: true,
             showlrc: false,
             music: {
               title: "Coming Home",
               author: "Peter Jeremias",
-              url: "https://win-web-rh01-sycdn.kuwo.cn/82085a53bb863deabb553b390e5932fb/5d9b449b/resource/n2/62/49/2900285534.mp3",
+              url: "https://win-web-rh00-sycdn.kuwo.cn/82085a53bb863deabb553b390e5932fb/5d9b449b/resource/n2/62/49/2900285534.mp3",
               pic: "http://img2.kuwo.cn/star/albumcover/120/5/34/683811610.jpg",
               lrc: ""
             }
@@ -448,7 +448,7 @@
           window.aplayers || (window.aplayers = []);
           window.aplayers.push(ap);
         </script>
-<h3 id="Ansible简介"><a href="#Ansible简介" class="headerlink" title="Ansible简介"></a>Ansible简介</h3><h4 id="Ansible特性"><a href="#Ansible特性" class="headerlink" title="Ansible特性"></a>Ansible特性</h4></li>
+<h4 id="Ansible特性"><a href="#Ansible特性" class="headerlink" title="Ansible特性"></a>Ansible特性</h4></li>
 <li>模块化：调用特定的模块，完成特定任务</li>
 <li>Paramiko（python对ssh的实现），PyYAML，Jinja2（模板语言）三个关键模块</li>
 <li>支持自定义模块</li>
@@ -473,7 +473,7 @@
 <li>USER-> Ansible Playbook -> Ansibile<h4 id="利用ansible实现管理的方式："><a href="#利用ansible实现管理的方式：" class="headerlink" title="利用ansible实现管理的方式："></a>利用ansible实现管理的方式：</h4></li>
 <li>Ad-Hoc 即ansible命令，主要用于临时命令使用场景</li>
 <li>Ansible-playbook 主要用于长期规划好的，大型项目的场景，需要有前期<br>的规划过程</li>
-</ul><a id="more"></a>
+</ul>
 <h4 id="Ansible-playbook（剧本）执行过程"><a href="#Ansible-playbook（剧本）执行过程" class="headerlink" title="Ansible-playbook（剧本）执行过程"></a>Ansible-playbook（剧本）执行过程</h4><ul>
 <li>将已有编排好的任务集写入Ansible-Playbook</li>
 <li>通过ansible-playbook命令分拆任务集至逐条ansible命令，按预定规则逐<br>条执行<h4 id="Ansible主要操作对象"><a href="#Ansible主要操作对象" class="headerlink" title="Ansible主要操作对象"></a>Ansible主要操作对象</h4></li>

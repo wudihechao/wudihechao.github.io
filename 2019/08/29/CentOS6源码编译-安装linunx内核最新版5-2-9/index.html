@@ -56,18 +56,18 @@
   };
 </script>
 
-  <meta name="description" content="&emsp;&emsp;之前在CentOS7 上源码编译安装过新内核，不过有次在6上编译就遇到问题了，提示错误如下1make[2]: *** [scripts/sign-file] Error 1 make[1]: *** [scripts] Error 2 make">
+  <meta name="description" content="&emsp;&emsp;之前在CentOS7 上源码编译安装过新内核，不过有次在6上编译就遇到问题了，提示错误如下 1make[2]: *** [scripts/sign-file] Error 1 make[1]: *** [scripts] Error 2 make  搞了好久，好像是参数设置不正确。 1error: #error Sorry, your compiler is too old">
 <meta name="keywords" content="linux,编译安装,kernel,踩坑">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CentOS6源码编译 安装linunx内核最新版5.2.9">
 <meta property="og:url" content="http://hewanyue.com/2019/08/29/CentOS6源码编译-安装linunx内核最新版5-2-9/index.html">
 <meta property="og:site_name" content="BOHC!">
-<meta property="og:description" content="&emsp;&emsp;之前在CentOS7 上源码编译安装过新内核，不过有次在6上编译就遇到问题了，提示错误如下1make[2]: *** [scripts/sign-file] Error 1 make[1]: *** [scripts] Error 2 make">
+<meta property="og:description" content="&emsp;&emsp;之前在CentOS7 上源码编译安装过新内核，不过有次在6上编译就遇到问题了，提示错误如下 1make[2]: *** [scripts/sign-file] Error 1 make[1]: *** [scripts] Error 2 make  搞了好久，好像是参数设置不正确。 1error: #error Sorry, your compiler is too old">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2019-10-07T02:21:42.622Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CentOS6源码编译 安装linunx内核最新版5.2.9">
-<meta name="twitter:description" content="&emsp;&emsp;之前在CentOS7 上源码编译安装过新内核，不过有次在6上编译就遇到问题了，提示错误如下1make[2]: *** [scripts/sign-file] Error 1 make[1]: *** [scripts] Error 2 make">
+<meta name="twitter:description" content="&emsp;&emsp;之前在CentOS7 上源码编译安装过新内核，不过有次在6上编译就遇到问题了，提示错误如下 1make[2]: *** [scripts/sign-file] Error 1 make[1]: *** [scripts] Error 2 make  搞了好久，好像是参数设置不正确。 1error: #error Sorry, your compiler is too old">
   <link rel="canonical" href="http://hewanyue.com/2019/08/29/CentOS6源码编译-安装linunx内核最新版5-2-9/">
 
 
@@ -410,8 +410,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>&emsp;&emsp;之前在CentOS7 上源码编译安装过新内核，不过有次在6上编译就遇到问题了，提示错误如下</p><figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">make</span>[<span class="number">2</span>]: *** [scripts/sign-file] <span class="built_in">Error</span> <span class="number">1</span> <span class="built_in">make</span>[<span class="number">1</span>]: *** [scripts] <span class="built_in">Error</span> <span class="number">2</span> <span class="built_in">make</span></span><br></pre></td></tr></table></figure><a id="more"></a>
-
+        <p>&emsp;&emsp;之前在CentOS7 上源码编译安装过新内核，不过有次在6上编译就遇到问题了，提示错误如下</p>
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">make</span>[<span class="number">2</span>]: *** [scripts/sign-file] <span class="built_in">Error</span> <span class="number">1</span> <span class="built_in">make</span>[<span class="number">1</span>]: *** [scripts] <span class="built_in">Error</span> <span class="number">2</span> <span class="built_in">make</span></span><br></pre></td></tr></table></figure>
 
 <p>搞了好久，好像是参数设置不正确。</p>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error: #<span class="builtin-name">error</span> Sorry, your compiler is too old - please<span class="built_in"> upgrade </span>it</span><br></pre></td></tr></table></figure>
