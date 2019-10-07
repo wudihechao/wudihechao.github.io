@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /2019/
+Allow: /archives/
+Allow: /tags/
+Allow: /about/
+Allow: /categories/
+Allow: /page/
+
+Disallow: /dist/
+Disallow: /js/
+Disallow: /css/
+Disallow: /live2d/
+Disallow: /lib/
+
+
+sitemap: http://hewanyue.com/sitemap.xml
+sitemap: http://hewanyue.com/baidusitemap.xml
