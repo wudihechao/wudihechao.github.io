@@ -2085,19 +2085,19 @@ article:last-child .post-eof {
 #reward-button span:hover {
   background: #f7877f;
 }
-qr {
+#qr {
   padding-top: 20px;
 }
-qr a {
+#qr a {
   border: 0;
 }
-qr img {
+#qr img {
   display: inline-block;
   margin: 0.8em 2em 0 2em;
   max-width: 100%;
   width: 180px;
 }
-qr p {
+#qr p {
   text-align: center;
 }
 #qr > div:hover p {
