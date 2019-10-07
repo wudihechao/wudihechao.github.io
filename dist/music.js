@@ -6,7 +6,7 @@ const ap = new APlayer({
       {
         name: "体面",
         artist: '于文文',
-        url: 'http://win.web.nf01.sycdn.kuwo.cn/e27a76df4e5c50a4055442c9d97f2451/5d9b4964/resource/n1/32/94/1843537127.mp3',
+        url: 'http://fs.open.kugou.com/bdc6be2b5e756bf3c5c917d7fe5a401b/5d9b4bdc/G135/M06/17/13/xw0DAFtHOJOACZiNAEUe3eVFTx8339.mp3',
         cover: 'https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike116%2C5%2C5%2C116%2C38/sign=45ead8f7ba3533fae1bb9b7cc9ba967a/b812c8fcc3cec3fda031f68cdd88d43f8794273f.jpg',
       },
       {
