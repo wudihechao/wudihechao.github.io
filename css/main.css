@@ -2059,7 +2059,7 @@ article:last-child .post-eof {
   align-self: center;
   height: 30px;
 }
-#reward-container {
+reward-container {
   margin: 20px auto;
   padding: 10px 0;
   text-align: center;
@@ -2082,7 +2082,7 @@ reward-button {
   text-transform: none;
   vertical-align: text-top;
 }
-reward-button span:hover {
+#reward-button span:hover {
   background: #f7877f;
 }
 qr {
@@ -2100,7 +2100,7 @@ qr img {
 qr p {
   text-align: center;
 }
-qr > div:hover p {
+#qr > div:hover p {
   animation: roll 0.1s infinite linear;
 }
 @-moz-keyframes roll {
