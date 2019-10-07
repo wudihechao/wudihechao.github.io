@@ -483,7 +483,7 @@
       
         <div id="reward-container">
   <div>It's very nice of you to support me.</div>
-  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById("qr"); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById("qr"); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
     打赏
   </button>
   <div id="qr" style="display: none;">
