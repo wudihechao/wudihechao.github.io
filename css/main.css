@@ -1268,7 +1268,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #09ff3c;
+  background: #34a11f;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2657,28 +2657,8 @@ embed {
 .container .header-inner {
   width: 100%;
 }
-body {
-  background-image: url("/images/bak.jpg");
-  background-attachment: fixed;
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-.main-inner {
-  margin-top: 60px;
-  padding: 60px 60px 60px 60px;
-  background: #fff;
-  opacity: 0.8;
-  min-height: 500px;
-}
 .header {
   line-height: 1.5;
-  padding: 5px 25px;
-  margin: 0 auto;
-  margin-top: 15px;
-  width: 700px;
-  opacity: 0.8;
-  border-radius: 10px;
 }
 .header-inner {
   padding-top: 35px;
@@ -2981,15 +2961,6 @@ img.img-topic {
 }
 .sidebar-active #sidebar-dimmer {
   opacity: 0;
-}
-.footer {
-  padding: 5px 25px;
-  position: relative;
-  margin: 0 auto;
-  margin-bottom: 5px;
-  width: 700px;
-  opacity: 0.8;
-  border-radius: 10px;
 }
 .site-nav-toggle {
   top: 35px;
