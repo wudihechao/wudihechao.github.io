@@ -1268,7 +1268,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #ff93ab;
+  background: #096199;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2695,7 +2695,7 @@ img.img-topic {
   -moz-box-shadow: 0 0 5px rgba(202,203,204,0.5);
   padding: 45px 36px 36px 36px;
   box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
-  background-color: #fff;
+  background-color: rgba(255,255,255,0.9);
 }
 .posts-expand .post-title {
   font-size: 26px;
