@@ -1268,7 +1268,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #a3b19f;
+  background: #16e95d;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2672,7 +2672,7 @@ embed {
   -moz-box-shadow: 0 0 5px rgba(202,203,204,0.5);
 }
 .posts-expand {
-  padding-top: 50px;
+  padding-top: 20px;
 }
 .posts-expand .post-meta {
   margin: 5px 0px 0px 0px;
@@ -2687,16 +2687,6 @@ img.img-topic {
   width: 75%;
 }
 /*******************文章样式*****************************/
-.post {
-  margin-top: 60px;
-  margin-bottom: 60px;
-  padding: 25px;
-  -webkit-box-shadow: 0 0 5px rgba(202,203,203,0.5);
-  -moz-box-shadow: 0 0 5px rgba(202,203,204,0.5);
-  padding: 45px 36px 36px 36px;
-  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.6);
-  background-color: rgba(255,255,255,0.9);
-}
 .posts-expand .post-title {
   font-size: 26px;
   font-weight: 700;
