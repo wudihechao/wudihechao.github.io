@@ -30,7 +30,7 @@ const ap = new APlayer({
       {
         name: '恋爱循环',
         artist: '花泽香菜',
-        url: 'http://win-web-nf01-sycdn.kuwo.cn/af78a7e41d78250b0e4de9e4e55a8d5b/5d9aef6c/resource/n2/60/21/501763569.mp3',
+        url: 'http://fs.open.kugou.com/7ccfce6341fde6fcbc38a258e2d5dd07/5d9c532f/G002/M05/0F/08/Qg0DAFS4Om6ADD4gAD4IAK1LhpU308.mp3',
         cover: 'http://img3.kuwo.cn/star/albumcover/120/83/18/648271655.jpg',
       }
     ]
