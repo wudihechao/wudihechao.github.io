@@ -12,19 +12,19 @@ const ap = new APlayer({
       {
         name: '白羊',
         artist: '徐秉龙&沈以诚',
-        url: 'http://win-web-nf01-sycdn.kuwo.cn/b857f0b017e6dc52ae4537cc5c80140e/5d9aee60/resource/n2/72/58/2811696247.mp3',
+        url: 'http://fs.open.kugou.com/4cbc74a37376733d9590a44592e283a4/5d9c511f/G107/M0A/1D/17/S5QEAFnzHSGAOh3sACkiyJENriA196.mp3',
         cover: 'http://img3.kuwo.cn/star/starheads/120/67/74/3204842448.jpg',
       },
       {
         name: '绿色',
         artist: '陈雪凝',
-        url: 'http://sp-sycdn.kuwo.cn/6a6022d0ccc92782737c1fe80bd51175/5d9aeed2/resource/n3/79/89/3763381716.mp3',
+        url: 'http://fs.open.kugou.com/889c155e3dfcf0e081fbb8bca80fa488/5d9c51d1/G161/M0A/09/1F/QYcBAFyQz--Ae3laAEHWnhJxq1c247.mp3',
         cover: 'http://img2.kuwo.cn/star/albumcover/120/92/93/306713154.jpg',
       },
       {
         name: '退',
         artist: '蒋蒋',
-        url: 'http://win-web-nf01-sycdn.kuwo.cn/1261d541a211d8219067fc4f9c5f2b4a/5d9aef27/resource/n3/20/34/3457848894.mp3',
+        url: 'http://fs.open.kugou.com/fce2bd3958921509e4b6b83a3d993f4c/5d9c50b0/G112/M01/1F/19/EIcBAFnM4FuAdrieADsTn3zi8ZI661.mp3',
         cover: 'http://img2.kuwo.cn/star/albumcover/120/3/46/4189090216.jpg',
       },
       {
