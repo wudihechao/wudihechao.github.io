@@ -68,7 +68,7 @@
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191007171304635.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191007191809637.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191007213354915.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
-<meta property="og:updated_time" content="2019-10-08T05:59:26.189Z">
+<meta property="og:updated_time" content="2019-10-08T07:33:11.010Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自动化运维之Ansible">
 <meta name="twitter:description" content="企业实际应用场景分析 Dev开发环境&emsp;&emsp;使用者：程序员&emsp;&emsp;功能：程序员开发软件，测试BUG的环境&emsp;&emsp;管理者：程序员 测试环境&emsp;&emsp;使用者：QA测试工程师&emsp;&emsp;功能：测试经过Dev环境测试通过的软件的功能&emsp;&emsp;管理者：运维&emsp;&emsp;说明：测试环境往往有多套,测试环境满足测试">
@@ -408,7 +408,8 @@
 <li>Dev开发环境<br>&emsp;&emsp;使用者：程序员<br>&emsp;&emsp;功能：程序员开发软件，测试BUG的环境<br>&emsp;&emsp;管理者：程序员</li>
 <li>测试环境<br>&emsp;&emsp;使用者：QA测试工程师<br>&emsp;&emsp;功能：测试经过Dev环境测试通过的软件的功能<br>&emsp;&emsp;管理者：运维<br>&emsp;&emsp;说明：测试环境往往有多套,测试环境满足测试功能即可，不宜过多<br>&emsp;&emsp;1、测试人员希望测试环境有多套,公司的产品多产品线并发，即多个版本，<br>意味着多个版本同步测试<br>&emsp;&emsp;2、通常测试环境有多少套和产品线数量保持一样</li>
 <li>发布环境：代码发布机,有些公司为堡垒机（安全屏障）<br>&emsp;&emsp;使用者：运维<br>&emsp;&emsp;功能：发布代码至生产环境<br>&emsp;&emsp;管理者：运维（有经验）<br>&emsp;&emsp;发布机：往往需要有2台（主备）</li>
-<li>生产环境<br>&emsp;&emsp;使用者：运维，少数情况开放权限给核心开发人员，极少数公司将权限完全<br>开放给开发人员并其维护<br>&emsp;&emsp;功能：对用户提供公司产品的服务<br>&emsp;&emsp;管理者：只能是运维<br>&emsp;&emsp;生产环境服务器数量：一般比较多，且应用非常重要。往往需要自动工具协<br>助部署配置应用<br>灰度环境（生产环境的一部分）<br>&emsp;&emsp;使用者：运维<br>&emsp;&emsp;功能：在全量发布代码前将代码的功能面向少量精准用户发布的环境,可基<br>于主机或用户执行灰度发布<br>&emsp;&emsp;案例：共100台生产服务器，先发布其中的10台服务器，这10台服务器就<br>是灰度服务器<br>&emsp;&emsp;管理者：运维<br>&emsp;&emsp;灰度环境：往往该版本功能变更较大，为保险起见特意先让一部分用户优化<br>体验该功能，待这部分用户使用没有重大问题的时候，再全量发布至所有服务器<h3 id="程序发布"><a href="#程序发布" class="headerlink" title="程序发布"></a>程序发布</h3></li>
+<li>生产环境<br>&emsp;&emsp;使用者：运维，少数情况开放权限给核心开发人员，极少数公司将权限完全<br>开放给开发人员并其维护<br>&emsp;&emsp;功能：对用户提供公司产品的服务<br>&emsp;&emsp;管理者：只能是运维<br>&emsp;&emsp;生产环境服务器数量：一般比较多，且应用非常重要。往往需要自动工具协<br>助部署配置应用<a id="more"></a>
+灰度环境（生产环境的一部分）<br>&emsp;&emsp;使用者：运维<br>&emsp;&emsp;功能：在全量发布代码前将代码的功能面向少量精准用户发布的环境,可基<br>于主机或用户执行灰度发布<br>&emsp;&emsp;案例：共100台生产服务器，先发布其中的10台服务器，这10台服务器就<br>是灰度服务器<br>&emsp;&emsp;管理者：运维<br>&emsp;&emsp;灰度环境：往往该版本功能变更较大，为保险起见特意先让一部分用户优化<br>体验该功能，待这部分用户使用没有重大问题的时候，再全量发布至所有服务器<h3 id="程序发布"><a href="#程序发布" class="headerlink" title="程序发布"></a>程序发布</h3></li>
 <li>程序发布要求：<br>&emsp;&emsp;不能导致系统故障或造成系统完全不可用<br>&emsp;&emsp;不能影响用户体验</li>
 <li>预发布验证：<br>&emsp;&emsp;新版本的代码先发布到服务器（跟线上环境配置完全相同，只是未接入到调度器）</li>
 <li>灰度发布：<br>&emsp;&emsp;基于主机，用户，业务</li>
@@ -428,12 +429,12 @@
 <li>Chef：ruby，国内应用少</li>
 <li>Cfengine</li>
 <li>func<h3 id="Ansible简介"><a href="#Ansible简介" class="headerlink" title="Ansible简介"></a>Ansible简介</h3>
-        <div id="aplayer-zpuJYhxh" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
+        <div id="aplayer-TeKIORvV" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
             <pre class="aplayer-lrc-content"></pre>
         </div>
         <script>
           var ap = new APlayer({
-            element: document.getElementById("aplayer-zpuJYhxh"),
+            element: document.getElementById("aplayer-TeKIORvV"),
             narrow: false,
             autoplay: true,
             showlrc: false,
@@ -473,7 +474,7 @@
 <li>USER-> Ansible Playbook -> Ansibile<h4 id="利用ansible实现管理的方式："><a href="#利用ansible实现管理的方式：" class="headerlink" title="利用ansible实现管理的方式："></a>利用ansible实现管理的方式：</h4></li>
 <li>Ad-Hoc 即ansible命令，主要用于临时命令使用场景</li>
 <li>Ansible-playbook 主要用于长期规划好的，大型项目的场景，需要有前期<br>的规划过程</li>
-</ul><a id="more"></a>
+</ul>
 <h4 id="Ansible-playbook（剧本）执行过程"><a href="#Ansible-playbook（剧本）执行过程" class="headerlink" title="Ansible-playbook（剧本）执行过程"></a>Ansible-playbook（剧本）执行过程</h4><ul>
 <li>将已有编排好的任务集写入Ansible-Playbook</li>
 <li>通过ansible-playbook命令分拆任务集至逐条ansible命令，按预定规则逐<br>条执行<h4 id="Ansible主要操作对象"><a href="#Ansible主要操作对象" class="headerlink" title="Ansible主要操作对象"></a>Ansible主要操作对象</h4></li>

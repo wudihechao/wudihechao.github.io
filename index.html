@@ -115,8 +115,6 @@
   </style>
 </noscript>
 
-<link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
-<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
@@ -402,72 +400,7 @@
 <li>Dev开发环境<br>&emsp;&emsp;使用者：程序员<br>&emsp;&emsp;功能：程序员开发软件，测试BUG的环境<br>&emsp;&emsp;管理者：程序员</li>
 <li>测试环境<br>&emsp;&emsp;使用者：QA测试工程师<br>&emsp;&emsp;功能：测试经过Dev环境测试通过的软件的功能<br>&emsp;&emsp;管理者：运维<br>&emsp;&emsp;说明：测试环境往往有多套,测试环境满足测试功能即可，不宜过多<br>&emsp;&emsp;1、测试人员希望测试环境有多套,公司的产品多产品线并发，即多个版本，<br>意味着多个版本同步测试<br>&emsp;&emsp;2、通常测试环境有多少套和产品线数量保持一样</li>
 <li>发布环境：代码发布机,有些公司为堡垒机（安全屏障）<br>&emsp;&emsp;使用者：运维<br>&emsp;&emsp;功能：发布代码至生产环境<br>&emsp;&emsp;管理者：运维（有经验）<br>&emsp;&emsp;发布机：往往需要有2台（主备）</li>
-<li>生产环境<br>&emsp;&emsp;使用者：运维，少数情况开放权限给核心开发人员，极少数公司将权限完全<br>开放给开发人员并其维护<br>&emsp;&emsp;功能：对用户提供公司产品的服务<br>&emsp;&emsp;管理者：只能是运维<br>&emsp;&emsp;生产环境服务器数量：一般比较多，且应用非常重要。往往需要自动工具协<br>助部署配置应用<br>灰度环境（生产环境的一部分）<br>&emsp;&emsp;使用者：运维<br>&emsp;&emsp;功能：在全量发布代码前将代码的功能面向少量精准用户发布的环境,可基<br>于主机或用户执行灰度发布<br>&emsp;&emsp;案例：共100台生产服务器，先发布其中的10台服务器，这10台服务器就<br>是灰度服务器<br>&emsp;&emsp;管理者：运维<br>&emsp;&emsp;灰度环境：往往该版本功能变更较大，为保险起见特意先让一部分用户优化<br>体验该功能，待这部分用户使用没有重大问题的时候，再全量发布至所有服务器<h3 id="程序发布"><a href="#程序发布" class="headerlink" title="程序发布"></a>程序发布</h3></li>
-<li>程序发布要求：<br>&emsp;&emsp;不能导致系统故障或造成系统完全不可用<br>&emsp;&emsp;不能影响用户体验</li>
-<li>预发布验证：<br>&emsp;&emsp;新版本的代码先发布到服务器（跟线上环境配置完全相同，只是未接入到调度器）</li>
-<li>灰度发布：<br>&emsp;&emsp;基于主机，用户，业务</li>
-<li>发布路径：<br>&emsp;&emsp;/webapp/tuangou<br>&emsp;&emsp;/webapp/tuangou-1.1<br>&emsp;&emsp;/webapp/tuangou-1.2<ul>
-<li>发布过程：在调度器上下线一批主机(标记为maintenance 状态) –> 关闭服务 –> 部<br>署新版本的应用程序 –> 启动服务 –> 在调度器上启用这一批服务器</li>
-</ul>
-</li>
-<li>自动化灰度发布：脚本、发布平台<h3 id="自动化运维应用场景"><a href="#自动化运维应用场景" class="headerlink" title="自动化运维应用场景"></a>自动化运维应用场景</h3></li>
-<li>文件传输</li>
-<li>应用部署</li>
-<li>配置管理</li>
-<li>任务流编排<h3 id="常用自动化运维工具"><a href="#常用自动化运维工具" class="headerlink" title="常用自动化运维工具"></a>常用自动化运维工具</h3></li>
-<li>Ansible：python，Agentless，中小型应用环境</li>
-<li>Saltstack：python，一般需部署agent，执行效率更高</li>
-<li>Puppet：ruby, 功能强大，配置复杂，重型,适合大型环境</li>
-<li>Fabric：python，agentless</li>
-<li>Chef：ruby，国内应用少</li>
-<li>Cfengine</li>
-<li>func<h3 id="Ansible简介"><a href="#Ansible简介" class="headerlink" title="Ansible简介"></a>Ansible简介</h3>
-        <div id="aplayer-zpuJYhxh" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
-            <pre class="aplayer-lrc-content"></pre>
-        </div>
-        <script>
-          var ap = new APlayer({
-            element: document.getElementById("aplayer-zpuJYhxh"),
-            narrow: false,
-            autoplay: true,
-            showlrc: false,
-            music: {
-              title: "Coming Home",
-              author: "Peter Jeremias",
-              url: "http://fs.open.kugou.com/d56d410fb72661d781bfa8ca1a997d42/5d9c2582/G072/M09/14/13/iA0DAFc7JMOATpAmAB-N2jv_Uew910.mp3",
-              pic: "http://img2.kuwo.cn/star/albumcover/120/5/34/683811610.jpg",
-              lrc: ""
-            }
-          });
-          window.aplayers || (window.aplayers = []);
-          window.aplayers.push(ap);
-        </script>
-<h4 id="Ansible特性"><a href="#Ansible特性" class="headerlink" title="Ansible特性"></a>Ansible特性</h4></li>
-<li>模块化：调用特定的模块，完成特定任务</li>
-<li>Paramiko（python对ssh的实现），PyYAML，Jinja2（模板语言）三个关键模块</li>
-<li>支持自定义模块</li>
-<li>基于Python语言实现</li>
-<li>部署简单，基于python和SSH(默认已安装)，agentless</li>
-<li>安全，基于OpenSSH</li>
-<li>支持playbook编排任务</li>
-<li>幂等性：一个任务执行1遍和执行n遍效果一样，不因重复执行带来意外情况</li>
-<li>无需代理不依赖PKI（无需ssl）</li>
-<li>可使用任何编程语言写模块</li>
-<li>YAML格式，编排任务，支持丰富的数据结构</li>
-<li>较强大的多层解决方案<h4 id="Ansible架构"><a href="#Ansible架构" class="headerlink" title="Ansible架构"></a>Ansible架构</h4><img src="https://img-blog.csdnimg.cn/20191007171143415.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><h4 id="Ansible工作原理"><a href="#Ansible工作原理" class="headerlink" title="Ansible工作原理"></a>Ansible工作原理</h4><img src="https://img-blog.csdnimg.cn/20191007171304635.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><h4 id="Ansible主要组成部分"><a href="#Ansible主要组成部分" class="headerlink" title="Ansible主要组成部分"></a>Ansible主要组成部分</h4></li>
-<li>ANSIBLE PLAYBOOKS：任务剧本（任务集），编排定义Ansible任务集的配置<br>文件，由Ansible顺序依次执行，通常是JSON格式的YML文件</li>
-<li>INVENTORY：Ansible管理主机的清单/etc/anaible/hosts</li>
-<li>MODULES：Ansible执行命令的功能模块，多数为内置核心模块，也可自定义</li>
-<li>PLUGINS：模块功能的补充，如连接类型插件、循环插件、变量插件、过滤插<br>件等，该功能不常用</li>
-<li>API：供第三方程序调用的应用程序编程接口</li>
-<li>ANSIBLE：组合INVENTORY、API、MODULES、PLUGINS的绿框，可以理解<br>为是ansible命令工具，其为核心执行工具<h4 id="Ansible命令执行来源："><a href="#Ansible命令执行来源：" class="headerlink" title="Ansible命令执行来源："></a>Ansible命令执行来源：</h4></li>
-<li>USER，普通用户，即SYSTEM ADMINISTRATOR</li>
-<li>CMDB（配置管理数据库） API 调用</li>
-<li>PUBLIC/PRIVATE CLOUD API调用</li>
-<li>USER-> Ansible Playbook -> Ansibile<h4 id="利用ansible实现管理的方式："><a href="#利用ansible实现管理的方式：" class="headerlink" title="利用ansible实现管理的方式："></a>利用ansible实现管理的方式：</h4></li>
-<li>Ad-Hoc 即ansible命令，主要用于临时命令使用场景</li>
-<li>Ansible-playbook 主要用于长期规划好的，大型项目的场景，需要有前期<br>的规划过程</li>
-</ul>
+<li>生产环境<br>&emsp;&emsp;使用者：运维，少数情况开放权限给核心开发人员，极少数公司将权限完全<br>开放给开发人员并其维护<br>&emsp;&emsp;功能：对用户提供公司产品的服务<br>&emsp;&emsp;管理者：只能是运维<br>&emsp;&emsp;生产环境服务器数量：一般比较多，且应用非常重要。往往需要自动工具协<br>助部署配置应用
           <!--noindex-->
           
             <div class="post-button">
