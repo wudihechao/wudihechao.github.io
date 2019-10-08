@@ -56,13 +56,13 @@
   };
 </script>
 
-  <meta name="description" content="&emsp;&emsp; MHA(master high   availability)目前是MySQL高可用方面是一个相对成熟的解决方案。在切换过程中，mha能做到0-30s内自动完成数据库的切换，并且在切换过程中最大的保持数据的一致性，以达到真正意义上的高可用">
+  <meta name="description" content="&emsp;&emsp; MHA(master high   availability)目前是MySQL高可用方面是一个相对成熟的解决方案。在切换过程中，mha能做到0-30s内自动完成数据库的切换，并且在切换过程中最大的保持数据的一致性，以达到真正意义上的高可用&emsp;&emsp; MHA的组成：">
 <meta name="keywords" content="多实例,mysql,MHA,高可用,mariadb">
 <meta property="og:type" content="article">
 <meta property="og:title" content="myql数据库MHA实现高可用（多实例间实现）">
 <meta property="og:url" content="http://hewanyue.com/2019/10/05/mysql数据库MHA实现高可用（多实例间实现）/index.html">
 <meta property="og:site_name" content="BOHC!">
-<meta property="og:description" content="&emsp;&emsp; MHA(master high   availability)目前是MySQL高可用方面是一个相对成熟的解决方案。在切换过程中，mha能做到0-30s内自动完成数据库的切换，并且在切换过程中最大的保持数据的一致性，以达到真正意义上的高可用">
+<meta property="og:description" content="&emsp;&emsp; MHA(master high   availability)目前是MySQL高可用方面是一个相对成熟的解决方案。在切换过程中，mha能做到0-30s内自动完成数据库的切换，并且在切换过程中最大的保持数据的一致性，以达到真正意义上的高可用&emsp;&emsp; MHA的组成：">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/2019092709363970.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190927123356815.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
@@ -71,7 +71,7 @@
 <meta property="og:updated_time" content="2019-10-07T02:54:54.513Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="myql数据库MHA实现高可用（多实例间实现）">
-<meta name="twitter:description" content="&emsp;&emsp; MHA(master high   availability)目前是MySQL高可用方面是一个相对成熟的解决方案。在切换过程中，mha能做到0-30s内自动完成数据库的切换，并且在切换过程中最大的保持数据的一致性，以达到真正意义上的高可用">
+<meta name="twitter:description" content="&emsp;&emsp; MHA(master high   availability)目前是MySQL高可用方面是一个相对成熟的解决方案。在切换过程中，mha能做到0-30s内自动完成数据库的切换，并且在切换过程中最大的保持数据的一致性，以达到真正意义上的高可用&emsp;&emsp; MHA的组成：">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/2019092709363970.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
   <link rel="canonical" href="http://hewanyue.com/2019/10/05/mysql数据库MHA实现高可用（多实例间实现）/">
 
@@ -402,8 +402,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>&emsp;&emsp; MHA(master high   availability)目前是MySQL高可用方面是一个相对成熟的解决方案。在切换过程中，mha能做到0-30s内自动完成数据库的切换，并且在切换过程中最大的保持数据的一致性，以达到真正意义上的高可用</p><a id="more"></a>
-<p>&emsp;&emsp; MHA的组成：</p>
+        <p>&emsp;&emsp; MHA(master high   availability)目前是MySQL高可用方面是一个相对成熟的解决方案。在切换过程中，mha能做到0-30s内自动完成数据库的切换，并且在切换过程中最大的保持数据的一致性，以达到真正意义上的高可用</p><p>&emsp;&emsp; MHA的组成：</p><a id="more"></a>
+
 <p>&emsp;&emsp; MHA Manager(管理节点)和MHA Node(数据节点)。MHA Manager可以独立部署在一台独立的机器上，管理多个集群，也可以部署在从从库上。</p>
 <p>&emsp;&emsp; 当Master出现故障的时候，它可以自动将最新的数据的Slave提升为新的Master，然后将所有的Slave重新指向新的Master，整个故障转移过程是完全透明的。<br>&emsp;&emsp; 实验演示图如下：<br><img src="https://img-blog.csdnimg.cn/2019092709363970.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp; 操作如下：<br>&emsp;&emsp; 1、在192.168.32.71主机和192.168.32.72主机上搭建好1主3从的主从配置服务器；<br>&emsp;&emsp; 2、在192.168.32.7主机作为监控主机，安装mhamanager包和node包，192.168.32.71主机、192.168.32.72主机只安装node包；<br>&emsp;&emsp; 3、将三台主机的ssh公钥信息互相储存（或公用一个公钥私钥对），设置好相互之间的基于key验证免密登录。<strong>（因为用的是多实例数据库，SSH连通性验证时还会检查各个数据库之间的连通性，这就包括3307、3308、3309端口数据库之间的SSH连接，所以一定要在192.168.32.72主机家目录的.ssh/authorized_keys文件中加入192.168.32.72本机的公钥，否则会报错，切记，已踩坑）</strong><br>&emsp;&emsp; 4、编写mha配置文件，路径随意。<code>vim /etc/mha.cnf</code></p>
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[server default]</span></span><br><span class="line"><span class="attr">user</span>=mhauser</span><br><span class="line"><span class="attr">password</span>=mhuser</span><br><span class="line"><span class="attr">manager_workdir</span>=/data/mastermha/group1/</span><br><span class="line"><span class="attr">manager_log</span>=/data/mastermha/group1/manager.log</span><br><span class="line"><span class="attr">remote_workdir</span>=/data/mastermha/group1/</span><br><span class="line"><span class="attr">ssh_user</span>=root</span><br><span class="line"><span class="attr">repl_user</span>=repluser</span><br><span class="line"><span class="attr">repl_password</span>=repluser</span><br><span class="line"><span class="attr">ping_interval</span>=<span class="number">1</span></span><br><span class="line"><span class="attr">master_binlog_dir</span>=/data/mysql</span><br><span class="line"><span class="section">[server1]</span></span><br><span class="line"><span class="attr">hostname</span>=<span class="number">192.168</span>.<span class="number">32.71</span></span><br><span class="line"><span class="section">[server2]</span></span><br><span class="line"><span class="attr">hostname</span>=<span class="number">192.168</span>.<span class="number">32.72</span></span><br><span class="line"><span class="attr">port</span>=<span class="number">3307</span></span><br><span class="line"><span class="attr">candidate_master</span>=<span class="number">1</span></span><br><span class="line"><span class="section">[server3]</span></span><br><span class="line"><span class="attr">hostname</span>=<span class="number">192.168</span>.<span class="number">32.72</span></span><br><span class="line"><span class="attr">port</span>=<span class="number">3308</span></span><br><span class="line"><span class="section">[server4]</span></span><br><span class="line"><span class="attr">hostname</span>=<span class="number">192.168</span>.<span class="number">32.72</span></span><br><span class="line"><span class="attr">port</span>=<span class="number">3309</span></span><br></pre></td></tr></table></figure>

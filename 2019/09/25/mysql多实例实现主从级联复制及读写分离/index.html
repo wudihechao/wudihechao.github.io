@@ -56,13 +56,13 @@
   };
 </script>
 
-  <meta name="description" content="一、多实例1、概述&emsp;&emsp; MySQL多实例就是在一台机器上开启多个不同的服务端口（如：3306,3307），运行多个MySQL服务进程，通过不同的socket监听不同的服务端口来提供各自的服务">
+  <meta name="description" content="一、多实例1、概述&emsp;&emsp; MySQL多实例就是在一台机器上开启多个不同的服务端口（如：3306,3307），运行多个MySQL服务进程，通过不同的socket监听不同的服务端口来提供各自的服务2.1、优点1）有效利用服务器资源&emsp;&emsp; 当单个服务器资源过剩时，可以充分利用剩余的资源来提供更多的服务；2）节约服务器资源">
 <meta name="keywords" content="多实例,mysql,级联复制,读写分离">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql多实例实现主从级联复制及读写分离">
 <meta property="og:url" content="http://hewanyue.com/2019/09/25/mysql多实例实现主从级联复制及读写分离/index.html">
 <meta property="og:site_name" content="BOHC!">
-<meta property="og:description" content="一、多实例1、概述&emsp;&emsp; MySQL多实例就是在一台机器上开启多个不同的服务端口（如：3306,3307），运行多个MySQL服务进程，通过不同的socket监听不同的服务端口来提供各自的服务">
+<meta property="og:description" content="一、多实例1、概述&emsp;&emsp; MySQL多实例就是在一台机器上开启多个不同的服务端口（如：3306,3307），运行多个MySQL服务进程，通过不同的socket监听不同的服务端口来提供各自的服务2.1、优点1）有效利用服务器资源&emsp;&emsp; 当单个服务器资源过剩时，可以充分利用剩余的资源来提供更多的服务；2）节约服务器资源">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190925114000429.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190925164049740.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
@@ -70,7 +70,7 @@
 <meta property="og:updated_time" content="2019-10-05T13:36:50.758Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql多实例实现主从级联复制及读写分离">
-<meta name="twitter:description" content="一、多实例1、概述&emsp;&emsp; MySQL多实例就是在一台机器上开启多个不同的服务端口（如：3306,3307），运行多个MySQL服务进程，通过不同的socket监听不同的服务端口来提供各自的服务">
+<meta name="twitter:description" content="一、多实例1、概述&emsp;&emsp; MySQL多实例就是在一台机器上开启多个不同的服务端口（如：3306,3307），运行多个MySQL服务进程，通过不同的socket监听不同的服务端口来提供各自的服务2.1、优点1）有效利用服务器资源&emsp;&emsp; 当单个服务器资源过剩时，可以充分利用剩余的资源来提供更多的服务；2）节约服务器资源">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190925114000429.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
   <link rel="canonical" href="http://hewanyue.com/2019/09/25/mysql多实例实现主从级联复制及读写分离/">
 
@@ -414,12 +414,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><strong>一、多实例</strong></p><p>1、概述</p><p>&emsp;&emsp; MySQL多实例就是在一台机器上开启多个不同的服务端口（如：3306,3307），运行多个MySQL服务进程，通过不同的socket监听不同的服务端口来提供各自的服务</p><a id="more"></a>
+        <p><strong>一、多实例</strong></p><p>1、概述</p><p>&emsp;&emsp; MySQL多实例就是在一台机器上开启多个不同的服务端口（如：3306,3307），运行多个MySQL服务进程，通过不同的socket监听不同的服务端口来提供各自的服务</p><p>2.1、优点</p><p>1）有效利用服务器资源</p><p>&emsp;&emsp; 当单个服务器资源过剩时，可以充分利用剩余的资源来提供更多的服务；<br>2）节约服务器资源</p><a id="more"></a>
 
 
-<p>2.1、优点</p>
-<p>1）有效利用服务器资源</p>
-<p>&emsp;&emsp; 当单个服务器资源过剩时，可以充分利用剩余的资源来提供更多的服务；<br>2）节约服务器资源</p>
+
+
+
 <p>&emsp;&emsp; 当公司资金紧张，但数据库又需要数据库之间各自提供服务时，并且还想使用主从同步等技术，此时多实例就再好不过了；<br>3）方便后期架构扩展</p>
 <p>&emsp;&emsp; 当公司的某个项目才启动时，启动初期并不一定有很大的用户量，因此可以先用一组物理数据库服务器，在上面部署多个实例，方便后续架构扩展、迁移；</p>
 <p>2.2、缺点</p>

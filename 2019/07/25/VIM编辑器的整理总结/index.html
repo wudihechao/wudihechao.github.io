@@ -56,13 +56,13 @@
   };
 </script>
 
-  <meta name="description" content="&emsp;&emsp;VIM是linux中功能强大的文本编辑工具，因为功能强大，所以各种参数快捷键也很复杂，为方便记忆，特整理如下：">
+  <meta name="description" content="&emsp;&emsp;VIM是linux中功能强大的文本编辑工具，因为功能强大，所以各种参数快捷键也很复杂，为方便记忆，特整理如下：vim命令基本格式与参数  vim [OPTION] FILE  常见参数：  +#  :打开文件后，让光标处于第#行，(+ 默认为行尾)。  +/PATTERN  :打开文件后，让光标处于第一个被PATTERN匹配到的行的行首。  -b file  :以二进制方式">
 <meta name="keywords" content="linux,vim编辑器">
 <meta property="og:type" content="article">
 <meta property="og:title" content="VIM编辑器的整理总结">
 <meta property="og:url" content="http://hewanyue.com/2019/07/25/VIM编辑器的整理总结/index.html">
 <meta property="og:site_name" content="BOHC!">
-<meta property="og:description" content="&emsp;&emsp;VIM是linux中功能强大的文本编辑工具，因为功能强大，所以各种参数快捷键也很复杂，为方便记忆，特整理如下：">
+<meta property="og:description" content="&emsp;&emsp;VIM是linux中功能强大的文本编辑工具，因为功能强大，所以各种参数快捷键也很复杂，为方便记忆，特整理如下：vim命令基本格式与参数  vim [OPTION] FILE  常见参数：  +#  :打开文件后，让光标处于第#行，(+ 默认为行尾)。  +/PATTERN  :打开文件后，让光标处于第一个被PATTERN匹配到的行的行首。  -b file  :以二进制方式">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190725151050805.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190725164028382.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
@@ -77,7 +77,7 @@
 <meta property="og:updated_time" content="2019-10-07T02:38:38.768Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="VIM编辑器的整理总结">
-<meta name="twitter:description" content="&emsp;&emsp;VIM是linux中功能强大的文本编辑工具，因为功能强大，所以各种参数快捷键也很复杂，为方便记忆，特整理如下：">
+<meta name="twitter:description" content="&emsp;&emsp;VIM是linux中功能强大的文本编辑工具，因为功能强大，所以各种参数快捷键也很复杂，为方便记忆，特整理如下：vim命令基本格式与参数  vim [OPTION] FILE  常见参数：  +#  :打开文件后，让光标处于第#行，(+ 默认为行尾)。  +/PATTERN  :打开文件后，让光标处于第一个被PATTERN匹配到的行的行首。  -b file  :以二进制方式">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190725151050805.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
   <link rel="canonical" href="http://hewanyue.com/2019/07/25/VIM编辑器的整理总结/">
 
@@ -408,8 +408,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>&emsp;&emsp;VIM是linux中功能强大的文本编辑工具，因为功能强大，所以各种参数快捷键也很复杂，为方便记忆，特整理如下：</p><a id="more"></a>
-<h3 id="vim命令基本格式与参数"><a href="#vim命令基本格式与参数" class="headerlink" title="vim命令基本格式与参数"></a>vim命令基本格式与参数</h3><p>  <code>vim [OPTION] FILE</code><br>  常见参数：<br>  +#  :打开文件后，让光标处于第#行，(+ 默认为行尾)。<br>  +/PATTERN  :打开文件后，让光标处于第一个被PATTERN匹配到的行的行首。<br>  -b file  :以二进制方式打开文件。<br>  -d file1/file2  :比较多个文件的不同。<br>  -m file  :以只读方式打开文件。<br>  -e file 或 ex file  :直接进入ex模式（扩展命令模式或叫做末行模式）。</p>
+        <p>&emsp;&emsp;VIM是linux中功能强大的文本编辑工具，因为功能强大，所以各种参数快捷键也很复杂，为方便记忆，特整理如下：</p><h3 id="vim命令基本格式与参数"><a href="#vim命令基本格式与参数" class="headerlink" title="vim命令基本格式与参数"></a>vim命令基本格式与参数</h3><p>  <code>vim [OPTION] FILE</code><br>  常见参数：<br>  +#  :打开文件后，让光标处于第#行，(+ 默认为行尾)。<br>  +/PATTERN  :打开文件后，让光标处于第一个被PATTERN匹配到的行的行首。<br>  -b file  :以二进制方式打开文件。<br>  -d file1/file2  :比较多个文件的不同。<br>  -m file  :以只读方式打开文件。<br>  -e file 或 ex file  :直接进入ex模式（扩展命令模式或叫做末行模式）。</p><a id="more"></a>
+
 <h3 id="vim的几种工作模式"><a href="#vim的几种工作模式" class="headerlink" title="vim的几种工作模式"></a>vim的几种工作模式</h3><p><img src="https://img-blog.csdnimg.cn/20190725151050805.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="VIM几种模式及切换"></p>
 <h3 id="command模式下的光标跳转："><a href="#command模式下的光标跳转：" class="headerlink" title="command模式下的光标跳转："></a>command模式下的光标跳转：</h3><p>字符间跳转：h 左；j下；k 上；l 右。<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;#command 可以执行#次命令。<br>单词间跳转：w：下一个单词的词首；<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;e：当前或下一个单词的词尾。<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;b：当前或前一个单词的词首。<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;#command 可以执行#次命令。<br>当前页跳转：H：跳转至页首。<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;M：跳转至页中间行。<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;L：跳转至页底。<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;zt：将光别所在行移到屏幕顶端；<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;zz：将光标所在行移到屏幕中间；<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;zb：将光标所在行移到屏幕低端。<br>行首行尾跳转：^:跳转至行首的第一个非空的字符；<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;0:跳转至行首；<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;$:跳转至行尾。<br>行间移动：#G :移动至第#行行首。（相当于扩展命令模式下 #）<br>&emsp;&emsp;&emsp;&emsp;&emsp;   G  ：移至最后一行行首。<br>&emsp;&emsp;&emsp;1G 或gg:移至第一行行首。<br>句间移动   :  ) : 下一句；<br>&emsp;&emsp;&emsp;&emsp;&emsp;( : 上一句。<br>段间移动   :  } : 下一段；<br>&emsp;&emsp;&emsp;&emsp;&emsp;{ : 上一段。<br>翻屏操作：Ctrl+f  向文件尾部翻一屏（向前翻屏）；<br>&emsp;&emsp;&emsp;&emsp;&emsp;Ctrl+b 向文件首部翻一屏（向后翻屏）；<br>&emsp;&emsp;&emsp;&emsp;&emsp;Ctrl+d 向文件尾部翻半屏（向下翻屏）；<br>&emsp;&emsp;&emsp;&emsp;&emsp;Ctrl+u 向文件尾部翻半屏（向上翻屏）；</p>
 <h3 id="command模式下的字符编辑："><a href="#command模式下的字符编辑：" class="headerlink" title="command模式下的字符编辑："></a>command模式下的字符编辑：</h3><p><strong>x</strong> ： 删除（可认为是剪切，并非真的删除）光标处的字符；<br><strong>#x</strong>：删除光标处起始的#个字符；<br><strong>p</strong> ：在光标所在处的后面插入储存的字符；<br><strong>xp</strong>：交换光标所在处的字符及后面字符的位置；<br><strong>~</strong> ： 转换大小写；<br><strong>J</strong> ： 删除当前行后的换行符；</p>
