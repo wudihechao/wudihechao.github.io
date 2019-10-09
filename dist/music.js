@@ -1,4 +1,4 @@
-const ap = new APlayer({
+const aplist = new APlayer({
     container: document.getElementById('aplayer'),
     fixed: true,
     autoplay: false,
