@@ -6,13 +6,13 @@ const ap = new APlayer({
       {
         name: "体面",
         artist: '于文文',
-        url: 'http://fs.open.kugou.com/bdc6be2b5e756bf3c5c917d7fe5a401b/5d9b4bdc/G135/M06/17/13/xw0DAFtHOJOACZiNAEUe3eVFTx8339.mp3',
+        url: 'https://hewanyue.com/mp3/timian.mp3',
         cover: 'https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike116%2C5%2C5%2C116%2C38/sign=45ead8f7ba3533fae1bb9b7cc9ba967a/b812c8fcc3cec3fda031f68cdd88d43f8794273f.jpg',
       },
       {
         name: '白羊',
         artist: '徐秉龙&沈以诚',
-        url: 'http://fs.open.kugou.com/4cbc74a37376733d9590a44592e283a4/5d9c511f/G107/M0A/1D/17/S5QEAFnzHSGAOh3sACkiyJENriA196.mp3',
+        url: 'https://hewanyue.com/mp3/baiyang.mp3',
         cover: 'http://img3.kuwo.cn/star/starheads/120/67/74/3204842448.jpg',
       },
       {
