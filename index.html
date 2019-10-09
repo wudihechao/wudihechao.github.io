@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 
 
-
-<script>
-  function clear(){
-  sou=document.body.firstChild.date;
-  document.open();
-  document.close();
-  document.title='BOHC! -- 看不到源码'
-  document.body.innerHTML=sou ////看不到源码
-  }
+<script type="text/javascript">
+document.onmousedown=click
+function click()
+{
+if(event.button==2){alert('对不起，您无权查看源代码);}
+if(event.button==3){alert('对不起，您无权查看源代码');}
+}
 </script>
 <script type="text/javascript" src="/js/src/dytitle.js"></script>
 <html lang="zh-CN">
