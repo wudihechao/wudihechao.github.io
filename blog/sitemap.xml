@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://hewanyue.com/blog/about/index.html</loc>
+    
+    <lastmod>2019-10-10T03:34:51.879Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://hewanyue.com/blog/2019/10/07/%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E4%B9%8BAnsible/</loc>
     
-    <lastmod>2019-10-10T03:31:51.971Z</lastmod>
+    <lastmod>2019-10-10T03:33:32.261Z</lastmod>
     
   </url>
   
@@ -75,13 +82,6 @@
     <loc>https://hewanyue.com/blog/2019/09/06/%E9%83%A8%E7%BD%B2%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%89%E8%A3%85%E5%8F%8Acobber-Http-TFTP-PXE-kickstart%E6%97%A0%E4%BA%BA%E8%81%8C%E5%AE%88%E6%89%B9%E9%87%8F%E5%AE%89%E8%A3%85%E7%B2%BE%E7%AE%80%E7%89%88Linux%E7%B3%BB%E7%BB%9F/</loc>
     
     <lastmod>2019-10-07T02:12:56.856Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hewanyue.com/blog/about/index.html</loc>
-    
-    <lastmod>2019-10-06T06:36:35.178Z</lastmod>
     
   </url>
   
