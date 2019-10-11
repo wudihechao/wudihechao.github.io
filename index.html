@@ -196,7 +196,9 @@ NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
 
 
 
-                    <div id="aplayer" class="aplayer aplayer-withlist aplayer-arrow aplayer-fixed">
+
+
+                    <div id="aplayer-index" class="aplayer aplayer-withlist aplayer-arrow aplayer-fixed">
 
 
 <div class="aplayer-list aplayer-list-hide" style="max-height: 250px">
@@ -301,7 +303,26 @@ NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
 
 
 
-
+        <div id="aplayer-NBsprYWS" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
+            <pre class="aplayer-lrc-content"></pre>
+        </div>
+        <script>
+          var ap = new APlayer({
+            element: document.getElementById("aplayer-index"),
+            narrow: false,
+            autoplay: true,
+            showlrc: false,
+            music: {
+              title: "Coming Home",
+              author: "Peter Jeremias",
+              url: "https://hewanyue.com/blog/mp3/ComingHome.mp3",
+              pic: "https://hewanyue.com/blog/mp3/cover/ComingHome.jpg",
+              lrc: ""
+            }
+          });
+          window.aplayers || (window.aplayers = []);
+          window.aplayers.push(ap);
+        </script>
 
 
 </div>
