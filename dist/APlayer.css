@@ -58,14 +58,14 @@
  width:66px
 }
 .aplayer.aplayer-fixed {
- position:absolute;
+ position:fixed;
  bottom:89px;
- left:1055px;
+ left:1058px;
  right:0px;
  margin:0;
  z-index:97;
  overflow:visible;
- max-width:289px;
+ max-width:300px;
  box-shadow:none
 }
 .aplayer.aplayer-fixed .aplayer-list {
@@ -76,14 +76,14 @@
 .aplayer.aplayer-fixed .aplayer-body {
  position:fixed;
  bottom:92px;
- left:1055px;
+ left:1058px;
  right:0px;
  margin:0;
  z-index:99;
  background:#fff;
  padding-right:0px;
  transition:all .3s ease;
- max-width:302px;
+ max-width:300px;
 }
 .aplayer.aplayer-fixed .aplayer-lrc {
  display:block;
