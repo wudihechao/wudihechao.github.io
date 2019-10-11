@@ -58,9 +58,9 @@
  width:66px
 }
 .aplayer.aplayer-fixed {
- position:fixed;
+ position:absolute;
  bottom:89px;
- left:1058px;
+ left:11px;
  right:0px;
  margin:0;
  z-index:97;
@@ -74,9 +74,9 @@
  border-bottom:none
 }
 .aplayer.aplayer-fixed .aplayer-body {
- position:fixed;
- bottom:92px;
- left:1058px;
+ position:absolute;
+ bottom:3px;
+ left:0px;
  right:0px;
  margin:0;
  z-index:99;
