@@ -63,7 +63,7 @@
 <meta property="og:site_name" content="BOHC!">
 <meta property="og:description" content="&emsp;&emsp;近期想在新出的CentOS8上安装一下最新版的mariadb10.4.8，不过又嫌源码编译太麻烦费时间。就想去找找有没有yum源可用。&emsp;&emsp;果然官网上已经放出了yum安装的repo源了，也支持到CentOS8了——http://mirror.aarnet.edu.au/pub/MariaDB//mariadb-10.4.8/yum/centos/8/x86">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-10-12T07:49:25.880Z">
+<meta property="og:updated_time" content="2019-10-12T08:06:07.706Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="yum/dnf 安装mariadb10.4.8（最新版）">
 <meta name="twitter:description" content="&emsp;&emsp;近期想在新出的CentOS8上安装一下最新版的mariadb10.4.8，不过又嫌源码编译太麻烦费时间。就想去找找有没有yum源可用。&emsp;&emsp;果然官网上已经放出了yum安装的repo源了，也支持到CentOS8了——http://mirror.aarnet.edu.au/pub/MariaDB//mariadb-10.4.8/yum/centos/8/x86">
@@ -413,7 +413,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>&emsp;&emsp;近期想在新出的CentOS8上安装一下最新版的mariadb10.4.8，不过又嫌源码编译太麻烦费时间。就想去找找有没有yum源可用。<br>&emsp;&emsp;果然官网上已经放出了yum安装的repo源了，也支持到CentOS8了——<a href="http://mirror.aarnet.edu.au/pub/MariaDB//mariadb-10.4.8/yum/centos/8/x86_64/。那就手动加一个yum源吧。" target="_blank" rel="noopener">http://mirror.aarnet.edu.au/pub/MariaDB//mariadb-10.4.8/yum/centos/8/x86_64/。那就手动加一个yum源吧。</a><br>&emsp;&emsp;<code>vim /etc/yum.repos.d/mariadb1048.repo</code></p><a id="more"></a>
+        <p>&emsp;&emsp;近期想在新出的CentOS8上安装一下最新版的mariadb10.4.8，不过又嫌源码编译太麻烦费时间。就想去找找有没有yum源可用。<br>&emsp;&emsp;果然官网上已经放出了yum安装的repo源了，也支持到CentOS8了——<a href="http://mirror.aarnet.edu.au/pub/MariaDB//mariadb-10.4.8/yum/centos/8/x86_64/" target="_blank" rel="noopener">http://mirror.aarnet.edu.au/pub/MariaDB//mariadb-10.4.8/yum/centos/8/x86_64/</a><br>&emsp;&emsp;那就手动加一个yum源吧。<br>&emsp;&emsp;<code>vim /etc/yum.repos.d/mariadb1048.repo</code></p><a id="more"></a>
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[mariadb10.4.8]</span></span><br><span class="line"><span class="attr">name</span>=Mariadb10.<span class="number">4.8</span> RPM repository for  Linux <span class="variable">$releasever</span> - <span class="variable">$basearch</span></span><br><span class="line"><span class="attr">baseurl</span>=http://mirror.aarnet.edu.au/pub/MariaDB//mariadb-<span class="number">10.4</span>.<span class="number">8</span>/yum/centos/<span class="variable">$releasever</span>/<span class="variable">$basearch</span>/</span><br><span class="line"><span class="attr">enabled</span>=<span class="number">1</span></span><br><span class="line"><span class="attr">gpgcheck</span>=<span class="number">0</span></span><br></pre></td></tr></table></figure>
 
 <p>&emsp;&emsp;加好yum源后，执行安装<code>dnf install mariadb-server -y</code></p>
