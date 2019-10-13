@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://hewanyue.com/blog/categories/index.html</loc>
+    
+    <lastmod>2019-10-13T08:09:29.506Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://hewanyue.com/blog/2019/10/12/yum-dnf-%E5%AE%89%E8%A3%85mariadb10-4-8%EF%BC%88%E6%9C%80%E6%96%B0%E7%89%88%EF%BC%89/</loc>
     
     <lastmod>2019-10-12T08:10:37.585Z</lastmod>
@@ -131,13 +138,6 @@
     <loc>https://hewanyue.com/blog/2019/07/16/%E4%B8%8D%E5%BF%98%E5%88%9D%E5%BF%83%EF%BC%8C%E6%96%B9%E5%BE%97%E5%A7%8B%E7%BB%88/</loc>
     
     <lastmod>2019-10-04T08:24:47.572Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hewanyue.com/blog/categories/index.html</loc>
-    
-    <lastmod>2019-10-04T08:22:01.753Z</lastmod>
     
   </url>
   
