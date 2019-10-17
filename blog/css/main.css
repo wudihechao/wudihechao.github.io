@@ -377,9 +377,9 @@ code {
 code {
   overflow-wrap: break-word;
   word-wrap: break-word;
-  background: #008b8b;
+  background: #eee;
   border-radius: 4px;
-  color: #eee;
+  color: #d05;
   padding: 2px 4px;
 }
 pre {
@@ -411,7 +411,7 @@ pre code {
   padding: 0;
 }
 .highlight figcaption {
-  background: #008b8b;
+  background: #eee;
   border-bottom: 1px solid #e9e9e9;
   color: #c5c8c6;
   line-height: 1em;
@@ -1268,7 +1268,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #fc86af;
+  background: #06ff00;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2676,6 +2676,8 @@ embed {
 .header-inner {
   padding-top: 35px;
   padding-bottom: 0px;
+  padding-left: 30px;
+  padding-right: 30px;
 }
 .post {
   margin-top: 60px;
@@ -2686,6 +2688,8 @@ embed {
 }
 .posts-expand {
   padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 30px;
 }
 .posts-expand .post-meta {
   margin: 5px 0px 0px 0px;
