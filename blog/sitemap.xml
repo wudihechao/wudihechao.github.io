@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://hewanyue.com/blog/categories/index.html</loc>
+    
+    <lastmod>2019-10-18T03:08:04.266Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://hewanyue.com/blog/2019/08/29/CentOS6%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91-%E5%AE%89%E8%A3%85linunx%E5%86%85%E6%A0%B8%E6%9C%80%E6%96%B0%E7%89%885-2-9/</loc>
     
     <lastmod>2019-10-18T02:52:17.197Z</lastmod>
@@ -26,13 +33,6 @@
     <loc>https://hewanyue.com/blog/2019/10/12/yum-dnf-%E5%AE%89%E8%A3%85mariadb10-4-8%EF%BC%88%E6%9C%80%E6%96%B0%E7%89%88%EF%BC%89/</loc>
     
     <lastmod>2019-10-13T14:31:46.593Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hewanyue.com/blog/categories/index.html</loc>
-    
-    <lastmod>2019-10-13T08:57:43.941Z</lastmod>
     
   </url>
   
