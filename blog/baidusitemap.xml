@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://hewanyue.com/blog/blog/2019/08/29/CentOS6%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91-%E5%AE%89%E8%A3%85linunx%E5%86%85%E6%A0%B8%E6%9C%80%E6%96%B0%E7%89%885-2-9/</loc>
+    <lastmod>2019-10-18</lastmod>
+  </url>  <url>
     <loc>https://hewanyue.com/blog/blog/2019/10/14/LAMP%E6%9E%B6%E6%9E%84%E5%AE%9E%E7%8E%B0PowerDNS/</loc>
     <lastmod>2019-10-17</lastmod>
   </url>  <url>
@@ -32,9 +35,6 @@
     <lastmod>2019-10-07</lastmod>
   </url>  <url>
     <loc>https://hewanyue.com/blog/blog/2019/07/30/%E8%87%AA%E5%8A%A8%E5%A4%87%E4%BB%BD%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%84%9A%E6%9C%AC%EF%BC%88screen%E5%90%8E%E5%8F%B0%E6%89%A7%E8%A1%8C%EF%BC%89/</loc>
-    <lastmod>2019-10-07</lastmod>
-  </url>  <url>
-    <loc>https://hewanyue.com/blog/blog/2019/08/29/CentOS6%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91-%E5%AE%89%E8%A3%85linunx%E5%86%85%E6%A0%B8%E6%9C%80%E6%96%B0%E7%89%885-2-9/</loc>
     <lastmod>2019-10-07</lastmod>
   </url>  <url>
     <loc>https://hewanyue.com/blog/blog/2019/09/06/%E9%83%A8%E7%BD%B2%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%89%E8%A3%85%E5%8F%8Acobber-Http-TFTP-PXE-kickstart%E6%97%A0%E4%BA%BA%E8%81%8C%E5%AE%88%E6%89%B9%E9%87%8F%E5%AE%89%E8%A3%85%E7%B2%BE%E7%AE%80%E7%89%88Linux%E7%B3%BB%E7%BB%9F/</loc>
