@@ -64,7 +64,7 @@
 <meta property="og:description" content="&emsp;&emsp;所谓LAMP架构，是指：&emsp;&emsp;&emsp;&emsp;L：linux&emsp;&emsp;&emsp;&emsp;A：apache (httpd)&emsp;&emsp;&emsp;&emsp;M：mysql, mariadb&emsp;&emsp;&emsp;&emsp;（或M：memcached）&emsp;&emsp;&emsp;&emsp;P：p">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191018193028582.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
-<meta property="og:updated_time" content="2019-10-19T13:40:31.943Z">
+<meta property="og:updated_time" content="2019-10-19T13:42:12.740Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="源码编译Apache和PHP实现lamp架构">
 <meta name="twitter:description" content="&emsp;&emsp;所谓LAMP架构，是指：&emsp;&emsp;&emsp;&emsp;L：linux&emsp;&emsp;&emsp;&emsp;A：apache (httpd)&emsp;&emsp;&emsp;&emsp;M：mysql, mariadb&emsp;&emsp;&emsp;&emsp;（或M：memcached）&emsp;&emsp;&emsp;&emsp;P：p">
@@ -460,7 +460,7 @@
 <p>&emsp;&emsp;添加php测试页</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim <span class="regexp">/data/</span>httpd24<span class="regexp">/htdocs/i</span>ndex.php</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="meta"><?php</span></span></span><br><span class="line"><span class="php">phpinfo() </span></span><br><span class="line"><span class="php"><span class="meta">?></span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> <span class="php"><span class="meta"><?php</span></span></span><br><span class="line"><span class="php">phpinfo() </span></span><br><span class="line"><span class="php"><span class="meta">?></span></span></span><br></pre></td></tr></table></figure>
 
 <p>&emsp;&emsp;重启apache服务</p>
 <figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">apachectl restart</span></span><br></pre></td></tr></table></figure>
