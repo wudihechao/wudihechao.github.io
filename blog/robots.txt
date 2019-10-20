@@ -1,12 +1,10 @@
 User-agent: *
-Allow: /2019/
-Allow: /archives/
-Allow: /tags/
-Allow: /about/
-Allow: /categories/
-Allow: /page/
 Allow: /blog/
 
+Disallow: /js/
+Disallow: /css/
+Disallow: /dist/
+Disallow: /side/
 
 
 sitemap: https://hewanyue.com/blog/sitemap.xml
