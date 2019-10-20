@@ -7,16 +7,6 @@ Allow: /categories/
 Allow: /page/
 Allow: /blog/
 
-Disallow: /dist/
-Disallow: /js/
-Disallow: /css/
-Disallow: /live2d/
-Disallow: /lib/
-Disallow: /blog/dist/
-Disallow: /blog/js/
-Disallow: /blog/css/
-Disallow: /blog/live2d/
-Disallow: /blog/lib/
 
 
 sitemap: https://hewanyue.com/blog/sitemap.xml
