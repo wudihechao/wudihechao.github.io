@@ -5,13 +5,19 @@ Allow: /tags/
 Allow: /about/
 Allow: /categories/
 Allow: /page/
+Allow: /blog/
 
 Disallow: /dist/
 Disallow: /js/
 Disallow: /css/
 Disallow: /live2d/
 Disallow: /lib/
+Disallow: /blog/dist/
+Disallow: /blog/js/
+Disallow: /blog/css/
+Disallow: /blog/live2d/
+Disallow: /blog/lib/
 
 
-sitemap: http://hewanyue.com/sitemap.xml
-sitemap: http://hewanyue.com/baidusitemap.xml
+sitemap: https://hewanyue.com/blog/sitemap.xml
+sitemap: https://hewanyue.com/blog/baidusitemap.xml
