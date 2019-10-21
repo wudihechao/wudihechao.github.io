@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-
-
-
-
 <script type="text/javascript" src="/blog/js/src/dytitle.js"></script>
 <html lang="zh-CN">
 <body oncontextmenu=self.event.returnValue=false onselectstart="return false">
@@ -14,13 +10,8 @@
 <meta name="generator" content="Hexo 3.9.0">
   <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32.ico?v=7.4.0">
   <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16.ico?v=7.4.0">
-
 <link rel="stylesheet" href="/blog/css/main.css?v=7.4.0">
-
-
 <link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
-
-
 <script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
@@ -54,7 +45,6 @@
     sidebarPadding: 40
   };
 </script>
-
   <meta name="description" content="&emsp;&emsp;一般来说，硬盘上的空间，想要被我们利用，都要经过几个步骤： 1设备识别 2磁盘分区 3创建文件系统（并标记文件系统） 4挂载新的文件系统 5在/etc/fstab文件中创建新条目&emsp; &emsp;&emsp;只有当设备被挂载到文件系统中，才可以被我们访问且使用。&emsp;">
 <meta name="keywords" content="linux,filesystem">
 <meta property="og:type" content="article">
@@ -72,8 +62,6 @@
 <meta name="twitter:description" content="&emsp;&emsp;一般来说，硬盘上的空间，想要被我们利用，都要经过几个步骤： 1设备识别 2磁盘分区 3创建文件系统（并标记文件系统） 4挂载新的文件系统 5在/etc/fstab文件中创建新条目&emsp; &emsp;&emsp;只有当设备被挂载到文件系统中，才可以被我们访问且使用。&emsp;">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190815093309132.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
   <link rel="canonical" href="https://hewanyue.com/blog/CentOS7磁盘分区及文件系统/">
-
-
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
@@ -84,17 +72,8 @@
     isArchive: false
   };
 </script>
-
   <title>CentOS7磁盘分区及文件系统 | BOHC!</title>
   
-
-
-
-
-
-
-
-
   <noscript>
   <style>
   .use-motion .brand,
@@ -106,21 +85,17 @@
   .use-motion .post-header,
   .use-motion .post-body,
   .use-motion .collection-header { opacity: initial; }
-
   .use-motion .logo,
   .use-motion .site-title,
   .use-motion .site-subtitle {
     opacity: initial;
     top: initial;
   }
-
   .use-motion .logo-line-before i { left: initial; }
   .use-motion .logo-line-after i { right: initial; }
   </style>
 </noscript>
-
 </head>
-
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
   <div class="container use-motion">
     <div class="headband"></div>
@@ -128,7 +103,6 @@
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-meta">
-
     <div>
       <a href="/blog/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
@@ -139,7 +113,6 @@
         <h1 class="site-subtitle" itemprop="description">blog of hechao!</h1>
       
   </div>
-
   <div class="site-nav-toggle">
     <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
@@ -148,8 +121,6 @@
     </button>
   </div>
 </div>
-
-
 <nav class="site-nav">
   
   <ul id="menu" class="menu">
@@ -169,9 +140,7 @@
         
       
     
-
     <a href="/blog/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i><br>首页</a>
-
   </li>
       
       
@@ -189,9 +158,7 @@
         
       
     
-
     <a href="/blog/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i><br>关于</a>
-
   </li>
       
       
@@ -211,9 +178,7 @@
         
       
     
-
     <a href="/blog/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i><br>标签<span class="badge">29</span></a>
-
   </li>
       
       
@@ -233,9 +198,7 @@
         
       
     
-
     <a href="/blog/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i><br>分类<span class="badge">4</span></a>
-
   </li>
       
       
@@ -255,9 +218,7 @@
         
       
     
-
     <a href="/blog/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i><br>归档<span class="badge">19</span></a>
-
   </li>
       <li class="menu-item menu-item-search">
         <a href="javascript:;" class="popup-trigger">
@@ -266,9 +227,7 @@
       </li>
     
   </ul>
-
     
-
 </nav>
   <div class="site-search">
     <div class="popup search-popup">
@@ -286,14 +245,11 @@
   </span>
 </div>
 <div id="search-result"></div>
-
 </div>
 <div class="search-pop-overlay"></div>
-
   </div>
 </div>
     </header>
-
     
   <div class="back-to-top">
     <i class="fa fa-arrow-up"></i>
@@ -301,16 +257,12 @@
   </div>
   <div class="reading-progress-bar"></div>
   <a class="book-mark-link book-mark-link-fixed" href="#"></a>
-
   <a href="https://github.com/wudihechao" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
-
-
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
           <div id="content" class="content">
             
-
   <div id="posts" class="posts-expand">
       <article itemscope itemtype="http://schema.org/Article">
   
@@ -318,33 +270,27 @@
   
   <div class="post-block post">
     <link itemprop="mainEntityOfPage" href="https://hewanyue.com/blog/blog/CentOS7磁盘分区及文件系统/">
-
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hechao">
       <meta itemprop="description" content="BOHC is just a blog of hechao.">
       <meta itemprop="image" content="/blog/images/touxiang.jpg">
     </span>
-
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="BOHC!">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">CentOS7磁盘分区及文件系统
-
           
         </h2>
-
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-
               
                 
               
-
               <time title="创建时间：2019-08-14 22:27:33" itemprop="dateCreated datePublished" datetime="2019-08-14T22:27:33+08:00">2019-08-14</time>
             </span>
           
@@ -355,13 +301,11 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/blog/categories/linux基础/" itemprop="url" rel="index"><span itemprop="name">linux基础</span></a></span>
-
                 
                 
               
             </span>
           
-
           
             <span id="/blog/CentOS7磁盘分区及文件系统/" class="post-meta-item leancloud_visitors" data-flag-title="CentOS7磁盘分区及文件系统" title="阅读次数">
               <span class="post-meta-item-icon">
@@ -407,15 +351,12 @@
               <span>7 分钟</span>
             </span>
           
-
         </div>
       </header>
-
     
     
     
     <div class="post-body" itemprop="articleBody">
-
       
         <p><strong>&emsp;&emsp;一般来说，硬盘上的空间，想要被我们利用，都要经过几个步骤：</strong></p><ul>
 <li>1设备识别</li>
@@ -424,8 +365,6 @@
 <li>4挂载新的文件系统</li>
 <li>5在/etc/fstab文件中创建新条目<br>&emsp;</li>
 </ul><p><strong>&emsp;&emsp;只有当设备被挂载到文件系统中，才可以被我们访问且使用。</strong><br>&emsp;</p><a id="more"></a>
-
-
 <h2 id="1-设备识别"><a href="#1-设备识别" class="headerlink" title="1 设备识别"></a>1 设备识别</h2><p> 新插入硬盘设备，没法被系统立马识别到，需要手动扫描，才可以发现并识别新设备<br><code>echo "- - -" > /sys/class/scsi_host/host0/scan</code><br>/sys/class/scsi_host/        目录下面有几个host 就扫描几次。<br>&emsp;<br>&emsp;</p>
 <h2 id="2-磁盘分区"><a href="#2-磁盘分区" class="headerlink" title="2 磁盘分区"></a>2 磁盘分区</h2><h3 id="2-1为什么要分区"><a href="#2-1为什么要分区" class="headerlink" title="2.1为什么要分区"></a>2.1为什么要分区</h3><ul>
 <li>优化I/O性能</li>
@@ -475,14 +414,11 @@
 <h3 id="4-2卸载命令"><a href="#4-2卸载命令" class="headerlink" title="4.2卸载命令"></a>4.2卸载命令</h3><p>查看挂载情况<br>&emsp;&emsp;findmnt MOUNT_POINT|device<br>查看正在访问指定文件系统的进程<br>&emsp;&emsp;lsof MOUNT_POINT<br>&emsp;&emsp;fuser -v MOUNT_POINT<br>终止所有在正访问指定的文件系统的进程<br>&emsp;&emsp;fuser -km MOUNT_POINT<br>卸载<br>&emsp;&emsp;umount DEVICE<br>&emsp;&emsp;umount MOUNT_POINT</p>
 <h2 id="5-修改-etc-fstab配置文件"><a href="#5-修改-etc-fstab配置文件" class="headerlink" title="5 修改/etc/fstab配置文件"></a>5 修改/etc/fstab配置文件</h2><p>&emsp;&emsp;使用mount命令挂载设备都是临时挂载，每次开机后需要手动重新挂载，比较费时费力，如果需要实现自动挂载，就要修改文件系统挂载配置文件/etc/fstab文件。<br>/etc/fstab文件 下面的每行定义一个要挂载的文件系统<br>&emsp;&emsp;总共六列，分别对应设备、挂载点、文件系统类型、挂载选项、转储频率及是否自检。<br> 1、要挂载的设备或伪文件系统<br>设备文件<br>LABEL：LABEL=””<br>UUID：UUID=””<br>伪文件系统名称：proc, sysfs<br> 2、挂载点  一般为某文件或目录<br> 3、文件系统类型：ext4，xfs，iso9660，nfs，none<br> 4、挂载选项：defaults（包括rw suidi dev exac auto nouser async） ，acl，bind<br> 5、转储频率：0：不做备份 1：每天转储 2：每隔一天转储<br> 6、fsck检查的文件系统的顺序：允许的数字是0 1 2<br>&emsp;&emsp;0：不自检<br>&emsp;&emsp;1：首先自检；一般只有rootfs才用<br>&emsp;&emsp;2：非rootfs使用<br>&emsp;&emsp;可以使用cat 、echo 等命令 将这6个信息 追加至/etc/fstab文件中，也可以用sed 命令 。</p>
 <p>&emsp;&emsp;<strong>使用<code>mount -a</code> 命令可以立即挂载/etc/fstab中的所有文件系统</strong></p>
-
     </div>
-
     
     
     
       
-
     <div style="text-align:center;color: #ccc;font-size:14px;">---------------- The End ----------------</div>
         
       
@@ -498,13 +434,10 @@
         <img src="/blog/images/wechat-pay.png" alt="Hechao 微信支付">
         <p>微信支付</p>
       </div>
-
   </div>
 </div>
-
       
         
-
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
@@ -517,9 +450,7 @@
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
 </ul>
 </div>
-
       
-
       <footer class="post-footer">
           
             
@@ -532,9 +463,7 @@
             
           </div>
         
-
         
-
         
     <div class="links-of-blogroll motion-element links-of-blogroll-block">
       <div class="links-of-blogroll-title" style="padding-left: 10px;">
@@ -567,8 +496,6 @@
         
       </ul>
     </div>
-
-
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
@@ -577,9 +504,7 @@
                 </a>
               
             </div>
-
             <span class="post-nav-divider"></span>
-
             <div class="post-nav-prev post-nav-item">
               
                 <a href="/blog/for循环实现的小脚本/" rel="prev" title="for循环实现的小脚本">
@@ -596,16 +521,12 @@
   
   
   </article>
-
   </div>
-
-
           </div>
           
     
     <div class="comments" id="comments"></div>
   
-
         </div>
           
   
@@ -616,7 +537,6 @@
       <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
     </div>
   </div>
-
   <aside class="sidebar">
     <div class="sidebar-inner">
         
@@ -624,7 +544,6 @@
         
         
       
-
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
           文章目录
@@ -633,14 +552,12 @@
           站点概览
         </li>
       </ul>
-
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
           <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-设备识别"><span class="nav-number">1.</span> <span class="nav-text">1 设备识别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-磁盘分区"><span class="nav-number">2.</span> <span class="nav-text">2 磁盘分区</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1为什么要分区"><span class="nav-number">2.1.</span> <span class="nav-text">2.1为什么要分区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2分区方式"><span class="nav-number">2.2.</span> <span class="nav-text">2.2分区方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MBR分区结构"><span class="nav-number">2.2.1.</span> <span class="nav-text">MBR分区结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MBR分区表"><span class="nav-number">2.2.2.</span> <span class="nav-text">MBR分区表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GPT分区结构"><span class="nav-number">2.2.3.</span> <span class="nav-text">GPT分区结构</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3管理分区"><span class="nav-number">2.3.</span> <span class="nav-text">2.3管理分区</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-31列出块设备"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.31列出块设备</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-32创建新分区"><span class="nav-number">2.3.2.</span> <span class="nav-text">2.32创建新分区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-33同步内核与硬盘的分区表"><span class="nav-number">2.3.3.</span> <span class="nav-text">2.33同步内核与硬盘的分区表</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-创建文件系统"><span class="nav-number">3.</span> <span class="nav-text">3 创建文件系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1文件系统"><span class="nav-number">3.1.</span> <span class="nav-text">3.1文件系统</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-11文件系统类型"><span class="nav-number">3.1.1.</span> <span class="nav-text">3.11文件系统类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-12文件系统分类"><span class="nav-number">3.1.2.</span> <span class="nav-text">3.12文件系统分类</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2创建文件系统"><span class="nav-number">3.2.</span> <span class="nav-text">3.2创建文件系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3文件系统标签"><span class="nav-number">3.3.</span> <span class="nav-text">3.3文件系统标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4文件系统检测和修复"><span class="nav-number">3.4.</span> <span class="nav-text">3.4文件系统检测和修复</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-挂载新的文件系统"><span class="nav-number">4.</span> <span class="nav-text">4 挂载新的文件系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1用mount命令挂载文件系统"><span class="nav-number">4.1.</span> <span class="nav-text">4.1用mount命令挂载文件系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2卸载命令"><span class="nav-number">4.2.</span> <span class="nav-text">4.2卸载命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-修改-etc-fstab配置文件"><span class="nav-number">5.</span> <span class="nav-text">5 修改/etc/fstab配置文件</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
-
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image"
@@ -727,7 +644,6 @@
     <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/blog/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
   </div>
 <div id="show_date_time"></div>
-
 <div id="days"></div>
 <script>
 function show_date_time(){
@@ -754,18 +670,14 @@ return i;
 }
 show_date_time();
 </script>
-
       </div>
-
       
       
-  </aside>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=551334101&auto=0&height=66"></iframe> 
+ </aside>
   <div id="sidebar-dimmer"></div>
-
-
       </div>
     </main>
-
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
@@ -779,7 +691,6 @@ show_date_time();
     </span>
     <span title="站点总字数">160k</span>
 </div>
-
         
 <div class="busuanzi-count">
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
@@ -804,23 +715,10 @@ show_date_time();
     </span>
   
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
         
       </div>
     </footer>
   </div>
-
   
     
   
@@ -831,9 +729,6 @@ show_date_time();
 <script src="/blog/js/utils.js?v=7.4.0"></script><script src="/blog/js/motion.js?v=7.4.0"></script>
 <script src="/blog/js/schemes/muse.js?v=7.4.0"></script>
 <script src="/blog/js/next-boot.js?v=7.4.0"></script><script src="/blog/js/bookmark.js?v=7.4.0"></script>
-
-
-
   
   <script>
     (function(){
@@ -844,18 +739,7 @@ show_date_time();
       s.parentNode.insertBefore(bp, s);
     })();
   </script>
-
-
-
-
-
-
-
-
   <script src="/blog/js/local-search.js?v=7.4.0"></script>
-
-
-
   <script>
     window.ChatraSetup = {
       mode: 'frame',
@@ -875,24 +759,9 @@ show_date_time();
       if (d.head) d.head.appendChild(s);
     })(document, window, 'Chatra');
   </script>
-
-
-
-
-
-
-
-
-
-
-
   
-
   
-
   
-
-
 <script>
 NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
   var GUEST = ['nick', 'mail', 'link'];
@@ -916,7 +785,6 @@ NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
   });
 }, window.Valine);
 </script>
-
 <link rel="stylesheet" href="/blog/dist/APlayer.min.css">
 <div id="aplayer"></div>
 <script type="text/javascript" src="/blog/dist/APlayer.min.js"></script>
