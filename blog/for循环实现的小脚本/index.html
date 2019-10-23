@@ -51,6 +51,14 @@
       app_id: "4c96f4af"
     });
   daovoice('update');
+  daovoice('init', {
+    app_id: "4c96f4af",
+    user_id: "NO_89757", // 必填: 该用户在您系统上的唯一ID
+    email: "wudihechao@163.com", // 选填:  该用户在您系统上的主邮箱
+    name: "没有人", // 选填: 用户名
+    signed_up: 1449821660 // 选填: 用户的注册时间，用Unix时间戳表示
+  });
+  daovoice('update');
   </script>
   <meta name="description" content="&emsp;&emsp;用for循环写了个小脚本，可以输出不同大小的图案，能力有限，输出了一个不太规则的字符图案，希望可以早日写出一个脚本可以自动填充放大任何ASCII图案。&emsp;&emsp;效果图如下：">
 <meta name="keywords" content="linux,script">

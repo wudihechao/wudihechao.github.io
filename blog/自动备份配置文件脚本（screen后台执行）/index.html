@@ -51,6 +51,14 @@
       app_id: "4c96f4af"
     });
   daovoice('update');
+  daovoice('init', {
+    app_id: "4c96f4af",
+    user_id: "NO_89757", // 必填: 该用户在您系统上的唯一ID
+    email: "wudihechao@163.com", // 选填:  该用户在您系统上的主邮箱
+    name: "没有人", // 选填: 用户名
+    signed_up: 1449821660 // 选填: 用户的注册时间，用Unix时间戳表示
+  });
+  daovoice('update');
   </script>
   <meta name="description" content="&emsp;&emsp;Linux中配置文件很多，各种需要设置的各种参数很多，有些自定义选项为了方便使用，都会自己修改使用，不过有时候配置文件或者用户参数属性不小心误删掉或者日后想找回当时的参数设置，没有备份肯定是不行的，所以闲暇之余自己写了一个专门备份/etc目录的脚本，以备不时之需。&emsp;&emsp;下面贴代码~">
 <meta name="keywords" content="script,backup">

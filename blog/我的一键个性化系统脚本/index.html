@@ -51,6 +51,14 @@
       app_id: "4c96f4af"
     });
   daovoice('update');
+  daovoice('init', {
+    app_id: "4c96f4af",
+    user_id: "NO_89757", // 必填: 该用户在您系统上的唯一ID
+    email: "wudihechao@163.com", // 选填:  该用户在您系统上的主邮箱
+    name: "没有人", // 选填: 用户名
+    signed_up: 1449821660 // 选填: 用户的注册时间，用Unix时间戳表示
+  });
+  daovoice('update');
   </script>
   <meta name="description" content="&emsp;&emsp;经常要把虚拟机上的系统搞崩，总是各种报错，有次yum安装gcc程序都报错，一旦折腾半天解决不了，只好选择最笨却最有效的方法——还原vrm虚拟机的快照！可是还原快照到干净系统，就导致之前做的喜欢的配置又都没了 还要去慢慢设置开机图案、别名以及各种环境变量比较麻烦，于是就费了点时间，写了下面这个脚本，每次都可以一键实现让新系统恢复自己当初个性化的各种设置。&emsp;&emsp">
 <meta name="keywords" content="script,init">

@@ -51,6 +51,14 @@
       app_id: "4c96f4af"
     });
   daovoice('update');
+  daovoice('init', {
+    app_id: "4c96f4af",
+    user_id: "NO_89757", // 必填: 该用户在您系统上的唯一ID
+    email: "wudihechao@163.com", // 选填:  该用户在您系统上的主邮箱
+    name: "没有人", // 选填: 用户名
+    signed_up: 1449821660 // 选填: 用户的注册时间，用Unix时间戳表示
+  });
+  daovoice('update');
   </script>
   <meta name="description" content="&emsp;&emsp;之前在CentOS7 上源码编译安装过新内核，不过有次在6上编译就遇到问题了，提示错误如下1make[2]: *** [scripts/sign-file] Error 1 make[1]: *** [scripts] Error 2 make搞了好久，好像是参数设置不正确。1error: #error Sorry, your compiler is too old - p">
 <meta name="keywords" content="linux,编译安装,kernel,踩坑">

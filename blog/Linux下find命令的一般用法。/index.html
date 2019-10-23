@@ -51,6 +51,14 @@
       app_id: "4c96f4af"
     });
   daovoice('update');
+  daovoice('init', {
+    app_id: "4c96f4af",
+    user_id: "NO_89757", // 必填: 该用户在您系统上的唯一ID
+    email: "wudihechao@163.com", // 选填:  该用户在您系统上的主邮箱
+    name: "没有人", // 选填: 用户名
+    signed_up: 1449821660 // 选填: 用户的注册时间，用Unix时间戳表示
+  });
+  daovoice('update');
   </script>
   <meta name="description" content="find和locate介绍在linux中，查找文件一般使用locate和find，locate是根据事先构建好的缩影库或者数据库中的数据查找文件名（非实时，速度快，模糊查找），而find作为一个实时查找命令，通过遍历指定起始路径下文件系统层级结构完成文件查找，功能更加强大（实时查找，速度略慢，精确查找）。  find 命令一般用法find [OPTIONS] [查找起始路径] [查找条件] [处">
 <meta name="keywords" content="linux,find命令">

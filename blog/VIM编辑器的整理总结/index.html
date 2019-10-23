@@ -51,6 +51,14 @@
       app_id: "4c96f4af"
     });
   daovoice('update');
+  daovoice('init', {
+    app_id: "4c96f4af",
+    user_id: "NO_89757", // 必填: 该用户在您系统上的唯一ID
+    email: "wudihechao@163.com", // 选填:  该用户在您系统上的主邮箱
+    name: "没有人", // 选填: 用户名
+    signed_up: 1449821660 // 选填: 用户的注册时间，用Unix时间戳表示
+  });
+  daovoice('update');
   </script>
   <meta name="description" content="&emsp;&emsp;VIM是linux中功能强大的文本编辑工具，因为功能强大，所以各种参数快捷键也很复杂，为方便记忆，特整理如下：vim命令基本格式与参数  vim [OPTION] FILE  常见参数：  +#  :打开文件后，让光标处于第#行，(+ 默认为行尾)。  +/PATTERN  :打开文件后，让光标处于第一个被PATTERN匹配到的行的行首。  -b file  :以二进制方式">
 <meta name="keywords" content="linux,vim编辑器">
