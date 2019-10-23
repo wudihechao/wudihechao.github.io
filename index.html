@@ -1,6 +1,13 @@
 <!DOCTYPE>
 <!DOCTYPE html>
 <script type="text/javascript" src="/blog/js/src/dytitle.js"></script>
+<script type="text/javascript">
+        var url = window.location.href;
+        if (url.indexOf("https") < 0) {
+        url = url.replace("http:", "https:");
+        window.location.replace(url);
+        }
+</script>
 <html lang="zh-CN">
 <body oncontextmenu=self.event.returnValue=false onselectstart="return false">
 <head>
