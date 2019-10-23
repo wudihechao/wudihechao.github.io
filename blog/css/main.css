@@ -1268,7 +1268,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #73aa6a;
+  background: #5b5dc1;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2659,7 +2659,6 @@ embed {
     margin: 0;
     padding: 0;
     width: 100%;
-    z-index: 1030;
   }
 }
 .site-nav-toggle {
@@ -2673,14 +2672,14 @@ embed {
 .menu-item-active a,
 .menu .menu-item a:hover,
 .menu .menu-item span.exturl:hover {
-  border-bottom-color: #222;
+  border-bottom: 1px solid #222 !important;
   color: #222;
 }
 @media (max-width: 767px) {
   .menu-item-active a,
   .menu .menu-item a:hover,
   .menu .menu-item span.exturl:hover {
-    border-bottom: 1px dotted #ddd;
+    border-bottom: 1px dotted #ddd !important;
   }
 }
 @media (max-width: 767px) {
@@ -2690,26 +2689,9 @@ embed {
     vertical-align: top;
   }
 }
-.menu .menu-item .badge {
-  background-color: #eee;
-  display: inline-block;
-  font-weight: 700;
-  line-height: 1;
-  margin-left: 5px;
-  padding: 1px 4px;
-  text-align: center;
-  white-space: nowrap;
-}
-@media (max-width: 767px) {
-  .menu .menu-item .badge {
-    float: right;
-    margin: 0.35em 0 0 0;
-  }
-}
-@media (max-width: 767px) {
-  .menu .menu-item br {
-    display: none;
-  }
+.menu .menu-item a,
+.menu .menu-item span.exturl {
+  border-bottom: 1px solid transparent;
 }
 @media (max-width: 767px) {
   .menu .menu-item a,
@@ -2717,21 +2699,25 @@ embed {
     padding: 5px 10px;
   }
 }
-@media (hover: none) {
-  .menu .menu-item a:hover,
-  .menu .menu-item span.exturl:hover {
-    border-bottom-color: transparent !important;
-  }
-}
 @media (min-width: 768px) and (max-width: 991px) {
   .menu .menu-item .fa {
+    display: block;
+    line-height: 2;
+    margin-right: 0;
     width: 100%;
   }
 }
 @media (min-width: 992px) {
   .menu .menu-item .fa {
+    display: block;
+    line-height: 2;
+    margin-right: 0;
     width: 100%;
   }
+}
+.menu .menu-item .badge {
+  background-color: #eee;
+  padding: 1px 4px;
 }
 .sidebar {
   right: -320px;
