@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+
+
+
+
 <script type="text/javascript" src="/blog/js/src/dytitle.js"></script>
 <html lang="zh-CN">
 <body oncontextmenu=self.event.returnValue=false onselectstart="return false">
@@ -10,8 +14,13 @@
 <meta name="generator" content="Hexo 3.9.0">
   <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32.ico?v=7.4.0">
   <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16.ico?v=7.4.0">
+
 <link rel="stylesheet" href="/blog/css/main.css?v=7.4.0">
+
+
 <link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
 <script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
@@ -45,6 +54,9 @@
     sidebarPadding: 40
   };
 </script>
+
+
+
   <meta name="description" content="find和locate介绍在linux中，查找文件一般使用locate和find，locate是根据事先构建好的缩影库或者数据库中的数据查找文件名（非实时，速度快，模糊查找），而find作为一个实时查找命令，通过遍历指定起始路径下文件系统层级结构完成文件查找，功能更加强大（实时查找，速度略慢，精确查找）。  find 命令一般用法find [OPTIONS] [查找起始路径] [查找条件] [处">
 <meta name="keywords" content="linux,find命令">
 <meta property="og:type" content="article">
@@ -58,6 +70,8 @@
 <meta name="twitter:title" content="Linux下find命令的一般用法。">
 <meta name="twitter:description" content="find和locate介绍在linux中，查找文件一般使用locate和find，locate是根据事先构建好的缩影库或者数据库中的数据查找文件名（非实时，速度快，模糊查找），而find作为一个实时查找命令，通过遍历指定起始路径下文件系统层级结构完成文件查找，功能更加强大（实时查找，速度略慢，精确查找）。  find 命令一般用法find [OPTIONS] [查找起始路径] [查找条件] [处">
   <link rel="canonical" href="https://hewanyue.com/blog/Linux下find命令的一般用法。/">
+
+
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
@@ -68,8 +82,17 @@
     isArchive: false
   };
 </script>
+
   <title>Linux下find命令的一般用法。 | BOHC!</title>
   
+
+
+
+
+
+
+
+
   <noscript>
   <style>
   .use-motion .brand,
@@ -81,17 +104,21 @@
   .use-motion .post-header,
   .use-motion .post-body,
   .use-motion .collection-header { opacity: initial; }
+
   .use-motion .logo,
   .use-motion .site-title,
   .use-motion .site-subtitle {
     opacity: initial;
     top: initial;
   }
+
   .use-motion .logo-line-before i { left: initial; }
   .use-motion .logo-line-after i { right: initial; }
   </style>
 </noscript>
+
 </head>
+
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
   <div class="container use-motion">
     <div class="headband"></div>
@@ -99,6 +126,7 @@
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-meta">
+
     <div>
       <a href="/blog/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
@@ -109,6 +137,7 @@
         <h1 class="site-subtitle" itemprop="description">blog of hechao!</h1>
       
   </div>
+
   <div class="site-nav-toggle">
     <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
@@ -117,6 +146,8 @@
     </button>
   </div>
 </div>
+
+
 <nav class="site-nav">
   
   <ul id="menu" class="menu">
@@ -136,7 +167,9 @@
         
       
     
-    <a href="/blog/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i><br>首页</a>
+
+    <a href="/blog/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-home&quot;&gt;&lt;&#x2F;i&gt;&lt;br&gt;首页</a>
+
   </li>
       
       
@@ -154,7 +187,9 @@
         
       
     
-    <a href="/blog/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i><br>关于</a>
+
+    <a href="/blog/about/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-user&quot;&gt;&lt;&#x2F;i&gt;&lt;br&gt;关于</a>
+
   </li>
       
       
@@ -174,7 +209,9 @@
         
       
     
-    <a href="/blog/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i><br>标签<span class="badge">29</span></a>
+
+    <a href="/blog/tags/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-tags&quot;&gt;&lt;&#x2F;i&gt;&lt;br&gt;标签&lt;span class=&quot;badge&quot;&gt;29&lt;&#x2F;span&gt;</a>
+
   </li>
       
       
@@ -194,7 +231,9 @@
         
       
     
-    <a href="/blog/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i><br>分类<span class="badge">4</span></a>
+
+    <a href="/blog/categories/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-th&quot;&gt;&lt;&#x2F;i&gt;&lt;br&gt;分类&lt;span class=&quot;badge&quot;&gt;4&lt;&#x2F;span&gt;</a>
+
   </li>
       
       
@@ -214,7 +253,9 @@
         
       
     
-    <a href="/blog/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i><br>归档<span class="badge">19</span></a>
+
+    <a href="/blog/archives/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-archive&quot;&gt;&lt;&#x2F;i&gt;&lt;br&gt;归档&lt;span class=&quot;badge&quot;&gt;19&lt;&#x2F;span&gt;</a>
+
   </li>
       <li class="menu-item menu-item-search">
         <a href="javascript:;" class="popup-trigger">
@@ -223,7 +264,9 @@
       </li>
     
   </ul>
+
     
+
 </nav>
   <div class="site-search">
     <div class="popup search-popup">
@@ -241,11 +284,14 @@
   </span>
 </div>
 <div id="search-result"></div>
+
 </div>
 <div class="search-pop-overlay"></div>
+
   </div>
 </div>
     </header>
+
     
   <div class="back-to-top">
     <i class="fa fa-arrow-up"></i>
@@ -253,12 +299,16 @@
   </div>
   <div class="reading-progress-bar"></div>
   <a class="book-mark-link book-mark-link-fixed" href="#"></a>
-  <a href="https://github.com/wudihechao" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+  <a href="https://github.com/wudihechao" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank">&lt;svg width=&quot;80&quot; height=&quot;80&quot; viewBox=&quot;0 0 250 250&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z&quot;&gt;&lt;&#x2F;path&gt;&lt;path d=&quot;M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2&quot; fill=&quot;currentColor&quot; style=&quot;transform-origin: 130px 106px;&quot; class=&quot;octo-arm&quot;&gt;&lt;&#x2F;path&gt;&lt;path d=&quot;M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z&quot; fill=&quot;currentColor&quot; class=&quot;octo-body&quot;&gt;&lt;&#x2F;path&gt;&lt;&#x2F;svg&gt;</a>
+
+
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
           <div id="content" class="content">
             
+
   <div id="posts" class="posts-expand">
       <article itemscope itemtype="http://schema.org/Article">
   
@@ -266,27 +316,33 @@
   
   <div class="post-block post">
     <link itemprop="mainEntityOfPage" href="https://hewanyue.com/blog/blog/Linux下find命令的一般用法。/">
+
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hechao">
       <meta itemprop="description" content="BOHC is just a blog of hechao.">
       <meta itemprop="image" content="/blog/images/touxiang.jpg">
     </span>
+
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="BOHC!">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">Linux下find命令的一般用法。
+
           
         </h2>
+
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+
               
                 
               
+
               <time title="创建时间：2019-05-05 17:27:40" itemprop="dateCreated datePublished" datetime="2019-05-05T17:27:40+08:00">2019-05-05</time>
             </span>
           
@@ -297,11 +353,13 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/blog/categories/linux基础/" itemprop="url" rel="index"><span itemprop="name">linux基础</span></a></span>
+
                 
                 
               
             </span>
           
+
           
             <span id="/blog/Linux下find命令的一般用法。/" class="post-meta-item leancloud_visitors" data-flag-title="Linux下find命令的一般用法。" title="阅读次数">
               <span class="post-meta-item-icon">
@@ -347,12 +405,15 @@
               <span>2 分钟</span>
             </span>
           
+
         </div>
       </header>
+
     
     
     
     <div class="post-body" itemprop="articleBody">
+
       
         <ol>
 <li><p><strong>find和locate介绍</strong><br>在linux中，查找文件一般使用locate和find，locate是根据事先构建好的缩影库或者数据库中的数据查找文件名（非实时，速度快，模糊查找），而find作为一个实时查找命令，通过遍历指定起始路径下文件系统层级结构完成文件查找，功能更加强大（实时查找，速度略慢，精确查找）。</p>
@@ -371,6 +432,7 @@ f：普通文件   </code></pre><p>   d：目录文件<br>   l：符号链接文
 -user USERNAME  或  -uid UID
 -group GROUPNAME  或  -gid GID
 查找无属主属组文件：-nouser  ,  -nogroup
+
 **根据时间戳查找**：
 以“天”为单位：-atime(访问时间)，-mtime(修改时间)（指文件内容修改），-ctime(改变时间)（指权限及从属关系等修改）
  以“分钟”为单位：-amin(访问时间)，-mmin(修改时间)（指文件内容修改），-cmin(改变时间)（指权限及从属关系等修改）
@@ -446,11 +508,14 @@ f：普通文件   </code></pre><p>   d：目录文件<br>   l：符号链接文
 <li><strong>处理动作</strong></li>
 </ol>
 <p>-print：输出至标准输出；默认动作<br>-ls：类似对查找到的文件执行“ls-l”<br>-delete：删除查找到的文件<br>-fls /PATH/TO/SOMEFILE 将查找到的文件信息长格式保存至指定路径。<br>-ok COMMAND {} ; 对找到的每个文件执行COMMAND命令（可能需要确认）<br>-exec COMMAND {} ; 对找到的每个文件执行COMMAND命定（无需确认）<br>ps：find传递查找到的文件路径之后面的命令时。实现查找出所有符合的文件路径，并一次性传递给后面的命令。但是有些命令不能接受过长的参数，此时命令执行会失效，可用管道find /… | xargs COMMAND执行。</p>
+
     </div>
+
     
     
     
       
+
     <div style="text-align:center;color: #ccc;font-size:14px;">---------------- The End ----------------</div>
         
       
@@ -466,23 +531,28 @@ f：普通文件   </code></pre><p>   d：目录文件<br>   l：符号链接文
         <img src="/blog/images/wechat-pay.png" alt="Hechao 微信支付">
         <p>微信支付</p>
       </div>
+
   </div>
 </div>
+
       
         
+
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
     <strong>本文作者： </strong>Hechao</li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://hewanyue.com/blog/Linux%E4%B8%8Bfind%E5%91%BD%E4%BB%A4%E7%9A%84%E4%B8%80%E8%88%AC%E7%94%A8%E6%B3%95%E3%80%82/" title="Linux下find命令的一般用法。">https://hewanyue.com/blog/Linux下find命令的一般用法。/</a>
+    <a href="https://hewanyue.com/blog/Linux%E4%B8%8Bfind%E5%91%BD%E4%BB%A4%E7%9A%84%E4%B8%80%E8%88%AC%E7%94%A8%E6%B3%95%E3%80%82/" title="Linux下find命令的一般用法。">https:&#x2F;&#x2F;hewanyue.com&#x2F;blog&#x2F;Linux下find命令的一般用法。&#x2F;</a>
   </li>
   <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank">&lt;i class=&quot;fa fa-fw fa-creative-commons&quot;&gt;&lt;&#x2F;i&gt;BY-NC-SA</a> 许可协议。转载请注明出处！</li>
 </ul>
 </div>
+
       
+
       <footer class="post-footer">
           
             
@@ -495,7 +565,9 @@ f：普通文件   </code></pre><p>   d：目录文件<br>   l：符号链接文
             
           </div>
         
+
         
+
         
     <div class="links-of-blogroll motion-element links-of-blogroll-block">
       <div class="links-of-blogroll-title" style="padding-left: 10px;">
@@ -528,6 +600,8 @@ f：普通文件   </code></pre><p>   d：目录文件<br>   l：符号链接文
         
       </ul>
     </div>
+
+
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
@@ -536,7 +610,9 @@ f：普通文件   </code></pre><p>   d：目录文件<br>   l：符号链接文
                 </a>
               
             </div>
+
             <span class="post-nav-divider"></span>
+
             <div class="post-nav-prev post-nav-item">
               
                 <a href="/blog/不忘初心，方得始终/" rel="prev" title="不忘初心，方得始终">
@@ -553,12 +629,16 @@ f：普通文件   </code></pre><p>   d：目录文件<br>   l：符号链接文
   
   
   </article>
+
   </div>
+
+
           </div>
           
     
     <div class="comments" id="comments"></div>
   
+
         </div>
           
   
@@ -569,6 +649,7 @@ f：普通文件   </code></pre><p>   d：目录文件<br>   l：符号链接文
       <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
     </div>
   </div>
+
   <aside class="sidebar">
     <div class="sidebar-inner">
         
@@ -576,6 +657,7 @@ f：普通文件   </code></pre><p>   d：目录文件<br>   l：符号链接文
         
         
       
+
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
           文章目录
@@ -584,10 +666,12 @@ f：普通文件   </code></pre><p>   d：目录文件<br>   l：符号链接文
           站点概览
         </li>
       </ul>
+
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
       </div>
       <!--/noindex-->
+
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image"
@@ -640,7 +724,7 @@ f：普通文件   </code></pre><p>   d：目录文件<br>   l：符号链接文
       
         
       
-        <a href="https://github.com/wudihechao" title="GitHub &rarr; https://github.com/wudihechao" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+        <a href="https://github.com/wudihechao" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;wudihechao" rel="noopener" target="_blank">&lt;i class=&quot;fa fa-fw fa-github&quot;&gt;&lt;&#x2F;i&gt;</a>
       </span>
     
       <span class="links-of-author-item">
@@ -649,7 +733,7 @@ f：普通文件   </code></pre><p>   d：目录文件<br>   l：符号链接文
       
         
       
-        <a href="mailto:wudihechao@163.com" title="E-Mail &rarr; mailto:wudihechao@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+        <a href="mailto:wudihechao@163.com" title="E-Mail &amp;rarr; mailto:wudihechao@163.com" rel="noopener" target="_blank">&lt;i class=&quot;fa fa-fw fa-envelope&quot;&gt;&lt;&#x2F;i&gt;</a>
       </span>
     
       <span class="links-of-author-item">
@@ -658,16 +742,17 @@ f：普通文件   </code></pre><p>   d：目录文件<br>   l：符号链接文
       
         
       
-        <a href="https://weibo.com/u/1050367191" title="Weibo &rarr; https://weibo.com/u/1050367191" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i></a>
+        <a href="https://weibo.com/u/1050367191" title="Weibo &amp;rarr; https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;1050367191" rel="noopener" target="_blank">&lt;i class=&quot;fa fa-fw fa-weibo&quot;&gt;&lt;&#x2F;i&gt;</a>
       </span>
     
   </div>
   <div class="cc-license motion-element" itemprop="license">
     
   
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/blog/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank">&lt;img src=&quot;&#x2F;blog&#x2F;images&#x2F;cc-by-nc-sa.svg&quot; alt=&quot;Creative Commons&quot;&gt;</a>
   </div>
 <div id="show_date_time"></div>
+
 <div id="days"></div>
 <script>
 function show_date_time(){
@@ -694,13 +779,18 @@ return i;
 }
 show_date_time();
 </script>
+
       </div>
+
       
       
  </aside>
   <div id="sidebar-dimmer"></div>
+
+
       </div>
     </main>
+
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
@@ -714,6 +804,7 @@ show_date_time();
     </span>
     <span title="站点总字数">160k</span>
 </div>
+
         
 <div class="busuanzi-count">
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
@@ -738,10 +829,23 @@ show_date_time();
     </span>
   
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
         
       </div>
     </footer>
   </div>
+
   
     
   
@@ -752,6 +856,9 @@ show_date_time();
 <script src="/blog/js/utils.js?v=7.4.0"></script><script src="/blog/js/motion.js?v=7.4.0"></script>
 <script src="/blog/js/schemes/muse.js?v=7.4.0"></script>
 <script src="/blog/js/next-boot.js?v=7.4.0"></script><script src="/blog/js/bookmark.js?v=7.4.0"></script>
+
+
+
   
   <script>
     (function(){
@@ -762,10 +869,31 @@ show_date_time();
       s.parentNode.insertBefore(bp, s);
     })();
   </script>
+
+
+
+
+
+
+
+
   <script src="/blog/js/local-search.js?v=7.4.0"></script>
+
+
+
+
+
+
+
+
+
   
+
   
+
   
+
+
 <script>
 NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
   var GUEST = ['nick', 'mail', 'link'];
@@ -789,6 +917,7 @@ NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
   });
 }, window.Valine);
 </script>
+
 </body>
 </html>
   <!-- 页面点击小红心 -->
