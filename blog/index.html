@@ -173,7 +173,7 @@
         
       
     
-    <a href="/blog/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i><br>标签<span class="badge">29</span></a>
+    <a href="/blog/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i><br>标签<span class="badge">34</span></a>
   </li>
       
       
@@ -213,7 +213,7 @@
         
       
     
-    <a href="/blog/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i><br>归档<span class="badge">19</span></a>
+    <a href="/blog/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i><br>归档<span class="badge">20</span></a>
   </li>
       <li class="menu-item menu-item-search">
         <a href="javascript:;" class="popup-trigger">
@@ -259,6 +259,128 @@
           <div id="content" class="content">
             
   <div id="posts" class="posts-expand">
+        <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block home">
+    <link itemprop="mainEntityOfPage" href="https://hewanyue.com/blog/blog/企业级应用：负载均衡层——LVS调度器详解/">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hechao">
+      <meta itemprop="description" content="BOHC is just a blog of hechao.">
+      <meta itemprop="image" content="/blog/images/touxiang.jpg">
+    </span>
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BOHC!">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+            
+            <a href="/blog/%E4%BC%81%E4%B8%9A%E7%BA%A7%E5%BA%94%E7%94%A8%EF%BC%9A%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%B1%82%E2%80%94%E2%80%94LVS%E8%B0%83%E5%BA%A6%E5%99%A8%E8%AF%A6%E8%A7%A3/" class="post-title-link" itemprop="url">企业级应用：负载均衡层——LVS调度器详解</a>
+          
+        </h2>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+                
+              
+              <time title="创建时间：2019-10-24 22:31:52" itemprop="dateCreated datePublished" datetime="2019-10-24T22:31:52+08:00">2019-10-24</time>
+            </span>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/blog/categories/linux进阶/" itemprop="url" rel="index"><span itemprop="name">linux进阶</span></a></span>
+                
+                
+              
+            </span>
+          
+          
+            <span id="/blog/企业级应用：负载均衡层——LVS调度器详解/" class="post-meta-item leancloud_visitors" data-flag-title="企业级应用：负载均衡层——LVS调度器详解" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+              <span>℃</span>
+            </span>
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/blog/企业级应用：负载均衡层——LVS调度器详解/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/blog/企业级应用：负载均衡层——LVS调度器详解/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>11k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>10 分钟</span>
+            </span>
+          
+        </div>
+      </header>
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+      
+          <p>&emsp;&emsp;所谓LVS，是Linux Virtual Server的缩写，直译就是linux虚拟服务器。LVS说是虚拟服务器，并不是说这个服务器本身不存在，而是指一般用户访问企业web网站时，访问的都是LVS，而LVS本身上面没有任何web界面资源，真实的界面以及服务都在后端web服务器上，LVS服务器起到的是一个指引分流的作用，所以相对来说，后端的web服务器是real server,而LVS就被称为是virtual server（虚拟服务器）了。<br>&emsp;&emsp;既然这个服务器上没有页面资源，又无法提供服务，那为什么还有必要部署它来多此一举呢？因为通常来说，我们访问的web服务，都不是由单一服务器主机来支撑的，背后都有好几台、甚至成百上千台web服务器集群共同提供，一台单一主机是无法支撑大的访问并发的，需要很多台服务器来共同分担压力，这时就需要一个专门的服务器来进行调度，将大量访问请求分配到不同的web服务器上，减小每台服务器的压力，实现负载均衡。<br>&emsp;&emsp;本文将详细介绍LVS调度器的工作模式及配置实例。</p>
+          <!--noindex-->
+          
+            <div class="post-button">
+              <a class="btn" href="/blog/企业级应用：负载均衡层——LVS调度器详解/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+    
         <article itemscope itemtype="http://schema.org/Article">
   
   
@@ -749,128 +871,6 @@
   
   </article>
     
-        <article itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="https://hewanyue.com/blog/blog/mysql数据库MHA实现高可用（多实例间实现）/">
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Hechao">
-      <meta itemprop="description" content="BOHC is just a blog of hechao.">
-      <meta itemprop="image" content="/blog/images/touxiang.jpg">
-    </span>
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="BOHC!">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-            
-            <a href="/blog/mysql%E6%95%B0%E6%8D%AE%E5%BA%93MHA%E5%AE%9E%E7%8E%B0%E9%AB%98%E5%8F%AF%E7%94%A8%EF%BC%88%E5%A4%9A%E5%AE%9E%E4%BE%8B%E9%97%B4%E5%AE%9E%E7%8E%B0%EF%BC%89/" class="post-title-link" itemprop="url">myql数据库MHA实现高可用（多实例间实现）</a>
-          
-        </h2>
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-                
-              
-              <time title="创建时间：2019-10-05 09:15:31" itemprop="dateCreated datePublished" datetime="2019-10-05T09:15:31+08:00">2019-10-05</time>
-            </span>
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/blog/categories/数据库/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a></span>
-                
-                
-              
-            </span>
-          
-          
-            <span id="/blog/mysql数据库MHA实现高可用（多实例间实现）/" class="post-meta-item leancloud_visitors" data-flag-title="myql数据库MHA实现高可用（多实例间实现）" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-              <span>℃</span>
-            </span>
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-        
-      
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/blog/mysql数据库MHA实现高可用（多实例间实现）/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/blog/mysql数据库MHA实现高可用（多实例间实现）/" itemprop="commentCount"></span></a>
-  </span>
-  
-  
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">本文字数：</span>
-              
-              <span>11k</span>
-            </span>
-          
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              
-              <span>10 分钟</span>
-            </span>
-          
-        </div>
-      </header>
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-      
-          <p>&emsp;&emsp; MHA(master high   availability)目前是MySQL高可用方面是一个相对成熟的解决方案。在切换过程中，mha能做到0-30s内自动完成数据库的切换，并且在切换过程中最大的保持数据的一致性，以达到真正意义上的高可用</p><p>&emsp;&emsp; MHA的组成：</p>
-          <!--noindex-->
-          
-            <div class="post-button">
-              <a class="btn" href="/blog/mysql数据库MHA实现高可用（多实例间实现）/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-    
   </div>
   
   <nav class="pagination">
@@ -916,7 +916,7 @@
         
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -940,7 +940,7 @@
             <a href="/blog/tags/">
           
         
-        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-count">34</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -1026,7 +1026,7 @@ show_date_time();
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">160k</span>
+    <span title="站点总字数">171k</span>
 </div>
         
 <div class="busuanzi-count">
