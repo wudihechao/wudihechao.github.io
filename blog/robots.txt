@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /blog/
+Allow: /
+
+Disallow: /js/
+Disallow: /css/
+Disallow: /dist/
+Disallow: /side/
+
+
+sitemap: https://hewanyue.com/blog/sitemap.xml
+sitemap: https://hewanyue.com/blog/baidusitemap.xml
