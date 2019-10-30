@@ -45,19 +45,19 @@
     sidebarPadding: 40
   };
 </script>
-  <meta name="description" content="&emsp;&emsp;防盗链的必要性，我这里就不再赘述了，这是网站设计的最基本要求。而在nginx中，一般比较容易实现的防盗链手段就是通过ungx_http_referer_module模块 检查访问请求的referer信息是否有效来实现防盗链功能。&emsp;&emsp;所谓referer检查，举个例子来说，在正常情况下当用户在浏览http://example.com/abc.html时点击一">
+  <meta name="description" content="&emsp;&emsp;防盗链的必要性，我这里就不再赘述了，这是网站设计的最基本要求。而在nginx中，一般比较容易实现的防盗链手段就是通过ungx_http_referer_module模块（查看官方文档） 检查访问请求的referer信息是否有效来实现防盗链功能。&emsp;&emsp;所谓referer检查，举个例子来说，在正常情况下当用户在浏览http://example.com/abc.">
 <meta name="keywords" content="nginx,防盗链,referer,配置文件,细节">
 <meta property="og:type" content="article">
 <meta property="og:title" content="nginx防盗链设置的一些细节">
 <meta property="og:url" content="https://hewanyue.com/blog/nginx防盗链设置的一些细节/index.html">
 <meta property="og:site_name" content="BOHC!">
-<meta property="og:description" content="&emsp;&emsp;防盗链的必要性，我这里就不再赘述了，这是网站设计的最基本要求。而在nginx中，一般比较容易实现的防盗链手段就是通过ungx_http_referer_module模块 检查访问请求的referer信息是否有效来实现防盗链功能。&emsp;&emsp;所谓referer检查，举个例子来说，在正常情况下当用户在浏览http://example.com/abc.html时点击一">
+<meta property="og:description" content="&emsp;&emsp;防盗链的必要性，我这里就不再赘述了，这是网站设计的最基本要求。而在nginx中，一般比较容易实现的防盗链手段就是通过ungx_http_referer_module模块（查看官方文档） 检查访问请求的referer信息是否有效来实现防盗链功能。&emsp;&emsp;所谓referer检查，举个例子来说，在正常情况下当用户在浏览http://example.com/abc.">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191030165321571.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
-<meta property="og:updated_time" content="2019-10-30T12:01:34.403Z">
+<meta property="og:updated_time" content="2019-10-30T12:08:01.130Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nginx防盗链设置的一些细节">
-<meta name="twitter:description" content="&emsp;&emsp;防盗链的必要性，我这里就不再赘述了，这是网站设计的最基本要求。而在nginx中，一般比较容易实现的防盗链手段就是通过ungx_http_referer_module模块 检查访问请求的referer信息是否有效来实现防盗链功能。&emsp;&emsp;所谓referer检查，举个例子来说，在正常情况下当用户在浏览http://example.com/abc.html时点击一">
+<meta name="twitter:description" content="&emsp;&emsp;防盗链的必要性，我这里就不再赘述了，这是网站设计的最基本要求。而在nginx中，一般比较容易实现的防盗链手段就是通过ungx_http_referer_module模块（查看官方文档） 检查访问请求的referer信息是否有效来实现防盗链功能。&emsp;&emsp;所谓referer检查，举个例子来说，在正常情况下当用户在浏览http://example.com/abc.">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20191030165321571.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
   <link rel="canonical" href="https://hewanyue.com/blog/nginx防盗链设置的一些细节/">
 <script id="page-configurations">
@@ -236,7 +236,7 @@
         </div>
       </header>
     <div class="post-body" itemprop="articleBody">
-        <p>&emsp;&emsp;防盗链的必要性，我这里就不再赘述了，这是网站设计的最基本要求。而在nginx中，一般比较容易实现的防盗链手段就是通过<a href="https://nginx.org/en/docs/http/ngx_http_re%20ferer_module.html#valid_referers" target="_blank" rel="noopener">ungx_http_referer_module模块</a> 检查访问请求的referer信息是否有效来实现防盗链功能。<br>&emsp;&emsp;所谓referer检查，举个例子来说，在正常情况下当用户在浏览<code>http://example.com/abc.html</code>时点击一个链接去到<code>http://example.com/123.mp3</code>文件时，浏览器在发出请求123.mp3 资源时还会附带当刻浏览器所处的页面地址（即<code>http://example.com/abc.html</code>），所以当你的网站程序接收到下载 jacky.mp3 资源请求的时候，先判断http的referer字段的值，如果是从 自己的域名（example.com）过来的，则可以认为是合法的连接请求，否则就返回一个错误的提示信息。</p>
+        <p>&emsp;&emsp;防盗链的必要性，我这里就不再赘述了，这是网站设计的最基本要求。而在nginx中，一般比较容易实现的防盗链手段就是通过ungx_http_referer_module模块<a href="https://nginx.org/en/docs/http/ngx_http_referer_module.html#valid_referers" target="_blank" rel="noopener">（查看官方文档）</a> 检查访问请求的referer信息是否有效来实现防盗链功能。<br>&emsp;&emsp;所谓referer检查，举个例子来说，在正常情况下当用户在浏览<code>http://example.com/abc.html</code>时点击一个链接去到<code>http://example.com/123.mp3</code>文件时，浏览器在发出请求123.mp3 资源时还会附带当刻浏览器所处的页面地址（即<code>http://example.com/abc.html</code>），所以当你的网站程序接收到下载 jacky.mp3 资源请求的时候，先判断http的referer字段的值，如果是从 自己的域名（example.com）过来的，则可以认为是合法的连接请求，否则就返回一个错误的提示信息。</p>
 <a id="more"></a>
 <p>&emsp;&emsp;这种方法通常用于图片、mp3这种容易被人用html“嵌入”到其他网站的资源，使用这种方法可以防止你的图片直接出现在别人的网页里（或者防止mp3直接被其他网站嵌入到flash播放器里），不过访客使用下载工具还是可以轻松下载，因为现在的下载工具一般会自动用你的域名构造一个引用地址，所以如果想再进一步防范的话，可以使用一个对应表限制每个资源的引用地址，例如将 123.mp3 的引用地址限制为<code>http://example.com/abc.htmlid=123456</code>，这样下载工具就不太可能构造一个“正确”的引用地址了。</p>
 <h3 id="referer"><a href="#referer" class="headerlink" title="referer"></a>referer</h3><p>&emsp;&emsp;要过滤掉盗链访问的referer信息，首先要明确知道，正常访问的referer有哪些。一般来说，正常的referer信息有以下四种：</p>
