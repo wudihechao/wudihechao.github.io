@@ -54,7 +54,7 @@
 <meta property="og:description" content="&emsp;&emsp;防盗链的必要性，我这里就不再赘述了，这是网站设计的最基本要求。而在nginx中，一般比较容易实现的防盗链手段就是通过ungx_http_referer_module模块 检查访问请求的referer信息是否有效来实现防盗链功能。&emsp;&emsp;所谓referer检查，举个例子来说，在正常情况下当用户在浏览http://example.com/abc.html时点击一">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191030165321571.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
-<meta property="og:updated_time" content="2019-10-30T11:59:12.686Z">
+<meta property="og:updated_time" content="2019-10-30T12:01:34.403Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nginx防盗链设置的一些细节">
 <meta name="twitter:description" content="&emsp;&emsp;防盗链的必要性，我这里就不再赘述了，这是网站设计的最基本要求。而在nginx中，一般比较容易实现的防盗链手段就是通过ungx_http_referer_module模块 检查访问请求的referer信息是否有效来实现防盗链功能。&emsp;&emsp;所谓referer检查，举个例子来说，在正常情况下当用户在浏览http://example.com/abc.html时点击一">
@@ -276,7 +276,7 @@
 </ul>
 <p>&emsp;&emsp;我们可以得知，只可以在域名的开头和结尾用 * 的通配符，而不是URI中，这也就是为什么我发现<code>www.examlpe.com/*</code>无法匹配通过的原因。<br>&emsp;&emsp;跟server_names一样，只要<strong>包含</strong>自定义字符串就可以,例如匹配规则写成<code>www.example.com/mp3/</code>，在<code>www.example.com/mp3/</code>页面下就可以引用的<code>/apps/nginx/html/mp3/123.mp3</code>文件了，在<code>www.example.com/mp3/abc/efg/</code>页面下是同样可以跳转访问<code>/apps/nginx/html/mp3/123.mp3</code>文件的。</p>
 <h4 id="regular-expression"><a href="#regular-expression" class="headerlink" title="regular expression"></a>regular expression</h4><p>&emsp;&emsp;被指定的正则表达式模式匹配到的字符串,要使用 ~ 开头，例如：~.*.google.com。这要严格按照正则表达式匹配到的referer写，否则就会无法访问。</p>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>&emsp;&emsp;设置匹配规则时，必须符合其中的某一种，而不能想当然的把几种规则混合起来使用，想要放行的链接，一定要考虑好，到底确切适用于哪一种规则，才不会出现“误伤“、“漏网”的情况。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>&emsp;&emsp;设置匹配规则时，必须符合其中的某一种，而不能想当然的把几种规则混合起来使用，想要放行的链接，一定要考虑好，到底确切适用于哪一种规则，才不会出现“误伤“、“漏网”的情况。</p>
     </div>
     <div style="text-align:center;color: #ccc;font-size:14px;">---------------- The End ----------------</div>
         <div id="reward-container">
@@ -371,7 +371,7 @@
       </ul>
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#referer"><span class="nav-number">1.</span> <span class="nav-text">referer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#过滤规则设置"><span class="nav-number">2.</span> <span class="nav-text">过滤规则设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#跳转设置"><span class="nav-number">3.</span> <span class="nav-text">跳转设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#规则细节"><span class="nav-number">4.</span> <span class="nav-text">规则细节</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#server-names"><span class="nav-number">4.1.</span> <span class="nav-text">server_names</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#arbitrary-string"><span class="nav-number">4.2.</span> <span class="nav-text">arbitrary string</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#regular-expression"><span class="nav-number">4.3.</span> <span class="nav-text">regular expression</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">4.4.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#referer"><span class="nav-number">1.</span> <span class="nav-text">referer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#过滤规则设置"><span class="nav-number">2.</span> <span class="nav-text">过滤规则设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#跳转设置"><span class="nav-number">3.</span> <span class="nav-text">跳转设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#规则细节"><span class="nav-number">4.</span> <span class="nav-text">规则细节</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#server-names"><span class="nav-number">4.1.</span> <span class="nav-text">server_names</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#arbitrary-string"><span class="nav-number">4.2.</span> <span class="nav-text">arbitrary string</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#regular-expression"><span class="nav-number">4.3.</span> <span class="nav-text">regular expression</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
       <div class="site-overview-wrap sidebar-panel">
