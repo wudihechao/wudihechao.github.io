@@ -1268,7 +1268,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #ff42ff;
+  background: #aca1f1;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2029,6 +2029,7 @@ article:last-child .post-eof {
 .post-meta .post-meta-item + .post-meta-item::before {
   content: '|';
   margin: 0 0.5em;
+  display: none;
 }
 .post-meta .post-meta-item {
   font-size: 0.75em;
