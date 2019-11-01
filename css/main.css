@@ -1268,7 +1268,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #167913;
+  background: #81acf9;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -1906,7 +1906,7 @@ article:last-child .post-eof {
   display: none;
 }
 .posts-expand {
-  padding-top: 40px;
+  padding-top: 30px;
 }
 @media (max-width: 767px) {
   .posts-expand {
@@ -2763,7 +2763,7 @@ embed {
   -moz-box-shadow: 0 0 5px rgba(202,203,204,0.5);
 }
 .posts-expand {
-  padding-top: 0px;
+  padding-top: 30px;
   padding-left: 30px;
   padding-right: 30px;
 }
@@ -2784,7 +2784,7 @@ img.img-topic {
   margin-top: 60px;
   margin-bottom: 60px;
   padding: 25px;
-  -webkit-box-shadow: 0 0 5px rgba(202,203,203,0.5);
+  -webkit-box-shadow: 0 0 10px rgba(202,203,203,0.8);
   -moz-box-shadow: 0 0 5px rgba(202,203,204,0.5);
   padding: 45px 36px 36px 36px;
   box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.6);
