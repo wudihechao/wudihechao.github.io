@@ -46,7 +46,7 @@
   };
 </script>
   <meta name="description" content="&emsp;&emsp; MHA(master high   availability)目前是MySQL高可用方面是一个相对成熟的解决方案。在切换过程中，mha能做到0-30s内自动完成数据库的切换，并且在切换过程中最大的保持数据的一致性，以达到真正意义上的高可用&emsp;&emsp; MHA的组成：">
-<meta name="keywords" content="多实例,mysql,MHA,高可用,mariadb">
+<meta name="keywords" content="MHA,高可用,mysql,mariadb,多实例">
 <meta property="og:type" content="article">
 <meta property="og:title" content="myql数据库MHA实现高可用（多实例间实现）">
 <meta property="og:url" content="https://hewanyue.com/blog/mysql数据库MHA实现高可用（多实例间实现）/index.html">
@@ -97,12 +97,12 @@
 </noscript>
 <script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "https://hm.baidu.com/hm.js?a0d4e217e26da03ea5ca2acc76d543ae";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();</script>
 </head>
-        <div id="aplayer-index" class="aplayer aplayer-withlist aplayer-fixed" style="position: fixed; z-index: 5; bottom: 80px; left: 0px; width: 400px;">
+        <div id="aplayer" class="aplayer aplayer-withlist aplayer-fixed" style="position: fixed; z-index: 5; bottom: 80px; left: 0px; width: 400px;">
             <pre class="aplayer-lrc-content"></pre>
         </div>
         <script>
           var ap = new APlayer({
-            element: document.getElementById("aplayer-index"),
+            element: document.getElementById("aplayer"),
             narrow: false,
             autoplay: false,
             showlrc: false,
@@ -299,11 +299,11 @@
 </div>
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/多实例/" rel="tag"><i class="fa fa-tag">多实例</i></a>
-              <a href="/tags/mysql/" rel="tag"><i class="fa fa-tag">mysql</i></a>
               <a href="/tags/MHA/" rel="tag"><i class="fa fa-tag">MHA</i></a>
               <a href="/tags/高可用/" rel="tag"><i class="fa fa-tag">高可用</i></a>
+              <a href="/tags/mysql/" rel="tag"><i class="fa fa-tag">mysql</i></a>
               <a href="/tags/mariadb/" rel="tag"><i class="fa fa-tag">mariadb</i></a>
+              <a href="/tags/多实例/" rel="tag"><i class="fa fa-tag">多实例</i></a>
           </div>
     <div class="links-of-blogroll motion-element links-of-blogroll-block">
       <div class="links-of-blogroll-title" style="padding-left: 10px;">
