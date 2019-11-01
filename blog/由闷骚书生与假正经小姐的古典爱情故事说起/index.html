@@ -101,7 +101,7 @@
 <link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
 <script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
 </head>
-        <div id="aplayer-index" class="aplayer aplayer-tag-marker" style="position: fixed; z-index: 5; bottom: 80px; left: 0px; width: 220px;">
+        <div id="aplayer" class="aplayer aplayer-withlist aplayer-fixed" style="z-index: 5; left: 0px; width: 400px;">
             <pre class="aplayer-lrc-content"></pre>
         </div>
         <script>
@@ -110,14 +110,30 @@
             narrow: false,
             autoplay: false,
             showlrc: false,
-            music: {
+            music: [
+            {
               title: "星月神话",
               author: "金莎",
               url: "https://79d5q6.coding-pages.com/mp3/xingyueshenhua.mp3",
               pic: "https://79d5q6.coding-pages.com/mp3/cover/xingyueshenhua.jpg",
               lrc: "https://79d5q6.coding-pages.com/mp3/lrc/星月神话-金莎.lrc"
+            },
+            {
+              title: "体面",
+              author: "于文文",
+              url: "https://hewanyue.com/mp3/timian.mp3",
+              pic: "https://hewanyue.com/mp3/cover/timian.jpg",
+              lrc: "https://hewanyue.com/mp3/lrc/体面-于文文.lrc"
+            },
+            {
+            title: "白羊",
+            author: "徐秉龙&沈以诚",
+            url: "https://hewanyue.com/mp3/baiyang.mp3",
+            pic: "https://hewanyue.com/mp3/cover/baiyang.jpg"
+            lrc: "https://hewanyue.com/mp3/lrc/白羊-沈以诚徐秉龙.lrc"
             }
-          });
+          ]
+       });
           window.aplayers || (window.aplayers = []);
           window.aplayers.push(ap);
         </script>
@@ -262,12 +278,12 @@
       </header>
     <div class="post-body" itemprop="articleBody">
         <p>&emsp;&emsp;城南外湖畔边，天气下着小雨，刮起微风，吹起茶铺门前的风铃叮铃作响让人昏昏欲睡，但铺子里舒缓轻柔的抚琴声却给人自然清醒的感觉，立锥之地，瞥一眼便一览无遗，简单的陈设透露出古朴淡雅，一长发清秀女子品一壶热茶望着这淅淅沥沥的小雨。<br><img src="https://img-blog.csdnimg.cn/20190801143110232.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;“姑娘有心事？”一身穿白袍英俊书生抿嘴品茶问到。少女：“公子与城北唐公子可是熟识？”<br>&emsp;&emsp;“书生：“我与他乃世交，有何事？”少女：“那下次你与他一同前来我这品茶可好？”书生：“他不喜品茶。”少女：“无妨，那公子可知他喜欢什么，我可以慢慢学。”书生：“我其实也不喜品茶。”少女：“公子莫说谎，不喜为何天天早晨都跑我这茶铺。”</p><a id="more"></a>
-        <div id="aplayer-gZgRTDPl" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
+        <div id="aplayer-VQXqurmO" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
             <pre class="aplayer-lrc-content"></pre>
         </div>
         <script>
           var ap = new APlayer({
-            element: document.getElementById("aplayer-gZgRTDPl"),
+            element: document.getElementById("aplayer-VQXqurmO"),
             narrow: false,
             autoplay: true,
             showlrc: false,
