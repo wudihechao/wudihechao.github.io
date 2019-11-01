@@ -8,14 +8,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 3.9.0">
-  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32.ico?v=7.4.0">
-  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16.ico?v=7.4.0">
-<link rel="stylesheet" href="/blog/css/main.css?v=7.4.0">
-<link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.ico?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.ico?v=7.4.0">
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
 <script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
-    root: '/blog/',
+    root: '/',
     scheme: 'Muse',
     version: '7.4.0',
     exturl: false,
@@ -46,7 +46,7 @@
   };
 </script>
   <meta name="description" content="&emsp;&emsp; MHA(master high   availability)目前是MySQL高可用方面是一个相对成熟的解决方案。在切换过程中，mha能做到0-30s内自动完成数据库的切换，并且在切换过程中最大的保持数据的一致性，以达到真正意义上的高可用&emsp;&emsp; MHA的组成：">
-<meta name="keywords" content="MHA,高可用,mysql,mariadb,多实例">
+<meta name="keywords" content="多实例,mysql,MHA,高可用,mariadb">
 <meta property="og:type" content="article">
 <meta property="og:title" content="myql数据库MHA实现高可用（多实例间实现）">
 <meta property="og:url" content="https://hewanyue.com/blog/mysql数据库MHA实现高可用（多实例间实现）/index.html">
@@ -124,19 +124,19 @@
 <nav class="site-nav">
   <ul id="menu" class="menu">
         <li class="menu-item menu-item-home">
-    <a href="/blog/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i>首页</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i>首页</a>
   </li>
         <li class="menu-item menu-item-about">
-    <a href="/blog/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i>关于</a>
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i>关于</a>
   </li>
         <li class="menu-item menu-item-tags">
-    <a href="/blog/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">39</span></a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">39</span></a>
   </li>
         <li class="menu-item menu-item-categories">
-    <a href="/blog/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">4</span></a>
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">4</span></a>
   </li>
         <li class="menu-item menu-item-archives">
-    <a href="/blog/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">21</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">21</span></a>
   </li>
       <li class="menu-item menu-item-search">
         <a href="javascript:;" class="popup-trigger">
@@ -179,11 +179,11 @@
   <div id="posts" class="posts-expand">
       <article itemscope itemtype="http://schema.org/Article">
   <div class="post-block post">
-    <link itemprop="mainEntityOfPage" href="https://hewanyue.com/blog/blog/mysql数据库MHA实现高可用（多实例间实现）/">
+    <link itemprop="mainEntityOfPage" href="https://hewanyue.com/blog/mysql数据库MHA实现高可用（多实例间实现）/">
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hechao">
       <meta itemprop="description" content="BOHC is just a blog of hechao.">
-      <meta itemprop="image" content="/blog/images/touxiang.jpg">
+      <meta itemprop="image" content="/images/touxiang.jpg">
     </span>
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="BOHC!">
@@ -203,7 +203,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/blog/categories/数据库/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/数据库/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a></span>
             </span>
             <span id="/blog/mysql数据库MHA实现高可用（多实例间实现）/" class="post-meta-item leancloud_visitors" data-flag-title="myql数据库MHA实现高可用（多实例间实现）" title="阅读次数">
               <span class="post-meta-divider">•</span>
@@ -259,7 +259,7 @@
   </button>
   <div id="qr" style="display: none;">
       <div style="display: inline-block">
-        <img src="/blog/images/wechat-pay.png" alt="Hechao 微信支付">
+        <img src="/images/wechat-pay.png" alt="Hechao 微信支付">
         <p>微信支付</p>
       </div>
   </div>
@@ -278,11 +278,11 @@
 </div>
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/blog/tags/MHA/" rel="tag"><i class="fa fa-tag">MHA</i></a>
-              <a href="/blog/tags/高可用/" rel="tag"><i class="fa fa-tag">高可用</i></a>
-              <a href="/blog/tags/mysql/" rel="tag"><i class="fa fa-tag">mysql</i></a>
-              <a href="/blog/tags/mariadb/" rel="tag"><i class="fa fa-tag">mariadb</i></a>
-              <a href="/blog/tags/多实例/" rel="tag"><i class="fa fa-tag">多实例</i></a>
+              <a href="/tags/多实例/" rel="tag"><i class="fa fa-tag">多实例</i></a>
+              <a href="/tags/mysql/" rel="tag"><i class="fa fa-tag">mysql</i></a>
+              <a href="/tags/MHA/" rel="tag"><i class="fa fa-tag">MHA</i></a>
+              <a href="/tags/高可用/" rel="tag"><i class="fa fa-tag">高可用</i></a>
+              <a href="/tags/mariadb/" rel="tag"><i class="fa fa-tag">mariadb</i></a>
           </div>
     <div class="links-of-blogroll motion-element links-of-blogroll-block">
       <div class="links-of-blogroll-title" style="padding-left: 10px;">
@@ -352,7 +352,7 @@
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image"
-      src="/blog/images/touxiang.jpg"
+      src="/images/touxiang.jpg"
       alt="Hechao">
   <p class="site-author-name" itemprop="name">Hechao</p>
   <div class="site-description" itemprop="description">BOHC is just a blog of hechao.</div>
@@ -360,19 +360,19 @@
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/blog/archives/">
+          <a href="/archives/">
           <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-          <a href="/blog/categories/">
+          <a href="/categories/">
         <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/blog/tags/">
+            <a href="/tags/">
         <span class="site-state-item-count">39</span>
         <span class="site-state-item-name">标签</span>
         </a>
@@ -391,7 +391,7 @@
       </span>
   </div>
   <div class="cc-license motion-element" itemprop="license">
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/blog/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
   </div>
 <div id="show_date_time"></div>
 <div id="days"></div>
@@ -461,14 +461,14 @@ show_date_time();
       </div>
     </footer>
   </div>
-  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/blog/lib/canvas-nest/canvas-nest.min.js"></script>
-  <script src="/blog/lib/anime.min.js?v=3.1.0"></script>
-  <script src="/blog/lib/pjax/pjax.min.js?v=0.2.8"></script>
-  <script src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  <script src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-<script src="/blog/js/utils.js?v=7.4.0"></script><script src="/blog/js/motion.js?v=7.4.0"></script>
-<script src="/blog/js/schemes/muse.js?v=7.4.0"></script>
-<script src="/blog/js/next-boot.js?v=7.4.0"></script><script src="/blog/js/bookmark.js?v=7.4.0"></script>
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/pjax/pjax.min.js?v=0.2.8"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/muse.js?v=7.4.0"></script>
+<script src="/js/next-boot.js?v=7.4.0"></script><script src="/js/bookmark.js?v=7.4.0"></script>
   <script>
 var pjax = new Pjax({
   selectors: [
@@ -526,7 +526,7 @@ window.addEventListener('pjax:success', () => {
       s.parentNode.insertBefore(bp, s);
     })();
   </script>
-  <script src="/blog/js/local-search.js?v=7.4.0"></script>
+  <script src="/js/local-search.js?v=7.4.0"></script>
     <div id="pjax">
 <script>
 NexT.utils.getScript('//hewanyue.com/blog/js/Valine.min.js', () => {

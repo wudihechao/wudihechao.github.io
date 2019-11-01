@@ -1,17 +1,12 @@
 User-agent: *
+Allow: /blog/
 Allow: /
 
 Disallow: /js/
 Disallow: /css/
 Disallow: /dist/
-Disallow: /index.bak
-Disallow: /index.htm1
-Disallow: /index.html.bak
-Disallow: /CNAME
-Disallow: /blog/js/
-Disallow: /blog/css/
-Disallow: /blog/dist/
-Disallow: /blog/CNAME
+Disallow: /side/
+
 
 sitemap: https://hewanyue.com/blog/sitemap.xml
 sitemap: https://hewanyue.com/blog/baidusitemap.xml
