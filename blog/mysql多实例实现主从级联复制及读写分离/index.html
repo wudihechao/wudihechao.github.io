@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-
-
-
-
 <script type="text/javascript" src="/js/src/dytitle.js"></script>
 <html lang="zh-CN">
 <body oncontextmenu=self.event.returnValue=false>
@@ -14,13 +10,8 @@
 <meta name="generator" content="Hexo 3.9.0">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.ico?v=7.4.0">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.ico?v=7.4.0">
-
 <link rel="stylesheet" href="/css/main.css?v=7.4.0">
-
-
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
-
-
 <script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
@@ -54,16 +45,13 @@
     sidebarPadding: 40
   };
 </script>
-
-
-
-  <meta name="description" content="一、多实例1、概述&amp;emsp;&amp;emsp; MySQL多实例就是在一台机器上开启多个不同的服务端口（如：3306,3307），运行多个MySQL服务进程，通过不同的socket监听不同的服务端口来提供各自的服务2.1、优点1）有效利用服务器资源&amp;emsp;&amp;emsp; 当单个服务器资源过剩时，可以充分利用剩余的资源来提供更多的服务；2）节约服务器资源">
+  <meta name="description" content="一、多实例1、概述&emsp;&emsp; MySQL多实例就是在一台机器上开启多个不同的服务端口（如：3306,3307），运行多个MySQL服务进程，通过不同的socket监听不同的服务端口来提供各自的服务2.1、优点1）有效利用服务器资源&emsp;&emsp; 当单个服务器资源过剩时，可以充分利用剩余的资源来提供更多的服务；2）节约服务器资源">
 <meta name="keywords" content="多实例,mysql,级联复制,读写分离">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql多实例实现主从级联复制及读写分离">
 <meta property="og:url" content="https://hewanyue.com/blog/mysql多实例实现主从级联复制及读写分离/index.html">
 <meta property="og:site_name" content="BOHC!">
-<meta property="og:description" content="一、多实例1、概述&amp;emsp;&amp;emsp; MySQL多实例就是在一台机器上开启多个不同的服务端口（如：3306,3307），运行多个MySQL服务进程，通过不同的socket监听不同的服务端口来提供各自的服务2.1、优点1）有效利用服务器资源&amp;emsp;&amp;emsp; 当单个服务器资源过剩时，可以充分利用剩余的资源来提供更多的服务；2）节约服务器资源">
+<meta property="og:description" content="一、多实例1、概述&emsp;&emsp; MySQL多实例就是在一台机器上开启多个不同的服务端口（如：3306,3307），运行多个MySQL服务进程，通过不同的socket监听不同的服务端口来提供各自的服务2.1、优点1）有效利用服务器资源&emsp;&emsp; 当单个服务器资源过剩时，可以充分利用剩余的资源来提供更多的服务；2）节约服务器资源">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190925114000429.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190925164049740.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
@@ -71,11 +59,9 @@
 <meta property="og:updated_time" content="2019-10-05T13:36:50.758Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql多实例实现主从级联复制及读写分离">
-<meta name="twitter:description" content="一、多实例1、概述&amp;emsp;&amp;emsp; MySQL多实例就是在一台机器上开启多个不同的服务端口（如：3306,3307），运行多个MySQL服务进程，通过不同的socket监听不同的服务端口来提供各自的服务2.1、优点1）有效利用服务器资源&amp;emsp;&amp;emsp; 当单个服务器资源过剩时，可以充分利用剩余的资源来提供更多的服务；2）节约服务器资源">
+<meta name="twitter:description" content="一、多实例1、概述&emsp;&emsp; MySQL多实例就是在一台机器上开启多个不同的服务端口（如：3306,3307），运行多个MySQL服务进程，通过不同的socket监听不同的服务端口来提供各自的服务2.1、优点1）有效利用服务器资源&emsp;&emsp; 当单个服务器资源过剩时，可以充分利用剩余的资源来提供更多的服务；2）节约服务器资源">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190925114000429.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
   <link rel="canonical" href="https://hewanyue.com/blog/mysql多实例实现主从级联复制及读写分离/">
-
-
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
@@ -86,17 +72,7 @@
     isArchive: false
   };
 </script>
-
   <title>mysql多实例实现主从级联复制及读写分离 | BOHC!</title>
-  
-
-
-
-
-
-
-
-
   <noscript>
   <style>
   .use-motion .brand,
@@ -108,19 +84,16 @@
   .use-motion .post-header,
   .use-motion .post-body,
   .use-motion .collection-header { opacity: initial; }
-
   .use-motion .logo,
   .use-motion .site-title,
   .use-motion .site-subtitle {
     opacity: initial;
     top: initial;
   }
-
   .use-motion .logo-line-before i { left: initial; }
   .use-motion .logo-line-after i { right: initial; }
   </style>
 </noscript>
-
 <script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "https://hm.baidu.com/hm.js?a0d4e217e26da03ea5ca2acc76d543ae";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();</script>
 <style>
     #aplayer {
@@ -133,16 +106,11 @@
         }
     }
 </style>
-
-
-<link rel="stylesheet" href="/blog/assets/css/APlayer.min.css" class="aplayer-style-marker">
-<script src="/blog/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
+<link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
+<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
 </head>
-
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
-
-
-        <div id="aplayer" class="aplayer aplayer-withlist aplayer-fixed" style="position: fixed; z-index: 5; left: 0px; width: 220px;">
+        <div id="aplayer" class="aplayer aplayer-withlist aplayer-fixed" style="position: fixed; z-index: 5; left: 0px; width: 400px;">
             <pre class="aplayer-lrc-content"></pre>
         </div>
         <script>
@@ -154,21 +122,19 @@
             music: {
               title: "星月神话",
               author: "金莎",
-              url: "https://79d5q6.coding-pages.com/blog/mp3/xingyueshenhua.mp3",
-              pic: "https://79d5q6.coding-pages.com/blog/images/20190704091853483.jpg",
-              lrc: ""
+              url: "https://79d5q6.coding-pages.com/mp3/xingyueshenhua.mp3",
+              pic: "https://79d5q6.coding-pages.com/mp3/cover/20190704091853483.jpg",
+              lrc: "https://79d5q6.coding-pages.com/mp3/lrc/金莎-星月神话.lrc"
             }
           });          window.aplayers || (window.aplayers = []);
           window.aplayers.push(ap);
         </script>
-
   <div class="container use-motion">
     <div class="headband"></div>
 <a href="https://github.com/wudihechao/" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-meta">
-
     <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
@@ -177,9 +143,7 @@
       </a>
     </div>
         <h1 class="site-subtitle" itemprop="description">blog of hechao!</h1>
-      
   </div>
-
   <div class="site-nav-toggle">
     <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
@@ -188,127 +152,28 @@
     </button>
   </div>
 </div>
-
-
 <nav class="site-nav">
-  
   <ul id="menu" class="menu">
-      
-      
-      
-        
         <li class="menu-item menu-item-home">
-      
-    
-      
-      
-        
-      
-        
-      
-        
-      
-    
-
-    <a href="/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-home&quot;&gt;&lt;&#x2F;i&gt;首页</a>
-
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i>首页</a>
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-about">
-      
-    
-      
-      
-        
-      
-        
-      
-        
-      
-    
-
-    <a href="/about/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-user&quot;&gt;&lt;&#x2F;i&gt;关于</a>
-
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i>关于</a>
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-tags">
-      
-    
-      
-      
-        
-      
-        
-      
-        
-          
-        
-      
-    
-
-    <a href="/tags/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-tags&quot;&gt;&lt;&#x2F;i&gt;标签&lt;span class=&quot;badge&quot;&gt;39&lt;&#x2F;span&gt;</a>
-
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">39</span></a>
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-categories">
-      
-    
-      
-      
-        
-      
-        
-          
-        
-      
-        
-      
-    
-
-    <a href="/categories/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-th&quot;&gt;&lt;&#x2F;i&gt;分类&lt;span class=&quot;badge&quot;&gt;4&lt;&#x2F;span&gt;</a>
-
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">4</span></a>
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-archives">
-      
-    
-      
-      
-        
-          
-        
-      
-        
-      
-        
-      
-    
-
-    <a href="/archives/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-archive&quot;&gt;&lt;&#x2F;i&gt;归档&lt;span class=&quot;badge&quot;&gt;21&lt;&#x2F;span&gt;</a>
-
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">21</span></a>
   </li>
       <li class="menu-item menu-item-search">
         <a href="javascript:;" class="popup-trigger">
-        
           <i class="menu-item-icon fa fa-search fa-fw"></i>搜索</a>
       </li>
-    
   </ul>
-
-    
-
 </nav>
   <div class="site-search">
     <div class="popup search-popup">
@@ -326,149 +191,84 @@
   </span>
 </div>
 <div id="search-result"></div>
-
 </div>
 <div class="search-pop-overlay"></div>
-
   </div>
 </div>
     </header>
-
-    
   <div class="back-to-top">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
   <div class="reading-progress-bar"></div>
   <a class="book-mark-link book-mark-link-fixed" href="#"></a>
-
-  <a href="https://github.com/wudihechao" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank">&lt;svg width=&quot;80&quot; height=&quot;80&quot; viewBox=&quot;0 0 250 250&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z&quot;&gt;&lt;&#x2F;path&gt;&lt;path d=&quot;M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2&quot; fill=&quot;currentColor&quot; style=&quot;transform-origin: 130px 106px;&quot; class=&quot;octo-arm&quot;&gt;&lt;&#x2F;path&gt;&lt;path d=&quot;M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z&quot; fill=&quot;currentColor&quot; class=&quot;octo-body&quot;&gt;&lt;&#x2F;path&gt;&lt;&#x2F;svg&gt;</a>
-
-
+  <a href="https://github.com/wudihechao" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
           <div id="content" class="content">
-            
-
   <div id="posts" class="posts-expand">
       <article itemscope itemtype="http://schema.org/Article">
-  
-  
-  
   <div class="post-block post">
     <link itemprop="mainEntityOfPage" href="https://hewanyue.com/blog/mysql多实例实现主从级联复制及读写分离/">
-
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hechao">
       <meta itemprop="description" content="BOHC is just a blog of hechao.">
       <meta itemprop="image" content="/images/touxiang.jpg">
     </span>
-
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="BOHC!">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">mysql多实例实现主从级联复制及读写分离
-
-          
         </h2>
-
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-
-
-              
-                
-              
-
               <time title="创建时间：2019-09-25 11:21:43" itemprop="dateCreated datePublished" datetime="2019-09-25T11:21:43+08:00">2019-09-25</time>
             </span>
-          
             <span class="post-meta-item">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-
-              
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/数据库/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a></span>
-
-                
-                
-              
             </span>
-          
-
-          
             <span id="/blog/mysql多实例实现主从级联复制及读写分离/" class="post-meta-item leancloud_visitors" data-flag-title="mysql多实例实现主从级联复制及读写分离" title="阅读次数">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
-
               <span class="leancloud-visitors-count"></span>
               <span>℃</span>
             </span>
-          
-
               <span class="post-meta-divider">•</span>
-  
   <span class="post-meta-item">
-    
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
-        
-      
-      <span class="post-meta-item-text">Valine：</span>
-    
     <a title="valine" href="/blog/mysql多实例实现主从级联复制及读写分离/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/blog/mysql多实例实现主从级联复制及读写分离/" itemprop="commentCount"></span></a>
   </span>
-  
-  
-          
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-file-word-o"></i>
               </span>
-              
-
-              
               <span>10k</span>
             </span>
-          
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
-              
-
-              
               <span>25 分钟</span>
             </span>
-          
-
         </div>
       </header>
-
-    
-    
-    
     <div class="post-body" itemprop="articleBody">
-
-      
         <p><strong>一、多实例</strong></p><p>1、概述</p><p>&emsp;&emsp; MySQL多实例就是在一台机器上开启多个不同的服务端口（如：3306,3307），运行多个MySQL服务进程，通过不同的socket监听不同的服务端口来提供各自的服务</p><p>2.1、优点</p><p>1）有效利用服务器资源</p><p>&emsp;&emsp; 当单个服务器资源过剩时，可以充分利用剩余的资源来提供更多的服务；<br>2）节约服务器资源</p><a id="more"></a>
-
-
-
-
-
 <p>&emsp;&emsp; 当公司资金紧张，但数据库又需要数据库之间各自提供服务时，并且还想使用主从同步等技术，此时多实例就再好不过了；<br>3）方便后期架构扩展</p>
 <p>&emsp;&emsp; 当公司的某个项目才启动时，启动初期并不一定有很大的用户量，因此可以先用一组物理数据库服务器，在上面部署多个实例，方便后续架构扩展、迁移；</p>
 <p>2.2、缺点</p>
@@ -490,45 +290,34 @@
 <p>&emsp;&emsp; （4）端口不能相同</p>
 <p>&emsp;&emsp; （5）socket文件的生成路径不能相同<br>5、配置搭建<br>&emsp;&emsp; 实现目标：<img src="https://img-blog.csdnimg.cn/20190925114000429.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp; 1、源码编译安装或者二进制安装或者yum安装mysql或mariadb客户端以及server端,若没有创建mysql用户、组则创建。<br>&emsp;&emsp; 2、在指定路径下创建3个数据库目录<br>&emsp;&emsp;mkdir -p /data/mysql330{789}<br>&emsp;&emsp;挂载在不同的三块硬盘上</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mount /dev/sdb /data/mysql3307</span><br><span class="line">mount /dev/sdc /data/mysql3308</span><br><span class="line">mount /dev/sdd /data/mysql3309</span><br></pre></td></tr></table></figure>
-
 <p>&emsp;&emsp; 3、用server端带的初始化脚本生成三个数据库</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">scripts/mariadb-install-db --datadir=/data/mysql3307/ --user=mysql</span><br><span class="line">scripts/mariadb-install-db --datadir=/data/mysql3308/ --user=mysql</span><br><span class="line">scripts/mariadb-install-db --datadir=/data/mysql3309/ --user=mysql</span><br></pre></td></tr></table></figure>
-
 <p>&emsp;&emsp; 4、准备三个配置文件</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cp /etc/my.cnf /data/mysql3307/my.cnf</span><br><span class="line">cp /etc/my.cnf /data/mysql3308/my.cnf</span><br><span class="line">cp /etc/my.cnf /data/mysql3309/my.cnf</span><br></pre></td></tr></table></figure>
-
 <p>&emsp;&emsp; 修改分别其中配置（以下以实例3307为例，3308、3309将下面所有数字对应改成自己的端口号）</p>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[client]</span><br><span class="line"><span class="comment">#password       = your_password</span></span><br><span class="line">port            = 3307</span><br><span class="line">socket          = /data/mysql3307/mysql.sock</span><br><span class="line"></span><br><span class="line">[mysqld]</span><br><span class="line"><span class="attribute">datadir</span>=/data/mysql3307/</span><br><span class="line"><span class="attribute">innodb_file_per-table</span>=on</span><br><span class="line"><span class="attribute">skip_name_resolve</span>=on</span><br><span class="line">port            = 3307</span><br><span class="line">socket          = /data/mysql3307/mysql.sock</span><br><span class="line"><span class="attribute">log-bin</span>=mysql-bin</span><br><span class="line">log-slave-updates</span><br><span class="line">server-id       = 3307					        	#每个数据库server-id全局唯一</span><br><span class="line"><span class="attribute">default-character-set</span>=utf8</span><br><span class="line"></span><br><span class="line"><span class="attribute">read_only</span>=ON								#3307特有选项-开启中继日志</span><br><span class="line"><span class="attribute">relay_log</span>=relay-log							#3307特有选项</span><br><span class="line"><span class="attribute">relay_log_index</span>=relay-log.index						#3307特有选项</span><br></pre></td></tr></table></figure>
-
 <p>&emsp;&emsp; 5、编写服务启动脚本（并加执行权限和修改PATH路径）</p>
 <p>&emsp;&emsp;vim mysqld</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">port=$1</span><br><span class="line">mysql_user="root"</span><br><span class="line">mysql_pwd="password"</span><br><span class="line">cmd_path="/usr/local/mysql/bin"</span><br><span class="line">mysql_basedir="/data/mysql"</span><br><span class="line">mysql_sock="$&#123;mysql_basedir&#125;$&#123;port&#125;/mysql.sock"</span><br><span class="line"></span><br><span class="line">function_start_mysql()</span><br><span class="line">&#123;</span><br><span class="line">    if [ ! -e "$mysql_sock" ];then</span><br><span class="line">      printf "Starting MySQL...\n"</span><br><span class="line">      $&#123;cmd_path&#125;/mysqld_safe --defaults-file=$&#123;mysql_basedir&#125;$&#123;port&#125;/my.cnf  &amp;&gt; /dev/null  &amp;</span><br><span class="line">    else</span><br><span class="line">      printf "MySQL is running...\n"</span><br><span class="line">      exit</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">function_stop_mysql()</span><br><span class="line">&#123;</span><br><span class="line">    if [ ! -e "$mysql_sock" ];then</span><br><span class="line">       printf "MySQL is stopped...\n"</span><br><span class="line">       exit</span><br><span class="line">    else</span><br><span class="line">       printf "Stoping MySQL...\n"</span><br><span class="line">       $&#123;cmd_path&#125;/mysqladmin -u $&#123;mysql_user&#125; -p$&#123;mysql_pwd&#125; -S $&#123;mysql_sock&#125; shutdown</span><br><span class="line">   fi</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">function_restart_mysql()</span><br><span class="line">&#123;</span><br><span class="line">    printf "Restarting MySQL...\n"</span><br><span class="line">    function_stop_mysql</span><br><span class="line">    sleep 1</span><br><span class="line">    function_start_mysql</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if [ ! -n "$2" ];then</span><br><span class="line">	printf "Usage: $&#123;mysql_basedir&#125;$&#123;port&#125;/bin/mysqld [PORT] &#123;start|stop|restart&#125;\n"</span><br><span class="line">else</span><br><span class="line">	case $2 in</span><br><span class="line">	start)</span><br><span class="line">    	function_start_mysql</span><br><span class="line">	;;</span><br><span class="line">	stop)</span><br><span class="line">    	function_stop_mysql</span><br><span class="line">	;;</span><br><span class="line">	restart)</span><br><span class="line">    	function_restart_mysql</span><br><span class="line">	;;</span><br><span class="line">	*)</span><br><span class="line">    	printf "Usage: $&#123;mysql_basedir&#125;$&#123;port&#125;/bin/mysqld &#123;start|stop|restart&#125;\n"</span><br><span class="line">	esac</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">port=$1</span><br><span class="line">mysql_user="root"</span><br><span class="line">mysql_pwd="password"</span><br><span class="line">cmd_path="/usr/local/mysql/bin"</span><br><span class="line">mysql_basedir="/data/mysql"</span><br><span class="line">mysql_sock="$&#123;mysql_basedir&#125;$&#123;port&#125;/mysql.sock"</span><br><span class="line"></span><br><span class="line">function_start_mysql()</span><br><span class="line">&#123;</span><br><span class="line">    if [ ! -e "$mysql_sock" ];then</span><br><span class="line">      printf "Starting MySQL...\n"</span><br><span class="line">      $&#123;cmd_path&#125;/mysqld_safe --defaults-file=$&#123;mysql_basedir&#125;$&#123;port&#125;/my.cnf  &> /dev/null  &</span><br><span class="line">    else</span><br><span class="line">      printf "MySQL is running...\n"</span><br><span class="line">      exit</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">function_stop_mysql()</span><br><span class="line">&#123;</span><br><span class="line">    if [ ! -e "$mysql_sock" ];then</span><br><span class="line">       printf "MySQL is stopped...\n"</span><br><span class="line">       exit</span><br><span class="line">    else</span><br><span class="line">       printf "Stoping MySQL...\n"</span><br><span class="line">       $&#123;cmd_path&#125;/mysqladmin -u $&#123;mysql_user&#125; -p$&#123;mysql_pwd&#125; -S $&#123;mysql_sock&#125; shutdown</span><br><span class="line">   fi</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">function_restart_mysql()</span><br><span class="line">&#123;</span><br><span class="line">    printf "Restarting MySQL...\n"</span><br><span class="line">    function_stop_mysql</span><br><span class="line">    sleep 1</span><br><span class="line">    function_start_mysql</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if [ ! -n "$2" ];then</span><br><span class="line">	printf "Usage: $&#123;mysql_basedir&#125;$&#123;port&#125;/bin/mysqld [PORT] &#123;start|stop|restart&#125;\n"</span><br><span class="line">else</span><br><span class="line">	case $2 in</span><br><span class="line">	start)</span><br><span class="line">    	function_start_mysql</span><br><span class="line">	;;</span><br><span class="line">	stop)</span><br><span class="line">    	function_stop_mysql</span><br><span class="line">	;;</span><br><span class="line">	restart)</span><br><span class="line">    	function_restart_mysql</span><br><span class="line">	;;</span><br><span class="line">	*)</span><br><span class="line">    	printf "Usage: $&#123;mysql_basedir&#125;$&#123;port&#125;/bin/mysqld &#123;start|stop|restart&#125;\n"</span><br><span class="line">	esac</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
 <p>&emsp;&emsp; 6、现在就可以实现执行mysqld 3307 start启动数据库服务了。启动三台数据库后（可运行安全加固脚本去掉test数据库以及多余账户），在主机数据库及这3个数据库中分别增加主从配置。<br>&emsp;&emsp; 192.168.32.71主机数据库:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MariaDB [(none)]&gt; GRANT REPLICATION SLAVE ON *.* TO &apos;repluser&apos;@&apos;192.168.32.72&apos; IDENTIFIED BY &apos;replpasswd&apos;;</span><br><span class="line">MariaDB [(none)]&gt; SHOW MASTER STATUS;</span><br></pre></td></tr></table></figure>
-
-<p>MariaDB [(none)]&gt; show master status;<br>+———————-+—————–+——————-+————————-+<br>|&emsp;&emsp; &emsp;File&emsp;&emsp;&emsp;&emsp;      | &emsp;Position &emsp;| Binlog_Do_DB | Binlog_Ignore_DB |<br>+———————-+—————–+——————-+————————-+<br>| mysql-bin.000026 | &emsp; 1136 &emsp;&emsp;|&emsp;&emsp; &emsp;&emsp;&emsp;&emsp;&emsp;|&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; |<br>+———————-+—————–+——————-+————————-+</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MariaDB [(none)]> GRANT REPLICATION SLAVE ON *.* TO &apos;repluser&apos;@&apos;192.168.32.72&apos; IDENTIFIED BY &apos;replpasswd&apos;;</span><br><span class="line">MariaDB [(none)]> SHOW MASTER STATUS;</span><br></pre></td></tr></table></figure>
+<p>MariaDB [(none)]> show master status;<br>+———————-+—————–+——————-+————————-+<br>|&emsp;&emsp; &emsp;File&emsp;&emsp;&emsp;&emsp;      | &emsp;Position &emsp;| Binlog_Do_DB | Binlog_Ignore_DB |<br>+———————-+—————–+——————-+————————-+<br>| mysql-bin.000026 | &emsp; 1136 &emsp;&emsp;|&emsp;&emsp; &emsp;&emsp;&emsp;&emsp;&emsp;|&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; |<br>+———————-+—————–+——————-+————————-+</p>
 <p>&emsp;&emsp; 查看并记录主机当前二进制日志文件信息及位置。<br>&emsp;&emsp; 用mysqldump (或者物理备份)，并还原至3个从节点。<br>&emsp;&emsp; <strong>192.168.32.71主机:</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -ppassword -A --default-character-set=utf8 --master-data=1 --hex-blob  &gt;/data/fullbak_`date +%F`.sql</span><br><span class="line">scp /data/fullbak_`date +%F`.sql 192.168.32.72:/data/</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -ppassword -A --default-character-set=utf8 --master-data=1 --hex-blob  >/data/fullbak_`date +%F`.sql</span><br><span class="line">scp /data/fullbak_`date +%F`.sql 192.168.32.72:/data/</span><br></pre></td></tr></table></figure>
 <p>&emsp;&emsp; <strong>192.168.32.72主机:</strong></p>
 <p>&emsp;&emsp; 启动3个实例的服务</p>
 <p>&emsp;&emsp;mysqld 3307 start；mysqld 3308 start；mysqld 3309 start</p>
 <p>&emsp;&emsp; 连接3307实例</p>
 <p>&emsp;&emsp;mysql -S /data/mysql3307/mysql.sock</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MariaDB [(none)]&gt; source /data/fullbak_XXX.sql</span><br><span class="line">MariaDB [(none)]&gt; SHOW MASTER STATUS;</span><br></pre></td></tr></table></figure>
-
-<p>MariaDB [(none)]&gt; show master status;<br>+———————–+—————-+——————-+————————-+<br>|&emsp;&emsp; &emsp;File&emsp;&emsp;&emsp;&emsp;      | &emsp;Position &emsp;| Binlog_Do_DB | Binlog_Ignore_DB |<br>+———————–+—————-+——————-+————————-+<br>| mysql-bin.000006 | &emsp; 1167 &emsp;&emsp;|&emsp;&emsp; &emsp;&emsp;&emsp;&emsp;&emsp;|&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; |<br>+———————–+—————-+——————-+————————-+</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MariaDB [(none)]> source /data/fullbak_XXX.sql</span><br><span class="line">MariaDB [(none)]> SHOW MASTER STATUS;</span><br></pre></td></tr></table></figure>
+<p>MariaDB [(none)]> show master status;<br>+———————–+—————-+——————-+————————-+<br>|&emsp;&emsp; &emsp;File&emsp;&emsp;&emsp;&emsp;      | &emsp;Position &emsp;| Binlog_Do_DB | Binlog_Ignore_DB |<br>+———————–+—————-+——————-+————————-+<br>| mysql-bin.000006 | &emsp; 1167 &emsp;&emsp;|&emsp;&emsp; &emsp;&emsp;&emsp;&emsp;&emsp;|&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; |<br>+———————–+—————-+——————-+————————-+</p>
 <p>&emsp;&emsp; 记录3307实例的当前二进制日志文件信息及位置。</p>
 <p>&emsp;&emsp; 在从节点3307添加主节点配置信息。</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">MariaDB [(none)]&gt; change master <span class="keyword">to</span> <span class="attribute">master_host</span>=<span class="string">'192.168.32.71'</span>,</span><br><span class="line"><span class="attribute">master_user</span>=<span class="string">'repluser'</span>,</span><br><span class="line"><span class="attribute">master_password</span>=<span class="string">'replpasswd'</span>,</span><br><span class="line"><span class="attribute">master_port</span>=3306,</span><br><span class="line"><span class="attribute">master_log_file</span>=<span class="string">'mysql-bin.000026'</span>,master_log_pos=1136;</span><br><span class="line">MariaDB [(none)]&gt;start slave;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">MariaDB [(none)]> change master <span class="keyword">to</span> <span class="attribute">master_host</span>=<span class="string">'192.168.32.71'</span>,</span><br><span class="line"><span class="attribute">master_user</span>=<span class="string">'repluser'</span>,</span><br><span class="line"><span class="attribute">master_password</span>=<span class="string">'replpasswd'</span>,</span><br><span class="line"><span class="attribute">master_port</span>=3306,</span><br><span class="line"><span class="attribute">master_log_file</span>=<span class="string">'mysql-bin.000026'</span>,master_log_pos=1136;</span><br><span class="line">MariaDB [(none)]>start slave;</span><br></pre></td></tr></table></figure>
 <p>&emsp;&emsp; 连接3308实例mysql -S /data/mysql3308/mysql.sock<br>&emsp;&emsp; 在从节点3308添加主节点配置信息。</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">MariaDB [(none)]&gt; source /data/fullbak_XXX.sql</span><br><span class="line">MariaDB [(none)]&gt; change master <span class="keyword">to</span> <span class="attribute">master_host</span>=<span class="string">'192.168.32.72,</span></span><br><span class="line"><span class="string">master_user='</span>repluser',</span><br><span class="line"><span class="attribute">master_password</span>=<span class="string">'replpasswd'</span>,</span><br><span class="line"><span class="attribute">master_port</span>=3307,</span><br><span class="line"><span class="attribute">master_log_file</span>=<span class="string">'mysql-bin.000006'</span>,master_log_pos=1167;</span><br><span class="line">MariaDB [(none)]&gt;start slave;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">MariaDB [(none)]> source /data/fullbak_XXX.sql</span><br><span class="line">MariaDB [(none)]> change master <span class="keyword">to</span> <span class="attribute">master_host</span>=<span class="string">'192.168.32.72,</span></span><br><span class="line"><span class="string">master_user='</span>repluser',</span><br><span class="line"><span class="attribute">master_password</span>=<span class="string">'replpasswd'</span>,</span><br><span class="line"><span class="attribute">master_port</span>=3307,</span><br><span class="line"><span class="attribute">master_log_file</span>=<span class="string">'mysql-bin.000006'</span>,master_log_pos=1167;</span><br><span class="line">MariaDB [(none)]>start slave;</span><br></pre></td></tr></table></figure>
 <p>&emsp;&emsp; 连接3309实例mysql -S /data/mysql3309/mysql.sock<br>&emsp;&emsp; 在从节点3309添加主节点配置信息。</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">MariaDB [(none)]&gt; source /data/fullbak_XXX.sql</span><br><span class="line">MariaDB [(none)]&gt; change master <span class="keyword">to</span> <span class="attribute">master_host</span>=<span class="string">'192.168.32.72,</span></span><br><span class="line"><span class="string">master_user='</span>repluser',</span><br><span class="line"><span class="attribute">master_password</span>=<span class="string">'replpasswd'</span>,</span><br><span class="line"><span class="attribute">master_port</span>=3307,</span><br><span class="line"><span class="attribute">master_log_file</span>=<span class="string">'mysql-bin.000006'</span>,master_log_pos=1167;</span><br><span class="line">MariaDB [(none)]&gt;start slave;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">MariaDB [(none)]> source /data/fullbak_XXX.sql</span><br><span class="line">MariaDB [(none)]> change master <span class="keyword">to</span> <span class="attribute">master_host</span>=<span class="string">'192.168.32.72,</span></span><br><span class="line"><span class="string">master_user='</span>repluser',</span><br><span class="line"><span class="attribute">master_password</span>=<span class="string">'replpasswd'</span>,</span><br><span class="line"><span class="attribute">master_port</span>=3307,</span><br><span class="line"><span class="attribute">master_log_file</span>=<span class="string">'mysql-bin.000006'</span>,master_log_pos=1167;</span><br><span class="line">MariaDB [(none)]>start slave;</span><br></pre></td></tr></table></figure>
 <p>&emsp;&emsp; 三个从节点数据库依次<br>&emsp;&emsp;show slave status\G<br>查看主从状态信息，确认主从配置无误且均已启动，至此，多实例主从级联配置就完成了。<br>&emsp;&emsp;<br><strong>二、读写分离</strong><br>1、什么是读写分离？</p>
 <p>&emsp;&emsp; 读写分离，基本的原理是让主数据库处理事务性增、改、删操作（INSERT、UPDATE、DELETE），而从数据库处理SELECT查询操作。数据库复制被用来把事务性操作导致的变更同步到集群中的从数据库。 </p>
 <p>2、为什么要实现读写分离？</p>
@@ -536,89 +325,54 @@
 <p> 3、什么时候要读写分离？ </p>
 <p>&emsp;&emsp; 数据库不一定要读写分离，如果程序使用数据库较多时，而更新少，查询多的情况下会考虑使用，利用数据库 主从同步 。可以减少数据库压力，提高性能。当然，数据库也有其它优化方案。memcache 或是 表折分，或是搜索引擎。都是解决方法。 </p>
 <p>4、部署读写分离<br>&emsp;&emsp; 本次使用proxy实现读写分离，最终实现下图所示<br><img src="https://img-blog.csdnimg.cn/20190925164049740.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp; 1、部署代理机ip：192.168.32.70<br>&emsp;&emsp; 安装proxy及mysql客户端</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/yum.repos.d/proxysql.repo &lt;&lt;EOF </span><br><span class="line">[proxysql_repo]</span><br><span class="line">name= ProxySQL YUM repository</span><br><span class="line">baseurl=http://repo.proxysql.com/ProxySQL/proxysql-1.4.x/centos/\$releasever</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=http://repo.proxysql.com/ProxySQL/repo_pub_key</span><br><span class="line">EOF</span><br><span class="line">yum install proxysql -y</span><br><span class="line">yum install mysql -y</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/yum.repos.d/proxysql.repo <<EOF </span><br><span class="line">[proxysql_repo]</span><br><span class="line">name= ProxySQL YUM repository</span><br><span class="line">baseurl=http://repo.proxysql.com/ProxySQL/proxysql-1.4.x/centos/\$releasever</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=http://repo.proxysql.com/ProxySQL/repo_pub_key</span><br><span class="line">EOF</span><br><span class="line">yum install proxysql -y</span><br><span class="line">yum install mysql -y</span><br></pre></td></tr></table></figure>
 <p>&emsp;&emsp; 修改代理机配置文件端口号 6033 改为 3306（方便客户机连接,其他保持默认）</p>
 <p>&emsp;&emsp;sed -ri ‘s@(interfaces=”0.0.0.0:)6033@\13306@’ /etc/proxysql.cnf</p>
 <p>&emsp;&emsp; 登陆proxysql数据库</p>
 <p>&emsp;&emsp;mysql -uadmin -padmin -P6032 -h127.0.0.1</p>
 <p>&emsp;&emsp; 在代理服务器上增加主机信息</p>
-<p>&emsp;&emsp; MySQL [(none)]&gt; </p>
+<p>&emsp;&emsp; MySQL [(none)]> </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">insert into mysql_servers(hostgroup_id,hostname,port) 	values(10,&apos;192.168.32.71&apos;,3306),</span><br><span class="line">(10,&apos;192.168.32.72&apos;,3307),</span><br><span class="line">(10,&apos;192.168.32.72&apos;,3308),</span><br><span class="line">(10,&apos;192.168.32.72&apos;,3309);</span><br></pre></td></tr></table></figure>
-
-<p>&emsp;&emsp; 加载:MySQL [(none)]&gt; load mysql servers to runtime<br>&emsp;&emsp; 保存:MySQL [(none)]&gt; save mysql servers to disk</p>
-<p>&emsp;&emsp; #设置监控帐号（使用默认监控账号(账号:密码=monitor:monitor)的话，此步可跳过）<br>&emsp;&emsp; MySQL [(none)]&gt;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">set mysql-monitor_username=&apos;username&apos;</span><br><span class="line">set mysql-monitor_password=&apos;password&apos;</span><br><span class="line">MySQL [(none)]&gt; load mysql variables to runtime;</span><br><span class="line">MySQL [(none)]&gt; save mysql variables to disk;</span><br></pre></td></tr></table></figure>
-
+<p>&emsp;&emsp; 加载:MySQL [(none)]> load mysql servers to runtime<br>&emsp;&emsp; 保存:MySQL [(none)]> save mysql servers to disk</p>
+<p>&emsp;&emsp; #设置监控帐号（使用默认监控账号(账号:密码=monitor:monitor)的话，此步可跳过）<br>&emsp;&emsp; MySQL [(none)]></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">set mysql-monitor_username=&apos;username&apos;</span><br><span class="line">set mysql-monitor_password=&apos;password&apos;</span><br><span class="line">MySQL [(none)]> load mysql variables to runtime;</span><br><span class="line">MySQL [(none)]> save mysql variables to disk;</span><br></pre></td></tr></table></figure>
 <p>&emsp;&emsp; 2、在主服务器上增加创建proxy的监控帐号并授权(从节点会自动复制创建，无需再创)</p>
-<p>&emsp;&emsp; MySQL [(none)]&gt; grant replication client on <em>.</em> to monitor@’192.168.32.71’identified by ‘monitor’;</p>
-<p>&emsp;&emsp; 3、在代理机上查看监控连接是否正常的 (对connect指标的监控)：<br>&emsp;&emsp; 如果connect_error的结果为NULL则表示正常<br>&emsp;&emsp; MySQL&gt;select * from mysql_server_connect_log;<br>&emsp;&emsp; 查看监控心跳信息 (对ping指标的监控)：<br>&emsp;&emsp; MySQL&gt; select * from mysql_server_ping_log;<br>&emsp;&emsp; (如果显示连接失败，可尝试在从节点刷新权限<strong>flush privileges;</strong>)<br>&emsp;&emsp; 4、设置分组信息<br>&emsp;&emsp;  需要修改的是main库中的mysql_replication_hostgroups表，该表有3个字段：writer_hostgroup，reader_hostgroup，comment, 指定写组的id为10，读组的id为20<br>&emsp;&emsp; MySQL&gt;insert into mysql_replication_hostgroups values(10,20,”CentOS7”);<br>&emsp;&emsp; 将mysql_replication_hostgroups表的修改加载到RUNTIME生效<br>&emsp;&emsp; MySQL&gt; load mysql servers to runtime;<br>&emsp;&emsp; MySQL&gt; save mysql servers to disk;<br>&emsp;&emsp; Monitor模块监控后端的read_only值，按照read_only的值将节点自动移动到读/写组<br>&emsp;&emsp;查看添加的主机分组表，应该已经自动分组了：<br>&emsp;&emsp;  MySQL&gt;select hostgroup_id,hostname,port,status,weight from mysql_servers;<br><img src="https://img-blog.csdnimg.cn/2019092521480589.png" alt="在这里插入图片描述"><br>&emsp;&emsp; 5、在proxysql上配置路由规则，实现读写分离<br>&emsp;&emsp; 与规则有关的表：mysql_query_rules和mysql_query_rules_fast_routing，后者是前者的扩展表，1.4.7之后支持<br>&emsp;&emsp; 插入路由规则：将select语句分离到20的读组，select语句中有一个特殊语句<br>&emsp;&emsp; SELECT…FOR UPDATE它会申请写锁，应路由到10的写组<br>&emsp;&emsp; MySQL&gt;insert into mysql_query_rules(rule_id,active,match_digest,destination_hostgroup,apply) VALUES(1,1,’^SELECT.<em>FOR UPDATE$’,10,1),(2,1,’^SELECT’,20,1);<br>&emsp;&emsp; MySQL&gt; load mysql query rules to runtime;<br>&emsp;&emsp; MySQL&gt; save mysql query rules to disk;<br>*</em>注意：因ProxySQL根据rule_id顺序进行规则匹配，select … for update规则的rule_id必须要小于普通的select规则的rule_id**</p>
+<p>&emsp;&emsp; MySQL [(none)]> grant replication client on <em>.</em> to monitor@’192.168.32.71’identified by ‘monitor’;</p>
+<p>&emsp;&emsp; 3、在代理机上查看监控连接是否正常的 (对connect指标的监控)：<br>&emsp;&emsp; 如果connect_error的结果为NULL则表示正常<br>&emsp;&emsp; MySQL>select * from mysql_server_connect_log;<br>&emsp;&emsp; 查看监控心跳信息 (对ping指标的监控)：<br>&emsp;&emsp; MySQL> select * from mysql_server_ping_log;<br>&emsp;&emsp; (如果显示连接失败，可尝试在从节点刷新权限<strong>flush privileges;</strong>)<br>&emsp;&emsp; 4、设置分组信息<br>&emsp;&emsp;  需要修改的是main库中的mysql_replication_hostgroups表，该表有3个字段：writer_hostgroup，reader_hostgroup，comment, 指定写组的id为10，读组的id为20<br>&emsp;&emsp; MySQL>insert into mysql_replication_hostgroups values(10,20,”CentOS7”);<br>&emsp;&emsp; 将mysql_replication_hostgroups表的修改加载到RUNTIME生效<br>&emsp;&emsp; MySQL> load mysql servers to runtime;<br>&emsp;&emsp; MySQL> save mysql servers to disk;<br>&emsp;&emsp; Monitor模块监控后端的read_only值，按照read_only的值将节点自动移动到读/写组<br>&emsp;&emsp;查看添加的主机分组表，应该已经自动分组了：<br>&emsp;&emsp;  MySQL>select hostgroup_id,hostname,port,status,weight from mysql_servers;<br><img src="https://img-blog.csdnimg.cn/2019092521480589.png" alt="在这里插入图片描述"><br>&emsp;&emsp; 5、在proxysql上配置路由规则，实现读写分离<br>&emsp;&emsp; 与规则有关的表：mysql_query_rules和mysql_query_rules_fast_routing，后者是前者的扩展表，1.4.7之后支持<br>&emsp;&emsp; 插入路由规则：将select语句分离到20的读组，select语句中有一个特殊语句<br>&emsp;&emsp; SELECT…FOR UPDATE它会申请写锁，应路由到10的写组<br>&emsp;&emsp; MySQL>insert into mysql_query_rules(rule_id,active,match_digest,destination_hostgroup,apply) VALUES(1,1,’^SELECT.<em>FOR UPDATE$’,10,1),(2,1,’^SELECT’,20,1);<br>&emsp;&emsp; MySQL> load mysql query rules to runtime;<br>&emsp;&emsp; MySQL> save mysql query rules to disk;<br>*</em>注意：因ProxySQL根据rule_id顺序进行规则匹配，select … for update规则的rule_id必须要小于普通的select规则的rule_id**</p>
 <p>&emsp;&emsp;在代理机上用命令测试相应读写的是哪个数据库：<br>&emsp;&emsp;mysql -uroot -pPASSWORD -P3306 -h127.0.0.1 -e ‘start transaction;select @@server_id;commit;select @@server_id’<br>+———————+<br>| @@server_id&emsp;  |<br>+———————+<br>|      &emsp; &emsp;   3306&emsp; &emsp;  |<br>+———————+<br>+———————+<br>| @@server_id&emsp;  |<br>+———————+<br>|      &emsp; &emsp;   3307 &emsp; &emsp; |<br>+———————+<br>&emsp;&emsp;说明读写分离，在两个终端上成功实现~</p>
-
     </div>
-
-    
-    
-    
-      
-
     <div style="text-align:center;color: #ccc;font-size:14px;">---------------- The End ----------------</div>
-        
-      
         <div id="reward-container">
   <div>It's very nice of you to support me.</div>
   <button id="reward-button" disable="enable" onclick="var qr = document.getElementById('qr'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
     打赏
   </button>
   <div id="qr" style="display: none;">
-        
-      
       <div style="display: inline-block">
         <img src="/images/wechat-pay.png" alt="Hechao 微信支付">
         <p>微信支付</p>
       </div>
-
   </div>
 </div>
-
-      
-        
-
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
     <strong>本文作者： </strong>Hechao</li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://hewanyue.com/blog/mysql%E5%A4%9A%E5%AE%9E%E4%BE%8B%E5%AE%9E%E7%8E%B0%E4%B8%BB%E4%BB%8E%E7%BA%A7%E8%81%94%E5%A4%8D%E5%88%B6%E5%8F%8A%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/" title="mysql多实例实现主从级联复制及读写分离">https:&#x2F;&#x2F;hewanyue.com&#x2F;blog&#x2F;mysql多实例实现主从级联复制及读写分离&#x2F;</a>
+    <a href="https://hewanyue.com/blog/mysql%E5%A4%9A%E5%AE%9E%E4%BE%8B%E5%AE%9E%E7%8E%B0%E4%B8%BB%E4%BB%8E%E7%BA%A7%E8%81%94%E5%A4%8D%E5%88%B6%E5%8F%8A%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/" title="mysql多实例实现主从级联复制及读写分离">https://hewanyue.com/blog/mysql多实例实现主从级联复制及读写分离/</a>
   </li>
   <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank">&lt;i class=&quot;fa fa-fw fa-creative-commons&quot;&gt;&lt;&#x2F;i&gt;BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
 </ul>
 </div>
-
-      
-
       <footer class="post-footer">
-          
-            
-          
           <div class="post-tags">
-            
               <a href="/tags/多实例/" rel="tag"><i class="fa fa-tag">多实例</i></a>
-            
               <a href="/tags/mysql/" rel="tag"><i class="fa fa-tag">mysql</i></a>
-            
               <a href="/tags/级联复制/" rel="tag"><i class="fa fa-tag">级联复制</i></a>
-            
               <a href="/tags/读写分离/" rel="tag"><i class="fa fa-tag">读写分离</i></a>
-            
           </div>
-        
-
-        
-
-        
     <div class="links-of-blogroll motion-element links-of-blogroll-block">
       <div class="links-of-blogroll-title" style="padding-left: 10px;">
         <!-- modify icon to fire by szw -->
@@ -626,72 +380,43 @@
         近期文章
       </div>
       <ul class="links-of-blogroll-list" style="padding-left: 30px;">
-        
-        
           <li>
             <a href="/blog/nginx防盗链设置的一些细节/" title="nginx防盗链设置的一些细节" >nginx防盗链设置的一些细节</a>
           </li>
-        
           <li>
             <a href="/blog/企业级应用：负载均衡层——LVS调度器详解/" title="企业级应用：负载均衡层——LVS调度器详解" >企业级应用：负载均衡层——LVS调度器详解</a>
           </li>
-        
           <li>
             <a href="/blog/源码编译Apache和PHP实现lamp架构/" title="源码编译Apache和PHP实现lamp架构" >源码编译Apache和PHP实现lamp架构</a>
           </li>
-        
           <li>
             <a href="/blog/LAMP架构实现PowerDNS/" title="LAMP架构实现PowerDNS" >LAMP架构实现PowerDNS</a>
           </li>
-        
           <li>
             <a href="/blog/yum-dnf-安装mariadb10-4-8（最新版）/" title="yum/dnf 安装mariadb10.4.8（最新版）" >yum/dnf 安装mariadb10.4.8（最新版）</a>
           </li>
-        
       </ul>
     </div>
-
-
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-              
                 <a href="/blog/关于mariadb10-4-8二进制安装及源码编译后设置密码无效的一些发现/" rel="next" title="关于mariadb10.4.8二进制安装及源码编译后设置密码无效的一些发现">
                   <i class="fa fa-chevron-left"></i> 关于mariadb10.4.8二进制安装及源码编译后设置密码无效的一些发现
                 </a>
-              
             </div>
-
             <span class="post-nav-divider"></span>
-
             <div class="post-nav-prev post-nav-item">
-              
                 <a href="/blog/mysql数据库MHA实现高可用（多实例间实现）/" rel="prev" title="myql数据库MHA实现高可用（多实例间实现）">
                   myql数据库MHA实现高可用（多实例间实现） <i class="fa fa-chevron-right"></i>
                 </a>
-              
             </div>
           </div>
-        
       </footer>
-    
   </div>
-  
-  
-  
   </article>
-
   </div>
-
-
           </div>
-          
-    
     <div class="comments" id="comments"></div>
-  
-
         </div>
-          
-  
   <div class="sidebar-toggle">
     <div class="sidebar-toggle-line-wrap">
       <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
@@ -699,15 +424,8 @@
       <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
     </div>
   </div>
-
   <aside class="sidebar">
     <div class="sidebar-inner">
-        
-        
-        
-        
-      
-
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
           文章目录
@@ -716,12 +434,10 @@
           站点概览
         </li>
       </ul>
-
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
       </div>
       <!--/noindex-->
-
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image"
@@ -733,76 +449,40 @@
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-        
           <a href="/archives/">
-        
           <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
-    
-      
-      
       <div class="site-state-item site-state-categories">
-        
           <a href="/categories/">
-        
         <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
-    
-      
-      
       <div class="site-state-item site-state-tags">
-        
-          
             <a href="/tags/">
-          
-        
         <span class="site-state-item-count">39</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
-    
   </nav>
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-      
-      
-      
-        
-      
-        <a href="https://github.com/wudihechao" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;wudihechao" rel="noopener" target="_blank">&lt;i class=&quot;fa fa-fw fa-github&quot;&gt;&lt;&#x2F;i&gt;</a>
+        <a href="https://github.com/wudihechao" title="GitHub &rarr; https://github.com/wudihechao" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-      
-        
-      
-        <a href="mailto:wudihechao@163.com" title="E-Mail &amp;rarr; mailto:wudihechao@163.com" rel="noopener" target="_blank">&lt;i class=&quot;fa fa-fw fa-envelope&quot;&gt;&lt;&#x2F;i&gt;</a>
+        <a href="mailto:wudihechao@163.com" title="E-Mail &rarr; mailto:wudihechao@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-      
-        
-      
-        <a href="https://weibo.com/u/1050367191" title="Weibo &amp;rarr; https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;1050367191" rel="noopener" target="_blank">&lt;i class=&quot;fa fa-fw fa-weibo&quot;&gt;&lt;&#x2F;i&gt;</a>
+        <a href="https://weibo.com/u/1050367191" title="Weibo &rarr; https://weibo.com/u/1050367191" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i></a>
       </span>
-    
   </div>
   <div class="cc-license motion-element" itemprop="license">
-    
-  
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank">&lt;img src=&quot;&#x2F;images&#x2F;cc-by-nc-sa.svg&quot; alt=&quot;Creative Commons&quot;&gt;</a>
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
   </div>
 <div id="show_date_time"></div>
-
 <div id="days"></div>
 <script>
 function show_date_time(){
@@ -829,18 +509,11 @@ return i;
 }
 show_date_time();
 </script>
-
       </div>
-
-      
-      
  </aside>
   <div id="sidebar-dimmer"></div>
-
-
       </div>
     </main>
-
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
@@ -854,8 +527,6 @@ show_date_time();
     </span>
     <span title="站点总字数">176k</span>
 </div>
-
-        
 <div class="busuanzi-count">
   <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
@@ -866,9 +537,7 @@ show_date_time();
         <span id="busuanzi_value_site_uv"></span>
       </span>
     </span>
-  
     <span class="post-meta-divider">|</span>
-  
     <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="fa fa-eye"></i>
@@ -877,28 +546,10 @@ show_date_time();
         <span id="busuanzi_value_site_pv"></span>
       </span>
     </span>
-  
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-        
       </div>
     </footer>
   </div>
-
-  
-    
-  
   <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
   <script src="/lib/anime.min.js?v=3.1.0"></script>
   <script src="/lib/pjax/pjax.min.js?v=0.2.8"></script>
@@ -923,7 +574,6 @@ var pjax = new Pjax({
   cacheBust: false,
   scrollTo : !CONFIG.bookmark.enable
 });
-
 window.addEventListener('pjax:success', () => {
   document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
     var id = element.id || '';
@@ -956,11 +606,6 @@ window.addEventListener('pjax:success', () => {
   NexT.utils.updateSidebarPosition();
 });
 </script>
-
-
-
-
-  
   <script pjax>
     (function(){
       var bp = document.createElement('script');
@@ -970,34 +615,8 @@ window.addEventListener('pjax:success', () => {
       s.parentNode.insertBefore(bp, s);
     })();
   </script>
-
-
-
-
-
-
-
-
   <script src="/js/local-search.js?v=7.4.0"></script>
-
-
-
-
-
-
-
-
     <div id="pjax">
-
-
-
-  
-
-  
-
-  
-
-
 <script>
 NexT.utils.getScript('//hewanyue.com/js/Valine.min.js', () => {
   var GUEST = ['nick', 'mail'];
@@ -1021,7 +640,6 @@ NexT.utils.getScript('//hewanyue.com/js/Valine.min.js', () => {
   });
 }, window.Valine);
 </script>
-
     </div>
 </body>
 </html>
