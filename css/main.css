@@ -1211,7 +1211,7 @@ pre .javascript .function {
   overflow-y: auto;
 }
 .cc-license {
-  margin-top: 10px;
+  margin-top: 5px;
   text-align: center;
 }
 .cc-license .cc-opacity {
@@ -1268,7 +1268,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #7fc3ff;
+  background: #09d9ff;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2881,7 +2881,7 @@ img.img-topic {
   display: block;
   color: #07b39b;
   font-size: 13px;
-  margin-top: 15px;
+  margin-top: 20px;
 }
 .sidebar-toggle {
   right: 20px;
