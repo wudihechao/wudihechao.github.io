@@ -19,7 +19,7 @@
             "title": "白羊",
             "author": "徐秉龙&沈以诚",
             "url": "https://hewanyue.com/mp3/baiyang.mp3",
-            "pic": "https://hewanyue.com/mp3/cover/baiyang.jpg"
+            "pic": "https://hewanyue.com/mp3/cover/baiyang.jpg",
             "lrc": "https://hewanyue.com/mp3/lrc/白羊-沈以诚徐秉龙.lrc"
         }   
     ]   
