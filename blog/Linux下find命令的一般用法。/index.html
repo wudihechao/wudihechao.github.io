@@ -92,27 +92,45 @@
 </noscript>
 <script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "https://hm.baidu.com/hm.js?a0d4e217e26da03ea5ca2acc76d543ae";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();</script>
 </head>
-        <div id="aplayer" class="aplayer aplayer-withlist aplayer-fixed" style="position: fixed; z-index: 5; bottom: 80px; left: 0px; width: 400px;">
-            <pre class="aplayer-lrc-content"></pre>
-        </div>
-        <script>
-          var ap = new APlayer({
-            element: document.getElementById("aplayer"),
-            narrow: false,
-            autoplay: false,
-            showlrc: false,
-            music: 
-            {
-              title: "星月神话",
-              author: "金莎",
-              url: "https://79d5q6.coding-pages.com/mp3/xingyueshenhua.mp3",
-              pic: "https://79d5q6.coding-pages.com/mp3/cover/xingyueshenhua.jpg",
-              lrc: "https://79d5q6.coding-pages.com/mp3/lrc/星月神话-金莎.lrc"
-            }
-       });
-          window.aplayers || (window.aplayers = []);
-          window.aplayers.push(ap);
-        </script>
+<script>
+const ap = new APlayer({
+    container: document.getElementById('aplayer'),
+    mini: true,             <!-- 启用迷你播放模式 -->
+    autoplay: false,        <!-- 音频不自动播放 -->
+    theme: '#FADFA3',       <!-- 主题色 -->
+    loop: 'all',            <!-- 音频循环播放, 可选值: 'all', 'one', 'none'-->
+    order: 'random',        <!-- 音频循环顺序, 可选值: 'list', 'random'-->
+    preload: 'auto',        <!-- 预加载，可选值: 'none', 'metadata', 'auto'-->
+    volume: 0.7,            <!-- 默认音量，请注意播放器会记忆用户设置，用户手动设置音量后默认音量即失效-->
+    mutex: true,            <!-- 互斥，阻止多个播放器同时播放，当前播放器播放时暂停其他播放器 -->
+    listFolded: true,      <!-- 列表默认折叠， false表示不折叠-->
+    listMaxHeight: '120px', <!-- 列表最大高度，超出此高度将有滚动条-->
+    lrcType: 0,             <!-- 歌词类型，0表示不显示歌词-->
+    audio: [
+        {
+            name: '丑八怪',
+            artist: '薛之谦',
+            url: '/resources/music/丑八怪.mp3',
+            cover: '/resources/music/认真的雪.jpg',
+            theme: '#46718b'
+        },
+        {
+            name: '体面',
+            artist: '于文文',
+            url: 'https://hewanyue.com/mp3/timian.mp3',
+            cover: 'https://hewanyue.com/mp3/cover/timian.jpg',
+            theme: '#46718b'
+        },
+        {
+            name: '白羊',
+            artist: '徐秉龙&沈以诚',
+            url: 'https://hewanyue.com/mp3/baiyang.mp3',
+            cover: 'https://hewanyue.com/mp3/cover/baiyang.jpg',
+            theme: '#46718b'
+        }
+    ]
+});
+</script>
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
   <div class="container use-motion">
     <div class="headband"></div>
