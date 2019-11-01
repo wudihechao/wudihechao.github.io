@@ -46,7 +46,7 @@
   };
 </script>
   <meta name="description" content="一、多实例1、概述&emsp;&emsp; MySQL多实例就是在一台机器上开启多个不同的服务端口（如：3306,3307），运行多个MySQL服务进程，通过不同的socket监听不同的服务端口来提供各自的服务2.1、优点1）有效利用服务器资源&emsp;&emsp; 当单个服务器资源过剩时，可以充分利用剩余的资源来提供更多的服务；2）节约服务器资源">
-<meta name="keywords" content="多实例,mysql,级联复制,读写分离">
+<meta name="keywords" content="mysql,多实例,级联复制,读写分离">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql多实例实现主从级联复制及读写分离">
 <meta property="og:url" content="https://hewanyue.com/blog/mysql多实例实现主从级联复制及读写分离/index.html">
@@ -394,8 +394,8 @@
 </div>
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/多实例/" rel="tag"><i class="fa fa-tag">多实例</i></a>
               <a href="/tags/mysql/" rel="tag"><i class="fa fa-tag">mysql</i></a>
+              <a href="/tags/多实例/" rel="tag"><i class="fa fa-tag">多实例</i></a>
               <a href="/tags/级联复制/" rel="tag"><i class="fa fa-tag">级联复制</i></a>
               <a href="/tags/读写分离/" rel="tag"><i class="fa fa-tag">读写分离</i></a>
           </div>
@@ -481,10 +481,6 @@
         <a href="https://weibo.com/u/1050367191" title="Weibo &rarr; https://weibo.com/u/1050367191" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i></a>
       </span>
   </div>
-  <div class="cc-license motion-element" itemprop="license">
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
-  </div>
-<div id="show_date_time"></div>
     <div class="links-of-blogroll motion-element links-of-blogroll-block">
       <div class="links-of-blogroll-title" style="padding-left: 10px;">
         <!-- modify icon to fire by szw -->
@@ -506,6 +502,9 @@
           </li>
       </ul>
     </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
 <div id="days"></div>
 <script>
 function show_date_time(){
