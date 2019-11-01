@@ -94,6 +94,20 @@
 </noscript>
 <script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "https://hm.baidu.com/hm.js?a0d4e217e26da03ea5ca2acc76d543ae";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();</script>
 </head>
+<style>
+    #aplayer {
+        width: 50%;
+        margin: 0 auto;
+    }
+    @media screen and (max-device-width: 400px) {
+        #aplayer {
+            width: 100%;
+        }
+    }
+</style>
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script src="/dist/APlayer.min.js"></script>
 <script>
 const ap = new APlayer({
     container: document.getElementById('aplayer'),
