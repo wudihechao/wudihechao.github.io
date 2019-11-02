@@ -102,14 +102,17 @@
             element: document.getElementById("aplayer"),
             narrow: false,
             autoplay: false,
-            showlrc: false,
+            listFolded: true,  //播放列表默认折叠
+            mutex: true,  //互斥，阻止多个播放器同时播放，当前播放器播放时暂停其他播放器
+            showlrc: true,
+            lrcType: 3,
             music: [
             {
               title: "星月神话",
               author: "金莎",
               url: "https://79d5q6.coding-pages.com/mp3/xingyueshenhua.mp3",
               pic: "https://79d5q6.coding-pages.com/mp3/cover/xingyueshenhua.jpg",
-              lrc: "https://79d5q6.coding-pages.com/mp3/lrc/金莎-星月神话.txt",
+              lrc: "https://79d5q6.coding-pages.com/mp3/lrc/金莎-星月神话.lrc",
             },
             {
               title: "体面",

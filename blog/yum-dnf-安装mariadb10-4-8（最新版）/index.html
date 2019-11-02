@@ -46,7 +46,7 @@
   };
 </script>
   <meta name="description" content="&emsp;&emsp;近期想在新出的CentOS8上安装一下最新版的mariadb10.4.8，不过又嫌源码编译太麻烦费时间。就想去找找有没有yum源可用。&emsp;&emsp;果然官网上已经放出了yum安装的repo源了，也支持到CentOS8了——http://mirror.aarnet.edu.au/pub/MariaDB//mariadb-10.4.8/yum/centos/8/x86">
-<meta name="keywords" content="经验分享,mariadb,yum源">
+<meta name="keywords" content="mariadb,经验分享,yum源">
 <meta property="og:type" content="article">
 <meta property="og:title" content="yum/dnf 安装mariadb10.4.8（最新版）">
 <meta property="og:url" content="https://hewanyue.com/blog/yum-dnf-安装mariadb10-4-8（最新版）/index.html">
@@ -103,14 +103,17 @@
             element: document.getElementById("aplayer"),
             narrow: false,
             autoplay: false,
-            showlrc: false,
+            listFolded: true,  //播放列表默认折叠
+            mutex: true,  //互斥，阻止多个播放器同时播放，当前播放器播放时暂停其他播放器
+            showlrc: true,
+            lrcType: 3,
             music: [
             {
               title: "星月神话",
               author: "金莎",
               url: "https://79d5q6.coding-pages.com/mp3/xingyueshenhua.mp3",
               pic: "https://79d5q6.coding-pages.com/mp3/cover/xingyueshenhua.jpg",
-              lrc: "https://79d5q6.coding-pages.com/mp3/lrc/金莎-星月神话.txt",
+              lrc: "https://79d5q6.coding-pages.com/mp3/lrc/金莎-星月神话.lrc",
             },
             {
               title: "体面",
@@ -329,8 +332,8 @@
 </div>
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/经验分享/" rel="tag"><i class="fa fa-tag">经验分享</i></a>
               <a href="/tags/mariadb/" rel="tag"><i class="fa fa-tag">mariadb</i></a>
+              <a href="/tags/经验分享/" rel="tag"><i class="fa fa-tag">经验分享</i></a>
               <a href="/tags/yum源/" rel="tag"><i class="fa fa-tag">yum源</i></a>
           </div>
           <div class="post-nav">
