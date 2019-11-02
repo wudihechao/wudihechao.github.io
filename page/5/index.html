@@ -182,13 +182,13 @@
     <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i>关于</a>
   </li>
         <li class="menu-item menu-item-tags">
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">39</span></a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">44</span></a>
   </li>
         <li class="menu-item menu-item-categories">
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">4</span></a>
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">5</span></a>
   </li>
         <li class="menu-item menu-item-archives">
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">21</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">22</span></a>
   </li>
       <li class="menu-item menu-item-search">
         <a href="javascript:;" class="popup-trigger">
@@ -229,6 +229,88 @@
         <div class="content-wrap">
           <div id="content" class="content">
   <div id="posts" class="posts-expand">
+        <article itemscope itemtype="http://schema.org/Article">
+  <div class="post-block home">
+    <link itemprop="mainEntityOfPage" href="https://hewanyue.com/blog/Linux下find命令的一般用法。/">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hechao">
+      <meta itemprop="description" content="BOHC is just a blog of hechao.">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+    </span>
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BOHC!">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+            <a href="/blog/Linux%E4%B8%8Bfind%E5%91%BD%E4%BB%A4%E7%9A%84%E4%B8%80%E8%88%AC%E7%94%A8%E6%B3%95%E3%80%82/" class="post-title-link" itemprop="url">Linux下find命令的一般用法。</a>
+        </h2>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <time title="创建时间：2019-05-05 17:27:40" itemprop="dateCreated datePublished" datetime="2019-05-05T17:27:40+08:00">2019-05-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/linux基础/" itemprop="url" rel="index"><span itemprop="name">linux基础</span></a></span>
+            </span>
+            <span id="/blog/Linux下find命令的一般用法。/" class="post-meta-item leancloud_visitors" data-flag-title="Linux下find命令的一般用法。" title="阅读次数">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="leancloud-visitors-count"></span>
+              <span>℃</span>
+            </span>
+              <span class="post-meta-divider">•</span>
+  <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+    <a title="valine" href="/blog/Linux下find命令的一般用法。/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/blog/Linux下find命令的一般用法。/" itemprop="commentCount"></span></a>
+  </span>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              <span>2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              <span>5 分钟</span>
+            </span>
+        </div>
+      </header>
+    <div class="post-body" itemprop="articleBody">
+          <ol>
+<li><p><strong>find和locate介绍</strong><br>在linux中，查找文件一般使用locate和find，locate是根据事先构建好的缩影库或者数据库中的数据查找文件名（非实时，速度快，模糊查找），而find作为一个实时查找命令，通过遍历指定起始路径下文件系统层级结构完成文件查找，功能更加强大（实时查找，速度略慢，精确查找）。</p>
+</li>
+<li><p><strong>find 命令一般用法</strong><br>find [OPTIONS] [查找起始路径] [查找条件] [处理动作]<br>[查找起始路径] ：制定具体搜索目标起始路径；默认为当前目录。<br>[查找条件]：指定的查找标准，可以根据文件名，大小，类型，从属关系，时间戳，权限等标准进行；默认为找出指定目录下的所有文件。<br>[处理动作]：对符合查找条件的文件做出的操作，例如删除等操作；默认为输出至标准输出。</p>
+</li>
+<li><p><strong>查找条件</strong></p>
+</li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/Linux下find命令的一般用法。/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+    </div>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+      </footer>
+  </div>
+  </article>
         <article itemscope itemtype="http://schema.org/Article">
   <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="https://hewanyue.com/blog/hello-world/">
@@ -336,19 +418,19 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">39</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -373,6 +455,9 @@
       </div>
       <ul class="links-of-blogroll-list" style="padding-left: 30px;">
           <li>
+            <a href="/blog/报错：Header-V3-RSA-SHA256-Signature-key-ID-2f86d6a1-NOKEY/" title="报错：Header V3 RSA_SHA256 Signature, key ID 2f86d6a1_ NOKEY" >报错：Header V3 RSA_SHA256 Signature, key ID 2f86d6a1_ NOKEY</a>
+          </li>
+          <li>
             <a href="/blog/nginx防盗链设置的一些细节/" title="nginx防盗链设置的一些细节" >nginx防盗链设置的一些细节</a>
           </li>
           <li>
@@ -383,9 +468,6 @@
           </li>
           <li>
             <a href="/blog/LAMP架构实现PowerDNS/" title="LAMP架构实现PowerDNS" >LAMP架构实现PowerDNS</a>
-          </li>
-          <li>
-            <a href="/blog/yum-dnf-安装mariadb10-4-8（最新版）/" title="yum/dnf 安装mariadb10.4.8（最新版）" >yum/dnf 安装mariadb10.4.8（最新版）</a>
           </li>
       </ul>
     </div>
@@ -434,7 +516,7 @@ show_date_time();
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">176k</span>
+    <span title="站点总字数">178k</span>
 </div>
 <div class="busuanzi-count">
   <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
