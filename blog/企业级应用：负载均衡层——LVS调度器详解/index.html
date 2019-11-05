@@ -45,14 +45,14 @@
   };
 </script>
   <meta name="description" content="&emsp;&emsp;所谓LVS，是Linux Virtual Server的缩写，直译就是linux虚拟服务器。LVS说是虚拟服务器，并不是说这个服务器本身不存在，而是指一般用户访问企业web网站时，访问的都是LVS，而LVS本身上面没有任何web界面资源，真实的界面以及服务都在后端web服务器上，LVS服务器起到的是一个指引分流的作用，所以相对来说，后端的web服务器是real server">
-<meta name="keywords" content="企业级服务,负载均衡,LVS,调度器,集群">
+<meta name="keywords" content="企业级应用,负载均衡,LVS,调度算法,集群">
 <meta property="og:type" content="article">
 <meta property="og:title" content="企业级应用：负载均衡层——LVS调度器详解">
 <meta property="og:url" content="https://hewanyue.com/blog/企业级应用：负载均衡层——LVS调度器详解/index.html">
 <meta property="og:site_name" content="BOHC!">
 <meta property="og:description" content="&emsp;&emsp;所谓LVS，是Linux Virtual Server的缩写，直译就是linux虚拟服务器。LVS说是虚拟服务器，并不是说这个服务器本身不存在，而是指一般用户访问企业web网站时，访问的都是LVS，而LVS本身上面没有任何web界面资源，真实的界面以及服务都在后端web服务器上，LVS服务器起到的是一个指引分流的作用，所以相对来说，后端的web服务器是real server">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-10-25T07:42:56.987Z">
+<meta property="og:updated_time" content="2019-11-05T08:23:59.734Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="企业级应用：负载均衡层——LVS调度器详解">
 <meta name="twitter:description" content="&emsp;&emsp;所谓LVS，是Linux Virtual Server的缩写，直译就是linux虚拟服务器。LVS说是虚拟服务器，并不是说这个服务器本身不存在，而是指一般用户访问企业web网站时，访问的都是LVS，而LVS本身上面没有任何web界面资源，真实的界面以及服务都在后端web服务器上，LVS服务器起到的是一个指引分流的作用，所以相对来说，后端的web服务器是real server">
@@ -185,7 +185,7 @@
     <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i>关于</a>
   </li>
         <li class="menu-item menu-item-tags">
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">47</span></a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">45</span></a>
   </li>
         <li class="menu-item menu-item-categories">
     <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">5</span></a>
@@ -410,10 +410,10 @@ server-address</code><br>&emsp;&emsp;rip[:port] 如省略port，不作端口映�
 </div>
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/企业级服务/" rel="tag"><i class="fa fa-tag">企业级服务</i></a>
+              <a href="/tags/企业级应用/" rel="tag"><i class="fa fa-tag">企业级应用</i></a>
               <a href="/tags/负载均衡/" rel="tag"><i class="fa fa-tag">负载均衡</i></a>
               <a href="/tags/LVS/" rel="tag"><i class="fa fa-tag">LVS</i></a>
-              <a href="/tags/调度器/" rel="tag"><i class="fa fa-tag">调度器</i></a>
+              <a href="/tags/调度算法/" rel="tag"><i class="fa fa-tag">调度算法</i></a>
               <a href="/tags/集群/" rel="tag"><i class="fa fa-tag">集群</i></a>
           </div>
           <div class="post-nav">
@@ -482,7 +482,7 @@ server-address</code><br>&emsp;&emsp;rip[:port] 如省略port，不作端口映�
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">47</span>
+        <span class="site-state-item-count">45</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
