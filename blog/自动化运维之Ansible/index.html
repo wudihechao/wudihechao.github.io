@@ -56,7 +56,7 @@
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191007171304635.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191007191809637.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191007213354915.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
-<meta property="og:updated_time" content="2019-11-01T03:34:33.991Z">
+<meta property="og:updated_time" content="2019-11-06T08:23:40.543Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自动化运维之Ansible">
 <meta name="twitter:description" content="企业实际应用场景分析 Dev开发环境&emsp;&emsp;使用者：程序员&emsp;&emsp;功能：程序员开发软件，测试BUG的环境&emsp;&emsp;管理者：程序员 测试环境&emsp;&emsp;使用者：QA测试工程师&emsp;&emsp;功能：测试经过Dev环境测试通过的软件的功能&emsp;&emsp;管理者：运维&emsp;&emsp;说明：测试环境往往有多套,测试环境满足测试">
@@ -322,12 +322,12 @@
 <li>Chef：ruby，国内应用少</li>
 <li>Cfengine</li>
 <li>func<h3 id="Ansible简介"><a href="#Ansible简介" class="headerlink" title="Ansible简介"></a>Ansible简介</h3>
-        <div id="aplayer-jdRwBWvG" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
+        <div id="aplayer-OvjKikDI" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
             <pre class="aplayer-lrc-content"></pre>
         </div>
         <script>
           var ap = new APlayer({
-            element: document.getElementById("aplayer-jdRwBWvG"),
+            element: document.getElementById("aplayer-OvjKikDI"),
             narrow: false,
             autoplay: true,
             showlrc: false,
@@ -398,7 +398,7 @@
 <li>ansible-vault</li>
 <li>ansible-console</li>
 <li>ansible-galaxy</li>
-<li>ansible-pull<h4 id="ansible-doc-显示模块帮助"><a href="#ansible-doc-显示模块帮助" class="headerlink" title="ansible-doc: 显示模块帮助"></a>ansible-doc: 显示模块帮助</h4><code>ansible-doc [options] [module...]</code><br>&emsp;&emsp;-l, –list 列出可用模块<br>&emsp;&emsp;-s, –snippet显示指定模块的playbook片段<br>示例：<br>&emsp;&emsp;ansible-doc -l 列出所有模块<br>&emsp;&emsp;ansible-doc ping 查看指定模块帮助用法<br>&emsp;&emsp;ansible-doc -s ping 查看指定模块帮助用法<h4 id="ansible"><a href="#ansible" class="headerlink" title="ansible"></a>ansible</h4>&emsp;&emsp;ansible通过ssh实现配置管理、应用部署、任务执行等功能，建议配置ansible端能基于密钥认证的方式联系各被管理节点<br><code>ansible <host-pattern> [-m module_name] [-a args]</code><h5 id="ansible选项"><a href="#ansible选项" class="headerlink" title="ansible选项"></a>ansible选项</h5>&emsp;&emsp;–version 显示版本<br>&emsp;&emsp;-m module 指定模块，默认为command<br>&emsp;&emsp;-v 详细过程 –vv -vvv更详细<br>&emsp;&emsp;–list-hosts 显示主机列表，可简写 –list<br>&emsp;&emsp;-k, –ask-pass 提示输入ssh连接密码，默认Key验证<br>&emsp;&emsp;-C, –check 检查，并不执行<br>&emsp;&emsp;-T, –timeout=TIMEOUT 执行命令的超时时间，默认10s<br>&emsp;&emsp;-u, –user=REMOTE_USER 执行远程执行的用户<br>&emsp;&emsp;-b, –become 代替旧版的sudo 切换<br>&emsp;&emsp;–become-user=USERNAME 指定sudo的runas用户，默认为root<br>&emsp;&emsp;-K, –ask-become-pass 提示输入sudo时的口令</li>
+<li>ansible-pull<h4 id="ansible-doc-显示模块帮助"><a href="#ansible-doc-显示模块帮助" class="headerlink" title="ansible-doc: 显示模块帮助"></a>ansible-doc: 显示模块帮助</h4><code>ansible-doc [options] [module...]</code><br>&emsp;&emsp;-l, –list 列出可用模块<br>&emsp;&emsp;-s, –snippet显示指定模块的playbook片段<br>示例：<br>&emsp;&emsp;ansible-doc -l 列出所有模块<br>&emsp;&emsp;ansible-doc ping 查看指定模块帮助用法<br>&emsp;&emsp;ansible-doc -s ping 查看指定模块帮助用法<h4 id="ansible"><a href="#ansible" class="headerlink" title="ansible"></a>ansible</h4>&emsp;&emsp;ansible通过ssh实现配置管理、应用部署、任务执行等功能，建议配置ansible端能基于密钥认证的方式联系各被管理节点<br><code>ansible &lthost-pattern&gt [-m module_name] [-a args]</code><h5 id="ansible选项"><a href="#ansible选项" class="headerlink" title="ansible选项"></a>ansible选项</h5>&emsp;&emsp;–version 显示版本<br>&emsp;&emsp;-m module 指定模块，默认为command<br>&emsp;&emsp;-v 详细过程 –vv -vvv更详细<br>&emsp;&emsp;–list-hosts 显示主机列表，可简写 –list<br>&emsp;&emsp;-k, –ask-pass 提示输入ssh连接密码，默认Key验证<br>&emsp;&emsp;-C, –check 检查，并不执行<br>&emsp;&emsp;-T, –timeout=TIMEOUT 执行命令的超时时间，默认10s<br>&emsp;&emsp;-u, –user=REMOTE_USER 执行远程执行的用户<br>&emsp;&emsp;-b, –become 代替旧版的sudo 切换<br>&emsp;&emsp;–become-user=USERNAME 指定sudo的runas用户，默认为root<br>&emsp;&emsp;-K, –ask-become-pass 提示输入sudo时的口令</li>
 </ul>
 <h5 id="ansible的Host-pattern"><a href="#ansible的Host-pattern" class="headerlink" title="ansible的Host-pattern"></a>ansible的Host-pattern</h5><p>匹配主机的列表</p>
 <ul>
@@ -409,9 +409,9 @@
 <li>逻辑非<br><code>ansible &#39;websrvs:!dbsrvs&#39; –m ping</code><br>在websrvs组，但不在dbsrvs组中的主机<br>注意：此处为单引号</li>
 <li>综合逻辑<br><code>ansible &#39;websrvs:dbsrvs:&appsrvs:!ftpsrvs&#39; –m ping</code></li>
 <li>正则表达式<br><code>ansible "websrvs:&dbsrvs" –m ping</code><br><code>ansible "~(web|db).*.servers.com" –m ping</code><h5 id="ansible常用模块"><a href="#ansible常用模块" class="headerlink" title="ansible常用模块"></a>ansible常用模块</h5>模块文档：<a href="https://docs.ansible.com/ansible/latest/modules/modules_by_category.html" target="_blank" rel="noopener">https://docs.ansible.com/ansible/latest/modules/modules_by_category.html</a></li>
-<li>Command：在远程主机执行命令，<strong>默认模块，可忽略-m选项</strong><br><code>ansible srvs -m command -a &#39;service vsftpd start&#39;</code><br><code>ansible srvs -m command -a &#39;echo passwd |passwd --stdin user&#39;</code><strong>此命令不支持 $VARNAME < > | ; & 等，须用shell模块实现</strong></li>
+<li>Command：在远程主机执行命令，<strong>默认模块，可忽略-m选项</strong><br><code>ansible srvs -m command -a &#39;service vsftpd start&#39;</code><br><code>ansible srvs -m command -a &#39;echo passwd |passwd --stdin user&#39;</code><strong>此命令不支持 $VARNAME &lt &gt | ; & 等，须用shell模块实现</strong></li>
 <li>Shell：和command相似，用shell执行命令<br><code>ansible srv -m shell -a ‘echo passwd |passwd –stdin user’</code><br>&emsp;&emsp;调用bash执行命令 类似<code>cat /tmp/stanley.md | awk -F&#39;|&#39; &#39;{print $1,$2}&#39;&> /tmp/example.txt</code>这些复杂命令，即使使用shell也可能会失败，解决办法：写到脚本时，copy到远程，执行，再把需要的结果拉回执行命令的机器</li>
-<li>Script：在远程主机上运行ansible服务器上的脚本<br><code>ansible <host-pattern> -m script -a "/PATH/TO/SCRIPT_FILE"</code><br><code>ansible websrvs -m script -a /data/test.sh</code></li>
+<li>Script：在远程主机上运行ansible服务器上的脚本<br><code>ansible &lthost-pattern&gt -m script -a "/PATH/TO/SCRIPT_FILE"</code><br><code>ansible websrvs -m script -a /data/test.sh</code></li>
 <li>Copy：从主控端复制文件到远程主机<br><code>ansible srv -m copy -a "src=/root/test1.sh dest=/tmp/test2.sh
 owner=wang mode=600 backup=yes"</code><br>如目标存在，默认覆盖，此处指定先备份<br><code>ansible srv -m copy -a "content=&#39;test content\n&#39; dest=/tmp/test.txt"</code><br>指定内容，直接生成目标文件</li>
 <li>Fetch：从远程主机提取文件至主控端，copy相反，目前不支持目录<br><code>ansible srv -m fetch -a &#39;src=/root/test.sh dest=/data/scripts&#39;</code></li>
@@ -461,7 +461,7 @@ home=/app/user1 group=root&#39;</code><br><code>ansible srv -m user -a &#39;name
 <p>&emsp;&emsp;如果命令或脚本的退出码不为零，可以使用如下方式替代<br> <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">tasks:</span></span><br><span class="line"><span class="attr"> - name:</span> <span class="string">run</span> <span class="string">this</span> <span class="string">command</span> <span class="string">and</span> <span class="string">ignore</span> <span class="string">the</span> <span class="string">result</span></span><br><span class="line"><span class="attr">   shell:</span> <span class="string">/usr/bin/somecommand</span> <span class="string">||</span> <span class="string">/bin/true</span></span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;或者使用ignore_errors来忽略错误信息<br> <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">tasks:</span></span><br><span class="line"><span class="attr">  - name:</span> <span class="string">run</span> <span class="string">this</span> <span class="string">command</span> <span class="string">and</span> <span class="string">ignore</span> <span class="string">the</span> <span class="string">result</span></span><br><span class="line"><span class="attr">    shell:</span> <span class="string">/usr/bin/somecommand</span></span><br><span class="line"><span class="attr">    ignore_errors:</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure></p>
 <h4 id="运行playbook"><a href="#运行playbook" class="headerlink" title="运行playbook"></a>运行playbook</h4><ul>
-<li>运行playbook的方式<br><code>ansible-playbook <filename.yml> ... [options]</code></li>
+<li>运行playbook的方式<br><code>ansible-playbook &ltfilename.yml&gt ... [options]</code></li>
 <li>常见选项</li>
 <li>-check -C 只检测可能会发生的改变，但不真正执行操作</li>
 <li>-list-hosts 列出运行任务的主机</li>
