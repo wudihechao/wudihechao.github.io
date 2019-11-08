@@ -52,7 +52,7 @@
 <meta property="og:site_name" content="BOHC!">
 <meta property="og:description" content="{% if theme.links %}                                                      {{ theme.links_title }}&nbsp;                                                        {% for name, link in theme.links %}">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-08T09:20:08.089Z">
+<meta property="og:updated_time" content="2019-11-08T09:33:04.952Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="友链">
 <meta name="twitter:description" content="{% if theme.links %}                                                      {{ theme.links_title }}&nbsp;                                                        {% for name, link in theme.links %}">
@@ -194,7 +194,7 @@
     <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">24</span></a>
   </li>
         <li class="menu-item menu-item-friends">
-    <a href="/friends/" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i>friends</a>
+    <a href="/%E5%8F%8B%E9%93%BE/" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i>friends</a>
   </li>
       <li class="menu-item menu-item-search">
         <a href="javascript:;" class="popup-trigger">
@@ -243,7 +243,91 @@
 </div>
 </header>
       <div class="post-body">
-          <pre><code>{% if theme.links %}
+    <div id="links">
+        <style>
+            #links{
+               margin-top: 5rem;
+            }
+            .links-content{
+                margin-top:1rem;
+            }
+            .link-navigation::after {
+                content: " ";
+                display: block;
+                clear: both;
+            }
+            .card {
+                width: 300px;
+                font-size: 1rem;
+                padding: 10px 20px;
+                border-radius: 4px;
+                transition-duration: 0.15s;
+                margin-bottom: 1rem;
+                display:flex;
+            }
+            .card:nth-child(odd) {
+                float: left;
+            }
+            .card:nth-child(even) {
+                float: right;
+            }
+            .card:hover {
+                transform: scale(1.1);
+                box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.12), 0 0 6px 0 rgba(0, 0, 0, 0.04);
+            }
+            .card a {
+                border:none;
+            }
+            .card .ava {
+                width: 3rem!important;
+                height: 3rem!important;
+                margin:0!important;
+                margin-right: 1em!important;
+                border-radius:4px;
+            }
+            .card .card-header {
+                font-style: italic;
+                overflow: hidden;
+                width: 236px;
+            }
+            .card .card-header a {
+                font-style: normal;
+                color: #2bbc8a;
+                font-weight: bold;
+                text-decoration: none;
+            }
+            .card .card-header a:hover {
+                color: #d480aa;
+                text-decoration: none;
+            }
+            .card .card-header .info {
+                font-style:normal;
+                color:#a3a3a3;
+                font-size:14px;
+                min-width: 0;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+        </style>
+        <div class="links-content">
+            <div class="link-navigation">
+                    <div class="card">
+                        <img class="ava" src="https://www.dongye.live/images/avatar.gif"/>
+                        <div class="card-header">
+                        <div><a href="https://www.dongye.live" target="_blank">@ 东烨的窝</a></div>
+                        <div class="info">代码沉淀技术，技术成就梦想! Hugo、Java、Go、Docker、、Kubernetes~</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <img class="ava" src="https://leafjame.github.io/images/beichen.png"/>
+                        <div class="card-header">
+                        <div><a href="https://leafjame.github.io" target="_blank">@ Leaf's Blog</a></div>
+                        <div class="info">Java狮 北漂男 摄影 旅行 赚钱</div>
+                        </div>
+                    </div>
+            </div>
+            <pre><code>{% if theme.links %}
           <div class="links-of-blogroll motion-element {{ " links-of-blogroll-" + theme.links_layout | default('inline') }}">
             <div class="links-of-blogroll-title">
               <i class="fa  fa-fw fa-{{ theme.links_icon | default('globe') | lower }}"></i>
@@ -259,6 +343,8 @@
             </ul>
           </div>
          {% endif %}</code></pre>
+            </div>
+        </div>
       </div>
     </div>
   </div>
@@ -378,17 +464,6 @@ show_date_time();
 </script>
   <div class="cc-license motion-element" itemprop="license">
     <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
-  </div>
-  <div class="links-of-blogroll motion-element">
-    <div class="links-of-blogroll-title">
-      <i class="fa fa-fw fa-link"></i>
-      友情链接
-    </div>
-    <ul class="links-of-blogroll-list">
-        <li class="links-of-blogroll-item">
-          <a href="http://www.dongye.live/" title="http://www.dongye.live" rel="noopener" target="_blank">东烨的窝</a>
-        </li>
-    </ul>
   </div>
       </div>
  </aside>
