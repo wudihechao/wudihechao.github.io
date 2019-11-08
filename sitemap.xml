@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://hewanyue.com/friends/index.html</loc>
+    
+    <lastmod>2019-11-08T09:20:08.089Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hewanyue.com/about/index.html</loc>
+    
+    <lastmod>2019-11-08T09:19:50.106Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://hewanyue.com/blog/VIM%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E6%95%B4%E7%90%86%E6%80%BB%E7%BB%93/</loc>
     
     <lastmod>2019-11-08T08:32:38.487Z</lastmod>
@@ -82,13 +96,6 @@
     <loc>https://hewanyue.com/blog/CentOS6%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91-%E5%AE%89%E8%A3%85linunx%E5%86%85%E6%A0%B8%E6%9C%80%E6%96%B0%E7%89%885-2-9/</loc>
     
     <lastmod>2019-10-18T02:52:17.197Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hewanyue.com/about/index.html</loc>
-    
-    <lastmod>2019-10-18T01:06:41.135Z</lastmod>
     
   </url>
   
