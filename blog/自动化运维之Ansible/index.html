@@ -326,12 +326,12 @@
 <li>Chef：ruby，国内应用少</li>
 <li>Cfengine</li>
 <li>func<h3 id="Ansible简介"><a href="#Ansible简介" class="headerlink" title="Ansible简介"></a>Ansible简介</h3>
-        <div id="aplayer-NLIodSlO" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
+        <div id="aplayer-bzdsRvzY" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
             <pre class="aplayer-lrc-content"></pre>
         </div>
         <script>
           var ap = new APlayer({
-            element: document.getElementById("aplayer-NLIodSlO"),
+            element: document.getElementById("aplayer-bzdsRvzY"),
             narrow: false,
             autoplay: true,
             showlrc: false,
@@ -610,6 +610,24 @@ home=/app/user1 group=root&#39;</code><br><code>ansible srv -m user -a &#39;name
 <h4 id="roles-playbook-tags使用"><a href="#roles-playbook-tags使用" class="headerlink" title="roles playbook tags使用"></a>roles playbook tags使用</h4><p> roles playbook tags使用<br><code>ansible-playbook --tags="nginx,httpd,mysql" nginx-role.yml</code></p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">//</span> <span class="string">nginx-role.yml</span></span><br><span class="line"><span class="attr">- hosts:</span> <span class="string">testweb</span></span><br><span class="line"><span class="attr">  remote_user:</span> <span class="string">root</span></span><br><span class="line"><span class="attr">  roles:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">&#123;</span> <span class="attr">role:</span> <span class="string">nginx</span> <span class="string">,tags:</span> <span class="string">[</span> <span class="string">'nginx'</span><span class="string">,</span> <span class="string">'web'</span> <span class="string">]</span> <span class="string">,when:</span> <span class="string">ansible_distribution_major_version</span> <span class="string">==</span> <span class="string">"6“ &#125;</span></span><br><span class="line"><span class="string">    - &#123; role: httpd ,tags: [ 'httpd', 'web' ] &#125;</span></span><br><span class="line"><span class="string">    - &#123; role: mysql ,tags: [ 'mysql', 'db' ] &#125;</span></span><br><span class="line"><span class="string">    - &#123; role: marridb ,tags: [ 'mysql', 'db' ] &#125;</span></span><br><span class="line"><span class="string">    - &#123; role: php &#125;</span></span><br></pre></td></tr></table></figure>
     </div>
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/LAMP架构实现PowerDNS/" rel="bookmark">LAMP架构实现PowerDNS</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/二进制安装及源码编译安装mariadb数据库/" rel="bookmark">二进制安装及源码编译安装mariadb数据库</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/部署自动化安装及cobber-Http-TFTP-PXE-kickstart无人职守批量安装精简版Linux系统/" rel="bookmark">部署自动化安装及cobber(Http+TFTP+PXE+kickstart无人职守批量安装精简版Linux系统)</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/CentOS6源码编译-安装linunx内核最新版5-2-9/" rel="bookmark">CentOS6源码编译 安装linunx内核最新版5.2.9</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/for循环实现的小脚本/" rel="bookmark">for循环实现的小脚本</a></div>
+    </li>
+  </ul>
     <div style="text-align:center;color: #ccc;font-size:14px;">---------------- The End ----------------</div>
         <div id="reward-container">
   <div>It's very nice of you to support me.</div>

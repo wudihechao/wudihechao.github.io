@@ -459,6 +459,18 @@
 <figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@CentOS8</span> ~]<span class="meta">#echo <span class="string">"set weight web_host/web1 2"</span> | socat stdio /var/lib/haproxy/haproxy.sock2</span></span><br><span class="line"></span><br><span class="line">[root<span class="symbol">@CentOS8</span> ~]<span class="meta">#</span></span><br></pre></td></tr></table></figure>
 <p>&emsp;&emsp;需要注意的一点就是，多线程工作模式下，<strong>每个线程是独立的</strong>，设置1线程的权重，在其他线程上并不生效。这就意味着，如果想将某个服务器下线的话，需要在每个线程上都分别下线，上线是，也需要在每个线程中enable server。可以用脚本写一个循环来实现。</p>
     </div>
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/企业级应用：负载均衡层——haproxy-二/" rel="bookmark">企业级应用：负载均衡层——haproxy(二)</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/企业级应用：负载均衡层——LVS调度器详解/" rel="bookmark">企业级应用：负载均衡层——LVS调度器详解</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/mysql数据库MHA实现高可用（多实例间实现）/" rel="bookmark">myql数据库MHA实现高可用（多实例间实现）</a></div>
+    </li>
+  </ul>
     <div style="text-align:center;color: #ccc;font-size:14px;">---------------- The End ----------------</div>
         <div id="reward-container">
   <div>It's very nice of you to support me.</div>
