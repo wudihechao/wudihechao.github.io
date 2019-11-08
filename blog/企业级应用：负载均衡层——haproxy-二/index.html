@@ -52,7 +52,7 @@
 <meta property="og:site_name" content="BOHC!">
 <meta property="og:description" content="&emsp;&emsp;继续讲解HAProxy的一些进阶配置及用法，包括报文修改，日志配置，压缩功能，后端服务器状态监测及ACL等功能应用。配置环境及配置文件均延续上一篇《企业级应用：负载均衡层——haproxy(一)》,有任何疑问可以先看上一篇博客。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-08T07:57:24.369Z">
+<meta property="og:updated_time" content="2019-11-08T08:00:02.736Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="企业级应用：负载均衡层——haproxy(二)">
 <meta name="twitter:description" content="&emsp;&emsp;继续讲解HAProxy的一些进阶配置及用法，包括报文修改，日志配置，压缩功能，后端服务器状态监测及ACL等功能应用。配置环境及配置文件均延续上一篇《企业级应用：负载均衡层——haproxy(一)》,有任何疑问可以先看上一篇博客。">
@@ -280,7 +280,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-file-word-o"></i>
               </span>
-              <span>10k</span>
+              <span>11k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-divider">•</span>
@@ -332,7 +332,7 @@
 <p>&emsp;&emsp;示例:</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hdr &ltstring&gt用于测试请求头部首部指定内容</span><br><span class="line"><span class="function"><span class="title">hdr_dom</span><span class="params">(host)</span></span> 请求的host名称，如 www<span class="selector-class">.example</span><span class="selector-class">.com</span></span><br><span class="line"><span class="function"><span class="title">hdr_beg</span><span class="params">(host)</span></span> 请求的host开头，如 www. <span class="selector-tag">img</span>. <span class="selector-tag">video</span>. download. ftp.</span><br><span class="line"><span class="function"><span class="title">hdr_end</span><span class="params">(host)</span></span> 请求的host结尾，如 <span class="selector-class">.com</span> <span class="selector-class">.net</span> .cn</span><br><span class="line">path_beg 请求的URL开头，如/static、/images、/img、/css</span><br><span class="line">path_end 请求的URL中资源的结尾，如 <span class="selector-class">.gif</span> <span class="selector-class">.png</span> <span class="selector-class">.css</span> <span class="selector-class">.js</span> <span class="selector-class">.jpg</span> .jpeg</span><br></pre></td></tr></table></figure>
 <h5 id="ACL-flags"><a href="#ACL-flags" class="headerlink" title="ACL-flags"></a>ACL-flags</h5><p>&emsp;&emsp;ACL匹配模式</p>
-<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">选项：</span><br><span class="line"><span class="deletion">-i 不区分大小写</span></span><br><span class="line"><span class="deletion">-m 使用指定的pattern匹配方法</span></span><br><span class="line"><span class="deletion">-n 不做DNS解析</span></span><br><span class="line"><span class="deletion">-u 禁止acl重名，否则多个同名ACL匹配或关系</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;-i 不区分大小写<br>&emsp;&emsp;-m 使用指定的pattern匹配方法<br>&emsp;&emsp;-n 不做DNS解析<br>&emsp;&emsp;-u 禁止acl重名，否则多个同名ACL匹配或关系</p>
 <h5 id="ACL-operator"><a href="#ACL-operator" class="headerlink" title="ACL-operator"></a>ACL-operator</h5><p>&emsp;&emsp;ACL 操作符</p>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">整数比较：eq、ge、gt、le、lt</span><br><span class="line">字符比较：</span><br><span class="line">  exact match (-m str) :字符串必须完全匹配模式</span><br><span class="line">  substring match (-m sub) :在提取的字符串中查找模式，如果其中任何一个被发现，ACL将匹配</span><br><span class="line"> <span class="built_in"> prefix </span>match (-m beg) :在提取的字符串首部中查找模式，如果其中任何一个被发现，ACL将匹配</span><br><span class="line">  suffix match (-m end) :将模式与提取字符串的尾部进行比较，如果其中任何一个匹配，则ACL进行匹配</span><br><span class="line">  subdir match (-m dir) :查看提取出来的用斜线分隔（“/”）的字符串，如果其中任何一个匹配，则ACL进行匹配</span><br><span class="line">  domain match (-m dom) :查找提取的用点（“.”）分隔字符串，如果其中任何一个匹配，则ACL进行匹配</span><br></pre></td></tr></table></figure>
 <h5 id="ACL-value"><a href="#ACL-value" class="headerlink" title="ACL-value"></a>ACL-value</h5><p>&emsp;&emsp;value的类型</p>
