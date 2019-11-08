@@ -44,18 +44,18 @@
     sidebarPadding: 40
   };
 </script>
-  <meta name="description" content="继续讲解HAProxy的一些进阶配置及用法，包括报文修改，日志配置，压缩功能，后端服务器状态监测及ACL等功能应用。配置环境及配置文件均延续上一篇《企业级应用：负载均衡层——haproxy(一)》,有任何疑问可以先看上一篇博客。">
-<meta name="keywords" content="HAProxy,企业级应用,负载均衡,高可用,调度算法">
+  <meta name="description" content="&emsp;&emsp;继续讲解HAProxy的一些进阶配置及用法，包括报文修改，日志配置，压缩功能，后端服务器状态监测及ACL等功能应用。配置环境及配置文件均延续上一篇《企业级应用：负载均衡层——haproxy(一)》,有任何疑问可以先看上一篇博客。">
+<meta name="keywords" content="高可用,HAProxy,企业级应用,负载均衡,调度算法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="企业级应用：负载均衡层——haproxy(二)">
 <meta property="og:url" content="https://hewanyue.com/blog/企业级应用：负载均衡层——haproxy-二/index.html">
 <meta property="og:site_name" content="BOHC!">
-<meta property="og:description" content="继续讲解HAProxy的一些进阶配置及用法，包括报文修改，日志配置，压缩功能，后端服务器状态监测及ACL等功能应用。配置环境及配置文件均延续上一篇《企业级应用：负载均衡层——haproxy(一)》,有任何疑问可以先看上一篇博客。">
+<meta property="og:description" content="&emsp;&emsp;继续讲解HAProxy的一些进阶配置及用法，包括报文修改，日志配置，压缩功能，后端服务器状态监测及ACL等功能应用。配置环境及配置文件均延续上一篇《企业级应用：负载均衡层——haproxy(一)》,有任何疑问可以先看上一篇博客。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-08T07:26:54.711Z">
+<meta property="og:updated_time" content="2019-11-08T07:28:48.663Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="企业级应用：负载均衡层——haproxy(二)">
-<meta name="twitter:description" content="继续讲解HAProxy的一些进阶配置及用法，包括报文修改，日志配置，压缩功能，后端服务器状态监测及ACL等功能应用。配置环境及配置文件均延续上一篇《企业级应用：负载均衡层——haproxy(一)》,有任何疑问可以先看上一篇博客。">
+<meta name="twitter:description" content="&emsp;&emsp;继续讲解HAProxy的一些进阶配置及用法，包括报文修改，日志配置，压缩功能，后端服务器状态监测及ACL等功能应用。配置环境及配置文件均延续上一篇《企业级应用：负载均衡层——haproxy(一)》,有任何疑问可以先看上一篇博客。">
   <link rel="canonical" href="https://hewanyue.com/blog/企业级应用：负载均衡层——haproxy-二/">
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
@@ -287,12 +287,12 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
-              <span>25 分钟</span>
+              <span>26 分钟</span>
             </span>
         </div>
       </header>
     <div class="post-body" itemprop="articleBody">
-        <p>继续讲解HAProxy的一些进阶配置及用法，包括报文修改，日志配置，压缩功能，后端服务器状态监测及ACL等功能应用。配置环境及配置文件均延续上一篇<a href="https://hewanyue.com/blog/企业级应用：负载均衡层——haproxy-一/">《企业级应用：负载均衡层——haproxy(一)》</a>,有任何疑问可以先看上一篇博客。</p>
+        <p>&emsp;&emsp;继续讲解HAProxy的一些进阶配置及用法，包括报文修改，日志配置，压缩功能，后端服务器状态监测及ACL等功能应用。配置环境及配置文件均延续上一篇<a href="https://hewanyue.com/blog/企业级应用：负载均衡层——haproxy-一/">《企业级应用：负载均衡层——haproxy(一)》</a>,有任何疑问可以先看上一篇博客。</p>
 <a id="more"></a>
 <h3 id="haproxy的进阶配置"><a href="#haproxy的进阶配置" class="headerlink" title="haproxy的进阶配置"></a>haproxy的进阶配置</h3><h4 id="haproxy报文修改"><a href="#haproxy报文修改" class="headerlink" title="haproxy报文修改"></a>haproxy报文修改</h4><p>&emsp;&emsp;在http模式下，基于实际需求修改客户端的请求报文与响应报文，通过reqadd和reqdel在请求报文添加删除字段，通过rspadd与rspidel在响应报文中添加与删除字段。</p>
 <figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml">在请求报文尾部添加指定首部</span></span><br><span class="line"><span class="xml">    reqadd <span class="tag"><<span class="name">string</span>></span> [</span><span class="template-variable">&#123;<span class="keyword">if</span> | unless&#125;</span><span class="xml"> <span class="tag"><<span class="name">cond</span>></span>]</span></span><br><span class="line"><span class="xml">从请求报文中删除匹配正则表达式的首部</span></span><br><span class="line"><span class="xml">    reqdel <span class="tag"><<span class="name">search</span>></span> [</span><span class="template-variable">&#123;<span class="keyword">if</span> | unless&#125;</span><span class="xml"> <span class="tag"><<span class="name">cond</span>></span>]</span></span><br><span class="line"><span class="xml">    reqidel <span class="tag"><<span class="name">search</span>></span> [</span><span class="template-variable">&#123;<span class="keyword">if</span> | unless&#125;</span><span class="xml"> <span class="tag"><<span class="name">cond</span>></span>]</span></span><br><span class="line"><span class="xml">在响应报文尾部添加指定首部</span></span><br><span class="line"><span class="xml">    rspadd <span class="tag"><<span class="name">string</span>></span> [</span><span class="template-variable">&#123;<span class="keyword">if</span> | unless&#125;</span><span class="xml"> <span class="tag"><<span class="name">cond</span>></span>]</span></span><br><span class="line"><span class="xml">示例：</span></span><br><span class="line"><span class="xml">    rspadd X-Via:\ HAPorxy</span></span><br><span class="line"><span class="xml">从响应报文中删除匹配正则表达式的首部</span></span><br><span class="line"><span class="xml">    rspdel <span class="tag"><<span class="name">search</span>></span> [</span><span class="template-variable">&#123;<span class="keyword">if</span> | unless&#125;</span><span class="xml"> <span class="tag"><<span class="name">cond</span>></span>]</span></span><br><span class="line"><span class="xml">    rspidel <span class="tag"><<span class="name">search</span>></span> [</span><span class="template-variable">&#123;<span class="keyword">if</span> | unless&#125;</span><span class="xml"> <span class="tag"><<span class="name">cond</span>></span>]</span></span><br><span class="line"><span class="xml">示例：</span></span><br><span class="line"><span class="xml">    rspidel server.* #从相应报文删除server信息</span></span><br><span class="line"><span class="xml">    rspidel X-Powered-By:.* #从响应报文删除X-Powered-By信息</span></span><br></pre></td></tr></table></figure>
@@ -504,10 +504,10 @@
 </div>
       <footer class="post-footer">
           <div class="post-tags">
+              <a href="/tags/高可用/" rel="tag"><i class="fa fa-tag">高可用</i></a>
               <a href="/tags/HAProxy/" rel="tag"><i class="fa fa-tag">HAProxy</i></a>
               <a href="/tags/企业级应用/" rel="tag"><i class="fa fa-tag">企业级应用</i></a>
               <a href="/tags/负载均衡/" rel="tag"><i class="fa fa-tag">负载均衡</i></a>
-              <a href="/tags/高可用/" rel="tag"><i class="fa fa-tag">高可用</i></a>
               <a href="/tags/调度算法/" rel="tag"><i class="fa fa-tag">调度算法</i></a>
           </div>
           <div class="post-nav">
