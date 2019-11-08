@@ -44,18 +44,15 @@
     sidebarPadding: 40
   };
 </script>
-  <meta name="description" content="{% if theme.links %}                                                      {{ theme.links_title }}&nbsp;                                                        {% for name, link in theme.links %}">
-<meta name="keywords" content="BOHC! linux DEV OPS">
+  <meta name="keywords" content="BOHC! linux DEV OPS">
 <meta property="og:type" content="website">
 <meta property="og:title" content="友链">
 <meta property="og:url" content="https://hewanyue.com/friends/index.html">
 <meta property="og:site_name" content="BOHC!">
-<meta property="og:description" content="{% if theme.links %}                                                      {{ theme.links_title }}&nbsp;                                                        {% for name, link in theme.links %}">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-08T09:33:04.952Z">
+<meta property="og:updated_time" content="2019-11-08T09:51:50.405Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="友链">
-<meta name="twitter:description" content="{% if theme.links %}                                                      {{ theme.links_title }}&nbsp;                                                        {% for name, link in theme.links %}">
   <link rel="canonical" href="https://hewanyue.com/friends/">
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
@@ -327,22 +324,6 @@
                         </div>
                     </div>
             </div>
-            <pre><code>{% if theme.links %}
-          <div class="links-of-blogroll motion-element {{ " links-of-blogroll-" + theme.links_layout | default('inline') }}">
-            <div class="links-of-blogroll-title">
-              <i class="fa  fa-fw fa-{{ theme.links_icon | default('globe') | lower }}"></i>
-              {{ theme.links_title }}&nbsp;
-              <i class="fa  fa-fw fa-{{ theme.links_icon | default('globe') | lower }}"></i>
-            </div>
-            <ul class="links-of-blogroll-list">
-              {% for name, link in theme.links %}
-                <li class="links-of-blogroll-item">
-                  <a href="{{ link }}" title="{{ name }}" target="_blank">{{ name }}</a>
-                </li>
-              {% endfor %}
-            </ul>
-          </div>
-         {% endif %}</code></pre>
             </div>
         </div>
       </div>
