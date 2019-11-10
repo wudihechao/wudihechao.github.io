@@ -97,8 +97,8 @@ NexT.motion.middleWares = {
     }
   },
 
-#  menu: function(integrator) {
-#
+  menu: function(integrator) {
+
 #    Velocity(document.querySelectorAll('.menu-item'), 'transition.slideDownIn', {
 #      display : null,
 #      duration: 200,
@@ -106,11 +106,11 @@ NexT.motion.middleWares = {
 #        integrator.next();
 #      }
 #    });
-#
-#    if (CONFIG.motion.async) {
-#      integrator.next();
-#    }
-#  },
+
+    if (CONFIG.motion.async) {
+      integrator.next();
+    }
+  },
 
   postList: function(integrator) {
 
