@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<body oncontextmenu=self.event.returnValue=false>
+<head>
+  <meta name="baidu-site-verification" content="vT6Jf980C0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.ico?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.ico?v=7.4.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":true,"show_result":true,"style":"default"},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":true,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+
+
+  <meta name="description" content="&amp;emsp;&amp;emsp;所谓LAMP架构，是指：&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;L：linux&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;A：apache (httpd)&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;M：mysql, mariadb&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;（或M：memcached）&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;P：p">
+<meta name="keywords" content="编译安装,LAMP,总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="源码编译Apache和PHP实现lamp架构">
+<meta property="og:url" content="https://hewanyue.com/blog/dcaccc5a.html">
+<meta property="og:site_name" content="BOHC!">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;所谓LAMP架构，是指：&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;L：linux&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;A：apache (httpd)&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;M：mysql, mariadb&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;（或M：memcached）&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;P：p">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191018193028582.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2019-11-10T04:33:36.862Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="源码编译Apache和PHP实现lamp架构">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;所谓LAMP架构，是指：&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;L：linux&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;A：apache (httpd)&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;M：mysql, mariadb&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;（或M：memcached）&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;P：p">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20191018193028582.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
+  <link rel="canonical" href="https://hewanyue.com/blog/dcaccc5a">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>源码编译Apache和PHP实现lamp架构 | BOHC!</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "https://hm.baidu.com/hm.js?a0d4e217e26da03ea5ca2acc76d543ae";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();</script>
+
+
+
+<link rel="stylesheet" href="/dist/APlayer.min.css" class="aplayer-style-marker">
+<script src="/dist/APlayer.min.js" class="aplayer-script-marker"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+
+        <div id="aplayer" class="aplayer aplayer-withlist  aplayer-fixed aplayer-narrow" style="position: fixed; z-index: 5; left: 0px; width: 400px;">
+            <pre class="aplayer-lrc-content"></pre>
+        </div>
+        <script>
+          const ap = new APlayer({
+            container: document.getElementById("aplayer"),
+            narrow: false,
+            autoplay: false,
+            listFolded: true,  //播放列表默认折叠
+            mutex: true,  //互斥，阻止多个播放器同时播放，当前播放器播放时暂停其他播放器
+            showlrc: true,
+            lrcType: 3,
+            audio: [
+            {
+              name: "差你一次旅行",
+              artist: "翁大涵",
+              url: "https://hewanyue.com/mp3/chaniyicilvxing.m4a",
+              cover: "https://hewanyue.com/mp3/cover/chaniyicilvxing.jpg",
+              lrc: "https://hewanyue.com/mp3/lrc/chaniyicilvxing.lrc",
+            },
+            {
+              name: "星月神话",
+              artist: "金莎",
+              url: "https://hewanyue.com/mp3/xingyueshenhua.mp3",
+              cover: "https://hewanyue.com/mp3/cover/xingyueshenhua.jpg",
+              lrc: "https://hewanyue.com/mp3/lrc/xingyueshenhua.lrc",
+            },
+            {
+              name: "体面",
+              artist: "于文文",
+              url: "https://hewanyue.com/mp3/timian.mp3",
+              cover: "https://hewanyue.com/mp3/cover/timian.jpg",
+              lrc: "https://hewanyue.com/mp3/lrc/timian.lrc",
+            },
+            {
+              name: "白羊",
+              artist: "徐秉龙&沈以诚",
+              url: "https://hewanyue.com/mp3/baiyang.mp3",
+              cover: "https://hewanyue.com/mp3/cover/baiyang.jpg",
+              lrc: "https://hewanyue.com/mp3/lrc/baiyang.lrc",
+            },
+            {
+              name: "绿色",
+              artist: "陈雪凝",
+              url: "https://hewanyue.com/mp3/lvse.mp3",
+              cover: "https://hewanyue.com/mp3/cover/lvse.jpg",
+              lrc: "https://hewanyue.com/mp3/lrc/lvse.lrc",
+            },
+            {
+              name: "退",
+              artist: "蒋蒋",
+              url: "https://hewanyue.com/mp3/tui.mp3",
+              cover: "https://hewanyue.com/mp3/cover/tui.jpg",
+              lrc: "https://hewanyue.com/mp3/lrc/tui.lrc",
+            },
+            {
+              name: "恋爱循环",
+              artist: "花泽香菜",
+              url: "https://hewanyue.com/mp3/lianaixunhuan.mp3",
+              cover: "https://hewanyue.com/mp3/cover/lianaixunhuan.jpg",
+              lrc: "https://hewanyue.com/mp3/lrc/lianaixunhuan.lrc",
+            }
+          ]
+          });          window.aplayers || (window.aplayers = []);
+          window.aplayers.push(ap);
+        </script>
+<script src="https://cdnjs.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <div class="container use-motion">
+    <div class="headband"></div>
+<a href="https://github.com/wudihechao/" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">BOHC!</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">blog of hechao!</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+      
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-home&quot;&gt;&lt;&#x2F;i&gt;首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+      
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/about/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-user&quot;&gt;&lt;&#x2F;i&gt;关于</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+      
+      
+        
+      
+        
+      
+        
+          
+        
+      
+    
+
+    <a href="/tags/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-tags&quot;&gt;&lt;&#x2F;i&gt;标签&lt;span class=&quot;badge&quot;&gt;45&lt;&#x2F;span&gt;</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+      
+      
+        
+      
+        
+          
+        
+      
+        
+      
+    
+
+    <a href="/categories/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-th&quot;&gt;&lt;&#x2F;i&gt;分类&lt;span class=&quot;badge&quot;&gt;5&lt;&#x2F;span&gt;</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+      
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/archives/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-archive&quot;&gt;&lt;&#x2F;i&gt;归档&lt;span class=&quot;badge&quot;&gt;24&lt;&#x2F;span&gt;</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-friends">
+      
+    
+      
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/friends/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-link&quot;&gt;&lt;&#x2F;i&gt;友链</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i>搜索</a>
+      </li>
+    
+  </ul>
+
+    
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a class="book-mark-link book-mark-link-fixed" href="#"></a>
+
+  <a href="https://github.com/wudihechao" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank">&lt;svg width=&quot;80&quot; height=&quot;80&quot; viewBox=&quot;0 0 250 250&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z&quot;&gt;&lt;&#x2F;path&gt;&lt;path d=&quot;M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2&quot; fill=&quot;currentColor&quot; style=&quot;transform-origin: 130px 106px;&quot; class=&quot;octo-arm&quot;&gt;&lt;&#x2F;path&gt;&lt;path d=&quot;M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z&quot; fill=&quot;currentColor&quot; class=&quot;octo-body&quot;&gt;&lt;&#x2F;path&gt;&lt;&#x2F;svg&gt;</a>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://hewanyue.com/blog/dcaccc5a.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hechao">
+      <meta itemprop="description" content="BOHC is just a blog of hechao.">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BOHC!">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">源码编译Apache和PHP实现lamp架构
+
+          
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-18 21:12:31" itemprop="dateCreated datePublished" datetime="2019-10-18T21:12:31+08:00">2019-10-18</time>
+            </span>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/linux进阶/" itemprop="url" rel="index"><span itemprop="name">linux进阶</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span id="/blog/dcaccc5a.html" class="post-meta-item leancloud_visitors" data-flag-title="源码编译Apache和PHP实现lamp架构" title="阅读次数">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+
+              <span class="leancloud-visitors-count"></span>
+              <span>℃</span>
+            </span>
+          
+
+              <span class="post-meta-divider">•</span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/blog/dcaccc5a.html#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/blog/dcaccc5a.html" itemprop="commentCount"></span></a>
+  </span>
+  
+  
+          
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+
+              
+              <span>4.9k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+
+              
+              <span>12 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>&emsp;&emsp;所谓LAMP架构，是指：<br>&emsp;&emsp;&emsp;&emsp;<strong>L</strong>：linux<br>&emsp;&emsp;&emsp;&emsp;<strong>A</strong>：apache (httpd)<br>&emsp;&emsp;&emsp;&emsp;<strong>M</strong>：mysql, mariadb<br>&emsp;&emsp;&emsp;&emsp;（或M：memcached）<br>&emsp;&emsp;&emsp;&emsp;<strong>P</strong>：php, perl, python<br>&emsp;&emsp;WEB资源类型：<br>&emsp;&emsp;&emsp;&emsp;静态资源：原始形式与响应内容一致，在客户端浏览器执行<br>&emsp;&emsp;&emsp;&emsp;动态资源：原始形式通常为程序文件，需要在服务器端执行之后，将执行结果返回给客户端</p><a id="more"></a>
+<h3 id="LAMP工作原理"><a href="#LAMP工作原理" class="headerlink" title="LAMP工作原理"></a>LAMP工作原理</h3><p><img src="https://img-blog.csdnimg.cn/20191018193028582.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;httpd：接收用户的web请求；静态资源则直接响应；动态资源为php脚本，对此类资源的请求将交由php来运行<br>&emsp;&emsp;php：运行php程序<br>&emsp;&emsp;MariaDB：数据管理系统</p>
+<h3 id="httpd与php结合的方式"><a href="#httpd与php结合的方式" class="headerlink" title="httpd与php结合的方式"></a>httpd与php结合的方式</h3><p>1、modules (将php编译成为httpd的模块,默认方式)<br> MPM:<br>prefork: libphp5.so<br>event, worker: libphp5-zts.so<br>2、FastCGI</p>
+<p>&emsp;&emsp;本文将分别展示以模块方式以及FCGI的方式，源码编译apache、php、mariadb来实现LAMP架构。</p>
+<h3 id="编译部署"><a href="#编译部署" class="headerlink" title="编译部署"></a>编译部署</h3><h4 id="编译安装mariadb"><a href="#编译安装mariadb" class="headerlink" title="编译安装mariadb"></a>编译安装mariadb</h4><p>&emsp;&emsp;之前曾<a href="https://hewanyue.com/blog/二进制安装及源码编译安装mariadb数据库/#源码编译安装">详细介绍</a>，这里就不再赘述。</p>
+<h4 id="编译安装apache"><a href="#编译安装apache" class="headerlink" title="编译安装apache"></a>编译安装apache</h4><p>&emsp;&emsp;先安装依赖包<code>yum install gcc pcre-devel openssl-devel expat-devel autoconf libtool gcc-c++</code><br>&emsp;&emsp;下载apache源码包以及apr包</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget <span class="string">https:</span><span class="comment">//archive.apache.org/dist/httpd/httpd-2.4.39.tar.gz</span></span><br><span class="line">wget <span class="string">https:</span><span class="comment">//www-us.apache.org/dist//apr/apr-1.7.0.tar.gz</span></span><br><span class="line">wget <span class="string">https:</span><span class="comment">//www-us.apache.org/dist//apr/apr-util-1.6.1.tar.gz</span></span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;替换apr、apr-util文件</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tar xf apr<span class="number">-1.7</span><span class="number">.0</span>.tar.gz -C httpd<span class="number">-2.4</span><span class="number">.39</span>/srclib/ </span><br><span class="line">tar xf apr-util<span class="number">-1.6</span><span class="number">.1</span>.tar.gz -C httpd<span class="number">-2.4</span><span class="number">.39</span>/srclib/ </span><br><span class="line">cd httpd<span class="number">-2.4</span><span class="number">.39</span>/srclib/</span><br><span class="line">mv apr<span class="number">-1.7</span><span class="number">.0</span> apr</span><br><span class="line">mv apr-util<span class="number">-1.6</span><span class="number">.1</span> apr-util</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;编译安装</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=/data/httpd24 <span class="string">\</span></span><br><span class="line">--enable-so <span class="string">\</span></span><br><span class="line">--enable-ssl <span class="string">\</span></span><br><span class="line">--enable-cgi <span class="string">\</span></span><br><span class="line">--enable-rewrite <span class="string">\</span></span><br><span class="line">--<span class="keyword">with</span>-zlib <span class="string">\</span></span><br><span class="line">--<span class="keyword">with</span>-pcre <span class="string">\</span></span><br><span class="line">--enable-modules=most <span class="string">\</span></span><br><span class="line">--enable-mpms-shared=all <span class="string">\</span></span><br><span class="line">--<span class="keyword">with</span>-mpm=prefork <span class="string">\</span></span><br><span class="line">--<span class="keyword">with</span>-included-apr</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">make</span> -j <span class="number">4</span> &amp;&amp; <span class="built_in">make</span> install</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;写入PATH变量,并生效</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">vim</span> /etc/<span class="keyword">profile</span>.d/httpd.<span class="keyword">sh</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="built_in">export</span> PATH=/data/httpd24/bin:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">source</span> /etc/<span class="keyword">profile</span>.d/httpd.<span class="keyword">sh</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="编译安装php"><a href="#编译安装php" class="headerlink" title="编译安装php"></a>编译安装php</h4><h5 id="模块方式"><a href="#模块方式" class="headerlink" title="模块方式"></a>模块方式</h5><p>&emsp;&emsp;先安装依赖包</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum <span class="keyword">install</span> -y libxml2-devel</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;在官网下载php最新版php-7.3.10.tar.xz包并解压</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https:<span class="comment">//www.php.net/distributions/php-7.3.10.tar.xz</span></span><br><span class="line">tar xvf php-<span class="number">7.3</span>.<span class="number">10</span><span class="selector-class">.tar</span><span class="selector-class">.xz</span></span><br><span class="line">cd php-<span class="number">7.3</span>.<span class="number">10</span><span class="selector-class">.tar</span><span class="selector-class">.xz</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">.<span class="regexp">/configure --prefix=/data/php/</span> <span class="string">\</span></span><br><span class="line">--enable-mysqlnd <span class="string">\</span></span><br><span class="line">--<span class="keyword">with</span>-mysqli=mysqlnd <span class="string">\</span></span><br><span class="line">--<span class="keyword">with</span>-openssl <span class="string">\</span></span><br><span class="line">--<span class="keyword">with</span>-pdo-mysql=mysqlnd <span class="string">\</span></span><br><span class="line">--enable-mbstring <span class="string">\</span></span><br><span class="line">--<span class="keyword">with</span>-freetype-dir <span class="string">\</span></span><br><span class="line">--<span class="keyword">with</span>-jpeg-dir <span class="string">\</span></span><br><span class="line">--<span class="keyword">with</span>-png-dir <span class="string">\</span></span><br><span class="line">--<span class="keyword">with</span>-zlib <span class="string">\</span></span><br><span class="line">--enable-xml <span class="string">\</span></span><br><span class="line">--enable-sockets <span class="string">\</span></span><br><span class="line">--<span class="keyword">with</span>-apxs2=/data/httpd24/bin/apxs <span class="string">\</span></span><br><span class="line">--<span class="keyword">with</span>-config-file-path=/data/php/etc <span class="string">\</span></span><br><span class="line">--<span class="keyword">with</span>-config-file-scan-dir=/data/php/etc/php.d <span class="string">\</span></span><br><span class="line">--enable-maintainer-zts <span class="string">\</span></span><br><span class="line">--disable-fileinfo</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;PS:如果apache是之前yum装的，很有可能没有apxs文件，只需要<code>dnf install httpd-devel -y</code>命令安装httpd-devel包，即可生成/usr/bin/apxs工具，如果是以前编译安装的，也要改为正确apxs2对应路径。<br>&emsp;&emsp;编译安装</p>
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">make</span> -j <span class="number">4</span> &amp;&amp; <span class="built_in">make</span> install</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;复制配置文件模版至配置文件目录</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp php.ini-production <span class="regexp">/data/</span>php<span class="regexp">/etc/</span>php.ini</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;修改apache配置文件,设置默认php页面，增加PHP模块</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">vim</span> /etc/httpd/<span class="keyword">conf</span>/httpd.<span class="keyword">conf</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&amp;ltIfModule</span> <span class="string">dir_module&amp;gt</span></span><br><span class="line">    <span class="string">DirectoryIndex</span> <span class="string">index.php</span> <span class="string">index.html</span>                <span class="comment">#增加php页面</span></span><br><span class="line"><span class="string">&amp;lt/IfModule&amp;gt</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span><span class="meta">---</span></span><br><span class="line"><span class="meta">&amp;ltIfModule</span> <span class="string">mime_module&amp;gt</span></span><br><span class="line"></span><br><span class="line">    <span class="string">AddType</span> <span class="string">application/x-compress</span> <span class="string">.Z</span></span><br><span class="line">    <span class="string">AddType</span> <span class="string">application/x-gzip</span> <span class="string">.gz</span> <span class="string">.tgz</span></span><br><span class="line">    </span><br><span class="line">    <span class="string">AddType</span> <span class="string">application/x-httpd-php</span> <span class="string">.php</span>                <span class="comment">#增加模块</span></span><br><span class="line">    <span class="string">AddType</span> <span class="string">application/x-httpd-php-source</span> <span class="string">.phps</span>        <span class="comment">#增加模块</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="string">&amp;lt/IfModule&amp;gt</span></span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;添加php测试页</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim <span class="regexp">/data/</span>httpd24<span class="regexp">/htdocs/i</span>ndex.php</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&amp;lt?php</span><br><span class="line">phpinfo() </span><br><span class="line">?&amp;gt</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;重启apache服务</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">apachectl restart</span></span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;访问php测试页进行测试,便可看到php设置已经成功</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">curl HOSTIP</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="FCGI方式"><a href="#FCGI方式" class="headerlink" title="FCGI方式"></a>FCGI方式</h5><p>&emsp;&emsp;也要先安装依赖包</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum <span class="keyword">install </span>libxml2-devel <span class="keyword">bzip2-devel </span>libmcrypt-devel</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;同样下载tar包，解压并进入编译目录<br>&emsp;&emsp;开始编译安装</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=/data/php <span class="string">\</span></span><br><span class="line">--enable-mysqlnd <span class="string">\</span></span><br><span class="line">--<span class="keyword">with</span>-mysqli=mysqlnd <span class="string">\</span></span><br><span class="line">--<span class="keyword">with</span>-pdo-mysql=mysqlnd <span class="string">\</span></span><br><span class="line">--<span class="keyword">with</span>-openssl <span class="string">\</span></span><br><span class="line">--<span class="keyword">with</span>-freetype-dir <span class="string">\</span></span><br><span class="line">--<span class="keyword">with</span>-jpeg-dir <span class="string">\</span></span><br><span class="line">--<span class="keyword">with</span>-png-dir <span class="string">\</span></span><br><span class="line">--<span class="keyword">with</span>-zlib <span class="string">\</span></span><br><span class="line">--<span class="keyword">with</span>-libxml-dir=/usr <span class="string">\</span></span><br><span class="line">--<span class="keyword">with</span>-config-file-path=/etc <span class="string">\</span></span><br><span class="line">--<span class="keyword">with</span>-config-file-scan-dir=/etc/php.d <span class="string">\</span></span><br><span class="line">--enable-mbstring <span class="string">\</span></span><br><span class="line">--enable-xml <span class="string">\</span></span><br><span class="line">--enable-sockets <span class="string">\</span></span><br><span class="line">--enable-fpm <span class="string">\</span></span><br><span class="line">--enable-maintainer-zts <span class="string">\</span></span><br><span class="line">--disable-fileinfo</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">make</span> -j <span class="number">4</span> &amp;&amp; <span class="built_in">make</span> install</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;复制模版文件当配置文件</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /data/php<span class="number">-7.3</span><span class="number">.10</span>/php.ini-production  /etc/php.ini</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;因为php-fpm模式相当于单独的一个服务，将服务配置文件放至/usr/lib/systemd/system/目录</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /data/php-<span class="number">7.3</span>.<span class="number">10</span>/sapi/fpm/php-fpm.service /usr/<span class="class"><span class="keyword">lib</span>/<span class="title">systemd</span>/<span class="title">system</span>/</span></span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;生成fpm配置文件，并修改进程属主属组为apache</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd /data/php/etc</span><br><span class="line">cp php-fpm<span class="selector-class">.conf</span><span class="selector-class">.default</span>  php-fpm.conf</span><br><span class="line">cd php-fpm.d/</span><br><span class="line">cp www<span class="selector-class">.conf</span><span class="selector-class">.default</span> www.conf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vim www.conf</span><br><span class="line"></span><br><span class="line">user apache</span><br><span class="line">group apache</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;加载配置文件并启动进程</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl <span class="keyword">enable</span> <span class="comment">--now  php-fpm.service</span></span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;修改配置httpd.conf 支持php-fpm<br>&emsp;&emsp;取消下面两行的注释</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute"><span class="nomarkup">LoadModule</span></span> proxy_module modules/mod_proxy.so</span><br><span class="line"><span class="attribute"><span class="nomarkup">LoadModule</span></span> proxy_fcgi_module modules/mod_proxy_fcgi.so</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;修改下面行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&amp;ltIfModule dir_module&amp;gt</span><br><span class="line">DirectoryIndex index.php index.html</span><br><span class="line">&amp;lt/IfModule&amp;gt</span><br><span class="line">加下面四行</span><br><span class="line">AddType application/x-httpd-php .php</span><br><span class="line">AddType application/x-httpd-php-source .phps</span><br><span class="line">ProxyRequests Off</span><br><span class="line">ProxyPassMatch ^/(.*\.php)$ fcgi://127.0.0.1:9000/data/httpd24/htdocs/$1</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;也可修改php监听端口9000 为socket路径，下面代理转发命令为为</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ProxyRequests Off</span><br><span class="line">ProxyPassMatch ^<span class="regexp">/(.*\.php)$ unix:/</span>var<span class="regexp">/run/</span>php-fpm<span class="regexp">/php-fpm.sock|fcgi:/</span><span class="regexp">/localhost/</span>data<span class="regexp">/httpd24/</span>htdocs<span class="regexp">/$1</span></span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;重启apache服务</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">apachectl restart</span></span><br></pre></td></tr></table></figure>
+
+<p>至此，php页面就可以正常访问了</p>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="/blog/b124800c.html" rel="bookmark">二进制安装及源码编译安装mariadb数据库</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="/blog/133d68.html" rel="bookmark">CentOS6源码编译 安装linunx内核最新版5.2.9</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="/blog/57d66c4.html" rel="bookmark">LAMP架构实现PowerDNS</a></div>
+      
+    </li>
+  
+    <li class="popular-posts-item">
+      
+      
+      <div class="popular-posts-title"><a href="/blog/8a189dcf.html" rel="bookmark">自动化运维之Ansible</a></div>
+      
+    </li>
+  
+  </ul>
+
+    <div style="text-align:center;color: #ccc;font-size:14px;">---------------- The End ----------------</div>
+        
+      
+        <div id="reward-container">
+  <div>It's very nice of you to support me.</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById('qr'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechat-pay.png" alt="Hechao 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Hechao</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://hewanyue.com/blog/dcaccc5a.html" title="源码编译Apache和PHP实现lamp架构">https:&#x2F;&#x2F;hewanyue.com&#x2F;blog&#x2F;dcaccc5a.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank">&lt;i class=&quot;fa fa-fw fa-creative-commons&quot;&gt;&lt;&#x2F;i&gt;BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/编译安装/" rel="tag"><i class="fa fa-tag">编译安装</i></a>
+            
+              <a href="/tags/LAMP/" rel="tag"><i class="fa fa-tag">LAMP</i></a>
+            
+              <a href="/tags/总结/" rel="tag"><i class="fa fa-tag">总结</i></a>
+            
+          </div>
+        
+
+        
+
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/blog/57d66c4.html" rel="next" title="LAMP架构实现PowerDNS">
+                  <i class="fa fa-chevron-left"></i> LAMP架构实现PowerDNS
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/blog/159ef64c.html" rel="prev" title="企业级应用：负载均衡层——LVS调度器详解">
+                  企业级应用：负载均衡层——LVS调度器详解 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="comments"></div>
+  
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#LAMP工作原理"><span class="nav-number">1.</span> <span class="nav-text">LAMP工作原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#httpd与php结合的方式"><span class="nav-number">2.</span> <span class="nav-text">httpd与php结合的方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译部署"><span class="nav-number">3.</span> <span class="nav-text">编译部署</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#编译安装mariadb"><span class="nav-number">3.1.</span> <span class="nav-text">编译安装mariadb</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编译安装apache"><span class="nav-number">3.2.</span> <span class="nav-text">编译安装apache</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编译安装php"><span class="nav-number">3.3.</span> <span class="nav-text">编译安装php</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#模块方式"><span class="nav-number">3.3.1.</span> <span class="nav-text">模块方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#FCGI方式"><span class="nav-number">3.3.2.</span> <span class="nav-text">FCGI方式</span></a></li></ol></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/touxiang.jpg"
+      alt="Hechao">
+  <p class="site-author-name" itemprop="name">Hechao</p>
+  <div class="site-description" itemprop="description">BOHC is just a blog of hechao.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          <a href="/categories/">
+        
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">45</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+      
+        
+      
+        <a href="https://github.com/wudihechao" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;wudihechao" rel="noopener" target="_blank">&lt;i class=&quot;fa fa-fw fa-github&quot;&gt;&lt;&#x2F;i&gt;</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+      
+        
+      
+        <a href="mailto:wudihechao@163.com" title="E-Mail &amp;rarr; mailto:wudihechao@163.com" rel="noopener" target="_blank">&lt;i class=&quot;fa fa-fw fa-envelope&quot;&gt;&lt;&#x2F;i&gt;</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+      
+        
+      
+        <a href="https://weibo.com/u/1050367191" title="Weibo &amp;rarr; https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;1050367191" rel="noopener" target="_blank">&lt;i class=&quot;fa fa-fw fa-weibo&quot;&gt;&lt;&#x2F;i&gt;</a>
+      </span>
+    
+  </div>
+
+        
+    <div class="links-of-blogroll motion-element links-of-blogroll-block">
+      <div class="links-of-blogroll-title" style="padding-left: 10px;">
+        <!-- modify icon to fire by szw -->
+        <i class="fa fa-history fa-" aria-hidden="true"></i>
+        近期文章
+      </div>
+      <ul class="links-of-blogroll-list" style="padding-left: 30px;">
+        
+        
+          <li>
+            <a href="/blog/f5daec50.html" title="企业级应用：负载均衡层——haproxy(二)" >企业级应用：负载均衡层——haproxy(二)</a>
+          </li>
+        
+          <li>
+            <a href="/blog/5aeb7732.html" title="企业级应用：负载均衡层——haproxy(一)" >企业级应用：负载均衡层——haproxy(一)</a>
+          </li>
+        
+          <li>
+            <a href="/blog/5da16ceb.html" title="报错：Header V3 RSA_SHA256 Signature, key ID 2f86d6a1_ NOKEY" >报错：Header V3 RSA_SHA256 Signature, key ID 2f86d6a1_ NOKEY</a>
+          </li>
+        
+          <li>
+            <a href="/blog/e4415633.html" title="nginx防盗链设置的一些细节" >nginx防盗链设置的一些细节</a>
+          </li>
+        
+          <li>
+            <a href="/blog/159ef64c.html" title="企业级应用：负载均衡层——LVS调度器详解" >企业级应用：负载均衡层——LVS调度器详解</a>
+          </li>
+        
+      </ul>
+    </div>
+
+<div id="days"></div>
+<script>
+function show_date_time(){
+window.setTimeout("show_date_time()", 1000);
+BirthDay=new Date("10/01/2019 00:00:00");
+today=new Date();
+timeold=(today.getTime()-BirthDay.getTime());
+sectimeold=timeold/1000
+secondsold=Math.floor(sectimeold);
+msPerDay=24*60*60*1000
+e_daysold=timeold/msPerDay
+daysold=Math.floor(e_daysold);
+e_hrsold=(e_daysold-daysold)*24;
+hrsold=setzero(Math.floor(e_hrsold));
+e_minsold=(e_hrsold-hrsold)*60;
+minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+seconds=setzero(Math.floor((e_minsold-minsold)*60));
+document.getElementById('days').innerHTML="已运行"+daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒";
+}
+function setzero(i){
+if (i<10)
+{i="0" + i};
+return i;
+}
+show_date_time();
+</script>
+
+  <div class="cc-license motion-element" itemprop="license">
+    
+  
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank">&lt;img src=&quot;&#x2F;images&#x2F;cc-by-nc-sa.svg&quot; alt=&quot;Creative Commons&quot;&gt;</a>
+  </div>
+
+
+
+
+      </div>
+
+
+ </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user-circle-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hechao</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">213k</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+    
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/pjax/pjax.min.js?v=0.2.8"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/muse.js?v=7.4.0"></script>
+<script src="/js/next-boot.js?v=7.4.0"></script><script src="/js/bookmark.js?v=7.4.0"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
+    var id = element.id || '';
+    var src = element.src || '';
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (id !=='') {
+      script.id = element.id;
+    }
+    if (src !== '') {
+      script.src = src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+  <script pjax>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.0"></script>
+
+
+
+
+
+
+
+
+    <div id="pjax">
+
+
+
+  
+
+  
+
+  
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="/js/Valine.min.js"></script>
+<script>
+    <!--.comment要与评论区元素一致-->
+    comment_el = '.comment';
+    load_valine = function () {
+      if ($(comment_el).length) {
+        new Valine({ 
+          av: AV,
+          el: comment_el,
+          emoticon_url: 'https://cloud.panjunwen.com/alu',
+          emoticon_list: ["吐.png","喷血.png","狂汗.png","不说话.png","汗.png","坐等.png","献花.png","不高兴.png","中刀.png","害羞.png","皱眉.png","小眼睛.png","中指.png","尴尬.png","瞅你.png","想一想.png","中枪.png","得意.png","肿包.png","扇耳光.png","亲亲.png","惊喜.png","脸红.png","无所谓.png","便便.png","愤怒.png","蜡烛.png","献黄瓜.png","内伤.png","投降.png","观察.png","看不见.png","击掌.png","抠鼻.png","邪恶.png","看热闹.png","口水.png","抽烟.png","锁眉.png","装大款.png","吐舌.png","无奈.png","长草.png","赞一个.png","呲牙.png","无语.png","阴暗.png","不出所料.png","咽气.png","期待.png","高兴.png","吐血倒地.png","哭泣.png","欢呼.png","黑线.png","喜极而泣.png","喷水.png","深思.png","鼓掌.png","暗地观察.png"],
+          app_id: 'AVtPtVan0Ky5u33XhUzJlFKp-gzGzoHsz',
+          app_key: 'nx3XTnRJmaMQR3aLWYiigkgJ',
+          placeholder: 'Just Say Something~!',
+          });
+      }
+    };
+    $(document).ready(load_valine);
+    $(document).on('pjax:complete', function() {
+      load_valine();
+    });
+</script>
+<script>
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+</script>
+
+
+    </div>
+</body>
+</html>
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
