@@ -44,13 +44,6 @@
     sidebarPadding: 40
   };
 </script>
-<script>(function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/4c96f4af.js","daovoice");</script>
-<script>
-  daovoice('init', {
-    app_id: "4c96f4af",
-  });
-  daovoice('update');
-</script>
   <meta name="description" content="&emsp;&emsp;防盗链的必要性，我这里就不再赘述了，这是网站设计的最基本要求。而在nginx中，一般比较容易实现的防盗链手段就是通过ungx_http_referer_module模块（查看官方文档） 检查访问请求的referer信息是否有效来实现防盗链功能。&emsp;&emsp;所谓referer检查，举个例子来说，在正常情况下当用户在浏览http://example.com/abc.">
 <meta name="keywords" content="nginx,防盗链,referer,配置文件,细节">
 <meta property="og:type" content="article">
