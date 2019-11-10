@@ -1,6 +1,6 @@
-/* global NexT, CONFIG, Velocity */
+/* global NexT, CONFIG, Velocityx */
 
-if (window.$ && window.$.Velocity) window.Velocity = window.$.Velocity;
+if (window.$ && window.$.Velocityx) window.Velocityx = window.$.Velocityx;
 
 NexT.motion = {};
 
@@ -87,7 +87,7 @@ NexT.motion.middleWares = {
       sequence[sequence.length - 1].o.complete = function() {
         integrator.next();
       };
-      Velocity.RunSequence(sequence);
+      Velocityx.RunSequence(sequence);
     } else {
       integrator.next();
     }
@@ -99,7 +99,7 @@ NexT.motion.middleWares = {
 
   menu: function(integrator) {
 
-    Velocity(document.querySelectorAll('.menu-item'), 'transition.slideDownIn', {
+    Velocityx(document.querySelectorAll('.menu-item'), 'transition.slideDownIn', {
       display : null,
       duration: 200,
       complete: function() {
@@ -134,16 +134,16 @@ NexT.motion.middleWares = {
       };
 
       if (CONFIG.motion.transition.post_block) {
-        Velocity(postBlock, 'transition.' + postBlockTransition, postMotionOptions);
+        Velocityx(postBlock, 'transition.' + postBlockTransition, postMotionOptions);
       }
       if (CONFIG.motion.transition.post_header) {
-        Velocity(postHeader, 'transition.' + postHeaderTransition, postMotionOptions);
+        Velocityx(postHeader, 'transition.' + postHeaderTransition, postMotionOptions);
       }
       if (CONFIG.motion.transition.post_body) {
-        Velocity(postBody, 'transition.' + postBodyTransition, postMotionOptions);
+        Velocityx(postBody, 'transition.' + postBodyTransition, postMotionOptions);
       }
       if (CONFIG.motion.transition.coll_header) {
-        Velocity(collHeader, 'transition.' + collHeaderTransition, postMotionOptions);
+        Velocityx(collHeader, 'transition.' + collHeaderTransition, postMotionOptions);
       }
     }
     if (NexT.utils.isPisces() || NexT.utils.isGemini()) {
@@ -157,7 +157,7 @@ NexT.motion.middleWares = {
     var sidebarAffixTransition = CONFIG.motion.transition.sidebar;
     // Only for Pisces | Gemini.
     if (CONFIG.motion.transition.sidebar && (NexT.utils.isPisces() || NexT.utils.isGemini())) {
-      Velocity(sidebarAffix, 'transition.' + sidebarAffixTransition, {
+      Velocityx(sidebarAffix, 'transition.' + sidebarAffixTransition, {
         display : null,
         duration: 200,
         complete: function() {
