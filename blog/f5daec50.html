@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-
-
-
-
-
 <html lang="zh-CN">
 <body oncontextmenu=self.event.returnValue=false>
 <head>
@@ -14,13 +9,8 @@
 <meta name="generator" content="Hexo 3.9.0">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.ico?v=7.4.0">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.ico?v=7.4.0">
-
 <link rel="stylesheet" href="/css/main.css?v=7.4.0">
-
-
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
-
-
 <script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
@@ -54,24 +44,19 @@
     sidebarPadding: 40
   };
 </script>
-
-
-
-  <meta name="description" content="&amp;emsp;&amp;emsp;继续讲解HAProxy的一些进阶配置及用法，包括报文修改，日志配置，压缩功能，后端服务器状态监测及ACL等功能应用。配置环境及配置文件均延续上一篇《企业级应用：负载均衡层——haproxy(一)》,有任何疑问可以先看上一篇博客。">
+  <meta name="description" content="&emsp;&emsp;继续讲解HAProxy的一些进阶配置及用法，包括报文修改，日志配置，压缩功能，后端服务器状态监测及ACL等功能应用。配置环境及配置文件均延续上一篇《企业级应用：负载均衡层——haproxy(一)》,有任何疑问可以先看上一篇博客。">
 <meta name="keywords" content="高可用,HAProxy,企业级应用,负载均衡,调度算法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="企业级应用：负载均衡层——haproxy(二)">
 <meta property="og:url" content="https://hewanyue.com/blog/f5daec50.html">
 <meta property="og:site_name" content="BOHC!">
-<meta property="og:description" content="&amp;emsp;&amp;emsp;继续讲解HAProxy的一些进阶配置及用法，包括报文修改，日志配置，压缩功能，后端服务器状态监测及ACL等功能应用。配置环境及配置文件均延续上一篇《企业级应用：负载均衡层——haproxy(一)》,有任何疑问可以先看上一篇博客。">
+<meta property="og:description" content="&emsp;&emsp;继续讲解HAProxy的一些进阶配置及用法，包括报文修改，日志配置，压缩功能，后端服务器状态监测及ACL等功能应用。配置环境及配置文件均延续上一篇《企业级应用：负载均衡层——haproxy(一)》,有任何疑问可以先看上一篇博客。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2019-11-10T04:33:36.897Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="企业级应用：负载均衡层——haproxy(二)">
-<meta name="twitter:description" content="&amp;emsp;&amp;emsp;继续讲解HAProxy的一些进阶配置及用法，包括报文修改，日志配置，压缩功能，后端服务器状态监测及ACL等功能应用。配置环境及配置文件均延续上一篇《企业级应用：负载均衡层——haproxy(一)》,有任何疑问可以先看上一篇博客。">
+<meta name="twitter:description" content="&emsp;&emsp;继续讲解HAProxy的一些进阶配置及用法，包括报文修改，日志配置，压缩功能，后端服务器状态监测及ACL等功能应用。配置环境及配置文件均延续上一篇《企业级应用：负载均衡层——haproxy(一)》,有任何疑问可以先看上一篇博客。">
   <link rel="canonical" href="https://hewanyue.com/blog/f5daec50">
-
-
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
@@ -82,17 +67,7 @@
     isArchive: false
   };
 </script>
-
   <title>企业级应用：负载均衡层——haproxy(二) | BOHC!</title>
-  
-
-
-
-
-
-
-
-
   <noscript>
   <style>
   .use-motion .brand,
@@ -104,30 +79,21 @@
   .use-motion .post-header,
   .use-motion .post-body,
   .use-motion .collection-header { opacity: initial; }
-
   .use-motion .logo,
   .use-motion .site-title,
   .use-motion .site-subtitle {
     opacity: initial;
     top: initial;
   }
-
   .use-motion .logo-line-before i { left: initial; }
   .use-motion .logo-line-after i { right: initial; }
   </style>
 </noscript>
-
 <script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "https://hm.baidu.com/hm.js?a0d4e217e26da03ea5ca2acc76d543ae";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();</script>
-
-
-
 <link rel="stylesheet" href="/dist/APlayer.min.css" class="aplayer-style-marker">
 <script src="/dist/APlayer.min.js" class="aplayer-script-marker"></script>
 </head>
-
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
-
-
         <div id="aplayer" class="aplayer aplayer-withlist  aplayer-fixed aplayer-narrow" style="position: fixed; z-index: 5; left: 0px; width: 400px;">
             <pre class="aplayer-lrc-content"></pre>
         </div>
@@ -195,14 +161,12 @@
           window.aplayers.push(ap);
         </script>
 <script src="https://cdnjs.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
   <div class="container use-motion">
     <div class="headband"></div>
 <a href="https://github.com/wudihechao/" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-meta">
-
     <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
@@ -211,9 +175,7 @@
       </a>
     </div>
         <h1 class="site-subtitle" itemprop="description">blog of hechao!</h1>
-      
   </div>
-
   <div class="site-nav-toggle">
     <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
@@ -222,147 +184,31 @@
     </button>
   </div>
 </div>
-
-
 <nav class="site-nav">
-  
   <ul id="menu" class="menu">
-      
-      
-      
-        
         <li class="menu-item menu-item-home">
-      
-    
-      
-      
-        
-      
-        
-      
-        
-      
-    
-
-    <a href="/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-home&quot;&gt;&lt;&#x2F;i&gt;首页</a>
-
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i>首页</a>
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-about">
-      
-    
-      
-      
-        
-      
-        
-      
-        
-      
-    
-
-    <a href="/about/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-user&quot;&gt;&lt;&#x2F;i&gt;关于</a>
-
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i>关于</a>
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-tags">
-      
-    
-      
-      
-        
-      
-        
-      
-        
-          
-        
-      
-    
-
-    <a href="/tags/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-tags&quot;&gt;&lt;&#x2F;i&gt;标签&lt;span class=&quot;badge&quot;&gt;45&lt;&#x2F;span&gt;</a>
-
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">45</span></a>
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-categories">
-      
-    
-      
-      
-        
-      
-        
-          
-        
-      
-        
-      
-    
-
-    <a href="/categories/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-th&quot;&gt;&lt;&#x2F;i&gt;分类&lt;span class=&quot;badge&quot;&gt;5&lt;&#x2F;span&gt;</a>
-
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">5</span></a>
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-archives">
-      
-    
-      
-      
-        
-          
-        
-      
-        
-      
-        
-      
-    
-
-    <a href="/archives/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-archive&quot;&gt;&lt;&#x2F;i&gt;归档&lt;span class=&quot;badge&quot;&gt;24&lt;&#x2F;span&gt;</a>
-
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">24</span></a>
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-friends">
-      
-    
-      
-      
-        
-      
-        
-      
-        
-      
-    
-
-    <a href="/friends/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-link&quot;&gt;&lt;&#x2F;i&gt;友链</a>
-
+    <a href="/friends/" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i>友链</a>
   </li>
       <li class="menu-item menu-item-search">
         <a href="javascript:;" class="popup-trigger">
-        
           <i class="menu-item-icon fa fa-search fa-fw"></i>搜索</a>
       </li>
-    
   </ul>
-
-    
-
 </nav>
   <div class="site-search">
     <div class="popup search-popup">
@@ -380,152 +226,90 @@
   </span>
 </div>
 <div id="search-result"></div>
-
 </div>
 <div class="search-pop-overlay"></div>
-
   </div>
 </div>
     </header>
-
-    
   <div class="back-to-top">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
   <div class="reading-progress-bar"></div>
   <a class="book-mark-link book-mark-link-fixed" href="#"></a>
-
-  <a href="https://github.com/wudihechao" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank">&lt;svg width=&quot;80&quot; height=&quot;80&quot; viewBox=&quot;0 0 250 250&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z&quot;&gt;&lt;&#x2F;path&gt;&lt;path d=&quot;M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2&quot; fill=&quot;currentColor&quot; style=&quot;transform-origin: 130px 106px;&quot; class=&quot;octo-arm&quot;&gt;&lt;&#x2F;path&gt;&lt;path d=&quot;M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z&quot; fill=&quot;currentColor&quot; class=&quot;octo-body&quot;&gt;&lt;&#x2F;path&gt;&lt;&#x2F;svg&gt;</a>
-
-
+  <a href="https://github.com/wudihechao" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
           <div id="content" class="content">
-            
-
   <div id="posts" class="posts-expand">
       <article itemscope itemtype="http://schema.org/Article">
-  
-  
-  
   <div class="post-block post">
     <link itemprop="mainEntityOfPage" href="https://hewanyue.com/blog/f5daec50.html">
-
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hechao">
       <meta itemprop="description" content="BOHC is just a blog of hechao.">
       <meta itemprop="image" content="/images/touxiang.jpg">
     </span>
-
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="BOHC!">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">企业级应用：负载均衡层——haproxy(二)
-
-          
         </h2>
-
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-
-
-              
-                
-              
-
               <time title="创建时间：2019-11-08 15:09:10" itemprop="dateCreated datePublished" datetime="2019-11-08T15:09:10+08:00">2019-11-08</time>
             </span>
-          
             <span class="post-meta-item">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-
-              
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/linux进阶/" itemprop="url" rel="index"><span itemprop="name">linux进阶</span></a></span>
-
-                
-                
-              
             </span>
-          
-
-          
             <span id="/blog/f5daec50.html" class="post-meta-item leancloud_visitors" data-flag-title="企业级应用：负载均衡层——haproxy(二)" title="阅读次数">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
-
               <span class="leancloud-visitors-count"></span>
               <span>℃</span>
             </span>
-          
-
               <span class="post-meta-divider">•</span>
-  
   <span class="post-meta-item">
-    
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
-        
-      
-      <span class="post-meta-item-text">Valine：</span>
-    
     <a title="valine" href="/blog/f5daec50.html#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/blog/f5daec50.html" itemprop="commentCount"></span></a>
   </span>
-  
-  
-          
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-file-word-o"></i>
               </span>
-              
-
-              
               <span>11k</span>
             </span>
-          
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
-              
-
-              
               <span>26 分钟</span>
             </span>
-          
-
         </div>
       </header>
-
-    
-    
-    
     <div class="post-body" itemprop="articleBody">
-
-      
         <p>&emsp;&emsp;继续讲解HAProxy的一些进阶配置及用法，包括报文修改，日志配置，压缩功能，后端服务器状态监测及ACL等功能应用。配置环境及配置文件均延续上一篇<a href="https://hewanyue.com/blog/企业级应用：负载均衡层——haproxy-一/">《企业级应用：负载均衡层——haproxy(一)》</a>,有任何疑问可以先看上一篇博客。</p>
 <a id="more"></a>
 <h3 id="haproxy的进阶配置"><a href="#haproxy的进阶配置" class="headerlink" title="haproxy的进阶配置"></a>haproxy的进阶配置</h3><h4 id="haproxy报文修改"><a href="#haproxy报文修改" class="headerlink" title="haproxy报文修改"></a>haproxy报文修改</h4><p>&emsp;&emsp;在http模式下，基于实际需求修改客户端的请求报文与响应报文，通过reqadd和reqdel在请求报文添加删除字段，通过rspadd与rspidel在响应报文中添加与删除字段。</p>
-<figure class="highlight sas"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">在请求报文尾部添加指定首部</span><br><span class="line">    reqadd <span class="variable">&amp;ltstring</span><span class="variable">&amp;gt</span> [&#123;<span class="meta">if</span> | unless&#125; <span class="variable">&amp;ltcond</span><span class="variable">&amp;gt</span>]</span><br><span class="line">从请求报文中删除匹配正则表达式的首部</span><br><span class="line">    reqdel <span class="variable">&amp;ltsearch</span><span class="variable">&amp;gt</span> [&#123;<span class="meta">if</span> | unless&#125; <span class="variable">&amp;ltcond</span><span class="variable">&amp;gt</span>]</span><br><span class="line">    reqidel <span class="variable">&amp;ltsearch</span><span class="variable">&amp;gt</span> [&#123;<span class="meta">if</span> | unless&#125; <span class="variable">&amp;ltcond</span><span class="variable">&amp;gt</span>]</span><br><span class="line">在响应报文尾部添加指定首部</span><br><span class="line">    rspadd <span class="variable">&amp;ltstring</span><span class="variable">&amp;gt</span> [&#123;<span class="meta">if</span> | unless&#125; <span class="variable">&amp;ltcond</span><span class="variable">&amp;gt</span>]</span><br><span class="line">示例：</span><br><span class="line">    rspadd <span class="meta">X</span>-Via:\ HAPorxy</span><br><span class="line">从响应报文中删除匹配正则表达式的首部</span><br><span class="line">    rspdel <span class="variable">&amp;ltsearch</span><span class="variable">&amp;gt</span> [&#123;<span class="meta">if</span> | unless&#125; <span class="variable">&amp;ltcond</span><span class="variable">&amp;gt</span>]</span><br><span class="line">    rspidel <span class="variable">&amp;ltsearch</span><span class="variable">&amp;gt</span> [&#123;<span class="meta">if</span> | unless&#125; <span class="variable">&amp;ltcond</span><span class="variable">&amp;gt</span>]</span><br><span class="line">示例：</span><br><span class="line">    rspidel server.<span class="comment">* #从相应报文删除server信息</span></span><br><span class="line"><span class="comment">    rspidel X-Powered-By:.* #从响应报文删除X-Powered-By信息</span></span><br></pre></td></tr></table></figure>
-
+<figure class="highlight sas"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">在请求报文尾部添加指定首部</span><br><span class="line">    reqadd <span class="variable">&ltstring</span><span class="variable">&gt</span> [&#123;<span class="meta">if</span> | unless&#125; <span class="variable">&ltcond</span><span class="variable">&gt</span>]</span><br><span class="line">从请求报文中删除匹配正则表达式的首部</span><br><span class="line">    reqdel <span class="variable">&ltsearch</span><span class="variable">&gt</span> [&#123;<span class="meta">if</span> | unless&#125; <span class="variable">&ltcond</span><span class="variable">&gt</span>]</span><br><span class="line">    reqidel <span class="variable">&ltsearch</span><span class="variable">&gt</span> [&#123;<span class="meta">if</span> | unless&#125; <span class="variable">&ltcond</span><span class="variable">&gt</span>]</span><br><span class="line">在响应报文尾部添加指定首部</span><br><span class="line">    rspadd <span class="variable">&ltstring</span><span class="variable">&gt</span> [&#123;<span class="meta">if</span> | unless&#125; <span class="variable">&ltcond</span><span class="variable">&gt</span>]</span><br><span class="line">示例：</span><br><span class="line">    rspadd <span class="meta">X</span>-Via:\ HAPorxy</span><br><span class="line">从响应报文中删除匹配正则表达式的首部</span><br><span class="line">    rspdel <span class="variable">&ltsearch</span><span class="variable">&gt</span> [&#123;<span class="meta">if</span> | unless&#125; <span class="variable">&ltcond</span><span class="variable">&gt</span>]</span><br><span class="line">    rspidel <span class="variable">&ltsearch</span><span class="variable">&gt</span> [&#123;<span class="meta">if</span> | unless&#125; <span class="variable">&ltcond</span><span class="variable">&gt</span>]</span><br><span class="line">示例：</span><br><span class="line">    rspidel server.<span class="comment">* #从相应报文删除server信息</span></span><br><span class="line"><span class="comment">    rspidel X-Powered-By:.* #从响应报文删除X-Powered-By信息</span></span><br></pre></td></tr></table></figure>
 <h4 id="HAProxy日志"><a href="#HAProxy日志" class="headerlink" title="HAProxy日志"></a>HAProxy日志</h4><h5 id="HAProxy日志配置"><a href="#HAProxy日志配置" class="headerlink" title="HAProxy日志配置"></a>HAProxy日志配置</h5><p>&emsp;&emsp;需在HAProxy和Rsyslog中分别配置。</p>
 <ul>
 <li>HAProxy配置<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">在global配置项定义：</span><br><span class="line">log <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> local&#123;<span class="number">1</span><span class="number">-7</span>&#125; info #基于syslog记录日志到指定设备，级别有(err、warning、info、debug)</span><br><span class="line">listen web_port</span><br><span class="line">bind <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">80</span></span><br><span class="line">mode http</span><br><span class="line">log global</span><br><span class="line">server web1 <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8080</span> check <span class="built_in">int</span>er <span class="number">3000</span> fall <span class="number">2</span> rise <span class="number">5</span></span><br></pre></td></tr></table></figure>
-
 </li>
 </ul>
 <p>&emsp;&emsp;然后重启HAProxy<code>systemctl restart haproxy</code></p>
@@ -534,47 +318,35 @@
 </ul>
 <p>&emsp;&emsp;编辑配置文件<code>vim /etc/rsyslog.conf</code></p>
 <figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"><span class="meta-keyword">$ModLoad</span> imudp</span></span><br><span class="line"><span class="meta"><span class="meta-keyword">$UDPServerRun</span> 514</span></span><br><span class="line">local3.* /var/<span class="built-in">log</span>/haproxy.<span class="built-in">log</span></span><br></pre></td></tr></table></figure>
-
 <p>&emsp;&emsp;然后重启Rsyslog<code>systemctl restart rsyslog</code></p>
-<h5 id="HAProxy日志格式"><a href="#HAProxy日志格式" class="headerlink" title="HAProxy日志格式"></a>HAProxy日志格式</h5><p>&emsp;&emsp;将特定信息记录在日志中<br>&emsp;&emsp;配置选项：<br>&emsp;&emsp;<code>capture cookie &amp;ltname&amp;gt len &amp;ltlength&amp;gt</code> #捕获请求和响应报文中的 cookie并记录日志<br>&emsp;&emsp;<code>capture request header &amp;ltname&amp;gt len &amp;ltlength&amp;gt</code> #捕获请求报文中指定的首部内容和长度并记录日志<br>&emsp;&emsp;<code>capture response header &amp;ltname&amp;gt len &amp;ltlength&amp;gt</code> #捕获响应报文中指定的内容和长度首部并记录日志<br>&emsp;&emsp;示例：</p>
+<h5 id="HAProxy日志格式"><a href="#HAProxy日志格式" class="headerlink" title="HAProxy日志格式"></a>HAProxy日志格式</h5><p>&emsp;&emsp;将特定信息记录在日志中<br>&emsp;&emsp;配置选项：<br>&emsp;&emsp;<code>capture cookie &ltname&gt len &ltlength&gt</code> #捕获请求和响应报文中的 cookie并记录日志<br>&emsp;&emsp;<code>capture request header &ltname&gt len &ltlength&gt</code> #捕获请求报文中指定的首部内容和长度并记录日志<br>&emsp;&emsp;<code>capture response header &ltname&gt len &ltlength&gt</code> #捕获响应报文中指定的内容和长度首部并记录日志<br>&emsp;&emsp;示例：</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">capture request <span class="selector-tag">header</span> Host len <span class="number">256</span></span><br><span class="line">capture request <span class="selector-tag">header</span> User-Agent len <span class="number">512</span></span><br><span class="line">capture request <span class="selector-tag">header</span> Referer len <span class="number">15</span></span><br></pre></td></tr></table></figure>
-
 <h5 id="配置示例"><a href="#配置示例" class="headerlink" title="配置示例"></a>配置示例</h5><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">listen web_host</span><br><span class="line">    bind <span class="number">172.18</span><span class="number">.32</span><span class="number">.249</span>:<span class="number">80</span></span><br><span class="line">    mode http</span><br><span class="line">    balance roundrobin</span><br><span class="line">    log global</span><br><span class="line">    option httplog #日志格式选项</span><br><span class="line">    capture request header X-Forwarded-For len <span class="number">15</span></span><br><span class="line">    capture request header User-Agent len <span class="number">512</span></span><br><span class="line">    cookie SERVER-COOKIE insert indirect nocache</span><br><span class="line">    server web1 <span class="number">192.168</span><span class="number">.32</span><span class="number">.81</span>:<span class="number">80</span> cookie web1 check <span class="built_in">int</span>er <span class="number">3000</span> fall <span class="number">3</span> rise <span class="number">5</span></span><br><span class="line">    server web2 <span class="number">192.168</span><span class="number">.32</span><span class="number">.82</span>:<span class="number">80</span> cookie web2 check <span class="built_in">int</span>er <span class="number">3000</span> fall <span class="number">3</span> rise <span class="number">5</span></span><br></pre></td></tr></table></figure>
-
 <h4 id="压缩功能"><a href="#压缩功能" class="headerlink" title="压缩功能"></a>压缩功能</h4><p>&emsp;&emsp;启用功能可以对响应给客户端的报文进行压缩，以节省网络带宽，但是会占用部分CPU性能。</p>
 <h5 id="配置选项"><a href="#配置选项" class="headerlink" title="配置选项"></a>配置选项</h5><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">compression algo #启用http协议中的压缩机制，常用算法有gzip deflate</span><br><span class="line">   <span class="built_in"> identity </span>#调试使用的压缩方式</span><br><span class="line">    gzip #常用的压缩方式，与各浏览器兼容较好</span><br><span class="line">    deflate #有些浏览器不支持</span><br><span class="line">    raw-deflate #新出的压缩方式</span><br><span class="line">compression<span class="built_in"> type </span>#要压缩的文件类型</span><br></pre></td></tr></table></figure>
-
 <h5 id="配置示例-1"><a href="#配置示例-1" class="headerlink" title="配置示例"></a>配置示例</h5><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">listen web_host</span><br><span class="line">    bind 172.18.32.249:80</span><br><span class="line">    mode http</span><br><span class="line">    balance roundrobin</span><br><span class="line">    log global</span><br><span class="line">    option httplog</span><br><span class="line"><span class="comment">#    capture request header X-Forwarded-For len 15</span></span><br><span class="line"><span class="comment">#    capture request header User-Agent len 512</span></span><br><span class="line">    compression algo gzip</span><br><span class="line">    compression<span class="built_in"> type </span>compression<span class="built_in"> type </span>text/plain text/html text/css text/xml text/javascript application/javascript</span><br><span class="line">cookie SERVER-COOKIE insert indirect nocache</span><br><span class="line">server web1 192.168.32.81:80 cookie web1 check inter 3000 fall 3 rise 5</span><br><span class="line">server web2 192.168.32.82:80 cookie web2 check inter 3000 fall 3 rise 5</span><br></pre></td></tr></table></figure>
-
 <h3 id="后端服务器状态监测"><a href="#后端服务器状态监测" class="headerlink" title="后端服务器状态监测"></a>后端服务器状态监测</h3><p>&emsp;&emsp;haproxy能对后端服务器状态进行检测，如果发现后端服务器异常，可以自动将该服务器下线，实现高可用。<br>&emsp;&emsp;haproxy对后端服务器有三种检测方式：</p>
 <ul>
 <li>基于四层的传输端口做状态监测</li>
 <li>基于指定URI 做状态监测</li>
-<li>基于指定URI的request请求头部内容做状态监测<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">option httpchk</span><br><span class="line">option httpchk <span class="variable">&amp;lturi</span><span class="variable">&amp;gt</span></span><br><span class="line">option httpchk <span class="variable">&amp;ltmethod</span><span class="variable">&amp;gt</span> <span class="variable">&amp;lturi</span><span class="variable">&amp;gt</span></span><br><span class="line">option httpchk <span class="variable">&amp;ltmethod</span><span class="variable">&amp;gt</span> <span class="variable">&amp;lturi</span><span class="variable">&amp;gt</span> <span class="variable">&amp;ltversion</span><span class="variable">&amp;gt</span></span><br></pre></td></tr></table></figure>
-
+<li>基于指定URI的request请求头部内容做状态监测<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">option httpchk</span><br><span class="line">option httpchk <span class="variable">&lturi</span><span class="variable">&gt</span></span><br><span class="line">option httpchk <span class="variable">&ltmethod</span><span class="variable">&gt</span> <span class="variable">&lturi</span><span class="variable">&gt</span></span><br><span class="line">option httpchk <span class="variable">&ltmethod</span><span class="variable">&gt</span> <span class="variable">&lturi</span><span class="variable">&gt</span> <span class="variable">&ltversion</span><span class="variable">&gt</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <p>&emsp;&emsp;之前我们的配置都是基于传输IP加端口对检测，所以status状态页的后端检测状态里显示的是L4，基于指定URI做状态监测，需要持续从服务器get指定页面，会占用消耗一些带宽资源，所以基于指定URI的request请求头部内容做状态监测最为合理，配置如下：</p>
 <figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">listen web_host</span><br><span class="line">    bind <span class="number">172.18</span><span class="number">.32</span><span class="number">.249</span>:<span class="number">80</span></span><br><span class="line">    mode http</span><br><span class="line">    balance roundrobin</span><br><span class="line">    log global</span><br><span class="line">    option httplog</span><br><span class="line">#    option httpchk GET /app/monitor/check.html HTTP/<span class="number">1.0</span></span><br><span class="line">    option httpchk HEAD /app/monitor/check.html HTTP/<span class="number">1.0</span>\r\nHost:\ <span class="number">192.168</span><span class="number">.7</span><span class="number">.102</span></span><br><span class="line">    cookie SERVER-COOKIE insert indirect nocache</span><br><span class="line">    server web1 <span class="number">192.168</span><span class="number">.32</span><span class="number">.81</span>:<span class="number">80</span> cookie web1 check <span class="built_in">int</span>er <span class="number">3000</span> fall <span class="number">3</span> rise <span class="number">5</span></span><br><span class="line">    server web2 <span class="number">192.168</span><span class="number">.32</span><span class="number">.82</span>:<span class="number">80</span> cookie web2 check <span class="built_in">int</span>er <span class="number">3000</span> fall <span class="number">3</span> rise <span class="number">5</span></span><br></pre></td></tr></table></figure>
-
 <p>&emsp;&emsp;这时再去看9999端口的status页，就会看到后端服务器的检测状态为L7OK了</p>
 <h3 id="HAProxy的ACL功能"><a href="#HAProxy的ACL功能" class="headerlink" title="HAProxy的ACL功能"></a>HAProxy的ACL功能</h3><p>&emsp;&emsp;访问控制列表（ACL，Access Control Lists）是一种基于包过滤的访问控制技术，它可以根据设定的条件对经过服务器传输的数据包进行过滤(条件匹配)，即对接收到的报文进行匹配和过滤，基于请求报文头部中的源地址、源端口、目标地址、目标端口、请求方法、URL、文件后缀等信息内容进行匹配并执行进一步操作，允许其通过或丢弃。</p>
-<h4 id="ACL配置选项："><a href="#ACL配置选项：" class="headerlink" title="ACL配置选项："></a>ACL配置选项：</h4><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">acl <span class="variable">&amp;ltaclname</span><span class="variable">&amp;gt</span> <span class="variable">&amp;ltcriterion</span><span class="variable">&amp;gt</span> [flags] [operator] [<span class="variable">&amp;ltvalue</span><span class="variable">&amp;gt</span>]</span><br><span class="line">acl 名称 匹配规范 匹配模式 具体操作符 操作对象类型</span><br></pre></td></tr></table></figure>
-
+<h4 id="ACL配置选项："><a href="#ACL配置选项：" class="headerlink" title="ACL配置选项："></a>ACL配置选项：</h4><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">acl <span class="variable">&ltaclname</span><span class="variable">&gt</span> <span class="variable">&ltcriterion</span><span class="variable">&gt</span> [flags] [operator] [<span class="variable">&ltvalue</span><span class="variable">&gt</span>]</span><br><span class="line">acl 名称 匹配规范 匹配模式 具体操作符 操作对象类型</span><br></pre></td></tr></table></figure>
 <h5 id="ACL-Name"><a href="#ACL-Name" class="headerlink" title="ACL-Name"></a>ACL-Name</h5><p>&emsp;&emsp;实例：<code>acl image_service hdr_dom(host) -i img.example.com</code><br>&emsp;&emsp;ACL名称，可以使用大字母A-Z、小写字母a-z、数字0-9、冒号：、点.、中横线和下划线，并且严格区分大小写，比如Image_site和image_site完全是两个acl。</p>
 <h5 id="ACL-criterion"><a href="#ACL-criterion" class="headerlink" title="ACL-criterion"></a>ACL-criterion</h5><p>&emsp;&emsp;定义ACL匹配规范</p>
-<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">hdr（[<span class="variable">&amp;ltname</span><span class="variable">&amp;gt</span> [，<span class="variable">&amp;ltocc</span><span class="variable">&amp;gt</span>]]）：完全匹配字符串</span><br><span class="line">hdr_beg（[<span class="variable">&amp;ltname</span><span class="variable">&amp;gt</span> [，<span class="variable">&amp;ltocc</span><span class="variable">&amp;gt</span>]]）：前缀匹配</span><br><span class="line">hdr_dir（[<span class="variable">&amp;ltname</span><span class="variable">&amp;gt</span> [，<span class="variable">&amp;ltocc</span><span class="variable">&amp;gt</span>]]）：路径匹配</span><br><span class="line">hdr_dom（[<span class="variable">&amp;ltname</span><span class="variable">&amp;gt</span> [，<span class="variable">&amp;ltocc</span><span class="variable">&amp;gt</span>]]）：域匹配</span><br><span class="line">hdr_end（[<span class="variable">&amp;ltname</span><span class="variable">&amp;gt</span> [，<span class="variable">&amp;ltocc</span><span class="variable">&amp;gt</span>]]）：后缀匹配</span><br><span class="line">hdr_len（[<span class="variable">&amp;ltname</span><span class="variable">&amp;gt</span> [，<span class="variable">&amp;ltocc</span><span class="variable">&amp;gt</span>]]）：长度匹配</span><br><span class="line">hdr_reg（[<span class="variable">&amp;ltname</span><span class="variable">&amp;gt</span> [，<span class="variable">&amp;ltocc</span><span class="variable">&amp;gt</span>]]）：正则表达式匹配</span><br><span class="line">hdr_sub（[<span class="variable">&amp;ltname</span><span class="variable">&amp;gt</span> [，<span class="variable">&amp;ltocc</span><span class="variable">&amp;gt</span>]]）：子串匹配</span><br><span class="line">dst 目标IP</span><br><span class="line">dst_port 目标PORT</span><br><span class="line">src 源IP</span><br><span class="line">src_port 源PORT</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">hdr（[<span class="variable">&ltname</span><span class="variable">&gt</span> [，<span class="variable">&ltocc</span><span class="variable">&gt</span>]]）：完全匹配字符串</span><br><span class="line">hdr_beg（[<span class="variable">&ltname</span><span class="variable">&gt</span> [，<span class="variable">&ltocc</span><span class="variable">&gt</span>]]）：前缀匹配</span><br><span class="line">hdr_dir（[<span class="variable">&ltname</span><span class="variable">&gt</span> [，<span class="variable">&ltocc</span><span class="variable">&gt</span>]]）：路径匹配</span><br><span class="line">hdr_dom（[<span class="variable">&ltname</span><span class="variable">&gt</span> [，<span class="variable">&ltocc</span><span class="variable">&gt</span>]]）：域匹配</span><br><span class="line">hdr_end（[<span class="variable">&ltname</span><span class="variable">&gt</span> [，<span class="variable">&ltocc</span><span class="variable">&gt</span>]]）：后缀匹配</span><br><span class="line">hdr_len（[<span class="variable">&ltname</span><span class="variable">&gt</span> [，<span class="variable">&ltocc</span><span class="variable">&gt</span>]]）：长度匹配</span><br><span class="line">hdr_reg（[<span class="variable">&ltname</span><span class="variable">&gt</span> [，<span class="variable">&ltocc</span><span class="variable">&gt</span>]]）：正则表达式匹配</span><br><span class="line">hdr_sub（[<span class="variable">&ltname</span><span class="variable">&gt</span> [，<span class="variable">&ltocc</span><span class="variable">&gt</span>]]）：子串匹配</span><br><span class="line">dst 目标IP</span><br><span class="line">dst_port 目标PORT</span><br><span class="line">src 源IP</span><br><span class="line">src_port 源PORT</span><br></pre></td></tr></table></figure>
 <p>&emsp;&emsp;示例:</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hdr &amp;ltstring&amp;gt用于测试请求头部首部指定内容</span><br><span class="line"><span class="function"><span class="title">hdr_dom</span><span class="params">(host)</span></span> 请求的host名称，如 www<span class="selector-class">.example</span><span class="selector-class">.com</span></span><br><span class="line"><span class="function"><span class="title">hdr_beg</span><span class="params">(host)</span></span> 请求的host开头，如 www. <span class="selector-tag">img</span>. <span class="selector-tag">video</span>. download. ftp.</span><br><span class="line"><span class="function"><span class="title">hdr_end</span><span class="params">(host)</span></span> 请求的host结尾，如 <span class="selector-class">.com</span> <span class="selector-class">.net</span> .cn</span><br><span class="line">path_beg 请求的URL开头，如/static、/images、/img、/css</span><br><span class="line">path_end 请求的URL中资源的结尾，如 <span class="selector-class">.gif</span> <span class="selector-class">.png</span> <span class="selector-class">.css</span> <span class="selector-class">.js</span> <span class="selector-class">.jpg</span> .jpeg</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hdr &ltstring&gt用于测试请求头部首部指定内容</span><br><span class="line"><span class="function"><span class="title">hdr_dom</span><span class="params">(host)</span></span> 请求的host名称，如 www<span class="selector-class">.example</span><span class="selector-class">.com</span></span><br><span class="line"><span class="function"><span class="title">hdr_beg</span><span class="params">(host)</span></span> 请求的host开头，如 www. <span class="selector-tag">img</span>. <span class="selector-tag">video</span>. download. ftp.</span><br><span class="line"><span class="function"><span class="title">hdr_end</span><span class="params">(host)</span></span> 请求的host结尾，如 <span class="selector-class">.com</span> <span class="selector-class">.net</span> .cn</span><br><span class="line">path_beg 请求的URL开头，如/static、/images、/img、/css</span><br><span class="line">path_end 请求的URL中资源的结尾，如 <span class="selector-class">.gif</span> <span class="selector-class">.png</span> <span class="selector-class">.css</span> <span class="selector-class">.js</span> <span class="selector-class">.jpg</span> .jpeg</span><br></pre></td></tr></table></figure>
 <h5 id="ACL-flags"><a href="#ACL-flags" class="headerlink" title="ACL-flags"></a>ACL-flags</h5><p>&emsp;&emsp;ACL匹配模式<br>&emsp;&emsp;&emsp;&emsp;-i 不区分大小写<br>&emsp;&emsp;&emsp;&emsp;-m 使用指定的pattern匹配方法<br>&emsp;&emsp;&emsp;&emsp;-n 不做DNS解析<br>&emsp;&emsp;&emsp;&emsp;-u 禁止acl重名，否则多个同名ACL匹配或关系</p>
 <h5 id="ACL-operator"><a href="#ACL-operator" class="headerlink" title="ACL-operator"></a>ACL-operator</h5><p>&emsp;&emsp;ACL 操作符</p>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">整数比较：eq、ge、gt、le、lt</span><br><span class="line">字符比较：</span><br><span class="line">  exact match (-m str) :字符串必须完全匹配模式</span><br><span class="line">  substring match (-m sub) :在提取的字符串中查找模式，如果其中任何一个被发现，ACL将匹配</span><br><span class="line"> <span class="built_in"> prefix </span>match (-m beg) :在提取的字符串首部中查找模式，如果其中任何一个被发现，ACL将匹配</span><br><span class="line">  suffix match (-m end) :将模式与提取字符串的尾部进行比较，如果其中任何一个匹配，则ACL进行匹配</span><br><span class="line">  subdir match (-m dir) :查看提取出来的用斜线分隔（“/”）的字符串，如果其中任何一个匹配，则ACL进行匹配</span><br><span class="line">  domain match (-m dom) :查找提取的用点（“.”）分隔字符串，如果其中任何一个匹配，则ACL进行匹配</span><br></pre></td></tr></table></figure>
-
 <h5 id="ACL-value"><a href="#ACL-value" class="headerlink" title="ACL-value"></a>ACL-value</h5><p>&emsp;&emsp;value的类型</p>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">The ACL engine can match these types against patterns of the following types :</span><br><span class="line">  Boolean #布尔值</span><br><span class="line">  integer <span class="keyword">or</span> integer range #整数或整数范围，比如用于匹配端口范围</span><br><span class="line"> <span class="built_in"> IP address </span>/<span class="built_in"> network </span>#IP地址或IP范围, 192.168.0.1 ,192.168.0.1/24</span><br><span class="line">  string</span><br><span class="line">      exact –精确比较</span><br><span class="line">      substring—子串 www.example.com</span><br><span class="line">      suffix-后缀比较</span><br><span class="line">      prefix-前缀比较</span><br><span class="line">      subdir-路径， /wp-includes/js/jquery/jquery.js</span><br><span class="line">      domain-域名，www.example.com</span><br><span class="line">  regular expression #正则表达式</span><br><span class="line">  hex block #16进制</span><br></pre></td></tr></table></figure>
-
 <h4 id="ACL调用方式"><a href="#ACL调用方式" class="headerlink" title="ACL调用方式"></a>ACL调用方式</h4><p>&emsp;&emsp;ACL调用方式：</p>
 <ul>
 <li>与：隐式（默认）使用</li>
@@ -583,16 +355,11 @@
 </ul>
 <p>&emsp;&emsp;示例：</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> valid_src valid_port <span class="comment">#与关系</span></span><br><span class="line"><span class="keyword">if</span> invalid_src <span class="params">||</span> invalid_port <span class="comment">#或</span></span><br><span class="line"><span class="keyword">if</span> ! invalid_src <span class="comment">#非</span></span><br></pre></td></tr></table></figure>
-
 <h4 id="ACL具体示例"><a href="#ACL具体示例" class="headerlink" title="ACL具体示例"></a>ACL具体示例</h4><h5 id="域名匹配"><a href="#域名匹配" class="headerlink" title="域名匹配:"></a>域名匹配:</h5><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">listen web_host</span><br><span class="line">    bind <span class="number">172.18</span><span class="number">.32</span><span class="number">.249</span>:<span class="number">80</span></span><br><span class="line">    mode http</span><br><span class="line">    balance roundrobin</span><br><span class="line">    log global</span><br><span class="line">    option httplog</span><br><span class="line">    acl web_host hdr_dom(host) www.magedu.net</span><br><span class="line">    use_backend magedu_host <span class="keyword">if</span> web_host</span><br><span class="line">    default_backend default_web</span><br><span class="line">backend magedu_host</span><br><span class="line">    mode http</span><br><span class="line">    server web1 <span class="number">192.168</span><span class="number">.32</span><span class="number">.81</span>:<span class="number">80</span> check <span class="built_in">int</span>er <span class="number">2000</span> fall <span class="number">3</span> rise <span class="number">5</span></span><br><span class="line">    backend default_web</span><br><span class="line">    mode http</span><br><span class="line">    server web2 <span class="number">192.168</span><span class="number">.32</span><span class="number">.82</span>:<span class="number">80</span> check <span class="built_in">int</span>er <span class="number">2000</span> fall <span class="number">3</span> rise <span class="number">5</span></span><br></pre></td></tr></table></figure>
-
 <h5 id="匹配浏览器类型"><a href="#匹配浏览器类型" class="headerlink" title="匹配浏览器类型:"></a>匹配浏览器类型:</h5><p>&emsp;&emsp;匹配客户端浏览器，将不同类型的浏览器调动至不同的服务器组</p>
 <figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">listen web_host</span><br><span class="line">    bind 172.18.32.249:80</span><br><span class="line">    mode http</span><br><span class="line">    balance roundrobin</span><br><span class="line">    log global</span><br><span class="line">    option httplog</span><br><span class="line">    acl web_host hdr_dom(host) www.magedu.net</span><br><span class="line">    use_backend magedu_host<span class="built_in"> if </span>web_host</span><br><span class="line">    acl redirect_test hdr(User-Agent) -m<span class="built_in"> sub </span>-i <span class="string">"Mozilla/5.0 (Windows NT 6.1; WOW64;Trident/7.0; rv:11.0) like Gecko"</span></span><br><span class="line">    redirect prefix http://192.168.7.103<span class="built_in"> if </span>redirect_test</span><br><span class="line">    default_backend default_web</span><br><span class="line">backend magedu_host</span><br><span class="line">    mode http</span><br><span class="line">    server web1 192.168.32.81:80<span class="built_in"> check </span>inter 2000 fall 3 rise 5</span><br><span class="line">backend default_web</span><br><span class="line">    mode http</span><br><span class="line">    server web2 192.168.32.82:80<span class="built_in"> check </span>inter 2000 fall 3 rise 5</span><br></pre></td></tr></table></figure>
-
 <h5 id="基于文件后缀名实现动静分离"><a href="#基于文件后缀名实现动静分离" class="headerlink" title="基于文件后缀名实现动静分离:"></a>基于文件后缀名实现动静分离:</h5><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">listen web_host</span><br><span class="line">    bind 172.18.32.249:80</span><br><span class="line">    mode http</span><br><span class="line">    balance roundrobin</span><br><span class="line">    log global</span><br><span class="line">    option httplog</span><br><span class="line">    acl php_server path_end -i .php</span><br><span class="line">    use_backend php_server_host <span class="keyword">if</span> php_server</span><br><span class="line">    acl image_server path_end -i .jpg .png .jpeg .gif</span><br><span class="line">    use_backend image_server_host <span class="keyword">if</span> image_server</span><br><span class="line">    default_backend default_web</span><br><span class="line">backend php_server_host</span><br><span class="line">    mode http</span><br><span class="line">   <span class="built_in"> server </span>web1 192.168.32.81 check inter 2000 fall 3 rise 5</span><br><span class="line">backend image_server_host</span><br><span class="line">    mode http</span><br><span class="line">   <span class="built_in"> server </span>web1 192.168.32.82 check inter 2000 fall 3 rise 5</span><br><span class="line">backend default_web</span><br><span class="line">    mode http</span><br><span class="line">   <span class="built_in"> server </span>web1 192.168.32.8:80 check inter 2000 fall 3 rise 5</span><br></pre></td></tr></table></figure>
-
 <h5 id="匹配访问路径实现动静分离"><a href="#匹配访问路径实现动静分离" class="headerlink" title="匹配访问路径实现动静分离:"></a>匹配访问路径实现动静分离:</h5><figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">listen web_host</span><br><span class="line">    bind 172.18.32.249:80</span><br><span class="line">    mode http</span><br><span class="line">    balance roundrobin</span><br><span class="line">    log global</span><br><span class="line">    option httplog</span><br><span class="line">    acl<span class="keyword"> static</span>_path path_beg -i /static /images /javascript</span><br><span class="line">    use_backend<span class="keyword"> static</span>_path_host<span class="built_in"> if </span>static_path</span><br><span class="line">    default_backend default_web</span><br><span class="line">backend<span class="keyword"> static</span>_path_host</span><br><span class="line">    mode http</span><br><span class="line">    server web1 192.168.32.81<span class="built_in"> check </span>inter 2000 fall 3 rise 5</span><br><span class="line">backend default_web</span><br><span class="line">    mode http</span><br><span class="line">    server web1 192.168.32.8:80<span class="built_in"> check </span>inter 2000 fall 3 rise 5</span><br></pre></td></tr></table></figure>
-
 <h5 id="预定义ACL"><a href="#预定义ACL" class="headerlink" title="预定义ACL"></a>预定义ACL</h5><p>预定义ACL：</p>
 <table>
 <thead>
@@ -710,135 +477,70 @@
 </tbody></table>
 <p>&emsp;&emsp;预定义ACL使用示例</p>
 <figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">listen web_host</span><br><span class="line">    bind 172.18.32.249:80</span><br><span class="line">    mode http</span><br><span class="line">    balance roundrobin</span><br><span class="line">    log global</span><br><span class="line">    option httplog</span><br><span class="line">    acl<span class="keyword"> static</span>_path path_beg -i /static /images /javascript</span><br><span class="line">    use_backend<span class="keyword"> static</span>_path_host<span class="built_in"> if </span>HTTP_1.1 TRUE<span class="keyword"> static</span>_path</span><br><span class="line">    default_backend default_web</span><br><span class="line">backend php_server_host</span><br><span class="line">    mode http</span><br><span class="line">    server web1 192.168.32.81<span class="built_in"> check </span>inter 2000 fall 3 rise 5</span><br><span class="line">backend<span class="keyword"> static</span>_path_host</span><br><span class="line">    mode http</span><br><span class="line">    server web1 192.168.32.82<span class="built_in"> check </span>inter 2000 fall 3 rise 5</span><br><span class="line">backend default_web</span><br><span class="line">    mode http</span><br><span class="line">    server web1 192.168.32.8:80<span class="built_in"> check </span>inter 2000 fall 3 rise 5</span><br></pre></td></tr></table></figure>
-
 <p>&emsp;&emsp;详细信息查看官网<a href="http://cbonte.github.io/haproxy-dconv/2.0/configuration.html#7.4" target="_blank" rel="noopener">http://cbonte.github.io/haproxy-dconv/2.0/configuration.html#7.4</a></p>
-
     </div>
-
-    
-    
-    
-      
   <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      
-      
       <div class="popular-posts-title"><a href="/blog/5aeb7732.html" rel="bookmark">企业级应用：负载均衡层——haproxy(一)</a></div>
-      
     </li>
-  
     <li class="popular-posts-item">
-      
-      
       <div class="popular-posts-title"><a href="/blog/159ef64c.html" rel="bookmark">企业级应用：负载均衡层——LVS调度器详解</a></div>
-      
     </li>
-  
     <li class="popular-posts-item">
-      
-      
       <div class="popular-posts-title"><a href="/blog/108203a7.html" rel="bookmark">myql数据库MHA实现高可用（多实例间实现）</a></div>
-      
     </li>
-  
   </ul>
-
     <div style="text-align:center;color: #ccc;font-size:14px;">---------------- The End ----------------</div>
-        
-      
         <div id="reward-container">
   <div>It's very nice of you to support me.</div>
   <button id="reward-button" disable="enable" onclick="var qr = document.getElementById('qr'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
     打赏
   </button>
   <div id="qr" style="display: none;">
-        
-      
       <div style="display: inline-block">
         <img src="/images/wechat-pay.png" alt="Hechao 微信支付">
         <p>微信支付</p>
       </div>
-
   </div>
 </div>
-
-      
-        
-
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
     <strong>本文作者： </strong>Hechao</li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://hewanyue.com/blog/f5daec50.html" title="企业级应用：负载均衡层——haproxy(二)">https:&#x2F;&#x2F;hewanyue.com&#x2F;blog&#x2F;f5daec50.html</a>
+    <a href="https://hewanyue.com/blog/f5daec50.html" title="企业级应用：负载均衡层——haproxy(二)">https://hewanyue.com/blog/f5daec50.html</a>
   </li>
   <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank">&lt;i class=&quot;fa fa-fw fa-creative-commons&quot;&gt;&lt;&#x2F;i&gt;BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
 </ul>
 </div>
-
-      
-
       <footer class="post-footer">
-          
-            
-          
           <div class="post-tags">
-            
               <a href="/tags/高可用/" rel="tag"><i class="fa fa-tag">高可用</i></a>
-            
               <a href="/tags/HAProxy/" rel="tag"><i class="fa fa-tag">HAProxy</i></a>
-            
               <a href="/tags/企业级应用/" rel="tag"><i class="fa fa-tag">企业级应用</i></a>
-            
               <a href="/tags/负载均衡/" rel="tag"><i class="fa fa-tag">负载均衡</i></a>
-            
               <a href="/tags/调度算法/" rel="tag"><i class="fa fa-tag">调度算法</i></a>
-            
           </div>
-        
-
-        
-
-
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-              
                 <a href="/blog/5aeb7732.html" rel="next" title="企业级应用：负载均衡层——haproxy(一)">
                   <i class="fa fa-chevron-left"></i> 企业级应用：负载均衡层——haproxy(一)
                 </a>
-              
             </div>
-
             <span class="post-nav-divider"></span>
-
             <div class="post-nav-prev post-nav-item">
-              
             </div>
           </div>
-        
       </footer>
-    
   </div>
-  
-  
-  
   </article>
-
   </div>
-
-
           </div>
-          
-    
     <div class="comments" id="comments"></div>
-  
-
         </div>
-          
-  
   <div class="sidebar-toggle">
     <div class="sidebar-toggle-line-wrap">
       <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
@@ -846,15 +548,8 @@
       <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
     </div>
   </div>
-
   <aside class="sidebar">
     <div class="sidebar-inner">
-        
-        
-        
-        
-      
-
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
           文章目录
@@ -863,14 +558,11 @@
           站点概览
         </li>
       </ul>
-
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
           <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#haproxy的进阶配置"><span class="nav-number">1.</span> <span class="nav-text">haproxy的进阶配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#haproxy报文修改"><span class="nav-number">1.1.</span> <span class="nav-text">haproxy报文修改</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HAProxy日志"><span class="nav-number">1.2.</span> <span class="nav-text">HAProxy日志</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#HAProxy日志配置"><span class="nav-number">1.2.1.</span> <span class="nav-text">HAProxy日志配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#HAProxy日志格式"><span class="nav-number">1.2.2.</span> <span class="nav-text">HAProxy日志格式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置示例"><span class="nav-number">1.2.3.</span> <span class="nav-text">配置示例</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#压缩功能"><span class="nav-number">1.3.</span> <span class="nav-text">压缩功能</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#配置选项"><span class="nav-number">1.3.1.</span> <span class="nav-text">配置选项</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置示例-1"><span class="nav-number">1.3.2.</span> <span class="nav-text">配置示例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后端服务器状态监测"><span class="nav-number">2.</span> <span class="nav-text">后端服务器状态监测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HAProxy的ACL功能"><span class="nav-number">3.</span> <span class="nav-text">HAProxy的ACL功能</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ACL配置选项："><span class="nav-number">3.1.</span> <span class="nav-text">ACL配置选项：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#ACL-Name"><span class="nav-number">3.1.1.</span> <span class="nav-text">ACL-Name</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ACL-criterion"><span class="nav-number">3.1.2.</span> <span class="nav-text">ACL-criterion</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ACL-flags"><span class="nav-number">3.1.3.</span> <span class="nav-text">ACL-flags</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ACL-operator"><span class="nav-number">3.1.4.</span> <span class="nav-text">ACL-operator</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ACL-value"><span class="nav-number">3.1.5.</span> <span class="nav-text">ACL-value</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ACL调用方式"><span class="nav-number">3.2.</span> <span class="nav-text">ACL调用方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ACL具体示例"><span class="nav-number">3.3.</span> <span class="nav-text">ACL具体示例</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#域名匹配"><span class="nav-number">3.3.1.</span> <span class="nav-text">域名匹配:</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#匹配浏览器类型"><span class="nav-number">3.3.2.</span> <span class="nav-text">匹配浏览器类型:</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#基于文件后缀名实现动静分离"><span class="nav-number">3.3.3.</span> <span class="nav-text">基于文件后缀名实现动静分离:</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#匹配访问路径实现动静分离"><span class="nav-number">3.3.4.</span> <span class="nav-text">匹配访问路径实现动静分离:</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#预定义ACL"><span class="nav-number">3.3.5.</span> <span class="nav-text">预定义ACL</span></a></li></ol></li></ol></li></ol></div>
-        
       </div>
       <!--/noindex-->
-
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image"
@@ -882,71 +574,36 @@
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-        
           <a href="/archives/">
-        
           <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
-    
-      
-      
       <div class="site-state-item site-state-categories">
-        
           <a href="/categories/">
-        
         <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
-    
-      
-      
       <div class="site-state-item site-state-tags">
-        
-          
             <a href="/tags/">
-          
-        
         <span class="site-state-item-count">45</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
-    
   </nav>
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-      
-      
-      
-        
-      
-        <a href="https://github.com/wudihechao" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;wudihechao" rel="noopener" target="_blank">&lt;i class=&quot;fa fa-fw fa-github&quot;&gt;&lt;&#x2F;i&gt;</a>
+        <a href="https://github.com/wudihechao" title="GitHub &rarr; https://github.com/wudihechao" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-      
-        
-      
-        <a href="mailto:wudihechao@163.com" title="E-Mail &amp;rarr; mailto:wudihechao@163.com" rel="noopener" target="_blank">&lt;i class=&quot;fa fa-fw fa-envelope&quot;&gt;&lt;&#x2F;i&gt;</a>
+        <a href="mailto:wudihechao@163.com" title="E-Mail &rarr; mailto:wudihechao@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-      
-        
-      
-        <a href="https://weibo.com/u/1050367191" title="Weibo &amp;rarr; https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;1050367191" rel="noopener" target="_blank">&lt;i class=&quot;fa fa-fw fa-weibo&quot;&gt;&lt;&#x2F;i&gt;</a>
+        <a href="https://weibo.com/u/1050367191" title="Weibo &rarr; https://weibo.com/u/1050367191" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i></a>
       </span>
-    
   </div>
-
-        
     <div class="links-of-blogroll motion-element links-of-blogroll-block">
       <div class="links-of-blogroll-title" style="padding-left: 10px;">
         <!-- modify icon to fire by szw -->
@@ -954,31 +611,23 @@
         近期文章
       </div>
       <ul class="links-of-blogroll-list" style="padding-left: 30px;">
-        
-        
           <li>
             <a href="/blog/f5daec50.html" title="企业级应用：负载均衡层——haproxy(二)" >企业级应用：负载均衡层——haproxy(二)</a>
           </li>
-        
           <li>
             <a href="/blog/5aeb7732.html" title="企业级应用：负载均衡层——haproxy(一)" >企业级应用：负载均衡层——haproxy(一)</a>
           </li>
-        
           <li>
             <a href="/blog/5da16ceb.html" title="报错：Header V3 RSA_SHA256 Signature, key ID 2f86d6a1_ NOKEY" >报错：Header V3 RSA_SHA256 Signature, key ID 2f86d6a1_ NOKEY</a>
           </li>
-        
           <li>
             <a href="/blog/e4415633.html" title="nginx防盗链设置的一些细节" >nginx防盗链设置的一些细节</a>
           </li>
-        
           <li>
             <a href="/blog/159ef64c.html" title="企业级应用：负载均衡层——LVS调度器详解" >企业级应用：负载均衡层——LVS调度器详解</a>
           </li>
-        
       </ul>
     </div>
-
 <div id="days"></div>
 <script>
 function show_date_time(){
@@ -1005,26 +654,14 @@ return i;
 }
 show_date_time();
 </script>
-
   <div class="cc-license motion-element" itemprop="license">
-    
-  
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank">&lt;img src=&quot;&#x2F;images&#x2F;cc-by-nc-sa.svg&quot; alt=&quot;Creative Commons&quot;&gt;</a>
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
   </div>
-
-
-
-
       </div>
-
-
  </aside>
   <div id="sidebar-dimmer"></div>
-
-
       </div>
     </main>
-
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
@@ -1038,8 +675,6 @@ show_date_time();
     </span>
     <span title="站点总字数">213k</span>
 </div>
-
-        
 <div class="busuanzi-count">
   <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
@@ -1050,9 +685,7 @@ show_date_time();
         <span id="busuanzi_value_site_uv"></span>
       </span>
     </span>
-  
     <span class="post-meta-divider">|</span>
-  
     <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="fa fa-eye"></i>
@@ -1061,28 +694,10 @@ show_date_time();
         <span id="busuanzi_value_site_pv"></span>
       </span>
     </span>
-  
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-        
       </div>
     </footer>
   </div>
-
-  
-    
-  
   <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
   <script src="/lib/anime.min.js?v=3.1.0"></script>
   <script src="/lib/pjax/pjax.min.js?v=0.2.8"></script>
@@ -1107,7 +722,6 @@ var pjax = new Pjax({
   cacheBust: false,
   scrollTo : !CONFIG.bookmark.enable
 });
-
 window.addEventListener('pjax:success', () => {
   document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
     var id = element.id || '';
@@ -1140,11 +754,6 @@ window.addEventListener('pjax:success', () => {
   NexT.utils.updateSidebarPosition();
 });
 </script>
-
-
-
-
-  
   <script pjax>
     (function(){
       var bp = document.createElement('script');
@@ -1154,33 +763,8 @@ window.addEventListener('pjax:success', () => {
       s.parentNode.insertBefore(bp, s);
     })();
   </script>
-
-
-
-
-
-
-
-
   <script src="/js/local-search.js?v=7.4.0"></script>
-
-
-
-
-
-
-
-
     <div id="pjax">
-
-
-
-  
-
-  
-
-  
-
   <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
   <script src="/js/Valine.min.js"></script>
 <script>
@@ -1214,8 +798,6 @@ window.addEventListener('pjax:success', () => {
         }, 100);
     }
 </script>
-
-
     </div>
 </body>
 </html>

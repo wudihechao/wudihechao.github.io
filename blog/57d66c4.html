@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-
-
-
-
-
 <html lang="zh-CN">
 <body oncontextmenu=self.event.returnValue=false>
 <head>
@@ -14,13 +9,8 @@
 <meta name="generator" content="Hexo 3.9.0">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.ico?v=7.4.0">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.ico?v=7.4.0">
-
 <link rel="stylesheet" href="/css/main.css?v=7.4.0">
-
-
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
-
-
 <script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
@@ -54,16 +44,13 @@
     sidebarPadding: 40
   };
 </script>
-
-
-
-  <meta name="description" content="&amp;emsp;&amp;emsp;PowerDNS 是一个跨平台的开源DNS服务组件，它是高性能的域名服务器，除了支持普通的BIND配置文件，PowerDNS还可以从MySQL,Oracle,PostgreSQL等的数据库读取数据。PowerDNS安装了Poweradmin(基于php实现)，能实现Web管理DNS记录，非常方便。&amp;emsp;&amp;emsp;ps:本次过程是在centos7系统上完成。">
+  <meta name="description" content="&emsp;&emsp;PowerDNS 是一个跨平台的开源DNS服务组件，它是高性能的域名服务器，除了支持普通的BIND配置文件，PowerDNS还可以从MySQL,Oracle,PostgreSQL等的数据库读取数据。PowerDNS安装了Poweradmin(基于php实现)，能实现Web管理DNS记录，非常方便。&emsp;&emsp;ps:本次过程是在centos7系统上完成。">
 <meta name="keywords" content="linux,LAMP,经验分享,PowerDNS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LAMP架构实现PowerDNS">
 <meta property="og:url" content="https://hewanyue.com/blog/57d66c4.html">
 <meta property="og:site_name" content="BOHC!">
-<meta property="og:description" content="&amp;emsp;&amp;emsp;PowerDNS 是一个跨平台的开源DNS服务组件，它是高性能的域名服务器，除了支持普通的BIND配置文件，PowerDNS还可以从MySQL,Oracle,PostgreSQL等的数据库读取数据。PowerDNS安装了Poweradmin(基于php实现)，能实现Web管理DNS记录，非常方便。&amp;emsp;&amp;emsp;ps:本次过程是在centos7系统上完成。">
+<meta property="og:description" content="&emsp;&emsp;PowerDNS 是一个跨平台的开源DNS服务组件，它是高性能的域名服务器，除了支持普通的BIND配置文件，PowerDNS还可以从MySQL,Oracle,PostgreSQL等的数据库读取数据。PowerDNS安装了Poweradmin(基于php实现)，能实现Web管理DNS记录，非常方便。&emsp;&emsp;ps:本次过程是在centos7系统上完成。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191014132102422.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191014132109107.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
@@ -78,11 +65,9 @@
 <meta property="og:updated_time" content="2019-11-10T04:33:36.874Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LAMP架构实现PowerDNS">
-<meta name="twitter:description" content="&amp;emsp;&amp;emsp;PowerDNS 是一个跨平台的开源DNS服务组件，它是高性能的域名服务器，除了支持普通的BIND配置文件，PowerDNS还可以从MySQL,Oracle,PostgreSQL等的数据库读取数据。PowerDNS安装了Poweradmin(基于php实现)，能实现Web管理DNS记录，非常方便。&amp;emsp;&amp;emsp;ps:本次过程是在centos7系统上完成。">
+<meta name="twitter:description" content="&emsp;&emsp;PowerDNS 是一个跨平台的开源DNS服务组件，它是高性能的域名服务器，除了支持普通的BIND配置文件，PowerDNS还可以从MySQL,Oracle,PostgreSQL等的数据库读取数据。PowerDNS安装了Poweradmin(基于php实现)，能实现Web管理DNS记录，非常方便。&emsp;&emsp;ps:本次过程是在centos7系统上完成。">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20191014132102422.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
   <link rel="canonical" href="https://hewanyue.com/blog/57d66c4">
-
-
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
@@ -93,17 +78,7 @@
     isArchive: false
   };
 </script>
-
   <title>LAMP架构实现PowerDNS | BOHC!</title>
-  
-
-
-
-
-
-
-
-
   <noscript>
   <style>
   .use-motion .brand,
@@ -115,30 +90,21 @@
   .use-motion .post-header,
   .use-motion .post-body,
   .use-motion .collection-header { opacity: initial; }
-
   .use-motion .logo,
   .use-motion .site-title,
   .use-motion .site-subtitle {
     opacity: initial;
     top: initial;
   }
-
   .use-motion .logo-line-before i { left: initial; }
   .use-motion .logo-line-after i { right: initial; }
   </style>
 </noscript>
-
 <script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "https://hm.baidu.com/hm.js?a0d4e217e26da03ea5ca2acc76d543ae";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();</script>
-
-
-
 <link rel="stylesheet" href="/dist/APlayer.min.css" class="aplayer-style-marker">
 <script src="/dist/APlayer.min.js" class="aplayer-script-marker"></script>
 </head>
-
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
-
-
         <div id="aplayer" class="aplayer aplayer-withlist  aplayer-fixed aplayer-narrow" style="position: fixed; z-index: 5; left: 0px; width: 400px;">
             <pre class="aplayer-lrc-content"></pre>
         </div>
@@ -206,14 +172,12 @@
           window.aplayers.push(ap);
         </script>
 <script src="https://cdnjs.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
   <div class="container use-motion">
     <div class="headband"></div>
 <a href="https://github.com/wudihechao/" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-meta">
-
     <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
@@ -222,9 +186,7 @@
       </a>
     </div>
         <h1 class="site-subtitle" itemprop="description">blog of hechao!</h1>
-      
   </div>
-
   <div class="site-nav-toggle">
     <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
@@ -233,147 +195,31 @@
     </button>
   </div>
 </div>
-
-
 <nav class="site-nav">
-  
   <ul id="menu" class="menu">
-      
-      
-      
-        
         <li class="menu-item menu-item-home">
-      
-    
-      
-      
-        
-      
-        
-      
-        
-      
-    
-
-    <a href="/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-home&quot;&gt;&lt;&#x2F;i&gt;首页</a>
-
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i>首页</a>
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-about">
-      
-    
-      
-      
-        
-      
-        
-      
-        
-      
-    
-
-    <a href="/about/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-user&quot;&gt;&lt;&#x2F;i&gt;关于</a>
-
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i>关于</a>
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-tags">
-      
-    
-      
-      
-        
-      
-        
-      
-        
-          
-        
-      
-    
-
-    <a href="/tags/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-tags&quot;&gt;&lt;&#x2F;i&gt;标签&lt;span class=&quot;badge&quot;&gt;45&lt;&#x2F;span&gt;</a>
-
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">45</span></a>
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-categories">
-      
-    
-      
-      
-        
-      
-        
-          
-        
-      
-        
-      
-    
-
-    <a href="/categories/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-th&quot;&gt;&lt;&#x2F;i&gt;分类&lt;span class=&quot;badge&quot;&gt;5&lt;&#x2F;span&gt;</a>
-
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">5</span></a>
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-archives">
-      
-    
-      
-      
-        
-          
-        
-      
-        
-      
-        
-      
-    
-
-    <a href="/archives/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-archive&quot;&gt;&lt;&#x2F;i&gt;归档&lt;span class=&quot;badge&quot;&gt;24&lt;&#x2F;span&gt;</a>
-
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">24</span></a>
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-friends">
-      
-    
-      
-      
-        
-      
-        
-      
-        
-      
-    
-
-    <a href="/friends/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-link&quot;&gt;&lt;&#x2F;i&gt;友链</a>
-
+    <a href="/friends/" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i>友链</a>
   </li>
       <li class="menu-item menu-item-search">
         <a href="javascript:;" class="popup-trigger">
-        
           <i class="menu-item-icon fa fa-search fa-fw"></i>搜索</a>
       </li>
-    
   </ul>
-
-    
-
 </nav>
   <div class="site-search">
     <div class="popup search-popup">
@@ -391,150 +237,88 @@
   </span>
 </div>
 <div id="search-result"></div>
-
 </div>
 <div class="search-pop-overlay"></div>
-
   </div>
 </div>
     </header>
-
-    
   <div class="back-to-top">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
   <div class="reading-progress-bar"></div>
   <a class="book-mark-link book-mark-link-fixed" href="#"></a>
-
-  <a href="https://github.com/wudihechao" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank">&lt;svg width=&quot;80&quot; height=&quot;80&quot; viewBox=&quot;0 0 250 250&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z&quot;&gt;&lt;&#x2F;path&gt;&lt;path d=&quot;M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2&quot; fill=&quot;currentColor&quot; style=&quot;transform-origin: 130px 106px;&quot; class=&quot;octo-arm&quot;&gt;&lt;&#x2F;path&gt;&lt;path d=&quot;M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z&quot; fill=&quot;currentColor&quot; class=&quot;octo-body&quot;&gt;&lt;&#x2F;path&gt;&lt;&#x2F;svg&gt;</a>
-
-
+  <a href="https://github.com/wudihechao" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
           <div id="content" class="content">
-            
-
   <div id="posts" class="posts-expand">
       <article itemscope itemtype="http://schema.org/Article">
-  
-  
-  
   <div class="post-block post">
     <link itemprop="mainEntityOfPage" href="https://hewanyue.com/blog/57d66c4.html">
-
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hechao">
       <meta itemprop="description" content="BOHC is just a blog of hechao.">
       <meta itemprop="image" content="/images/touxiang.jpg">
     </span>
-
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="BOHC!">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">LAMP架构实现PowerDNS
-
-          
         </h2>
-
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-
-
-              
-                
-              
-
               <time title="创建时间：2019-10-14 14:05:20" itemprop="dateCreated datePublished" datetime="2019-10-14T14:05:20+08:00">2019-10-14</time>
             </span>
-          
             <span class="post-meta-item">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-
-              
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/linux进阶/" itemprop="url" rel="index"><span itemprop="name">linux进阶</span></a></span>
-
-                
-                
-              
             </span>
-          
-
-          
             <span id="/blog/57d66c4.html" class="post-meta-item leancloud_visitors" data-flag-title="LAMP架构实现PowerDNS" title="阅读次数">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
-
               <span class="leancloud-visitors-count"></span>
               <span>℃</span>
             </span>
-          
-
               <span class="post-meta-divider">•</span>
-  
   <span class="post-meta-item">
-    
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
-        
-      
-      <span class="post-meta-item-text">Valine：</span>
-    
     <a title="valine" href="/blog/57d66c4.html#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/blog/57d66c4.html" itemprop="commentCount"></span></a>
   </span>
-  
-  
-          
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-file-word-o"></i>
               </span>
-              
-
-              
               <span>6.8k</span>
             </span>
-          
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
-              
-
-              
               <span>17 分钟</span>
             </span>
-          
-
         </div>
       </header>
-
-    
-    
-    
     <div class="post-body" itemprop="articleBody">
-
-      
         <p>&emsp;&emsp;PowerDNS 是一个跨平台的开源DNS服务组件，它是高性能的域名服务器，除了支持普通的BIND配置文件，PowerDNS还可以从MySQL,Oracle,PostgreSQL等的数据库读取数据。PowerDNS安装了Poweradmin(基于php实现)，能实现Web管理DNS记录，非常方便。<br>&emsp;&emsp;ps:本次过程是在centos7系统上完成。</p><a id="more"></a>
 <h3 id="配置安装pdns"><a href="#配置安装pdns" class="headerlink" title="配置安装pdns"></a>配置安装pdns</h3><h4 id="安装pdns包"><a href="#安装pdns包" class="headerlink" title="安装pdns包"></a>安装pdns包</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y pdns pdns-backend-mysql</span><br></pre></td></tr></table></figure>
-
 <h4 id="创建pdns数据库"><a href="#创建pdns数据库" class="headerlink" title="创建pdns数据库"></a>创建pdns数据库</h4><p>&emsp;&emsp;搭建好mariadb数据库了，启动数据库服务，参考官方文档创建powerdns数据库及其中的表，参看下面文档 <a href="https://doc.powerdns.com/md/authoritative/backend-generic-mysql/" target="_blank" rel="noopener">https://doc.powerdns.com/md/authoritative/backend-generic-mysql/</a><br><code>vim powerdns.sql</code></p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">DATABASE</span> powerdns;</span><br><span class="line"><span class="keyword">GRANT</span> <span class="keyword">ALL</span> <span class="keyword">ON</span> powerdns.* <span class="keyword">TO</span> <span class="string">'powerdns'</span>@<span class="string">'127.0.0.1'</span> <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="string">'powerdns'</span>;</span><br><span class="line"><span class="keyword">use</span> powerdns;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> domains (</span><br><span class="line">  <span class="keyword">id</span>                    <span class="built_in">INT</span> AUTO_INCREMENT,</span><br><span class="line">  <span class="keyword">name</span>                  <span class="built_in">VARCHAR</span>(<span class="number">255</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="keyword">master</span>                <span class="built_in">VARCHAR</span>(<span class="number">128</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  last_check            <span class="built_in">INT</span> <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="keyword">type</span>                  <span class="built_in">VARCHAR</span>(<span class="number">6</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  notified_serial       <span class="built_in">INT</span> <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="keyword">account</span>               <span class="built_in">VARCHAR</span>(<span class="number">40</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="keyword">id</span>)</span><br><span class="line">) <span class="keyword">Engine</span>=<span class="keyword">InnoDB</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">UNIQUE</span> <span class="keyword">INDEX</span> name_index <span class="keyword">ON</span> domains(<span class="keyword">name</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">records</span> (</span><br><span class="line">  <span class="keyword">id</span>                    <span class="built_in">BIGINT</span> AUTO_INCREMENT,</span><br><span class="line">  domain_id             <span class="built_in">INT</span> <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="keyword">name</span>                  <span class="built_in">VARCHAR</span>(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="keyword">type</span>                  <span class="built_in">VARCHAR</span>(<span class="number">10</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="keyword">content</span>               <span class="built_in">VARCHAR</span>(<span class="number">64000</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  ttl                   <span class="built_in">INT</span> <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  prio                  <span class="built_in">INT</span> <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  change_date           <span class="built_in">INT</span> <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  disabled              <span class="built_in">TINYINT</span>(<span class="number">1</span>) <span class="keyword">DEFAULT</span> <span class="number">0</span>,</span><br><span class="line">  ordername             <span class="built_in">VARCHAR</span>(<span class="number">255</span>) <span class="built_in">BINARY</span> <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  auth                  <span class="built_in">TINYINT</span>(<span class="number">1</span>) <span class="keyword">DEFAULT</span> <span class="number">1</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="keyword">id</span>)</span><br><span class="line">) <span class="keyword">Engine</span>=<span class="keyword">InnoDB</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">INDEX</span> nametype_index <span class="keyword">ON</span> <span class="keyword">records</span>(<span class="keyword">name</span>,<span class="keyword">type</span>);</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">INDEX</span> domain_id <span class="keyword">ON</span> <span class="keyword">records</span>(domain_id);</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">INDEX</span> recordorder <span class="keyword">ON</span> <span class="keyword">records</span> (domain_id, ordername);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> supermasters (</span><br><span class="line">  ip                    <span class="built_in">VARCHAR</span>(<span class="number">64</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  nameserver            <span class="built_in">VARCHAR</span>(<span class="number">255</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="keyword">account</span>               <span class="built_in">VARCHAR</span>(<span class="number">40</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (ip, nameserver)</span><br><span class="line">) <span class="keyword">Engine</span>=<span class="keyword">InnoDB</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> comments (</span><br><span class="line">  <span class="keyword">id</span>                    <span class="built_in">INT</span> AUTO_INCREMENT,</span><br><span class="line">  domain_id             <span class="built_in">INT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="keyword">name</span>                  <span class="built_in">VARCHAR</span>(<span class="number">255</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="keyword">type</span>                  <span class="built_in">VARCHAR</span>(<span class="number">10</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  modified_at           <span class="built_in">INT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="keyword">account</span>               <span class="built_in">VARCHAR</span>(<span class="number">40</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="keyword">comment</span>               <span class="built_in">VARCHAR</span>(<span class="number">64000</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="keyword">id</span>)</span><br><span class="line">) <span class="keyword">Engine</span>=<span class="keyword">InnoDB</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">INDEX</span> comments_domain_id_idx <span class="keyword">ON</span> comments (domain_id);</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">INDEX</span> comments_name_type_idx <span class="keyword">ON</span> comments (<span class="keyword">name</span>, <span class="keyword">type</span>);</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">INDEX</span> comments_order_idx <span class="keyword">ON</span> comments (domain_id, modified_at);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> domainmetadata (</span><br><span class="line">  <span class="keyword">id</span>                    <span class="built_in">INT</span> AUTO_INCREMENT,</span><br><span class="line">  domain_id             <span class="built_in">INT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  kind                  <span class="built_in">VARCHAR</span>(<span class="number">32</span>),</span><br><span class="line">  <span class="keyword">content</span>               <span class="built_in">TEXT</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="keyword">id</span>)</span><br><span class="line">) <span class="keyword">Engine</span>=<span class="keyword">InnoDB</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">INDEX</span> domainmetadata_idx <span class="keyword">ON</span> domainmetadata (domain_id, kind);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> cryptokeys (</span><br><span class="line">  <span class="keyword">id</span>                    <span class="built_in">INT</span> AUTO_INCREMENT,</span><br><span class="line">  domain_id             <span class="built_in">INT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  flags                 <span class="built_in">INT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  active                <span class="built_in">BOOL</span>,</span><br><span class="line">  <span class="keyword">content</span>               <span class="built_in">TEXT</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span>(<span class="keyword">id</span>)</span><br><span class="line">) <span class="keyword">Engine</span>=<span class="keyword">InnoDB</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">INDEX</span> domainidindex <span class="keyword">ON</span> cryptokeys(domain_id);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tsigkeys (</span><br><span class="line">  <span class="keyword">id</span>                    <span class="built_in">INT</span> AUTO_INCREMENT,</span><br><span class="line">  <span class="keyword">name</span>                  <span class="built_in">VARCHAR</span>(<span class="number">255</span>),</span><br><span class="line">  algorithm             <span class="built_in">VARCHAR</span>(<span class="number">50</span>),</span><br><span class="line">  secret                <span class="built_in">VARCHAR</span>(<span class="number">255</span>),</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="keyword">id</span>)</span><br><span class="line">) <span class="keyword">Engine</span>=<span class="keyword">InnoDB</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">UNIQUE</span> <span class="keyword">INDEX</span> namealgoindex <span class="keyword">ON</span> tsigkeys(<span class="keyword">name</span>, algorithm);</span><br></pre></td></tr></table></figure>
-
-<p>&emsp;&emsp;以上参数设置为官方文档默认值，如果参数数值大小不对，可自行修改调整。数据库名、主机名、用户名及密码自行修改。<br>&emsp;&emsp;导入SQL语句<code>mysql -uroot -ppassword &lt; power.sql</code>，此时powerdns数据库就创建好了。</p>
+<p>&emsp;&emsp;以上参数设置为官方文档默认值，如果参数数值大小不对，可自行修改调整。数据库名、主机名、用户名及密码自行修改。<br>&emsp;&emsp;导入SQL语句<code>mysql -uroot -ppassword < power.sql</code>，此时powerdns数据库就创建好了。</p>
 <h4 id="配置PowerDNS使用mariadb作为后台数据存储"><a href="#配置PowerDNS使用mariadb作为后台数据存储" class="headerlink" title="配置PowerDNS使用mariadb作为后台数据存储"></a>配置PowerDNS使用mariadb作为后台数据存储</h4><p>可参见官方文档的设置参数：</p>
 <blockquote>
 <p><strong>gmysql-host</strong><br>Host (ip address) to connect to. Mutually exclusive with gmysql-socket.<br>WARNING: When specified as a hostname a chicken/egg situation might arise where the database is needed to resolve the IP address of the database. It is best to supply an IP address of the database here.<br><strong>gmysql-port</strong><br>The port to connect to on gmysql-host. Default: 3306<br><strong>gmysql-socket</strong><br>Connect to the UNIX socket at this path. Mutually exclusive with gmysql-host.<br><strong>gmysql-dbname</strong><br>Name of the database to connect to. Default: “pdns”.<br><strong>gmysql-user</strong><br>User to connect as. Default: “powerdns”.<br><strong>gmysql-group</strong><br>Group to connect as. Default: “client”.<br><strong>gmysql-password</strong><br>The password to for gmysql-user.<br><strong>gmysql-dnssec</strong><br>Enable DNSSEC processing for this backend. Default=no.<br><strong>gmysql-innodb-read-committed</strong><br>Use the InnoDB READ-COMMITTED transaction isolation level.<br>Default=yes.<br><strong>gmysql-timeout</strong><br>The timeout in seconds for each attempt to read from, or write to the server. A value of 0 will disable the timeout. Default: 10</p>
@@ -542,164 +326,86 @@
 <p>&emsp;&emsp;官方文档第一条写的很清楚，gmysql-localhost那一项最好填ip，或者你的hostname为localhost也可以解析成127.0.0.1，所以虽然我是本机数据库，也选择直接使用127.0.0.1（我试了localhost，提示无法连接数据库，应该是因为我改了hostname导致没法解析成127.0.0.1了，干脆直接用ip就成功连接了）</p>
 <p><code>vim /etc/pdns/pdns.conf</code><br>&emsp;&emsp;用/搜索到”launch=”将值修改为gmysql，并在下面添加mysql的相关信息设置：</p>
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">launch</span>=gmysql</span><br><span class="line"><span class="attr">gmysql-host</span>=<span class="number">127.0</span>.<span class="number">0.1</span></span><br><span class="line"><span class="attr">gmysql-port</span>=<span class="number">3306</span></span><br><span class="line"><span class="attr">gmysql-dbname</span>=powerdns</span><br><span class="line"><span class="attr">gmysql-user</span>=powerdns</span><br><span class="line"><span class="attr">gmysql-password</span>=powerdns</span><br></pre></td></tr></table></figure>
-
 <p>&emsp;&emsp;好了pdns服务就配置好了，启动服务.</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start pdns</span><br><span class="line">systemctl enable pdns</span><br></pre></td></tr></table></figure>
-
 <h3 id="搭建LAP架构用web界面实现pdns服务"><a href="#搭建LAP架构用web界面实现pdns服务" class="headerlink" title="搭建LAP架构用web界面实现pdns服务"></a>搭建LAP架构用web界面实现pdns服务</h3><h4 id="安装httpd和php相关包并启动httpd服务"><a href="#安装httpd和php相关包并启动httpd服务" class="headerlink" title="安装httpd和php相关包并启动httpd服务"></a>安装httpd和php相关包并启动httpd服务</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum -y install httpd php php-devel php-gd php-mcrypt php-imap php-ldap php-mysql php-odbc php-pear php-xml php-xmlrpc php-mbstring php-mcrypt php-mhash gettext</span><br><span class="line">systemctl start httpd</span><br><span class="line">systemctl enable httpd</span><br></pre></td></tr></table></figure>
-
 <h4 id="下载PowerAdmin程序，并解压缩到相应目录"><a href="#下载PowerAdmin程序，并解压缩到相应目录" class="headerlink" title="下载PowerAdmin程序，并解压缩到相应目录"></a>下载PowerAdmin程序，并解压缩到相应目录</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget http://downloads.sourceforge.net/project/poweradmin/poweradmin-2.1.7.tgz</span><br><span class="line">tar xvf poweradmin-2.1.7.tgz -C /var/www/html</span><br><span class="line">cd /var/www/html</span><br><span class="line">mv poweradmin-2.1.7 poweradmin</span><br></pre></td></tr></table></figure>
-
 <h4 id="登陆web界面安装PowerAdmin"><a href="#登陆web界面安装PowerAdmin" class="headerlink" title="登陆web界面安装PowerAdmin"></a>登陆web界面安装PowerAdmin</h4><p>&emsp;&emsp;浏览器输入<a href="http://powerdns服务器IP/poweradmin/install/" target="_blank" rel="noopener">http://powerdns服务器IP/poweradmin/install/</a> 进入安装向导界面。<br><img src="https://img-blog.csdnimg.cn/20191014132102422.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;1.选择语言<br><img src="https://img-blog.csdnimg.cn/20191014132109107.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;2. 确认powerdns服务已连接好数据库，如果之前已经有相关记录，本次安装将会清除之前的数据，时候确定安装。<br><img src="https://img-blog.csdnimg.cn/20191014132114800.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;3.填写数据库相关信息<br><img src="https://img-blog.csdnimg.cn/20191014132120662.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;4.为Poweradmin创建一个受限用户<br>&emsp;&emsp;说明：<br>&emsp;&emsp;&emsp;&emsp; Username：PowerAdmin用户名<br>&emsp;&emsp;&emsp;&emsp; Password：上述用户的密码<br>&emsp;&emsp;&emsp;&emsp; Hostmaster：当创建SOA记录指定默认主机管理员<br>&emsp;&emsp;&emsp;&emsp; Primary nameserver：主域名服务器<br>&emsp;&emsp;&emsp;&emsp; Secondary namesever:辅域名服务器<br><img src="https://img-blog.csdnimg.cn/20191014132126802.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;5.按照下面页面说明，在数据库中创建用户并授权</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GRANT</span> <span class="keyword">SELECT</span>, <span class="keyword">INSERT</span>, <span class="keyword">UPDATE</span>, <span class="keyword">DELETE</span></span><br><span class="line"><span class="keyword">ON</span> powerdns.*</span><br><span class="line"><span class="keyword">TO</span> <span class="string">'powerdns'</span>@<span class="string">'127.0.0.1'</span></span><br><span class="line"><span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="string">'powerdns'</span>;</span><br></pre></td></tr></table></figure>
-
 <p><img src="https://img-blog.csdnimg.cn/20191014132137177.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;6.按下面页面说明，创建config.in.php文件内容<br>&emsp;&emsp;<code>vim /var/www/html/poweradmin/inc/config.inc.php</code></p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&amp;lt?php</span><br><span class="line"></span><br><span class="line">$db_host                = <span class="string">'127.0.0.1'</span>;</span><br><span class="line">$db_user                = <span class="string">'powerdns'</span>;</span><br><span class="line">$db_pass                = <span class="string">'powerdns'</span>;</span><br><span class="line">$db_name                = <span class="string">'powerdns'</span>;</span><br><span class="line">$db_type                = <span class="string">'mysql'</span>;</span><br><span class="line">$db_layer               = <span class="string">'PDO'</span>;</span><br><span class="line"></span><br><span class="line">$session_key            = <span class="string">'Kae&#125;LCI!&amp;^Ew6(5eyd6B~!SVHRHhu+t(svkGqb1S&#123;C0&#125;TP'</span>;</span><br><span class="line"></span><br><span class="line">$iface_lang             = <span class="string">'en_EN'</span>;</span><br><span class="line"></span><br><span class="line">$dns_hostmaster         = <span class="string">'powerdns'</span>;</span><br><span class="line">$dns_ns1                = <span class="string">'192.168.32.7'</span>;</span><br><span class="line">$dns_ns2                = <span class="string">'192.168.32.7'</span>;`</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt?php</span><br><span class="line"></span><br><span class="line">$db_host                = <span class="string">'127.0.0.1'</span>;</span><br><span class="line">$db_user                = <span class="string">'powerdns'</span>;</span><br><span class="line">$db_pass                = <span class="string">'powerdns'</span>;</span><br><span class="line">$db_name                = <span class="string">'powerdns'</span>;</span><br><span class="line">$db_type                = <span class="string">'mysql'</span>;</span><br><span class="line">$db_layer               = <span class="string">'PDO'</span>;</span><br><span class="line"></span><br><span class="line">$session_key            = <span class="string">'Kae&#125;LCI!&^Ew6(5eyd6B~!SVHRHhu+t(svkGqb1S&#123;C0&#125;TP'</span>;</span><br><span class="line"></span><br><span class="line">$iface_lang             = <span class="string">'en_EN'</span>;</span><br><span class="line"></span><br><span class="line">$dns_hostmaster         = <span class="string">'powerdns'</span>;</span><br><span class="line">$dns_ns1                = <span class="string">'192.168.32.7'</span>;</span><br><span class="line">$dns_ns2                = <span class="string">'192.168.32.7'</span>;`</span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdnimg.cn/20191014135839135.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;7.设置完成，删除install目录<br>&emsp;&emsp;<code>\rm -rf install</code><br><img src="https://img-blog.csdnimg.cn/20191014132142570.png" alt="在这里插入图片描述"><br>&emsp;&emsp;如果不进行第6、7步就会报错，如上图所示。<br><img src="https://img-blog.csdnimg.cn/2019101413425982.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;8.输入用户名密码登陆<br><img src="https://img-blog.csdnimg.cn/20191014134306107.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;9.进入主页面。至此PowerDNS在web上展示就实现了~</p>
-
     </div>
-
-    
-    
-    
-      
   <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      
-      
       <div class="popular-posts-title"><a href="/blog/8a189dcf.html" rel="bookmark">自动化运维之Ansible</a></div>
-      
     </li>
-  
     <li class="popular-posts-item">
-      
-      
       <div class="popular-posts-title"><a href="/blog/b124800c.html" rel="bookmark">二进制安装及源码编译安装mariadb数据库</a></div>
-      
     </li>
-  
     <li class="popular-posts-item">
-      
-      
       <div class="popular-posts-title"><a href="/blog/8ddda8e.html" rel="bookmark">部署自动化安装及cobber(Http+TFTP+PXE+kickstart无人职守批量安装精简版Linux系统)</a></div>
-      
     </li>
-  
     <li class="popular-posts-item">
-      
-      
       <div class="popular-posts-title"><a href="/blog/133d68.html" rel="bookmark">CentOS6源码编译 安装linunx内核最新版5.2.9</a></div>
-      
     </li>
-  
     <li class="popular-posts-item">
-      
-      
       <div class="popular-posts-title"><a href="/blog/a96e917a.html" rel="bookmark">for循环实现的小脚本</a></div>
-      
     </li>
-  
   </ul>
-
     <div style="text-align:center;color: #ccc;font-size:14px;">---------------- The End ----------------</div>
-        
-      
         <div id="reward-container">
   <div>It's very nice of you to support me.</div>
   <button id="reward-button" disable="enable" onclick="var qr = document.getElementById('qr'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
     打赏
   </button>
   <div id="qr" style="display: none;">
-        
-      
       <div style="display: inline-block">
         <img src="/images/wechat-pay.png" alt="Hechao 微信支付">
         <p>微信支付</p>
       </div>
-
   </div>
 </div>
-
-      
-        
-
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
     <strong>本文作者： </strong>Hechao</li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://hewanyue.com/blog/57d66c4.html" title="LAMP架构实现PowerDNS">https:&#x2F;&#x2F;hewanyue.com&#x2F;blog&#x2F;57d66c4.html</a>
+    <a href="https://hewanyue.com/blog/57d66c4.html" title="LAMP架构实现PowerDNS">https://hewanyue.com/blog/57d66c4.html</a>
   </li>
   <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank">&lt;i class=&quot;fa fa-fw fa-creative-commons&quot;&gt;&lt;&#x2F;i&gt;BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
 </ul>
 </div>
-
-      
-
       <footer class="post-footer">
-          
-            
-          
           <div class="post-tags">
-            
               <a href="/tags/linux/" rel="tag"><i class="fa fa-tag">linux</i></a>
-            
               <a href="/tags/LAMP/" rel="tag"><i class="fa fa-tag">LAMP</i></a>
-            
               <a href="/tags/经验分享/" rel="tag"><i class="fa fa-tag">经验分享</i></a>
-            
               <a href="/tags/PowerDNS/" rel="tag"><i class="fa fa-tag">PowerDNS</i></a>
-            
           </div>
-        
-
-        
-
-
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-              
                 <a href="/blog/72c5296a.html" rel="next" title="yum/dnf 安装mariadb10.4.8（最新版）">
                   <i class="fa fa-chevron-left"></i> yum/dnf 安装mariadb10.4.8（最新版）
                 </a>
-              
             </div>
-
             <span class="post-nav-divider"></span>
-
             <div class="post-nav-prev post-nav-item">
-              
                 <a href="/blog/dcaccc5a.html" rel="prev" title="源码编译Apache和PHP实现lamp架构">
                   源码编译Apache和PHP实现lamp架构 <i class="fa fa-chevron-right"></i>
                 </a>
-              
             </div>
           </div>
-        
       </footer>
-    
   </div>
-  
-  
-  
   </article>
-
   </div>
-
-
           </div>
-          
-    
     <div class="comments" id="comments"></div>
-  
-
         </div>
-          
-  
   <div class="sidebar-toggle">
     <div class="sidebar-toggle-line-wrap">
       <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
@@ -707,15 +413,8 @@
       <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
     </div>
   </div>
-
   <aside class="sidebar">
     <div class="sidebar-inner">
-        
-        
-        
-        
-      
-
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
           文章目录
@@ -724,14 +423,11 @@
           站点概览
         </li>
       </ul>
-
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
           <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置安装pdns"><span class="nav-number">1.</span> <span class="nav-text">配置安装pdns</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装pdns包"><span class="nav-number">1.1.</span> <span class="nav-text">安装pdns包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建pdns数据库"><span class="nav-number">1.2.</span> <span class="nav-text">创建pdns数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置PowerDNS使用mariadb作为后台数据存储"><span class="nav-number">1.3.</span> <span class="nav-text">配置PowerDNS使用mariadb作为后台数据存储</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#搭建LAP架构用web界面实现pdns服务"><span class="nav-number">2.</span> <span class="nav-text">搭建LAP架构用web界面实现pdns服务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装httpd和php相关包并启动httpd服务"><span class="nav-number">2.1.</span> <span class="nav-text">安装httpd和php相关包并启动httpd服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#下载PowerAdmin程序，并解压缩到相应目录"><span class="nav-number">2.2.</span> <span class="nav-text">下载PowerAdmin程序，并解压缩到相应目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#登陆web界面安装PowerAdmin"><span class="nav-number">2.3.</span> <span class="nav-text">登陆web界面安装PowerAdmin</span></a></li></ol></li></ol></div>
-        
       </div>
       <!--/noindex-->
-
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image"
@@ -743,71 +439,36 @@
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-        
           <a href="/archives/">
-        
           <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
-    
-      
-      
       <div class="site-state-item site-state-categories">
-        
           <a href="/categories/">
-        
         <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
-    
-      
-      
       <div class="site-state-item site-state-tags">
-        
-          
             <a href="/tags/">
-          
-        
         <span class="site-state-item-count">45</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
-    
   </nav>
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-      
-      
-      
-        
-      
-        <a href="https://github.com/wudihechao" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;wudihechao" rel="noopener" target="_blank">&lt;i class=&quot;fa fa-fw fa-github&quot;&gt;&lt;&#x2F;i&gt;</a>
+        <a href="https://github.com/wudihechao" title="GitHub &rarr; https://github.com/wudihechao" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-      
-        
-      
-        <a href="mailto:wudihechao@163.com" title="E-Mail &amp;rarr; mailto:wudihechao@163.com" rel="noopener" target="_blank">&lt;i class=&quot;fa fa-fw fa-envelope&quot;&gt;&lt;&#x2F;i&gt;</a>
+        <a href="mailto:wudihechao@163.com" title="E-Mail &rarr; mailto:wudihechao@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-      
-        
-      
-        <a href="https://weibo.com/u/1050367191" title="Weibo &amp;rarr; https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;1050367191" rel="noopener" target="_blank">&lt;i class=&quot;fa fa-fw fa-weibo&quot;&gt;&lt;&#x2F;i&gt;</a>
+        <a href="https://weibo.com/u/1050367191" title="Weibo &rarr; https://weibo.com/u/1050367191" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i></a>
       </span>
-    
   </div>
-
-        
     <div class="links-of-blogroll motion-element links-of-blogroll-block">
       <div class="links-of-blogroll-title" style="padding-left: 10px;">
         <!-- modify icon to fire by szw -->
@@ -815,31 +476,23 @@
         近期文章
       </div>
       <ul class="links-of-blogroll-list" style="padding-left: 30px;">
-        
-        
           <li>
             <a href="/blog/f5daec50.html" title="企业级应用：负载均衡层——haproxy(二)" >企业级应用：负载均衡层——haproxy(二)</a>
           </li>
-        
           <li>
             <a href="/blog/5aeb7732.html" title="企业级应用：负载均衡层——haproxy(一)" >企业级应用：负载均衡层——haproxy(一)</a>
           </li>
-        
           <li>
             <a href="/blog/5da16ceb.html" title="报错：Header V3 RSA_SHA256 Signature, key ID 2f86d6a1_ NOKEY" >报错：Header V3 RSA_SHA256 Signature, key ID 2f86d6a1_ NOKEY</a>
           </li>
-        
           <li>
             <a href="/blog/e4415633.html" title="nginx防盗链设置的一些细节" >nginx防盗链设置的一些细节</a>
           </li>
-        
           <li>
             <a href="/blog/159ef64c.html" title="企业级应用：负载均衡层——LVS调度器详解" >企业级应用：负载均衡层——LVS调度器详解</a>
           </li>
-        
       </ul>
     </div>
-
 <div id="days"></div>
 <script>
 function show_date_time(){
@@ -866,26 +519,14 @@ return i;
 }
 show_date_time();
 </script>
-
   <div class="cc-license motion-element" itemprop="license">
-    
-  
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank">&lt;img src=&quot;&#x2F;images&#x2F;cc-by-nc-sa.svg&quot; alt=&quot;Creative Commons&quot;&gt;</a>
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
   </div>
-
-
-
-
       </div>
-
-
  </aside>
   <div id="sidebar-dimmer"></div>
-
-
       </div>
     </main>
-
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
@@ -899,8 +540,6 @@ show_date_time();
     </span>
     <span title="站点总字数">213k</span>
 </div>
-
-        
 <div class="busuanzi-count">
   <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
@@ -911,9 +550,7 @@ show_date_time();
         <span id="busuanzi_value_site_uv"></span>
       </span>
     </span>
-  
     <span class="post-meta-divider">|</span>
-  
     <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="fa fa-eye"></i>
@@ -922,28 +559,10 @@ show_date_time();
         <span id="busuanzi_value_site_pv"></span>
       </span>
     </span>
-  
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-        
       </div>
     </footer>
   </div>
-
-  
-    
-  
   <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
   <script src="/lib/anime.min.js?v=3.1.0"></script>
   <script src="/lib/pjax/pjax.min.js?v=0.2.8"></script>
@@ -968,7 +587,6 @@ var pjax = new Pjax({
   cacheBust: false,
   scrollTo : !CONFIG.bookmark.enable
 });
-
 window.addEventListener('pjax:success', () => {
   document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
     var id = element.id || '';
@@ -1001,11 +619,6 @@ window.addEventListener('pjax:success', () => {
   NexT.utils.updateSidebarPosition();
 });
 </script>
-
-
-
-
-  
   <script pjax>
     (function(){
       var bp = document.createElement('script');
@@ -1015,33 +628,8 @@ window.addEventListener('pjax:success', () => {
       s.parentNode.insertBefore(bp, s);
     })();
   </script>
-
-
-
-
-
-
-
-
   <script src="/js/local-search.js?v=7.4.0"></script>
-
-
-
-
-
-
-
-
     <div id="pjax">
-
-
-
-  
-
-  
-
-  
-
   <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
   <script src="/js/Valine.min.js"></script>
 <script>
@@ -1075,8 +663,6 @@ window.addEventListener('pjax:success', () => {
         }, 100);
     }
 </script>
-
-
     </div>
 </body>
 </html>
