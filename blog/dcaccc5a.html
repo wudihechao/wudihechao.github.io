@@ -53,7 +53,7 @@
 <meta property="og:description" content="&emsp;&emsp;所谓LAMP架构，是指：&emsp;&emsp;&emsp;&emsp;L：linux&emsp;&emsp;&emsp;&emsp;A：apache (httpd)&emsp;&emsp;&emsp;&emsp;M：mysql, mariadb&emsp;&emsp;&emsp;&emsp;（或M：memcached）&emsp;&emsp;&emsp;&emsp;P：p">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191018193028582.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
-<meta property="og:updated_time" content="2019-11-10T04:33:36.862Z">
+<meta property="og:updated_time" content="2019-11-11T09:19:24.684Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="源码编译Apache和PHP实现lamp架构">
 <meta name="twitter:description" content="&emsp;&emsp;所谓LAMP架构，是指：&emsp;&emsp;&emsp;&emsp;L：linux&emsp;&emsp;&emsp;&emsp;A：apache (httpd)&emsp;&emsp;&emsp;&emsp;M：mysql, mariadb&emsp;&emsp;&emsp;&emsp;（或M：memcached）&emsp;&emsp;&emsp;&emsp;P：p">
@@ -309,7 +309,7 @@
 <h3 id="LAMP工作原理"><a href="#LAMP工作原理" class="headerlink" title="LAMP工作原理"></a>LAMP工作原理</h3><p><img src="https://img-blog.csdnimg.cn/20191018193028582.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;httpd：接收用户的web请求；静态资源则直接响应；动态资源为php脚本，对此类资源的请求将交由php来运行<br>&emsp;&emsp;php：运行php程序<br>&emsp;&emsp;MariaDB：数据管理系统</p>
 <h3 id="httpd与php结合的方式"><a href="#httpd与php结合的方式" class="headerlink" title="httpd与php结合的方式"></a>httpd与php结合的方式</h3><p>1、modules (将php编译成为httpd的模块,默认方式)<br> MPM:<br>prefork: libphp5.so<br>event, worker: libphp5-zts.so<br>2、FastCGI</p>
 <p>&emsp;&emsp;本文将分别展示以模块方式以及FCGI的方式，源码编译apache、php、mariadb来实现LAMP架构。</p>
-<h3 id="编译部署"><a href="#编译部署" class="headerlink" title="编译部署"></a>编译部署</h3><h4 id="编译安装mariadb"><a href="#编译安装mariadb" class="headerlink" title="编译安装mariadb"></a>编译安装mariadb</h4><p>&emsp;&emsp;之前曾<a href="https://hewanyue.com/blog/二进制安装及源码编译安装mariadb数据库/#源码编译安装">详细介绍</a>，这里就不再赘述。</p>
+<h3 id="编译部署"><a href="#编译部署" class="headerlink" title="编译部署"></a>编译部署</h3><h4 id="编译安装mariadb"><a href="#编译安装mariadb" class="headerlink" title="编译安装mariadb"></a>编译安装mariadb</h4><p>&emsp;&emsp;之前曾<a href="https://hewanyue.com/blog/b124800c.html">详细介绍</a>，这里就不再赘述。</p>
 <h4 id="编译安装apache"><a href="#编译安装apache" class="headerlink" title="编译安装apache"></a>编译安装apache</h4><p>&emsp;&emsp;先安装依赖包<code>yum install gcc pcre-devel openssl-devel expat-devel autoconf libtool gcc-c++</code><br>&emsp;&emsp;下载apache源码包以及apr包</p>
 <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget <span class="string">https:</span><span class="comment">//archive.apache.org/dist/httpd/httpd-2.4.39.tar.gz</span></span><br><span class="line">wget <span class="string">https:</span><span class="comment">//www-us.apache.org/dist//apr/apr-1.7.0.tar.gz</span></span><br><span class="line">wget <span class="string">https:</span><span class="comment">//www-us.apache.org/dist//apr/apr-util-1.6.1.tar.gz</span></span><br></pre></td></tr></table></figure>
 <p>&emsp;&emsp;替换apr、apr-util文件</p>
