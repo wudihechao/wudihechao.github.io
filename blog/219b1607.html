@@ -44,29 +44,30 @@
     sidebarPadding: 40
   };
 </script>
-  <meta name="description" content="BOHC is just a blog of hechao.">
-<meta name="keywords" content="BOHC! linux DEV OPS">
-<meta property="og:type" content="website">
-<meta property="og:title" content="BOHC!">
-<meta property="og:url" content="https://hewanyue.com/archives/2019/07/index.html">
+  <meta name="description" content="&emsp;&emsp;之前配置了一个web集群(其实就3个服务器)，想实现数据共享和动静分离，感觉配置分布式存储比较复杂，也没必要，就打算在搭建一个NFS服务器，共享几个目录，挂载在几个web服务器上。&emsp;&emsp;搭建NFS服务过程很顺利，手动挂载也没问题，然后打算将挂载信息写进/etc/fstab配置文件，实现开机自动挂载。">
+<meta name="keywords" content="故障,记录,排错,NFS,挂载,软链接">
+<meta property="og:type" content="article">
+<meta property="og:title" content="故障:/etc/fstab中NFS自动挂载失败">
+<meta property="og:url" content="https://hewanyue.com/blog/219b1607.html">
 <meta property="og:site_name" content="BOHC!">
-<meta property="og:description" content="BOHC is just a blog of hechao.">
+<meta property="og:description" content="&emsp;&emsp;之前配置了一个web集群(其实就3个服务器)，想实现数据共享和动静分离，感觉配置分布式存储比较复杂，也没必要，就打算在搭建一个NFS服务器，共享几个目录，挂载在几个web服务器上。&emsp;&emsp;搭建NFS服务过程很顺利，手动挂载也没问题，然后打算将挂载信息写进/etc/fstab配置文件，实现开机自动挂载。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-11T11:21:18.688Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="BOHC!">
-<meta name="twitter:description" content="BOHC is just a blog of hechao.">
-  <link rel="canonical" href="https://hewanyue.com/archives/2019/07/">
+<meta name="twitter:title" content="故障:/etc/fstab中NFS自动挂载失败">
+<meta name="twitter:description" content="&emsp;&emsp;之前配置了一个web集群(其实就3个服务器)，想实现数据共享和动静分离，感觉配置分布式存储比较复杂，也没必要，就打算在搭建一个NFS服务器，共享几个目录，挂载在几个web服务器上。&emsp;&emsp;搭建NFS服务过程很顺利，手动挂载也没问题，然后打算将挂载信息写进/etc/fstab配置文件，实现开机自动挂载。">
+  <link rel="canonical" href="https://hewanyue.com/blog/219b1607">
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false,
+    isPost: true,
     isPage: false,
-    isArchive: true
+    isArchive: false
   };
 </script>
-  <title>归档 | BOHC!</title>
+  <title>故障:/etc/fstab中NFS自动挂载失败 | BOHC!</title>
   <noscript>
   <style>
   .use-motion .brand,
@@ -241,65 +242,134 @@
       <div class="main-inner">
         <div class="content-wrap">
           <div id="content" class="content">
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <span class="collection-header">嗯..! 目前共计 25 篇日志。 继续努力。</span>
-      </div>
-    <div class="collection-year">
-      <h2 class="collection-header">2019</h2>
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://hewanyue.com/blog/219b1607.html">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hechao">
+      <meta itemprop="description" content="BOHC is just a blog of hechao.">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+    </span>
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BOHC!">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">故障:/etc/fstab中NFS自动挂载失败
+        </h2>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <time title="创建时间：2019-11-11 19:17:33" itemprop="dateCreated datePublished" datetime="2019-11-11T19:17:33+08:00">2019-11-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/故障记录/" itemprop="url" rel="index"><span itemprop="name">故障记录</span></a></span>
+            </span>
+            <span id="/blog/219b1607.html" class="post-meta-item leancloud_visitors" data-flag-title="故障:/etc/fstab中NFS自动挂载失败" title="阅读次数">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="leancloud-visitors-count"></span>
+              <span>℃</span>
+            </span>
+              <span class="post-meta-divider">•</span>
+  <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+    <a title="valine" href="/blog/219b1607.html#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/blog/219b1607.html" itemprop="commentCount"></span></a>
+  </span>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              <span>4.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              <span>12 分钟</span>
+            </span>
+        </div>
+      </header>
+    <div class="post-body" itemprop="articleBody">
+        <p>&emsp;&emsp;之前配置了一个web集群(其实就3个服务器)，想实现数据共享和动静分离，感觉配置分布式存储比较复杂，也没必要，就打算在搭建一个NFS服务器，共享几个目录，挂载在几个web服务器上。<br>&emsp;&emsp;搭建NFS服务过程很顺利，手动挂载也没问题，然后打算将挂载信息写进<code>/etc/fstab</code>配置文件，实现开机自动挂载。</p>
+<a id="more"></a>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#</span><br><span class="line"># /etc/fstab</span><br><span class="line"># Created by anaconda on Wed Oct  <span class="number">9</span> <span class="number">08</span>:<span class="number">35</span>:<span class="number">16</span> <span class="number">2019</span></span><br><span class="line">#</span><br><span class="line"># Accessible filesystems, by <span class="built_in">ref</span>erence, are maintained under <span class="string">'/dev/disk/'</span>.</span><br><span class="line"># See man pages fstab(<span class="number">5</span>), findfs(<span class="number">8</span>), mount(<span class="number">8</span>) <span class="keyword">and</span>/<span class="keyword">or</span> blkid(<span class="number">8</span>) <span class="keyword">for</span> more info.</span><br><span class="line">#</span><br><span class="line"># After editing <span class="keyword">this</span> file, run <span class="string">'systemctl daemon-reload'</span> to update systemd</span><br><span class="line"># units generated <span class="keyword">from</span> <span class="keyword">this</span> file.</span><br><span class="line">#</span><br><span class="line">/dev/mapper/cl-root     /                       xfs     defaults        <span class="number">0</span> <span class="number">0</span></span><br><span class="line">UUID=<span class="number">100</span>a90e3<span class="number">-01</span>ac<span class="number">-43</span>aa-b6da-a10a6c105282 /boot                   ext4    defaults        <span class="number">1</span> <span class="number">2</span></span><br><span class="line">/dev/mapper/cl-data     /data                   xfs     defaults        <span class="number">0</span> <span class="number">0</span></span><br><span class="line">/dev/mapper/swap-swap   swap                    swap    defaults        <span class="number">0</span> <span class="number">0</span></span><br><span class="line">/dev/sr0                /cdrom                  iso9660 defaults        <span class="number">0</span> <span class="number">0</span></span><br><span class="line"><span class="number">192.168</span><span class="number">.32</span><span class="number">.85</span>:/data/nfsshare /apps/nginx/html/wordpress/wp-content/uploads nfs defaults,_netdev  <span class="number">0</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;以为一切万事大吉之后，重启了机子测试下,<code>df</code>命令一看，发现竟然没有显示，用<code>mount -l</code>命令看了下，也没有挂载信息——竟然没有自动挂载。<br>&emsp;&emsp;开始以为配置文件格式写错了，结果尝试一下<code>mount -a</code>发现一下就挂载成功了。<br>&emsp;&emsp;这就很奇怪了，说明配置文件格式也没问题。<br>&emsp;&emsp;NFS服务器也没任何报错，应该跟NFS服务器没有关系，只是出于某种原因不能自动挂载而已。<br>&emsp;&emsp;可是本地光盘确实可以开机正常挂载的，于是我怀疑是参数写的有问题，不过仔细确认了下，之前参数就是这样的也是可以成功挂载的，抑或是CentOS8有些新特性和改动。上面确实提示<code>After editing this file, run &#39;systemctl daemon-reload&#39; to update systemd units generated from this file</code>，我也尝试了，没有效果，不过既然其他挂载项都没问题，说明问题就在NFS这一行。<br>&emsp;&emsp;于是去查看下系统日志，发现了问题的端倪</p>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@<span class="symbol">CentOS8</span> ~]#tail /var/log/boot.log</span><br><span class="line"><span class="symbol">See</span> <span class="string">'systemctl status "apps-nginx-html-wordpress-wp\\x2dcontent-uploads.mount"'</span> for details.</span><br><span class="line">[<span class="symbol">DEPEND</span>] <span class="symbol">Dependency</span> failed for <span class="symbol">Remote</span> <span class="symbol">File</span> <span class="symbol">Systems</span>.</span><br><span class="line">         <span class="symbol">Starting</span> <span class="symbol">Permit</span> <span class="symbol">User</span> <span class="symbol">Sessions</span>...</span><br><span class="line">         <span class="symbol">Starting</span> <span class="symbol">The</span> nginx <span class="symbol">HTTP</span> and reverse proxy server...</span><br><span class="line">         <span class="symbol">Starting</span> <span class="symbol">Crash</span> recovery kernel arming...</span><br><span class="line">[  <span class="symbol">OK</span>  ] <span class="symbol">Started</span> <span class="symbol">OpenSSH</span> server daemon.</span><br><span class="line">[  <span class="symbol">OK</span>  ] <span class="symbol">Started</span> <span class="symbol">Permit</span> <span class="symbol">User</span> <span class="symbol">Sessions</span>.</span><br><span class="line">         <span class="symbol">Starting</span> <span class="symbol">Terminate</span> <span class="symbol">Plymouth</span> <span class="symbol">Boot</span> <span class="symbol">Screen</span>...</span><br><span class="line">         <span class="symbol">Starting</span> <span class="symbol">Hold</span> until boot process finishes up...</span><br><span class="line">[  <span class="symbol">OK</span>  ] <span class="symbol">Started</span> <span class="symbol">Command</span> <span class="symbol">Scheduler</span>.</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;显示远程服务系统也就是NFS服务挂载失败，查看详细信息。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[<span class="symbol">root@</span>CentOS8 ~]#systemctl status <span class="string">"apps-nginx-html-wordpress-wp\\x2dcontent-uploads.mount"</span></span><br><span class="line">● apps-nginx-html-wordpress-wp\x2dcontent-uploads.mount - /apps/nginx/html/wordpress/wp-content/uploads</span><br><span class="line">   Loaded: loaded (/etc/fstab; generated)</span><br><span class="line">   Active: failed (Result: resources)</span><br><span class="line">    Where: /apps/nginx/html/wordpress/wp-content/uploads</span><br><span class="line">     What: <span class="number">192.168</span><span class="number">.32</span><span class="number">.85</span>:/data/nfsshare</span><br><span class="line">     Docs: man:fstab(<span class="number">5</span>)</span><br><span class="line">           man:systemd-fstab-generator(<span class="number">8</span>)</span><br><span class="line"></span><br><span class="line">Nov <span class="number">11</span> <span class="number">16</span>:<span class="number">02</span>:<span class="number">39</span> CentOS8 systemd[<span class="number">1</span>]: apps-nginx-html-wordpress-wp\x2dcontent-uploads.mount: Mount path /apps/nginx/html/wordpress/wp-content/uploads <span class="keyword">is</span> <span class="keyword">not</span> canonical (contains a symlink).</span><br><span class="line">Nov <span class="number">11</span> <span class="number">16</span>:<span class="number">02</span>:<span class="number">39</span> CentOS8 systemd[<span class="number">1</span>]: apps-nginx-html-wordpress-wp\x2dcontent-uploads.mount: Failed to run <span class="string">'mount'</span> task: Too many levels of symbolic links</span><br><span class="line">Nov <span class="number">11</span> <span class="number">16</span>:<span class="number">02</span>:<span class="number">39</span> CentOS8 systemd[<span class="number">1</span>]: apps-nginx-html-wordpress-wp\x2dcontent-uploads.mount: Failed with result <span class="string">'resources'</span>.</span><br><span class="line">Nov <span class="number">11</span> <span class="number">16</span>:<span class="number">02</span>:<span class="number">39</span> CentOS8 systemd[<span class="number">1</span>]: Failed to mount /apps/nginx/html/wordpress/wp-content/uploads.</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;说挂载失败，挂载路径不符合规范<code>is not canonical (contains a symlink).</code>。路径写法应该没问题的，难道是因为<code>Too many levels of symbolic links</code>，层级太多了吗？我记得之前挂载点目录层级结构，比这还长都可以挂载成功的，难道又要归结为CentOS8的新特性了么。<br>&emsp;&emsp;一通百度、google之后，竟然没有人和我遇到的问题一样，挂载点的最大层级数是多大也没人提到过，官方文档也没有查到。<br>正当我打算将层数改小一些再尝试下的时候，突然看到一篇博客提到<code>Too many levels of symbolic links</code>，不过是在软链接中的报错。我突然想起来，当时我安装完系统后，规划的是讲文档和应用都装在/data目录下，可是我实际操作中比较习惯使用/apps/目录来找各种应用，于是之前编译安装nginx及php之前，我创建了一个软链接<code>ln -s /data/apps /apps</code>，以便/apps下的数据跟系统分区隔离开，在一个单独分区。或许这个<code>is not canonical (contains a symlink).</code>中的symlink说的就是指软链接。<br>&emsp;&emsp;将配置文件修改为<code>192.168.32.85:/data/nfsshare /data/apps/nginx/html/wordpress/wp-content/uploads nfs defaults,_netdev  0 0</code>后，再次重启。<code>df</code>命令查看</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[<span class="symbol">root@</span>CentOS8 ~]#df</span><br><span class="line">Filesystem                   <span class="number">1</span>K-blocks    Used Available Use% Mounted on</span><br><span class="line">devtmpfs                        <span class="number">393080</span>       <span class="number">0</span>    <span class="number">393080</span>   <span class="number">0</span>% /dev</span><br><span class="line">tmpfs                           <span class="number">408620</span>       <span class="number">0</span>    <span class="number">408620</span>   <span class="number">0</span>% /dev/shm</span><br><span class="line">tmpfs                           <span class="number">408620</span>    <span class="number">5816</span>    <span class="number">402804</span>   <span class="number">2</span>% /run</span><br><span class="line">tmpfs                           <span class="number">408620</span>       <span class="number">0</span>    <span class="number">408620</span>   <span class="number">0</span>% /sys/fs/cgroup</span><br><span class="line">/dev/mapper/cl-root           <span class="number">52399108</span> <span class="number">2700076</span>  <span class="number">49699032</span>   <span class="number">6</span>% /</span><br><span class="line">/dev/sr0                       <span class="number">6967726</span> <span class="number">6967726</span>         <span class="number">0</span> <span class="number">100</span>% /cdrom</span><br><span class="line">/dev/nvme0n1p1                 <span class="number">8191416</span>  <span class="number">163348</span>   <span class="number">7592256</span>   <span class="number">3</span>% /boot</span><br><span class="line">/dev/mapper/cl-data           <span class="number">41926656</span>  <span class="number">585412</span>  <span class="number">41341244</span>   <span class="number">2</span>% /data</span><br><span class="line"><span class="number">192.168</span><span class="number">.32</span><span class="number">.85</span>:/data/nfsshare  <span class="number">41926656</span>  <span class="number">535040</span>  <span class="number">41391616</span>   <span class="number">2</span>% /data/apps/nginx/html/wordpress/wp-content/uploads</span><br><span class="line">tmpfs                            <span class="number">81724</span>       <span class="number">0</span>     <span class="number">81724</span>   <span class="number">0</span>% /run/user/<span class="number">0</span></span><br><span class="line">[<span class="symbol">root@</span>CentOS8 ~]#</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;挂载成功~问题解决！原来纯属自己挖的坑！<br>&emsp;&emsp;记录一下，也算，增长点见识，吸取些教训。</p>
     </div>
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-07-30T11:08:16+08:00"
-              content="2019-07-30">
-          07-30
-        </time>
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/5da16ceb.html" rel="bookmark">报错：Header V3 RSA_SHA256 Signature, key ID 2f86d6a1_ NOKEY</a></div>
+    </li>
+  </ul>
+    <div style="text-align:center;color: #ccc;font-size:14px;">---------------- The End ----------------</div>
+        <div id="reward-container">
+  <div>It's very nice of you to support me.</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById('qr'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      <div style="display: inline-block">
+        <img src="/images/wechat-pay.png" alt="Hechao 微信支付">
+        <p>微信支付</p>
       </div>
-      <h3 class="post-title">
-          <a class="post-title-link" href="/blog/b580c8f5.html" itemprop="url">
-            <span itemprop="name">自动备份配置文件脚本（screen后台执行）</span>
-          </a>
-      </h3>
-    </header>
+  </div>
+</div>
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Hechao</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://hewanyue.com/blog/219b1607.html" title="故障:/etc/fstab中NFS自动挂载失败">https://hewanyue.com/blog/219b1607.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+</div>
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/故障/" rel="tag"><i class="fa fa-tag">故障</i></a>
+              <a href="/tags/记录/" rel="tag"><i class="fa fa-tag">记录</i></a>
+              <a href="/tags/排错/" rel="tag"><i class="fa fa-tag">排错</i></a>
+              <a href="/tags/NFS/" rel="tag"><i class="fa fa-tag">NFS</i></a>
+              <a href="/tags/挂载/" rel="tag"><i class="fa fa-tag">挂载</i></a>
+              <a href="/tags/软链接/" rel="tag"><i class="fa fa-tag">软链接</i></a>
+          </div>
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/blog/f5daec50.html" rel="next" title="企业级应用：负载均衡层——haproxy(二)">
+                  <i class="fa fa-chevron-left"></i> 企业级应用：负载均衡层——haproxy(二)
+                </a>
+            </div>
+            <span class="post-nav-divider"></span>
+            <div class="post-nav-prev post-nav-item">
+            </div>
+          </div>
+      </footer>
+  </div>
   </article>
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-07-25T15:38:14+08:00"
-              content="2019-07-25">
-          07-25
-        </time>
-      </div>
-      <h3 class="post-title">
-          <a class="post-title-link" href="/blog/8dcd5ad7.html" itemprop="url">
-            <span itemprop="name">VIM编辑器的整理总结</span>
-          </a>
-      </h3>
-    </header>
-  </article>
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-07-16T19:55:14+08:00"
-              content="2019-07-16">
-          07-16
-        </time>
-      </div>
-      <h3 class="post-title">
-          <a class="post-title-link" href="/blog/b84a93e4.html" itemprop="url">
-            <span itemprop="name">不忘初心，方得始终</span>
-          </a>
-      </h3>
-    </header>
-  </article>
-    </div>
   </div>
           </div>
+    <div class="comments" id="comments"></div>
         </div>
   <div class="sidebar-toggle">
     <div class="sidebar-toggle-line-wrap">

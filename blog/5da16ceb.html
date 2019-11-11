@@ -193,13 +193,13 @@
     <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i>关于</a>
   </li>
         <li class="menu-item menu-item-tags">
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">45</span></a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">48</span></a>
   </li>
         <li class="menu-item menu-item-categories">
     <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">5</span></a>
   </li>
         <li class="menu-item menu-item-archives">
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">24</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">25</span></a>
   </li>
         <li class="menu-item menu-item-friends">
     <a href="/friends/" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i>友链</a>
@@ -310,6 +310,12 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">name=aliyun</span><br><span class="line">baseurl=https://mirrors.aliyun.com/epel/$releasever/Everything/$basearch/</span><br><span class="line">gpgcheck=0</span><br><span class="line">enabled=1</span><br><span class="line">gpgkey=file://https://mirrors.aliyun.com/epel/RPM-GPG-KEY-EPEL-$releasever</span><br></pre></td></tr></table></figure>
 <p>&emsp;&emsp;希望不是因为阿里的安装包被人动过而导致秘钥检查不通过吧，姑且相信吧。记录一下，等后期如果有问题或者有空再来排查原因。<br>&emsp;&emsp;<br>&emsp;&emsp;<br>——————————————后记 ———————————–<br>&emsp;&emsp;原来当时配置yum源文件的时候不小心画蛇添足了，导致gpgkey文件路径不对，应为<code>gpgkey=https://mirrors.aliyun.com/epel/RPM-GPG-KEY-EPEL-$releaseve</code>，用file://的话，就不需要加协议了，直接写主机名或IP加路径。<br>&emsp;&emsp;要时刻提醒自己还是要仔细，一直不出错不代表没错。<br>&emsp;&emsp;<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;2019.11.10</p>
     </div>
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/219b1607.html" rel="bookmark">故障:/etc/fstab中NFS自动挂载失败</a></div>
+    </li>
+  </ul>
     <div style="text-align:center;color: #ccc;font-size:14px;">---------------- The End ----------------</div>
         <div id="reward-container">
   <div>It's very nice of you to support me.</div>
@@ -396,7 +402,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
-          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -408,7 +414,7 @@
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">45</span>
+        <span class="site-state-item-count">48</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -433,6 +439,9 @@
       </div>
       <ul class="links-of-blogroll-list" style="padding-left: 30px;">
           <li>
+            <a href="/blog/219b1607.html" title="故障:/etc/fstab中NFS自动挂载失败" >故障:/etc/fstab中NFS自动挂载失败</a>
+          </li>
+          <li>
             <a href="/blog/f5daec50.html" title="企业级应用：负载均衡层——haproxy(二)" >企业级应用：负载均衡层——haproxy(二)</a>
           </li>
           <li>
@@ -443,9 +452,6 @@
           </li>
           <li>
             <a href="/blog/e4415633.html" title="nginx防盗链设置的一些细节" >nginx防盗链设置的一些细节</a>
-          </li>
-          <li>
-            <a href="/blog/159ef64c.html" title="企业级应用：负载均衡层——LVS调度器详解" >企业级应用：负载均衡层——LVS调度器详解</a>
           </li>
       </ul>
     </div>
@@ -494,7 +500,7 @@ show_date_time();
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">214k</span>
+    <span title="站点总字数">218k</span>
 </div>
 <div class="busuanzi-count">
   <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
