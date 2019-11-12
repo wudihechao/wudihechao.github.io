@@ -45,7 +45,7 @@
   };
 </script>
   <meta name="description" content="&emsp;&emsp;所谓LVS，是Linux Virtual Server的缩写，直译就是linux虚拟服务器。LVS说是虚拟服务器，并不是说这个服务器本身不存在，而是指一般用户访问企业web网站时，访问的都是LVS，而LVS本身上面没有任何web界面资源，真实的界面以及服务都在后端web服务器上，LVS服务器起到的是一个指引分流的作用，所以相对来说，后端的web服务器是real server">
-<meta name="keywords" content="企业级应用,负载均衡,LVS,调度算法,集群">
+<meta name="keywords" content="企业级应用,负载均衡,调度算法,LVS,集群">
 <meta property="og:type" content="article">
 <meta property="og:title" content="企业级应用：负载均衡层——LVS调度器详解">
 <meta property="og:url" content="https://hewanyue.com/blog/159ef64c.html">
@@ -432,8 +432,8 @@ server-address</code><br>&emsp;&emsp;rip[:port] 如省略port，不作端口映�
           <div class="post-tags">
               <a href="/tags/企业级应用/" rel="tag"><i class="fa fa-tag">企业级应用</i></a>
               <a href="/tags/负载均衡/" rel="tag"><i class="fa fa-tag">负载均衡</i></a>
-              <a href="/tags/LVS/" rel="tag"><i class="fa fa-tag">LVS</i></a>
               <a href="/tags/调度算法/" rel="tag"><i class="fa fa-tag">调度算法</i></a>
+              <a href="/tags/LVS/" rel="tag"><i class="fa fa-tag">LVS</i></a>
               <a href="/tags/集群/" rel="tag"><i class="fa fa-tag">集群</i></a>
           </div>
           <div class="post-nav">
@@ -680,38 +680,28 @@ window.addEventListener('pjax:success', () => {
   </script>
   <script src="/js/local-search.js?v=7.4.0"></script>
     <div id="pjax">
-  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-  <script src="/js/Valine.min.js"></script>
 <script>
-    <!--.comment要与评论区元素一致-->
-    comment_el = '.comment';
-    load_valine = function () {
-      if ($(comment_el).length) {
-        new Valine({ 
-          av: AV,
-          el: comment_el,
-          emoticon_url: 'https://cloud.panjunwen.com/alu',
-          emoticon_list: ["吐.png","喷血.png","狂汗.png","不说话.png","汗.png","坐等.png","献花.png","不高兴.png","中刀.png","害羞.png","皱眉.png","小眼睛.png","中指.png","尴尬.png","瞅你.png","想一想.png","中枪.png","得意.png","肿包.png","扇耳光.png","亲亲.png","惊喜.png","脸红.png","无所谓.png","便便.png","愤怒.png","蜡烛.png","献黄瓜.png","内伤.png","投降.png","观察.png","看不见.png","击掌.png","抠鼻.png","邪恶.png","看热闹.png","口水.png","抽烟.png","锁眉.png","装大款.png","吐舌.png","无奈.png","长草.png","赞一个.png","呲牙.png","无语.png","阴暗.png","不出所料.png","咽气.png","期待.png","高兴.png","吐血倒地.png","哭泣.png","欢呼.png","黑线.png","喜极而泣.png","喷水.png","深思.png","鼓掌.png","暗地观察.png"],
-          app_id: 'AVtPtVan0Ky5u33XhUzJlFKp-gzGzoHsz',
-          app_key: 'nx3XTnRJmaMQR3aLWYiigkgJ',
-          placeholder: 'Just Say Something~!',
-          });
-      }
-    };
-    $(document).ready(load_valine);
-    $(document).on('pjax:complete', function() {
-      load_valine();
-    });
-</script>
-<script>
-    if(window.location.hash){
-        var checkExist = setInterval(function() {
-           if ($(window.location.hash).length) {
-              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
-              clearInterval(checkExist);
-           }
-        }, 100);
-    }
+NexT.utils.getScript('//hewanyue.com/js/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail','link'];
+  var guest = 'nick,mail,links';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'AVtPtVan0Ky5u33XhUzJlFKp-gzGzoHsz',
+    appKey: 'nx3XTnRJmaMQR3aLWYiigkgJ',
+    placeholder: 'Just Say Something~!',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: 'zh-cn' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
 </script>
     </div>
 </body>
