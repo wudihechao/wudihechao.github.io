@@ -856,7 +856,7 @@ window.addEventListener('pjax:success', () => {
 <script>
 NexT.utils.getScript('//hewanyue.com/js/Valine.min.js', () => {
   var GUEST = ['nick', 'mail','link'];
-  var guest = 'nick,mail,links';
+  var guest = 'nick,mail,link';
   guest = guest.split(',').filter(item => {
     return GUEST.includes(item);
   });
