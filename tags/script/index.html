@@ -525,8 +525,6 @@ window.addEventListener('pjax:success', () => {
   </script>
   <script src="/js/local-search.js?v=7.4.0"></script>
     <div id="pjax">
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
 <script>
 NexT.utils.getScript('//hewanyue.com/js/Valine.min.js', () => {
   var GUEST = ['nick', 'mail','link'];
@@ -535,7 +533,6 @@ NexT.utils.getScript('//hewanyue.com/js/Valine.min.js', () => {
     return GUEST.includes(item);
   });
   new Valine({
-    av: AV,
     el: '#comments',
     verify: false,
     notify: false,
