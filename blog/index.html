@@ -192,13 +192,13 @@
     <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i>关于</a>
   </li>
         <li class="menu-item menu-item-tags">
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">48</span></a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">52</span></a>
   </li>
         <li class="menu-item menu-item-categories">
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">5</span></a>
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">6</span></a>
   </li>
         <li class="menu-item menu-item-archives">
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">25</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">26</span></a>
   </li>
         <li class="menu-item menu-item-friends">
     <a href="/friends/" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i>友链</a>
@@ -242,6 +242,81 @@
         <div class="content-wrap">
           <div id="content" class="content">
   <div id="posts" class="posts-expand">
+        <article itemscope itemtype="http://schema.org/Article">
+  <div class="post-block home">
+    <link itemprop="mainEntityOfPage" href="https://hewanyue.com/blog/f2c1a89e.html">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hechao">
+      <meta itemprop="description" content="BOHC is just a blog of hechao.">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+    </span>
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BOHC!">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+            <a href="/blog/f2c1a89e.html" class="post-title-link" itemprop="url">一键源码编译安装redis</a>
+        </h2>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <time title="创建时间：2019-11-13 11:06:46" itemprop="dateCreated datePublished" datetime="2019-11-13T11:06:46+08:00">2019-11-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/redis/" itemprop="url" rel="index"><span itemprop="name">redis</span></a></span>
+            </span>
+            <span id="/blog/f2c1a89e.html" class="post-meta-item leancloud_visitors" data-flag-title="一键源码编译安装redis" title="阅读次数">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="leancloud-visitors-count"></span>
+              <span>℃</span>
+            </span>
+              <span class="post-meta-divider">•</span>
+  <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+    <a title="valine" href="/blog/f2c1a89e.html#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/blog/f2c1a89e.html" itemprop="commentCount"></span></a>
+  </span>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              <span>7.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              <span>18 分钟</span>
+            </span>
+        </div>
+      </header>
+    <div class="post-body" itemprop="articleBody">
+          <p>&emsp;&emsp;Redis 和 Memcached 是非关系型数据库也称为 NoSQL 数据库， MySQL、 Mariadb、 SQLServer、 PostgreSQL、 Oracle 数据库属于关系<br>型数据(RDBMS, Relational Database Management System)。<br>&emsp;&emsp;Redis(Remote Dictionary Server)在 2009 年发布， 开发者 Salvatore Sanfilippo 是意大利开发者， 他本想为自己的公司开发一个用<br>于替换 MySQL 的产品 Redis， 但是没有想到他把 Redis 开源后大受欢迎，短短几年， Redis 就有了很大的用户群体，目前国内外使用的公司有知乎>网、新浪微博、 GitHub 等。<br>&emsp;&emsp;redis 是一个开源的、 遵循 BSD 协议的、 基于内存的而且目前比较流行的键值数据库(key-value database)，是一个非关系型数据库，<br> redis 提供将内存通过网络远程共享的一种服务，提供类似功能的还有 memcache，但相比 memcache， redis 还提供了易扩展、高性能、 具备数据持<br>久性等功能。<br>&emsp;&emsp;Redis 在高并发、低延迟环境要求比较高的环境使用量非常广泛， 目前 redis 在 DBEngine 月排行榜 <a href="https://db-engines.com/en/ranking" target="_blank" rel="noopener">https://db-engines.com/en/ranking</a> 中一直比较靠前，而且一直是键值型存储类的首位。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/f2c1a89e.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+    </div>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+      </footer>
+  </div>
+  </article>
         <article itemscope itemtype="http://schema.org/Article">
   <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="https://hewanyue.com/blog/219b1607.html">
@@ -542,84 +617,9 @@
       </footer>
   </div>
   </article>
-        <article itemscope itemtype="http://schema.org/Article">
-  <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="https://hewanyue.com/blog/e4415633.html">
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Hechao">
-      <meta itemprop="description" content="BOHC is just a blog of hechao.">
-      <meta itemprop="image" content="/images/touxiang.jpg">
-    </span>
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="BOHC!">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-            <a href="/blog/e4415633.html" class="post-title-link" itemprop="url">nginx防盗链设置的一些细节</a>
-        </h2>
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <time title="创建时间：2019-10-30 14:08:19" itemprop="dateCreated datePublished" datetime="2019-10-30T14:08:19+08:00">2019-10-30</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-divider">•</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/linux进阶/" itemprop="url" rel="index"><span itemprop="name">linux进阶</span></a></span>
-            </span>
-            <span id="/blog/e4415633.html" class="post-meta-item leancloud_visitors" data-flag-title="nginx防盗链设置的一些细节" title="阅读次数">
-              <span class="post-meta-divider">•</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="leancloud-visitors-count"></span>
-              <span>℃</span>
-            </span>
-              <span class="post-meta-divider">•</span>
-  <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-    <a title="valine" href="/blog/e4415633.html#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/blog/e4415633.html" itemprop="commentCount"></span></a>
-  </span>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-divider">•</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-              <span>4.8k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-divider">•</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-              <span>12 分钟</span>
-            </span>
-        </div>
-      </header>
-    <div class="post-body" itemprop="articleBody">
-          <p>&emsp;&emsp;防盗链的必要性，我这里就不再赘述了，这是网站设计的最基本要求。而在nginx中，一般比较容易实现的防盗链手段就是通过ungx_http_referer_module模块<a href="https://nginx.org/en/docs/http/ngx_http_referer_module.html#valid_referers" target="_blank" rel="noopener">（查看官方文档）</a> 检查访问请求的referer信息是否有效来实现防盗链功能。<br>&emsp;&emsp;所谓referer检查，举个例子来说，在正常情况下当用户在浏览<code>http://example.com/abc.html</code>时点击一个链接去到<code>http://example.com/123.mp3</code>文件时，浏览器在发出请求123.mp3 资源时还会附带当刻浏览器所处的页面地址（即<code>http://example.com/abc.html</code>），所以当你的网站程序接收到下载 jacky.mp3 资源请求的时候，先判断http的referer字段的值，如果是从 自己的域名（example.com）过来的，则可以认为是合法的连接请求，否则就返回一个错误的提示信息。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/e4415633.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-    </div>
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-      </footer>
-  </div>
-  </article>
   </div>
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
           </div>
         </div>
@@ -656,19 +656,19 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
-          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-count">26</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-count">52</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -693,6 +693,9 @@
       </div>
       <ul class="links-of-blogroll-list" style="padding-left: 30px;">
           <li>
+            <a href="/blog/f2c1a89e.html" title="一键源码编译安装redis" >一键源码编译安装redis</a>
+          </li>
+          <li>
             <a href="/blog/219b1607.html" title="故障:/etc/fstab中NFS自动挂载失败" >故障:/etc/fstab中NFS自动挂载失败</a>
           </li>
           <li>
@@ -703,9 +706,6 @@
           </li>
           <li>
             <a href="/blog/5da16ceb.html" title="报错：Header V3 RSA_SHA256 Signature, key ID 2f86d6a1_ NOKEY" >报错：Header V3 RSA_SHA256 Signature, key ID 2f86d6a1_ NOKEY</a>
-          </li>
-          <li>
-            <a href="/blog/e4415633.html" title="nginx防盗链设置的一些细节" >nginx防盗链设置的一些细节</a>
           </li>
       </ul>
     </div>
@@ -754,7 +754,7 @@ show_date_time();
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">219k</span>
+    <span title="站点总字数">226k</span>
 </div>
 <div class="busuanzi-count">
   <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>

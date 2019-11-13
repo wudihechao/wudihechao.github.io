@@ -45,7 +45,7 @@
   };
 </script>
   <meta name="description" content="&emsp;&emsp;近期想在新出的CentOS8上安装一下最新版的mariadb10.4.8，不过又嫌源码编译太麻烦费时间。就想去找找有没有yum源可用。&emsp;&emsp;果然官网上已经放出了yum安装的repo源了，也支持到CentOS8了——http://mirror.aarnet.edu.au/pub/MariaDB//mariadb-10.4.8/yum/centos/8/x86">
-<meta name="keywords" content="经验分享,mariadb,yum源">
+<meta name="keywords" content="mariadb,经验分享,yum源">
 <meta property="og:type" content="article">
 <meta property="og:title" content="yum/dnf 安装mariadb10.4.8（最新版）">
 <meta property="og:url" content="https://hewanyue.com/blog/72c5296a.html">
@@ -193,13 +193,13 @@
     <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i>关于</a>
   </li>
         <li class="menu-item menu-item-tags">
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">48</span></a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">52</span></a>
   </li>
         <li class="menu-item menu-item-categories">
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">5</span></a>
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">6</span></a>
   </li>
         <li class="menu-item menu-item-archives">
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">25</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">26</span></a>
   </li>
         <li class="menu-item menu-item-friends">
     <a href="/friends/" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i>友链</a>
@@ -318,9 +318,6 @@
   <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/57d66c4.html" rel="bookmark">LAMP架构实现PowerDNS</a></div>
-    </li>
-    <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/blog/108203a7.html" rel="bookmark">myql数据库MHA实现高可用（多实例间实现）</a></div>
     </li>
     <li class="popular-posts-item">
@@ -328,6 +325,9 @@
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/blog/b124800c.html" rel="bookmark">二进制安装及源码编译安装mariadb数据库</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/57d66c4.html" rel="bookmark">LAMP架构实现PowerDNS</a></div>
     </li>
   </ul>
     <div style="text-align:center;color: #ccc;font-size:14px;">---------------- The End ----------------</div>
@@ -357,8 +357,8 @@
 </div>
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/经验分享/" rel="tag"><i class="fa fa-tag">经验分享</i></a>
               <a href="/tags/mariadb/" rel="tag"><i class="fa fa-tag">mariadb</i></a>
+              <a href="/tags/经验分享/" rel="tag"><i class="fa fa-tag">经验分享</i></a>
               <a href="/tags/yum源/" rel="tag"><i class="fa fa-tag">yum源</i></a>
           </div>
           <div class="post-nav">
@@ -414,19 +414,19 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
-          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-count">26</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-count">52</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -451,6 +451,9 @@
       </div>
       <ul class="links-of-blogroll-list" style="padding-left: 30px;">
           <li>
+            <a href="/blog/f2c1a89e.html" title="一键源码编译安装redis" >一键源码编译安装redis</a>
+          </li>
+          <li>
             <a href="/blog/219b1607.html" title="故障:/etc/fstab中NFS自动挂载失败" >故障:/etc/fstab中NFS自动挂载失败</a>
           </li>
           <li>
@@ -461,9 +464,6 @@
           </li>
           <li>
             <a href="/blog/5da16ceb.html" title="报错：Header V3 RSA_SHA256 Signature, key ID 2f86d6a1_ NOKEY" >报错：Header V3 RSA_SHA256 Signature, key ID 2f86d6a1_ NOKEY</a>
-          </li>
-          <li>
-            <a href="/blog/e4415633.html" title="nginx防盗链设置的一些细节" >nginx防盗链设置的一些细节</a>
           </li>
       </ul>
     </div>
@@ -512,7 +512,7 @@ show_date_time();
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">219k</span>
+    <span title="站点总字数">226k</span>
 </div>
 <div class="busuanzi-count">
   <script pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
