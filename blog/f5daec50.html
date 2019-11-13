@@ -45,7 +45,7 @@
   };
 </script>
   <meta name="description" content="&emsp;&emsp;继续讲解HAProxy的一些进阶配置及用法，包括报文修改，日志配置，压缩功能，后端服务器状态监测及ACL等功能应用。配置环境及配置文件均延续上一篇《企业级应用：负载均衡层——haproxy(一)》,有任何疑问可以先看上一篇博客。">
-<meta name="keywords" content="高可用,HAProxy,企业级应用,负载均衡,调度算法">
+<meta name="keywords" content="HAProxy,企业级应用,负载均衡,高可用,调度算法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="企业级应用：负载均衡层——haproxy(二)">
 <meta property="og:url" content="https://hewanyue.com/blog/f5daec50.html">
@@ -518,12 +518,17 @@
 </div>
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/高可用/" rel="tag"><i class="fa fa-tag">高可用</i></a>
               <a href="/tags/HAProxy/" rel="tag"><i class="fa fa-tag">HAProxy</i></a>
               <a href="/tags/企业级应用/" rel="tag"><i class="fa fa-tag">企业级应用</i></a>
               <a href="/tags/负载均衡/" rel="tag"><i class="fa fa-tag">负载均衡</i></a>
+              <a href="/tags/高可用/" rel="tag"><i class="fa fa-tag">高可用</i></a>
               <a href="/tags/调度算法/" rel="tag"><i class="fa fa-tag">调度算法</i></a>
           </div>
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
                 <a href="/blog/5aeb7732.html" rel="next" title="企业级应用：负载均衡层——haproxy(一)">
@@ -765,6 +770,26 @@ window.addEventListener('pjax:success', () => {
       var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(bp, s);
     })();
+  </script>
+  <script pjax>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 21895,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
   </script>
   <script src="/js/local-search.js?v=7.4.0"></script>
     <div id="pjax">

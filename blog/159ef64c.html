@@ -436,6 +436,11 @@ server-address</code><br>&emsp;&emsp;rip[:port] 如省略port，不作端口映�
               <a href="/tags/LVS/" rel="tag"><i class="fa fa-tag">LVS</i></a>
               <a href="/tags/集群/" rel="tag"><i class="fa fa-tag">集群</i></a>
           </div>
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
                 <a href="/blog/dcaccc5a.html" rel="next" title="源码编译Apache和PHP实现lamp架构">
@@ -677,6 +682,26 @@ window.addEventListener('pjax:success', () => {
       var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(bp, s);
     })();
+  </script>
+  <script pjax>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 21895,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
   </script>
   <script src="/js/local-search.js?v=7.4.0"></script>
     <div id="pjax">

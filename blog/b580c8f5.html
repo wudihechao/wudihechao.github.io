@@ -350,6 +350,11 @@
               <a href="/tags/script/" rel="tag"><i class="fa fa-tag">script</i></a>
               <a href="/tags/backup/" rel="tag"><i class="fa fa-tag">backup</i></a>
           </div>
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
                 <a href="/blog/8dcd5ad7.html" rel="next" title="VIM编辑器的整理总结">
@@ -590,6 +595,26 @@ window.addEventListener('pjax:success', () => {
       var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(bp, s);
     })();
+  </script>
+  <script pjax>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 21895,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
   </script>
   <script src="/js/local-search.js?v=7.4.0"></script>
     <div id="pjax">
