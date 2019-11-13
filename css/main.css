@@ -1211,7 +1211,7 @@ pre .javascript .function {
   overflow-y: auto;
 }
 .cc-license {
-  margin-top: 0px;
+  margin-top: -3px;
   text-align: center;
   padding-left: 10px;
 }
@@ -1269,7 +1269,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #ff0dcc;
+  background: #4e8aff;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2883,7 +2883,7 @@ img.img-topic {
   display: block;
   color: #07b39b;
   font-size: 13px;
-  margin-top: 13px;
+  margin-top: 10px;
 }
 .sidebar-toggle {
   right: 20px;
@@ -2968,8 +2968,8 @@ img.img-topic {
   margin-left: 10px;
 }
 .links-of-blogroll-title {
-  margin-bottom: 10px;
-  margin-top: 0px;
+  margin-bottom: 5px;
+  margin-top: -15px;
   color: rgba(7,179,155,0.75);
   margin-left: 6px;
   font-size: 15px;
