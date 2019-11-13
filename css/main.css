@@ -1269,7 +1269,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #245bff;
+  background: #0f7739;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2116,7 +2116,8 @@ article:last-child .post-eof {
   font-family: UKIJ Ekran;
 }
 .post-tags {
-  margin-top: 40px;
+  margin-top: 30px;
+  margin-bottom: 20px;
   text-align: center;
 }
 .post-tags a {
