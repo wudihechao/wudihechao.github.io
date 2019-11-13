@@ -380,6 +380,12 @@
 <p>&emsp;&emsp; 3、在代理机上查看监控连接是否正常的 (对connect指标的监控)：<br>&emsp;&emsp; 如果connect_error的结果为NULL则表示正常<br>&emsp;&emsp; MySQL>select * from mysql_server_connect_log;<br>&emsp;&emsp; 查看监控心跳信息 (对ping指标的监控)：<br>&emsp;&emsp; MySQL> select * from mysql_server_ping_log;<br>&emsp;&emsp; (如果显示连接失败，可尝试在从节点刷新权限<strong>flush privileges;</strong>)<br>&emsp;&emsp; 4、设置分组信息<br>&emsp;&emsp;  需要修改的是main库中的mysql_replication_hostgroups表，该表有3个字段：writer_hostgroup，reader_hostgroup，comment, 指定写组的id为10，读组的id为20<br>&emsp;&emsp; MySQL>insert into mysql_replication_hostgroups values(10,20,”CentOS7”);<br>&emsp;&emsp; 将mysql_replication_hostgroups表的修改加载到RUNTIME生效<br>&emsp;&emsp; MySQL> load mysql servers to runtime;<br>&emsp;&emsp; MySQL> save mysql servers to disk;<br>&emsp;&emsp; Monitor模块监控后端的read_only值，按照read_only的值将节点自动移动到读/写组<br>&emsp;&emsp;查看添加的主机分组表，应该已经自动分组了：<br>&emsp;&emsp;  MySQL>select hostgroup_id,hostname,port,status,weight from mysql_servers;<br><img src="https://img-blog.csdnimg.cn/2019092521480589.png" alt="在这里插入图片描述"><br>&emsp;&emsp; 5、在proxysql上配置路由规则，实现读写分离<br>&emsp;&emsp; 与规则有关的表：mysql_query_rules和mysql_query_rules_fast_routing，后者是前者的扩展表，1.4.7之后支持<br>&emsp;&emsp; 插入路由规则：将select语句分离到20的读组，select语句中有一个特殊语句<br>&emsp;&emsp; SELECT…FOR UPDATE它会申请写锁，应路由到10的写组<br>&emsp;&emsp; MySQL>insert into mysql_query_rules(rule_id,active,match_digest,destination_hostgroup,apply) VALUES(1,1,’^SELECT.<em>FOR UPDATE$’,10,1),(2,1,’^SELECT’,20,1);<br>&emsp;&emsp; MySQL> load mysql query rules to runtime;<br>&emsp;&emsp; MySQL> save mysql query rules to disk;<br>*</em>注意：因ProxySQL根据rule_id顺序进行规则匹配，select … for update规则的rule_id必须要小于普通的select规则的rule_id**</p>
 <p>&emsp;&emsp;在代理机上用命令测试相应读写的是哪个数据库：<br>&emsp;&emsp;mysql -uroot -pPASSWORD -P3306 -h127.0.0.1 -e ‘start transaction;select @@server_id;commit;select @@server_id’<br>+———————+<br>| @@server_id&emsp;  |<br>+———————+<br>|      &emsp; &emsp;   3306&emsp; &emsp;  |<br>+———————+<br>+———————+<br>| @@server_id&emsp;  |<br>+———————+<br>|      &emsp; &emsp;   3307 &emsp; &emsp; |<br>+———————+<br>&emsp;&emsp;说明读写分离，在两个终端上成功实现~</p>
     </div>
+          <div class="post-tags">
+              <a href="/tags/多实例/" rel="tag"><i class="fa fa-tag">多实例</i></a>
+              <a href="/tags/mysql/" rel="tag"><i class="fa fa-tag">mysql</i></a>
+              <a href="/tags/级联复制/" rel="tag"><i class="fa fa-tag">级联复制</i></a>
+              <a href="/tags/读写分离/" rel="tag"><i class="fa fa-tag">读写分离</i></a>
+          </div>
     <div style="text-align:center;color: #ccc;font-size:14px;">---------------- The End ----------------</div>
   <div class="post-widgets">
     <div class="wp_rating">
@@ -423,12 +429,6 @@
     </li>
   </ul>
       <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/多实例/" rel="tag"><i class="fa fa-tag">多实例</i></a>
-              <a href="/tags/mysql/" rel="tag"><i class="fa fa-tag">mysql</i></a>
-              <a href="/tags/级联复制/" rel="tag"><i class="fa fa-tag">级联复制</i></a>
-              <a href="/tags/读写分离/" rel="tag"><i class="fa fa-tag">读写分离</i></a>
-          </div>
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
                 <a href="/blog/4f0efae7.html" rel="next" title="关于mariadb10.4.8二进制安装及源码编译后设置密码无效的一些发现">

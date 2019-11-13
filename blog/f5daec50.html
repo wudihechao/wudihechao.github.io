@@ -479,6 +479,13 @@
 <figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">listen web_host</span><br><span class="line">    bind 172.18.32.249:80</span><br><span class="line">    mode http</span><br><span class="line">    balance roundrobin</span><br><span class="line">    log global</span><br><span class="line">    option httplog</span><br><span class="line">    acl<span class="keyword"> static</span>_path path_beg -i /static /images /javascript</span><br><span class="line">    use_backend<span class="keyword"> static</span>_path_host<span class="built_in"> if </span>HTTP_1.1 TRUE<span class="keyword"> static</span>_path</span><br><span class="line">    default_backend default_web</span><br><span class="line">backend php_server_host</span><br><span class="line">    mode http</span><br><span class="line">    server web1 192.168.32.81<span class="built_in"> check </span>inter 2000 fall 3 rise 5</span><br><span class="line">backend<span class="keyword"> static</span>_path_host</span><br><span class="line">    mode http</span><br><span class="line">    server web1 192.168.32.82<span class="built_in"> check </span>inter 2000 fall 3 rise 5</span><br><span class="line">backend default_web</span><br><span class="line">    mode http</span><br><span class="line">    server web1 192.168.32.8:80<span class="built_in"> check </span>inter 2000 fall 3 rise 5</span><br></pre></td></tr></table></figure>
 <p>&emsp;&emsp;详细信息查看官网<a href="http://cbonte.github.io/haproxy-dconv/2.0/configuration.html#7.4" rel="noopener external nofollow noreferrer" target="_blank">http://cbonte.github.io/haproxy-dconv/2.0/configuration.html#7.4</a></p>
     </div>
+          <div class="post-tags">
+              <a href="/tags/高可用/" rel="tag"><i class="fa fa-tag">高可用</i></a>
+              <a href="/tags/HAProxy/" rel="tag"><i class="fa fa-tag">HAProxy</i></a>
+              <a href="/tags/企业级应用/" rel="tag"><i class="fa fa-tag">企业级应用</i></a>
+              <a href="/tags/负载均衡/" rel="tag"><i class="fa fa-tag">负载均衡</i></a>
+              <a href="/tags/调度算法/" rel="tag"><i class="fa fa-tag">调度算法</i></a>
+          </div>
     <div style="text-align:center;color: #ccc;font-size:14px;">---------------- The End ----------------</div>
   <div class="post-widgets">
     <div class="wp_rating">
@@ -522,13 +529,6 @@
     </li>
   </ul>
       <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/高可用/" rel="tag"><i class="fa fa-tag">高可用</i></a>
-              <a href="/tags/HAProxy/" rel="tag"><i class="fa fa-tag">HAProxy</i></a>
-              <a href="/tags/企业级应用/" rel="tag"><i class="fa fa-tag">企业级应用</i></a>
-              <a href="/tags/负载均衡/" rel="tag"><i class="fa fa-tag">负载均衡</i></a>
-              <a href="/tags/调度算法/" rel="tag"><i class="fa fa-tag">调度算法</i></a>
-          </div>
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
                 <a href="/blog/5aeb7732.html" rel="next" title="企业级应用：负载均衡层——haproxy(一)">

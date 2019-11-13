@@ -466,6 +466,13 @@
 <figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@CentOS8</span> ~]<span class="meta">#echo <span class="string">"set weight web_host/web1 2"</span> | socat stdio /var/lib/haproxy/haproxy.sock2</span></span><br><span class="line"></span><br><span class="line">[root<span class="symbol">@CentOS8</span> ~]<span class="meta">#</span></span><br></pre></td></tr></table></figure>
 <p>&emsp;&emsp;需要注意的一点就是，多线程工作模式下，<strong>每个线程是独立的</strong>，设置1线程的权重，在其他线程上并不生效。这就意味着，如果想将某个服务器下线的话，需要在每个线程上都分别下线，上线是，也需要在每个线程中enable server。可以用脚本写一个循环来实现。</p>
     </div>
+          <div class="post-tags">
+              <a href="/tags/高可用/" rel="tag"><i class="fa fa-tag">高可用</i></a>
+              <a href="/tags/HAProxy/" rel="tag"><i class="fa fa-tag">HAProxy</i></a>
+              <a href="/tags/企业级应用/" rel="tag"><i class="fa fa-tag">企业级应用</i></a>
+              <a href="/tags/负载均衡/" rel="tag"><i class="fa fa-tag">负载均衡</i></a>
+              <a href="/tags/调度算法/" rel="tag"><i class="fa fa-tag">调度算法</i></a>
+          </div>
     <div style="text-align:center;color: #ccc;font-size:14px;">---------------- The End ----------------</div>
   <div class="post-widgets">
     <div class="wp_rating">
@@ -509,13 +516,6 @@
     </li>
   </ul>
       <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/高可用/" rel="tag"><i class="fa fa-tag">高可用</i></a>
-              <a href="/tags/HAProxy/" rel="tag"><i class="fa fa-tag">HAProxy</i></a>
-              <a href="/tags/企业级应用/" rel="tag"><i class="fa fa-tag">企业级应用</i></a>
-              <a href="/tags/负载均衡/" rel="tag"><i class="fa fa-tag">负载均衡</i></a>
-              <a href="/tags/调度算法/" rel="tag"><i class="fa fa-tag">调度算法</i></a>
-          </div>
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
                 <a href="/blog/5da16ceb.html" rel="next" title="报错：Header V3 RSA_SHA256 Signature, key ID 2f86d6a1_ NOKEY">

@@ -394,6 +394,13 @@ server-address</code><br>&emsp;&emsp;rip[:port] 如省略port，不作端口映�
 <p>&emsp;&emsp;Ldirectord配置文件示例</p>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">checktimeout</span>=3</span><br><span class="line"><span class="attribute">checkinterval</span>=1</span><br><span class="line"><span class="attribute">autoreload</span>=<span class="literal">yes</span></span><br><span class="line"><span class="attribute">logfile</span>=“/var/log/ldirectord.log“ #日志文件</span><br><span class="line"><span class="attribute">quiescent</span>=<span class="literal">no</span>   #down时<span class="literal">yes</span>权重为0，<span class="literal">no</span>为删除</span><br><span class="line"><span class="attribute">virtual</span>=5      #指定VS的FWM 或 IP:PORT</span><br><span class="line"><span class="attribute">real</span>=172.16.0.7:80 gate 2    #DR模型，权重为 2</span><br><span class="line"><span class="attribute">real</span>=172.16.0.8:80 gate 1</span><br><span class="line"><span class="attribute">fallback</span>=127.0.0.1:80 gate   #sorry server</span><br><span class="line"><span class="attribute">service</span>=http</span><br><span class="line"><span class="attribute">scheduler</span>=wrr</span><br><span class="line"><span class="attribute">checktype</span>=negotiate</span><br><span class="line"><span class="attribute">checkport</span>=80</span><br><span class="line"><span class="attribute">request</span>=<span class="string">"index.html"</span></span><br><span class="line"><span class="attribute">receive</span>=“Test Ldirectord<span class="string">"</span></span><br></pre></td></tr></table></figure>
     </div>
+          <div class="post-tags">
+              <a href="/tags/企业级应用/" rel="tag"><i class="fa fa-tag">企业级应用</i></a>
+              <a href="/tags/负载均衡/" rel="tag"><i class="fa fa-tag">负载均衡</i></a>
+              <a href="/tags/调度算法/" rel="tag"><i class="fa fa-tag">调度算法</i></a>
+              <a href="/tags/LVS/" rel="tag"><i class="fa fa-tag">LVS</i></a>
+              <a href="/tags/集群/" rel="tag"><i class="fa fa-tag">集群</i></a>
+          </div>
     <div style="text-align:center;color: #ccc;font-size:14px;">---------------- The End ----------------</div>
   <div class="post-widgets">
     <div class="wp_rating">
@@ -434,13 +441,6 @@ server-address</code><br>&emsp;&emsp;rip[:port] 如省略port，不作端口映�
     </li>
   </ul>
       <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/企业级应用/" rel="tag"><i class="fa fa-tag">企业级应用</i></a>
-              <a href="/tags/负载均衡/" rel="tag"><i class="fa fa-tag">负载均衡</i></a>
-              <a href="/tags/调度算法/" rel="tag"><i class="fa fa-tag">调度算法</i></a>
-              <a href="/tags/LVS/" rel="tag"><i class="fa fa-tag">LVS</i></a>
-              <a href="/tags/集群/" rel="tag"><i class="fa fa-tag">集群</i></a>
-          </div>
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
                 <a href="/blog/dcaccc5a.html" rel="next" title="源码编译Apache和PHP实现lamp架构">

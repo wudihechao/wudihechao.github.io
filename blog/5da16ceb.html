@@ -310,6 +310,13 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">name=aliyun</span><br><span class="line">baseurl=https://mirrors.aliyun.com/epel/$releasever/Everything/$basearch/</span><br><span class="line">gpgcheck=0</span><br><span class="line">enabled=1</span><br><span class="line">gpgkey=file://https://mirrors.aliyun.com/epel/RPM-GPG-KEY-EPEL-$releasever</span><br></pre></td></tr></table></figure>
 <p>&emsp;&emsp;希望不是因为阿里的安装包被人动过而导致秘钥检查不通过吧，姑且相信吧。记录一下，等后期如果有问题或者有空再来排查原因。<br>&emsp;&emsp;<br>&emsp;&emsp;<br>——————————————后记 ———————————–<br>&emsp;&emsp;原来当时配置yum源文件的时候不小心画蛇添足了，导致gpgkey文件路径不对，应为<code>gpgkey=https://mirrors.aliyun.com/epel/RPM-GPG-KEY-EPEL-$releaseve</code>，用file://的话，就不需要加协议了，直接写主机名或IP加路径。<br>&emsp;&emsp;要时刻提醒自己还是要仔细，一直不出错不代表没错。<br>&emsp;&emsp;<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;2019.11.10</p>
     </div>
+          <div class="post-tags">
+              <a href="/tags/故障/" rel="tag"><i class="fa fa-tag">故障</i></a>
+              <a href="/tags/记录/" rel="tag"><i class="fa fa-tag">记录</i></a>
+              <a href="/tags/排错/" rel="tag"><i class="fa fa-tag">排错</i></a>
+              <a href="/tags/epel/" rel="tag"><i class="fa fa-tag">epel</i></a>
+              <a href="/tags/阿里云/" rel="tag"><i class="fa fa-tag">阿里云</i></a>
+          </div>
     <div style="text-align:center;color: #ccc;font-size:14px;">---------------- The End ----------------</div>
   <div class="post-widgets">
     <div class="wp_rating">
@@ -347,13 +354,6 @@
     </li>
   </ul>
       <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/故障/" rel="tag"><i class="fa fa-tag">故障</i></a>
-              <a href="/tags/记录/" rel="tag"><i class="fa fa-tag">记录</i></a>
-              <a href="/tags/排错/" rel="tag"><i class="fa fa-tag">排错</i></a>
-              <a href="/tags/epel/" rel="tag"><i class="fa fa-tag">epel</i></a>
-              <a href="/tags/阿里云/" rel="tag"><i class="fa fa-tag">阿里云</i></a>
-          </div>
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
                 <a href="/blog/e4415633.html" rel="next" title="nginx防盗链设置的一些细节">
