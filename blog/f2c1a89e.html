@@ -52,7 +52,7 @@
 <meta property="og:site_name" content="BOHC!">
 <meta property="og:description" content="&emsp;&emsp;Redis 和 Memcached 是非关系型数据库也称为 NoSQL 数据库， MySQL、 Mariadb、 SQLServer、 PostgreSQL、 Oracle 数据库属于关系型数据(RDBMS, Relational Database Management System)。&emsp;&emsp;Redis(Remote Dictionary Server)在">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-13T03:15:29.818Z">
+<meta property="og:updated_time" content="2019-11-13T03:23:01.314Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一键源码编译安装redis">
 <meta name="twitter:description" content="&emsp;&emsp;Redis 和 Memcached 是非关系型数据库也称为 NoSQL 数据库， MySQL、 Mariadb、 SQLServer、 PostgreSQL、 Oracle 数据库属于关系型数据(RDBMS, Relational Database Management System)。&emsp;&emsp;Redis(Remote Dictionary Server)在">
@@ -303,7 +303,7 @@
         </div>
       </header>
     <div class="post-body" itemprop="articleBody">
-        <p>&emsp;&emsp;Redis 和 Memcached 是非关系型数据库也称为 NoSQL 数据库， MySQL、 Mariadb、 SQLServer、 PostgreSQL、 Oracle 数据库属于关系<br>型数据(RDBMS, Relational Database Management System)。<br>&emsp;&emsp;Redis(Remote Dictionary Server)在 2009 年发布， 开发者 Salvatore Sanfilippo 是意大利开发者， 他本想为自己的公司开发一个用<br>于替换 MySQL 的产品 Redis， 但是没有想到他把 Redis 开源后大受欢迎，短短几年， Redis 就有了很大的用户群体，目前国内外使用的公司有知乎>网、新浪微博、 GitHub 等。<br>&emsp;&emsp;redis 是一个开源的、 遵循 BSD 协议的、 基于内存的而且目前比较流行的键值数据库(key-value database)，是一个非关系型数据库，<br> redis 提供将内存通过网络远程共享的一种服务，提供类似功能的还有 memcache，但相比 memcache， redis 还提供了易扩展、高性能、 具备数据持<br>久性等功能。<br>&emsp;&emsp;Redis 在高并发、低延迟环境要求比较高的环境使用量非常广泛， 目前 redis 在 DBEngine 月排行榜 <a href="https://db-engines.com/en/ranking" target="_blank" rel="noopener">https://db-engines.com/en/ranking</a> 中一直比较靠前，而且一直是键值型存储类的首位。</p>
+        <p>&emsp;&emsp;Redis 和 Memcached 是非关系型数据库也称为 NoSQL 数据库， MySQL、 Mariadb、 SQLServer、 PostgreSQL、 Oracle 数据库属于关系型数据(RDBMS, Relational Database Management System)。<br>&emsp;&emsp;Redis(Remote Dictionary Server)在 2009 年发布， 开发者 Salvatore Sanfilippo 是意大利开发者， 他本想为自己的公司开发一个用于替换 MySQL 的产品 Redis， 但是没有想到他把 Redis 开源后大受欢迎，短短几年， Redis 就有了很大的用户群体，目前国内外使用的公司有知乎>网、新浪微博、 GitHub 等。<br>&emsp;&emsp;redis 是一个开源的、 遵循 BSD 协议的、 基于内存的而且目前比较流行的键值数据库(key-value database)，是一个非关系型数据库，redis 提供将内存通过网络远程共享的一种服务，提供类似功能的还有 memcache，但相比 memcache， redis 还提供了易扩展、高性能、 具备数据持久性等功能。<br>&emsp;&emsp;Redis 在高并发、低延迟环境要求比较高的环境使用量非常广泛， 目前 redis 在 DBEngine 月排行榜 <a href="https://db-engines.com/en/ranking" target="_blank" rel="noopener">https://db-engines.com/en/ranking</a> 中一直比较靠前，而且一直是键值型存储类的首位。</p>
 <a id="more"></a>
 <h3 id="编译安装"><a href="#编译安装" class="headerlink" title="编译安装"></a>编译安装</h3><p>&emsp;&emsp;redis在centos版本自带的yum源中版本比较低，一般都需要我们编译安装更高版本的redis。</p>
 <h4 id="准备源码包"><a href="#准备源码包" class="headerlink" title="准备源码包"></a>准备源码包</h4><p>&emsp;&emsp;可以先用下载工具去官网下载好源码包，下载链接为 <a href="https://db-engines.com/en/ranking" target="_blank" rel="noopener">https://db-engines.com/en/ranking</a>  。<br>&emsp;&emsp;出于稳定性要求，一般来说实际生产中不会选用最新版的redis，避免因为漏洞造成服务器的安全隐患，所以本次演示，我们选用目前redis4的最新版本，redis-4.0.14来安装。</p>
