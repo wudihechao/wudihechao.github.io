@@ -322,24 +322,6 @@
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@CentOS7 ~]#/usr/bin/masterha_manager <span class="attribute">--conf</span>=/etc/mha.cnf</span><br><span class="line">Fri Sep 27 11:35:37 2019 - [<span class="builtin-name">warning</span>] Global configuration file /etc/masterha_default.cnf <span class="keyword">not</span> found. Skipping.</span><br><span class="line">Fri Sep 27 11:35:37 2019 - [<span class="builtin-name">info</span>] Reading application<span class="built_in"> default </span>configuration <span class="keyword">from</span> /etc/mha.cnf<span class="built_in">..</span></span><br><span class="line">Fri Sep 27 11:35:37 2019 - [<span class="builtin-name">info</span>] Reading<span class="built_in"> server </span>configuration <span class="keyword">from</span> /etc/mha.cnf<span class="built_in">..</span></span><br></pre></td></tr></table></figure>
 <p>&emsp;&emsp; 在主数据库上将mysql进程杀掉后，MHA进程自动结束。<br><img src="https://img-blog.csdnimg.cn/20190927123356815.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp; 在3307端口数据库上查询，已经没有从节点信息了。<img src="https://img-blog.csdnimg.cn/20190927124323317.png" alt="在这里插入图片描述"><br>&emsp;&emsp; 在3308端口数据库以及3309端口数据上显示，主数据库已变为更为3307端口数据库，说明转换主从结构成功！<br><img src="https://img-blog.csdnimg.cn/20190927124330490.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp; PS：因为几个数据库都是源码编译安装，数据库路径和二进制文件储存位置都做出了调整，与默认位置不同，而yum安装的MHAmaster中如果配置文件中不写明master_binlog_dir的位置，则会默认去<code>/usr/bin/msyql/</code>目录下找主机二进制文件（当然，mysql数据库也是yum安装的可忽略这些配置，一切默认就好，而配置文件中添加server主机时，如果端口号不是默认3306，一定要记得写明port端口号，如本文中多实例用的不同端口，标记清楚即可。）</p>
     </div>
-  <div class="popular-posts-header">相关文章</div>
-  <ul class="popular-posts">
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/d006fe9f.html" rel="bookmark">mysql多实例实现主从级联复制及读写分离</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/4f0efae7.html" rel="bookmark">关于mariadb10.4.8二进制安装及源码编译后设置密码无效的一些发现</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/b124800c.html" rel="bookmark">二进制安装及源码编译安装mariadb数据库</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/f5daec50.html" rel="bookmark">企业级应用：负载均衡层——haproxy(二)</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/5aeb7732.html" rel="bookmark">企业级应用：负载均衡层——haproxy(一)</a></div>
-    </li>
-  </ul>
     <div style="text-align:center;color: #ccc;font-size:14px;">---------------- The End ----------------</div>
   <div class="post-widgets">
     <div class="wp_rating">
@@ -358,6 +340,24 @@
       </div>
   </div>
 </div>
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/d006fe9f.html" rel="bookmark">mysql多实例实现主从级联复制及读写分离</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/4f0efae7.html" rel="bookmark">关于mariadb10.4.8二进制安装及源码编译后设置密码无效的一些发现</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/b124800c.html" rel="bookmark">二进制安装及源码编译安装mariadb数据库</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/f5daec50.html" rel="bookmark">企业级应用：负载均衡层——haproxy(二)</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/5aeb7732.html" rel="bookmark">企业级应用：负载均衡层——haproxy(一)</a></div>
+    </li>
+  </ul>
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">

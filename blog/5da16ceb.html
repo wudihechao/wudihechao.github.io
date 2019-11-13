@@ -310,12 +310,6 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">name=aliyun</span><br><span class="line">baseurl=https://mirrors.aliyun.com/epel/$releasever/Everything/$basearch/</span><br><span class="line">gpgcheck=0</span><br><span class="line">enabled=1</span><br><span class="line">gpgkey=file://https://mirrors.aliyun.com/epel/RPM-GPG-KEY-EPEL-$releasever</span><br></pre></td></tr></table></figure>
 <p>&emsp;&emsp;希望不是因为阿里的安装包被人动过而导致秘钥检查不通过吧，姑且相信吧。记录一下，等后期如果有问题或者有空再来排查原因。<br>&emsp;&emsp;<br>&emsp;&emsp;<br>——————————————后记 ———————————–<br>&emsp;&emsp;原来当时配置yum源文件的时候不小心画蛇添足了，导致gpgkey文件路径不对，应为<code>gpgkey=https://mirrors.aliyun.com/epel/RPM-GPG-KEY-EPEL-$releaseve</code>，用file://的话，就不需要加协议了，直接写主机名或IP加路径。<br>&emsp;&emsp;要时刻提醒自己还是要仔细，一直不出错不代表没错。<br>&emsp;&emsp;<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;2019.11.10</p>
     </div>
-  <div class="popular-posts-header">相关文章</div>
-  <ul class="popular-posts">
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/219b1607.html" rel="bookmark">故障:/etc/fstab中NFS自动挂载失败</a></div>
-    </li>
-  </ul>
     <div style="text-align:center;color: #ccc;font-size:14px;">---------------- The End ----------------</div>
   <div class="post-widgets">
     <div class="wp_rating">
@@ -334,6 +328,12 @@
       </div>
   </div>
 </div>
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/219b1607.html" rel="bookmark">故障:/etc/fstab中NFS自动挂载失败</a></div>
+    </li>
+  </ul>
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">

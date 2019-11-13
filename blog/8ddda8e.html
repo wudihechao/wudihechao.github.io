@@ -360,24 +360,6 @@
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">default <span class="selector-tag">menu</span>.c32</span><br><span class="line">timeout <span class="number">600</span></span><br><span class="line"><span class="selector-tag">menu</span> title Auto Install CentOS</span><br><span class="line"><span class="selector-tag">label</span> linux <span class="number">7</span></span><br><span class="line">        mennu <span class="selector-tag">label</span> Install CentOS^<span class="number">7</span></span><br><span class="line">        <span class="selector-tag">menu</span> default</span><br><span class="line">        kernel <span class="number">7</span>/vmlinuz</span><br><span class="line">        append initrd=<span class="number">7</span>/initrd<span class="selector-class">.img</span> ks=http:<span class="comment">//192.168.32.7/ksdir/centos7-ks.cfg</span></span><br><span class="line"><span class="selector-tag">label</span> linux <span class="number">6</span></span><br><span class="line">        mennu <span class="selector-tag">label</span> Install CentOS^<span class="number">6</span></span><br><span class="line">        kernel <span class="number">6</span>/vmlinuz</span><br><span class="line">        append initrd=<span class="number">6</span>/initrd<span class="selector-class">.img</span> ks=http:<span class="comment">//192.168.32.7/ksdir/centos6-ks.cfg</span></span><br><span class="line"><span class="selector-tag">label</span> linux local</span><br><span class="line">        mennu <span class="selector-tag">label</span> Boot from ^local drive</span><br><span class="line">        localboot Oxffff</span><br></pre></td></tr></table></figure>
 <p><img src="https://img-blog.csdnimg.cn/20190907192047527.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;再将菜单文件存入tftp服务器中 <strong>/linux.cfg目录</strong> 下 <strong>重命名</strong>为fault文件。tftp服务器最终目录机构如下图所示：<br><img src="https://img-blog.csdnimg.cn/20190907192456310.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;至此，基于PXE网卡，无人职守批量安装CentOS系统的配置就完成了。</p>
     </div>
-  <div class="popular-posts-header">相关文章</div>
-  <ul class="popular-posts">
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/f2c1a89e.html" rel="bookmark">一键源码编译安装redis</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/57d66c4.html" rel="bookmark">LAMP架构实现PowerDNS</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/8a189dcf.html" rel="bookmark">自动化运维之Ansible</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/b124800c.html" rel="bookmark">二进制安装及源码编译安装mariadb数据库</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/133d68.html" rel="bookmark">CentOS6源码编译 安装linunx内核最新版5.2.9</a></div>
-    </li>
-  </ul>
     <div style="text-align:center;color: #ccc;font-size:14px;">---------------- The End ----------------</div>
   <div class="post-widgets">
     <div class="wp_rating">
@@ -396,6 +378,24 @@
       </div>
   </div>
 </div>
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/f2c1a89e.html" rel="bookmark">一键源码编译安装redis</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/57d66c4.html" rel="bookmark">LAMP架构实现PowerDNS</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/8a189dcf.html" rel="bookmark">自动化运维之Ansible</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/b124800c.html" rel="bookmark">二进制安装及源码编译安装mariadb数据库</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/133d68.html" rel="bookmark">CentOS6源码编译 安装linunx内核最新版5.2.9</a></div>
+    </li>
+  </ul>
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">

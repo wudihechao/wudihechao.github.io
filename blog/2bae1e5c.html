@@ -364,24 +364,6 @@
 <h2 id="5-修改-etc-fstab配置文件"><a href="#5-修改-etc-fstab配置文件" class="headerlink" title="5 修改/etc/fstab配置文件"></a>5 修改/etc/fstab配置文件</h2><p>&emsp;&emsp;使用mount命令挂载设备都是临时挂载，每次开机后需要手动重新挂载，比较费时费力，如果需要实现自动挂载，就要修改文件系统挂载配置文件/etc/fstab文件。<br>/etc/fstab文件 下面的每行定义一个要挂载的文件系统<br>&emsp;&emsp;总共六列，分别对应设备、挂载点、文件系统类型、挂载选项、转储频率及是否自检。<br> 1、要挂载的设备或伪文件系统<br>设备文件<br>LABEL：LABEL=””<br>UUID：UUID=””<br>伪文件系统名称：proc, sysfs<br> 2、挂载点  一般为某文件或目录<br> 3、文件系统类型：ext4，xfs，iso9660，nfs，none<br> 4、挂载选项：defaults（包括rw suidi dev exac auto nouser async） ，acl，bind<br> 5、转储频率：0：不做备份 1：每天转储 2：每隔一天转储<br> 6、fsck检查的文件系统的顺序：允许的数字是0 1 2<br>&emsp;&emsp;0：不自检<br>&emsp;&emsp;1：首先自检；一般只有rootfs才用<br>&emsp;&emsp;2：非rootfs使用<br>&emsp;&emsp;可以使用cat 、echo 等命令 将这6个信息 追加至/etc/fstab文件中，也可以用sed 命令 。</p>
 <p>&emsp;&emsp;<strong>使用<code>mount -a</code> 命令可以立即挂载/etc/fstab中的所有文件系统</strong></p>
     </div>
-  <div class="popular-posts-header">相关文章</div>
-  <ul class="popular-posts">
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/f2c1a89e.html" rel="bookmark">一键源码编译安装redis</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/57d66c4.html" rel="bookmark">LAMP架构实现PowerDNS</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/8a189dcf.html" rel="bookmark">自动化运维之Ansible</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/b124800c.html" rel="bookmark">二进制安装及源码编译安装mariadb数据库</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/8ddda8e.html" rel="bookmark">部署自动化安装及cobber(Http+TFTP+PXE+kickstart无人职守批量安装精简版Linux系统)</a></div>
-    </li>
-  </ul>
     <div style="text-align:center;color: #ccc;font-size:14px;">---------------- The End ----------------</div>
   <div class="post-widgets">
     <div class="wp_rating">
@@ -400,6 +382,24 @@
       </div>
   </div>
 </div>
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/f2c1a89e.html" rel="bookmark">一键源码编译安装redis</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/57d66c4.html" rel="bookmark">LAMP架构实现PowerDNS</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/8a189dcf.html" rel="bookmark">自动化运维之Ansible</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/b124800c.html" rel="bookmark">二进制安装及源码编译安装mariadb数据库</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/8ddda8e.html" rel="bookmark">部署自动化安装及cobber(Http+TFTP+PXE+kickstart无人职守批量安装精简版Linux系统)</a></div>
+    </li>
+  </ul>
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
