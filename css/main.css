@@ -1268,7 +1268,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #ff36bb;
+  background: #47ff59;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2162,7 +2162,7 @@ article:last-child .post-eof {
 }
 .post-widgets {
   border-top: 0px solid #eee;
-  margin-top: 15px;
+  margin-top: 5px;
   text-align: center;
 }
 .wp_rating {
@@ -2189,8 +2189,8 @@ article:last-child .post-eof {
   height: 30px;
 }
 #reward-container {
-  margin: 20px auto;
-  padding: 10px 0;
+  margin: 5px auto;
+  padding: 5px 0;
   text-align: center;
   width: 90%;
 }
@@ -3123,10 +3123,10 @@ details {
   }
 }
 .popular-posts-header {
-  margin-top: 45px;
+  margin-top: 10px;
   font-size: 20px;
   font-weight: 900;
-  border-bottom: 1px solid #eee;
+  border-bottom: 0px solid #eee;
 }
 @media (max-width: 767px) {
   .popular-posts-header {
