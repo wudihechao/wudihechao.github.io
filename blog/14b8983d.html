@@ -52,7 +52,7 @@
 <meta property="og:site_name" content="BOHC!">
 <meta property="og:description" content="&emsp;&emsp;redis高可用一般有两种方式实现：哨兵和集群。在哨兵 sentinel 机制中，可以解决 redis 高可用的问题， 即当 master 故障后可以自动将 slave 提升为 master 从而可以保证 redis 服务的正常使用，但是无法解决 redis 单机写入的瓶颈问题， 即单机的 redis 写入性能受限于单机的内存大小、 并发数量、 网卡速率等因素。&emsp;">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-15T09:00:08.114Z">
+<meta property="og:updated_time" content="2019-11-15T09:04:28.722Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redis高可用配置">
 <meta name="twitter:description" content="&emsp;&emsp;redis高可用一般有两种方式实现：哨兵和集群。在哨兵 sentinel 机制中，可以解决 redis 高可用的问题， 即当 master 故障后可以自动将 slave 提升为 master 从而可以保证 redis 服务的正常使用，但是无法解决 redis 单机写入的瓶颈问题， 即单机的 redis 写入性能受限于单机的内存大小、 并发数量、 网卡速率等因素。&emsp;">
@@ -303,7 +303,7 @@
         </div>
       </header>
     <div class="post-body" itemprop="articleBody">
-        <p>&emsp;&emsp;redis高可用一般有两种方式实现：哨兵和集群。在哨兵 sentinel 机制中，可以解决 redis 高可用的问题， 即当 master 故障后可以自<br>动将 slave 提升为 master 从而可以保证 redis 服务的正常使用，但是无法解决 redis 单机写入的瓶颈问题， 即单机的 redis 写入性能受限于单机<br>的内存大小、 并发数量、 网卡速率等因素。<br>&emsp;&emsp;redis 官方在 redis 3.0 版本之后推出了无中心架构的 redis cluster机制， 在无中心的 redis 集群当中，其每个节点保存当前节点数<br>据和整个集群状态,每个节点都和其他所有节点连接， 特点如下：</p>
+        <p>&emsp;&emsp;redis高可用一般有两种方式实现：哨兵和集群。在哨兵 sentinel 机制中，可以解决 redis 高可用的问题， 即当 master 故障后可以自动将 slave 提升为 master 从而可以保证 redis 服务的正常使用，但是无法解决 redis 单机写入的瓶颈问题， 即单机的 redis 写入性能受限于单机的内存大小、 并发数量、 网卡速率等因素。<br>&emsp;&emsp;redis 官方在 redis 3.0 版本之后推出了无中心架构的 redis cluster机制， 在无中心的 redis 集群当中，其每个节点保存当前节点数据和整个集群状态,每个节点都和其他所有节点连接， 特点如下：</p>
 <a id="more"></a>
 <p>&emsp;&emsp;1：所有 Redis 节点使用(PING 机制)互联。<br>&emsp;&emsp;2：集群中某个节点的失效， 是整个集群中超过半数的节点监测都失效才算真正的失效（类似Sdown和Odown） 。<br>&emsp;&emsp;3：客户端不需要 proxy 即可直接连接 redis， 应用程序需要写全部的 redis 服务器 IP。<br>&emsp;&emsp;4：redis cluster 把所有的 redis node 映射到 0-16383 个槽位(slot)上， 读写需要到指定的 redis node 上进行操作，因此有多少个 reids node 相当于 redis 并发扩展了多少倍。<br>&emsp;&emsp;5：Redis cluster 预先分配 16384 个(slot)槽位，当需要在 redis 集群中写入一个 key -value 的时候，会使用 CRC16(key) mod 16384 之后的值，决定将 key 写入值哪一个槽位从而决定写入哪一个 Redis 节点上， 从而有效解决单机瓶颈。</p>
 <h3 id="Sentinel-哨兵"><a href="#Sentinel-哨兵" class="headerlink" title="Sentinel(哨兵)"></a>Sentinel(哨兵)</h3><h4 id="手动配置主从"><a href="#手动配置主从" class="headerlink" title="手动配置主从"></a>手动配置主从</h4><p>&emsp;&emsp;需要手动先指定某一台 Redis 服务器为 master，然后将其他 slave 服务器修改配置文件或使用命令配置为 master 服务器的 slave。哨兵的前提是已经手动实现了一个 redis master-slave 的运行环境。<br>&emsp;&emsp;例如我们将192.168.32.81上的redis服务设置为master，192.168.32.82、192.168.32.83设置为slave，192.168.32.81中配置文件masterauth 设置为123456<br>&emsp;&emsp;在192.168.32.82上设置主节点信息<code>SLAVEOF 192.168.32.81 6379</code>(redis5版本命令为<code>REPLICAOF 192.168.7.101 6379</code>)</p>
