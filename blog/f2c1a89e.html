@@ -45,7 +45,7 @@
   };
 </script>
   <meta name="description" content="&emsp;&emsp;Redis 和 Memcached 是非关系型数据库也称为 NoSQL 数据库， MySQL、 Mariadb、 SQLServer、 PostgreSQL、 Oracle 数据库属于关系型数据(RDBMS, Relational Database Management System)。&emsp;&emsp;Redis(Remote Dictionary Server)在">
-<meta name="keywords" content="redis,源码编译,一键安装,企业级应用,内核参数">
+<meta name="keywords" content="一键安装,企业级应用,redis,源码编译,内核参数">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一键源码编译安装redis">
 <meta property="og:url" content="https://hewanyue.com/blog/f2c1a89e.html">
@@ -193,13 +193,13 @@
     <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i>关于</a>
   </li>
         <li class="menu-item menu-item-tags">
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">53</span></a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">55</span></a>
   </li>
         <li class="menu-item menu-item-categories">
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">6</span></a>
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">7</span></a>
   </li>
         <li class="menu-item menu-item-archives">
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">27</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">28</span></a>
   </li>
         <li class="menu-item menu-item-friends">
     <a href="/friends/" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i>友链</a>
@@ -333,10 +333,10 @@
 <h3 id="附：一键编译安装redis脚本"><a href="#附：一键编译安装redis脚本" class="headerlink" title="附：一键编译安装redis脚本"></a>附：一键编译安装redis脚本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">DST=<span class="string">"/apps"</span></span><br><span class="line"><span class="comment">#[ -d $DST ] || &#123; echo "install into $DST fail,No such file or directory" ;exit 10;&#125;</span></span><br><span class="line">[ -a redis-*.tar.* ] || &#123; <span class="built_in">echo</span> <span class="string">' the absence of redis.tar.gz'</span> ;<span class="built_in">exit</span> 1;&#125;</span><br><span class="line">[ -a /usr/lib/systemd/system/redis.service ] && &#123; <span class="built_in">echo</span> <span class="string">'redis.service is exist,redis is aready installed'</span> ;<span class="built_in">exit</span> 2;&#125;</span><br><span class="line">[ -d <span class="variable">$DST</span>/redis* ] && &#123; <span class="built_in">echo</span> <span class="string">"redis is aready installed into <span class="variable">$DST</span>/redis"</span> ;<span class="built_in">exit</span> 3;&#125;</span><br><span class="line">id redis &>/dev/null && &#123; <span class="built_in">echo</span> <span class="string">'user redis is exist,redis is aready installed'</span> ; <span class="built_in">exit</span> 4;&#125; || &#123; groupadd -g 379 redis && useradd -u 379 -g 379 redis -s /sbin/nologin || &#123; <span class="built_in">echo</span> user 379 is exist ;<span class="built_in">exit</span> 5; &#125; &#125;</span><br><span class="line">mkdir -p <span class="variable">$DST</span>/redis</span><br><span class="line">yum  install  -y make gcc</span><br><span class="line"><span class="comment">#yum  install  -y make gcc wget</span></span><br><span class="line"><span class="comment">#wget http://download.redis.io/releases/redis-4.0.14.tar.gz</span></span><br><span class="line">tar xf redis-*.tar.*</span><br><span class="line">PTH=`find . -name <span class="string">"redis*"</span> -<span class="built_in">type</span> d |head -n1`</span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$PTH</span></span><br><span class="line">make PREFIX=<span class="variable">$DST</span>/redis install</span><br><span class="line">mkdir <span class="variable">$DST</span>/redis/&#123;etc,logs,data,run&#125;</span><br><span class="line">cp redis.conf /apps/redis/etc/</span><br><span class="line">chown redis.redis -R /apps/redis</span><br><span class="line">cat > /usr/lib/systemd/system/redis.service <<<span class="string">"END"</span></span><br><span class="line">[Unit]</span><br><span class="line">Description=Redis persistent key-value database</span><br><span class="line">After=network.target</span><br><span class="line">After=network-online.target</span><br><span class="line">Wants=network-online.target</span><br><span class="line">[Service]</span><br><span class="line"><span class="comment">#ExecStart=/usr/bin/redis-server /etc/redis.conf --supervised systemd</span></span><br><span class="line">ExecStart=/apps/redis/bin/redis-server /apps/redis/etc/redis.conf --supervised systemd</span><br><span class="line">ExecReload=/bin/<span class="built_in">kill</span> -s HUP <span class="variable">$MAINPID</span></span><br><span class="line">ExecStop=/bin/<span class="built_in">kill</span> -s QUIT <span class="variable">$MAINPID</span></span><br><span class="line">Type=notify</span><br><span class="line">User=redis</span><br><span class="line">Group=redis</span><br><span class="line">RuntimeDirectory=redis</span><br><span class="line">RuntimeDirectoryMode=0755</span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br><span class="line">END</span><br><span class="line">[ <span class="variable">$DST</span> == <span class="string">"/apps"</span>  ] || sed -i <span class="string">"@/apps@<span class="variable">$DST</span>@g"</span> /usr/lib/systemd/system/redis.service</span><br><span class="line">ln -sv <span class="variable">$DST</span>/redis/bin/* /usr/<span class="built_in">local</span>/bin/</span><br><span class="line"></span><br><span class="line">cat >> /etc/sysctl.conf <<END</span><br><span class="line">net.core.somaxconn = 512</span><br><span class="line">vm.overcommit_memory = 1</span><br><span class="line">END</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> never > /sys/kernel/mm/transparent_hugepage/enabled</span><br><span class="line"></span><br><span class="line">systemctl <span class="built_in">enable</span> --now redis</span><br></pre></td></tr></table></figure>
     </div>
           <div class="post-tags">
-              <a href="/tags/redis/" rel="tag"><i class="fa fa-tag">redis</i></a>
-              <a href="/tags/源码编译/" rel="tag"><i class="fa fa-tag">源码编译</i></a>
               <a href="/tags/一键安装/" rel="tag"><i class="fa fa-tag">一键安装</i></a>
               <a href="/tags/企业级应用/" rel="tag"><i class="fa fa-tag">企业级应用</i></a>
+              <a href="/tags/redis/" rel="tag"><i class="fa fa-tag">redis</i></a>
+              <a href="/tags/源码编译/" rel="tag"><i class="fa fa-tag">源码编译</i></a>
               <a href="/tags/内核参数/" rel="tag"><i class="fa fa-tag">内核参数</i></a>
           </div>
     <div style="text-align:center;color: #ccc;font-size:14px;">------------------------------- The End -------------------------------</div>
@@ -377,6 +377,9 @@
   <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts" style="margin-top: 10px;
     margin-bottom: 10px;">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/b365780e.html" rel="bookmark">linux上部署与配置tomcat</a></div>
+    </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/blog/14b8983d.html" rel="bookmark">redis高可用配置</a></div>
     </li>
@@ -446,19 +449,19 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
-          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-count">28</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-count">55</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -483,6 +486,9 @@
       </div>
       <ul class="links-of-blogroll-list" style="padding-left: 30px;">
           <li>
+            <a href="/blog/b365780e.html" title="linux上部署与配置tomcat" >linux上部署与配置tomcat</a>
+          </li>
+          <li>
             <a href="/blog/14b8983d.html" title="redis高可用配置" >redis高可用配置</a>
           </li>
           <li>
@@ -493,9 +499,6 @@
           </li>
           <li>
             <a href="/blog/f5daec50.html" title="企业级应用：负载均衡层——haproxy(二)" >企业级应用：负载均衡层——haproxy(二)</a>
-          </li>
-          <li>
-            <a href="/blog/5aeb7732.html" title="企业级应用：负载均衡层——haproxy(一)" >企业级应用：负载均衡层——haproxy(一)</a>
           </li>
       </ul>
     </div>
@@ -544,7 +547,7 @@ show_date_time();
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">237k</span>
+    <span title="站点总字数">243k</span>
 </div>
 <div class="busuanzi-count">
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
