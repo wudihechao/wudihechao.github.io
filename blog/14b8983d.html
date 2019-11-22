@@ -45,7 +45,7 @@
   };
 </script>
   <meta name="description" content="&emsp;&emsp;redis高可用一般有两种方式实现：哨兵和集群。在哨兵 sentinel 机制中，可以解决 redis 高可用的问题， 即当 master 故障后可以自动将 slave 提升为 master 从而可以保证 redis 服务的正常使用，但是无法解决 redis 单机写入的瓶颈问题， 即单机的 redis 写入性能受限于单机的内存大小、 并发数量、 网卡速率等因素。&emsp;">
-<meta name="keywords" content="高可用,企业级应用,redis,集群,Sentinel">
+<meta name="keywords" content="企业级应用,高可用,redis,集群,Sentinel">
 <meta property="og:type" content="article">
 <meta property="og:title" content="redis高可用配置">
 <meta property="og:url" content="https://hewanyue.com/blog/14b8983d.html">
@@ -374,8 +374,8 @@
 <p>&emsp;&emsp;主节点被删除之后，其之前它的 slave 自动称为了 Redis 集群中其他 master的 slave，此节点如果不需要也可以一并删除。</p>
     </div>
           <div class="post-tags">
-              <a href="/tags/高可用/" rel="tag"><i class="fa fa-tag">高可用</i></a>
               <a href="/tags/企业级应用/" rel="tag"><i class="fa fa-tag">企业级应用</i></a>
+              <a href="/tags/高可用/" rel="tag"><i class="fa fa-tag">高可用</i></a>
               <a href="/tags/redis/" rel="tag"><i class="fa fa-tag">redis</i></a>
               <a href="/tags/集群/" rel="tag"><i class="fa fa-tag">集群</i></a>
               <a href="/tags/Sentinel/" rel="tag"><i class="fa fa-tag">Sentinel</i></a>
@@ -419,19 +419,19 @@
   <ul class="popular-posts" style="margin-top: 10px;
     margin-bottom: 10px;">
     <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/f2c1a89e.html" rel="bookmark">一键源码编译安装redis</a></div>
+    </li>
+    <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/blog/f5daec50.html" rel="bookmark">企业级应用：负载均衡层——haproxy(二)</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/blog/5aeb7732.html" rel="bookmark">企业级应用：负载均衡层——haproxy(一)</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/f2c1a89e.html" rel="bookmark">一键源码编译安装redis</a></div>
-    </li>
-    <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/blog/159ef64c.html" rel="bookmark">企业级应用：负载均衡层——LVS调度器详解</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/108203a7.html" rel="bookmark">myql数据库MHA实现高可用（多实例间实现）</a></div>
+      <div class="popular-posts-title"><a href="/blog/b365780e.html" rel="bookmark">linux上部署与配置tomcat</a></div>
     </li>
   </ul>
 </div>
