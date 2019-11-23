@@ -298,12 +298,12 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
-              <span>29 分钟</span>
+              <span>30 分钟</span>
             </span>
         </div>
       </header>
     <div class="post-body" itemprop="articleBody">
-          <h2 id="会话保持起源"><a href="#会话保持起源" class="headerlink" title="会话保持起源"></a>会话保持起源</h2><p>&emsp;&emsp;tomcat作为一个应用服务器，单机性能上都是无法满足生产中需要的，而想要解决高并发场景，光靠提升单机性能，成本与效果肯定都是无法让人接受的，而此时我们一般都采用tomcat集群的方式，用多台tomcat服务器来共同支撑我们的业务。<br>&emsp;&emsp;但这时就出现了一个新的问题，那就是会话保持。因为每台tomcat服务器的session是独立的，当客户端被调度到一个新的tomcat服务器时，他无法识别之前一台的tomcat服务器分配的sessionID，于是对于此次访问，之前的会话信息就都没有了，这表现在用户的客户端就相当于，点开一个新的链接，就发现需要重新登陆，或者之前的购物车里的商品都不见了等等。这样的客户访问体验绝对不是我们想要的，所以我们需要实现会话保持功能！</p>
+          <p>&emsp;&emsp;tomcat作为一个应用服务器，单机性能上都是无法满足生产中需要的，而想要解决高并发场景，光靠提升单机性能，成本与效果肯定都是无法让人接受的，而此时我们一般都采用tomcat集群的方式，用多台tomcat服务器来共同支撑我们的业务。<br>&emsp;&emsp;但这时就出现了一个新的问题，那就是会话保持。因为每台tomcat服务器的session是独立的，当客户端被调度到一个新的tomcat服务器时，他无法识别之前一台的tomcat服务器分配的sessionID，于是对于此次访问，之前的会话信息就都没有了，这表现在用户的客户端就相当于，点开一个新的链接，就发现需要重新登陆，或者之前的购物车里的商品都不见了等等。这样的客户访问体验绝对不是我们想要的，所以我们需要实现会话保持功能！</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/blog/6254cc16.html#more" rel="contents">
@@ -754,7 +754,7 @@ show_date_time();
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">255k</span>
+    <span title="站点总字数">256k</span>
 </div>
 <div class="busuanzi-count">
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
