@@ -45,7 +45,7 @@
   };
 </script>
   <meta name="description" content="&emsp;&emsp;tomcat作为一个应用服务器，单机性能上都是无法满足生产中需要的，而想要解决高并发场景，光靠提升单机性能，成本与效果肯定都是无法让人接受的，而此时我们一般都采用tomcat集群的方式，用多台tomcat服务器来共同支撑我们的业务。&emsp;&emsp;但这时就出现了一个新的问题，那就是会话保持。因为每台tomcat服务器的session是独立的，当客户端被调度到一个新的">
-<meta name="keywords" content="高可用,tomcat,redis,集群,session">
+<meta name="keywords" content="tomcat,高可用,redis,集群,session">
 <meta property="og:type" content="article">
 <meta property="og:title" content="tomcat集群的session共享">
 <meta property="og:url" content="https://hewanyue.com/blog/6254cc16.html">
@@ -58,7 +58,7 @@
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191122212611125.png">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191122212642803.png">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191123194433405.gif">
-<meta property="og:updated_time" content="2019-11-23T14:18:39.350Z">
+<meta property="og:updated_time" content="2019-11-23T14:22:57.163Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tomcat集群的session共享">
 <meta name="twitter:description" content="&emsp;&emsp;tomcat作为一个应用服务器，单机性能上都是无法满足生产中需要的，而想要解决高并发场景，光靠提升单机性能，成本与效果肯定都是无法让人接受的，而此时我们一般都采用tomcat集群的方式，用多台tomcat服务器来共同支撑我们的业务。&emsp;&emsp;但这时就出现了一个新的问题，那就是会话保持。因为每台tomcat服务器的session是独立的，当客户端被调度到一个新的">
@@ -325,8 +325,8 @@
 <figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">upstream tomcat &#123;</span><br><span class="line">    #ip_hash; #先关闭原地址iphash，观察效果</span><br><span class="line">    server <span class="number">192.168</span><span class="number">.32</span><span class="number">.231</span>:<span class="number">8080</span> weight=<span class="number">1</span> fail_timeout=<span class="number">5</span>s max_fails=<span class="number">3</span>;</span><br><span class="line">    server <span class="number">192.168</span><span class="number">.32</span><span class="number">.232</span>:<span class="number">8080</span> weight=<span class="number">1</span> fail_timeout=<span class="number">5</span>s max_fails=<span class="number">3</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">    listen <span class="number">80</span>;</span><br><span class="line">    index index.jsp</span><br><span class="line">#    server_name www.example.net;</span><br><span class="line">#    location ~* \.(jsp|<span class="keyword">do</span>)$ &#123;</span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_pass http:<span class="comment">//tomcat;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>&emsp;&emsp;可启用主机名，也可不启用直接用端口访问。用域名访问还需要改DNS或者hosts设置，比较麻烦，我们就直接通过IP+端口访问就可以了。<br>&emsp;&emsp;tomcat服务器中可以新建一个host，也可使用原先的localhost默认主机。我们这次不用之前的localhost，而是自己新创建一个host标签，指定appBase在/data/myapp目录下。两个tomcat服务器都要执行如下操作：</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim <span class="regexp">/apps/</span>tomcat<span class="regexp">/conf/</span>server.xml</span><br></pre></td></tr></table></figure>
-<p>&emsp;&emsp;找到<code>Engine标签</code>，将默认主机修改为``myapp`</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">    &ltEngine <span class="attribute">name</span>=<span class="string">"Catalina"</span> <span class="attribute">defaultHost</span>=<span class="string">"myapp"</span>&gt</span><br><span class="line">`</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;找到<code>Engine标签</code>，将默认主机修改为<code>myapp</code></p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&ltEngine <span class="attribute">name</span>=<span class="string">"Catalina"</span> <span class="attribute">defaultHost</span>=<span class="string">"myapp"</span>&gt</span><br></pre></td></tr></table></figure>
 <p>&emsp;&emsp;找到<code>localhost</code>的<code>&lt/Host&gt</code>标签，在下面创建新的主机<code>myapp</code>,指定appBase为/data/myapp</p>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&ltHost <span class="attribute">name</span>=<span class="string">"myapp"</span>  <span class="attribute">appBase</span>=<span class="string">"/data/myapp"</span></span><br><span class="line">      <span class="attribute">unpackWARs</span>=<span class="string">"true"</span> <span class="attribute">autoDeploy</span>=<span class="string">"true"</span>&gt</span><br><span class="line">&lt/Host&gt</span><br></pre></td></tr></table></figure>
 <p>&emsp;&emsp;PS：Host name一般为主机域名，当一个tomcat中有多个host服务时，就是通过http报文请求头部的host信息来判断去访问哪个host服务的，当找不到对应的主机之后才访问<code>defaultHost</code>，我们这里因为只有启用了一个host，且为defaultHost，所以就无所谓，可以任意命名了，只需对应上就好。<br>&emsp;&emsp;之后我们要在/data/myapp目录下创建一个<code>ROOT</code>目录来作为tomcat访问的默认目录，注意<code>ROOT</code>是大写的。</p>
@@ -367,8 +367,8 @@
 <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&ltManager className=<span class="string">"de.javakaffee.web.msm.MemcachedBackupSessionManager"</span></span><br><span class="line">memcachedNodes=<span class="string">"redis://192.168.32.233:6379"</span></span><br><span class="line">sticky=<span class="string">"false"</span></span><br><span class="line">sessionBackupAsync=<span class="string">"false"</span></span><br><span class="line">lockingMode=<span class="string">"uriPattern:/path1|/path2"</span></span><br><span class="line">requestUriIgnorePattern=<span class="string">".*\.(ico|png|gif|jpg|css|js)$"</span></span><br><span class="line">transcoderFactoryClass=<span class="string">"de.javakaffee.web.msm.serializer.kryo.KryoTranscoderFactory"</span></span><br><span class="line">/&gt</span><br></pre></td></tr></table></figure>
     </div>
           <div class="post-tags">
-              <a href="/tags/高可用/" rel="tag"><i class="fa fa-tag">高可用</i></a>
               <a href="/tags/tomcat/" rel="tag"><i class="fa fa-tag">tomcat</i></a>
+              <a href="/tags/高可用/" rel="tag"><i class="fa fa-tag">高可用</i></a>
               <a href="/tags/redis/" rel="tag"><i class="fa fa-tag">redis</i></a>
               <a href="/tags/集群/" rel="tag"><i class="fa fa-tag">集群</i></a>
               <a href="/tags/session/" rel="tag"><i class="fa fa-tag">session</i></a>
@@ -415,6 +415,9 @@
       <div class="popular-posts-title"><a href="/blog/14b8983d.html" rel="bookmark">redis高可用配置</a></div>
     </li>
     <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/b365780e.html" rel="bookmark">linux上部署与配置tomcat</a></div>
+    </li>
+    <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/blog/f5daec50.html" rel="bookmark">企业级应用：负载均衡层——haproxy(二)</a></div>
     </li>
     <li class="popular-posts-item">
@@ -422,9 +425,6 @@
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/blog/108203a7.html" rel="bookmark">myql数据库MHA实现高可用（多实例间实现）</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/b365780e.html" rel="bookmark">linux上部署与配置tomcat</a></div>
     </li>
   </ul>
 </div>
