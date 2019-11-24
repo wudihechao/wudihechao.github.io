@@ -45,7 +45,7 @@
   };
 </script>
   <meta name="description" content="&emsp;&emsp;tomcat作为一个应用服务器，单机性能上都是无法满足生产中需要的，而想要解决高并发场景，光靠提升单机性能，成本与效果肯定都是无法让人接受的，而此时我们一般都采用tomcat集群的方式，用多台tomcat服务器来共同支撑我们的业务。&emsp;&emsp;但这时就出现了一个新的问题，那就是会话保持。因为每台tomcat服务器的session是独立的，当客户端被调度到一个新的">
-<meta name="keywords" content="tomcat,高可用,redis,集群,session">
+<meta name="keywords" content="tomcat,redis,高可用,集群,session">
 <meta property="og:type" content="article">
 <meta property="og:title" content="tomcat集群的session共享">
 <meta property="og:url" content="https://hewanyue.com/blog/6254cc16.html">
@@ -58,7 +58,7 @@
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191122212611125.png">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191122212642803.png">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191123194433405.gif">
-<meta property="og:updated_time" content="2019-11-23T14:27:50.945Z">
+<meta property="og:updated_time" content="2019-11-24T06:11:47.485Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tomcat集群的session共享">
 <meta name="twitter:description" content="&emsp;&emsp;tomcat作为一个应用服务器，单机性能上都是无法满足生产中需要的，而想要解决高并发场景，光靠提升单机性能，成本与效果肯定都是无法让人接受的，而此时我们一般都采用tomcat集群的方式，用多台tomcat服务器来共同支撑我们的业务。&emsp;&emsp;但这时就出现了一个新的问题，那就是会话保持。因为每台tomcat服务器的session是独立的，当客户端被调度到一个新的">
@@ -316,7 +316,7 @@
 <ul>
 <li>nginx、httpd或者haproxy的调度实现session绑定,一般是源地址哈希方式实现<br>优点:简单易配置<br>缺点：<br>①如果目标服务器故障后,没有做持久化的话就会丢失session;<br>②即便做了持久化,当服务器故障后,nginx或者haproxy会不得不重新分配一个tomcat服务器,而这时因为新的tomcat服务器上没有原来的sessionID,所以无法找到相应会话信息,会重新分配一个sessionID给客户端,就算原来的tomcat服务器重新上线,又被分配到原来的tomcat服务器中,可此时客户端已经有了新的sessionID,也不会去读取最开始的session信息,那些会话信息就相当于永远丢失了。</li>
 <li>session复制集群,官方给出的tomcat会话共享解决方案<br>&emsp;&emsp;tomcat自己提供的多播集群，通过多播将任何一台的session同步到其他节点。<br>缺点：<br>①tomcat的同步节点不宜过多，互相即时通信session需要太多带宽；<br>②每一台tomcat服务器都拥有全部session信息，内存占用太多。</li>
-<li>session server<br>&emsp;&emsp;session 共享服务器，一般使用memcached、redis做共享的session服务器。<br>目前最理想的解决方案，不过会需要额外的机器来配置共享服务器。<h3 id="反向代理的session绑定"><a href="#反向代理的session绑定" class="headerlink" title="反向代理的session绑定"></a>反向代理的session绑定</h3>&emsp;&emsp;这种实现session保持的方案，一般是使用的不多，一般用于公司内部中的会话保持场景。只需在haproxy或者nginx中的调度算法中，加入基于源地址hash即可（调度算法参考<a href="https://blog.csdn.net/MicePro/article/details/102901024#t3" rel="noopener external nofollow noreferrer" target="_blank">之前博客</a>）。于是，用户每次访问都会被调度到同一台tomcat服务器上，上面已有他的session信息，便实现了会话保持。<h4 id="配置实现"><a href="#配置实现" class="headerlink" title="配置实现"></a>配置实现</h4>&emsp;&emsp;我们用一台nginx服务器做反向代理，两台tomcat服务器来演示实现过程。</li>
+<li>session server<br>&emsp;&emsp;session 共享服务器，一般使用memcached、redis做共享的session服务器。<br>目前最理想的解决方案，不过会需要额外的机器来配置共享服务器。<h3 id="反向代理的session绑定"><a href="#反向代理的session绑定" class="headerlink" title="反向代理的session绑定"></a>反向代理的session绑定</h3>&emsp;&emsp;这种实现session保持的方案，一般是使用的不多，一般用于公司内部中的会话保持场景。只需在haproxy或者nginx中的调度算法中，加入基于源地址hash即可（调度算法参考<a href="https://hewanyue.com/blog/5aeb7732.html#haproxy调度算法">之前博客</a>）。于是，用户每次访问都会被调度到同一台tomcat服务器上，上面已有他的session信息，便实现了会话保持。<h4 id="配置实现"><a href="#配置实现" class="headerlink" title="配置实现"></a>配置实现</h4>&emsp;&emsp;我们用一台nginx服务器做反向代理，两台tomcat服务器来演示实现过程。</li>
 </ul>
 <p>&gt nginx主机ip：192.168.32.207<br>&gt tomcat主机1ip：192.168.32.231<br>&gt tomcat主机2ip：192.168.32.232</p>
 <p>&emsp;&emsp;将3台机子中的nginx或tomcat服务启动之后，分别检查80端口和8080端口是否都已监听，确保服务启动。</p>
@@ -368,8 +368,8 @@
     </div>
           <div class="post-tags">
               <a href="/tags/tomcat/" rel="tag"><i class="fa fa-tag">tomcat</i></a>
-              <a href="/tags/高可用/" rel="tag"><i class="fa fa-tag">高可用</i></a>
               <a href="/tags/redis/" rel="tag"><i class="fa fa-tag">redis</i></a>
+              <a href="/tags/高可用/" rel="tag"><i class="fa fa-tag">高可用</i></a>
               <a href="/tags/集群/" rel="tag"><i class="fa fa-tag">集群</i></a>
               <a href="/tags/session/" rel="tag"><i class="fa fa-tag">session</i></a>
           </div>
@@ -418,13 +418,13 @@
       <div class="popular-posts-title"><a href="/blog/b365780e.html" rel="bookmark">linux上部署与配置tomcat</a></div>
     </li>
     <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/f2c1a89e.html" rel="bookmark">一键源码编译安装redis</a></div>
+    </li>
+    <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/blog/f5daec50.html" rel="bookmark">企业级应用：负载均衡层——haproxy(二)</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/blog/5aeb7732.html" rel="bookmark">企业级应用：负载均衡层——haproxy(一)</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/108203a7.html" rel="bookmark">myql数据库MHA实现高可用（多实例间实现）</a></div>
     </li>
   </ul>
 </div>
