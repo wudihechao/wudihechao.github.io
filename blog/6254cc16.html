@@ -45,9 +45,9 @@
   };
 </script>
   <meta name="description" content="&emsp;&emsp;tomcat作为一个应用服务器，单机性能上都是无法满足生产中需要的，而想要解决高并发场景，光靠提升单机性能，成本与效果肯定都是无法让人接受的，而此时我们一般都采用tomcat集群的方式，用多台tomcat服务器来共同支撑我们的业务。&emsp;&emsp;但这时就出现了一个新的问题，那就是会话保持。因为每台tomcat服务器的session是独立的，当客户端被调度到一个新的">
-<meta name="keywords" content="高可用,redis,tomcat,集群,session">
+<meta name="keywords" content="tomcat,redis,集群,msm,session">
 <meta property="og:type" content="article">
-<meta property="og:title" content="tomcat集群的session共享">
+<meta property="og:title" content="msm实现tomcat集群的session共享">
 <meta property="og:url" content="https://hewanyue.com/blog/6254cc16.html">
 <meta property="og:site_name" content="BOHC!">
 <meta property="og:description" content="&emsp;&emsp;tomcat作为一个应用服务器，单机性能上都是无法满足生产中需要的，而想要解决高并发场景，光靠提升单机性能，成本与效果肯定都是无法让人接受的，而此时我们一般都采用tomcat集群的方式，用多台tomcat服务器来共同支撑我们的业务。&emsp;&emsp;但这时就出现了一个新的问题，那就是会话保持。因为每台tomcat服务器的session是独立的，当客户端被调度到一个新的">
@@ -58,9 +58,9 @@
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191122212611125.png">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191122212642803.png">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191123194433405.gif">
-<meta property="og:updated_time" content="2019-11-24T06:11:47.485Z">
+<meta property="og:updated_time" content="2019-11-25T02:00:55.837Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tomcat集群的session共享">
+<meta name="twitter:title" content="msm实现tomcat集群的session共享">
 <meta name="twitter:description" content="&emsp;&emsp;tomcat作为一个应用服务器，单机性能上都是无法满足生产中需要的，而想要解决高并发场景，光靠提升单机性能，成本与效果肯定都是无法让人接受的，而此时我们一般都采用tomcat集群的方式，用多台tomcat服务器来共同支撑我们的业务。&emsp;&emsp;但这时就出现了一个新的问题，那就是会话保持。因为每台tomcat服务器的session是独立的，当客户端被调度到一个新的">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20191122152145219.gif">
   <link rel="canonical" href="https://hewanyue.com/blog/6254cc16">
@@ -74,7 +74,7 @@
     isArchive: false
   };
 </script>
-  <title>tomcat集群的session共享 | BOHC!</title>
+  <title>msm实现tomcat集群的session共享 | BOHC!</title>
   <noscript>
   <style>
   .use-motion .brand,
@@ -200,7 +200,7 @@
     <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i>关于</a>
   </li>
         <li class="menu-item menu-item-tags">
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">56</span></a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">57</span></a>
   </li>
         <li class="menu-item menu-item-categories">
     <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">7</span></a>
@@ -262,7 +262,7 @@
       <meta itemprop="name" content="BOHC!">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">tomcat集群的session共享
+        <h2 class="post-title" itemprop="name headline">msm实现tomcat集群的session共享
         </h2>
         <div class="post-meta">
             <span class="post-meta-item">
@@ -278,7 +278,7 @@
               </span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/tomcat/" itemprop="url" rel="index"><span itemprop="name">tomcat</span></a></span>
             </span>
-            <span id="/blog/6254cc16.html" class="post-meta-item leancloud_visitors" data-flag-title="tomcat集群的session共享" title="阅读次数">
+            <span id="/blog/6254cc16.html" class="post-meta-item leancloud_visitors" data-flag-title="msm实现tomcat集群的session共享" title="阅读次数">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
@@ -367,10 +367,10 @@
 <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&ltManager className=<span class="string">"de.javakaffee.web.msm.MemcachedBackupSessionManager"</span></span><br><span class="line">memcachedNodes=<span class="string">"redis://192.168.32.233:6379"</span></span><br><span class="line">sticky=<span class="string">"false"</span></span><br><span class="line">sessionBackupAsync=<span class="string">"false"</span></span><br><span class="line">lockingMode=<span class="string">"uriPattern:/path1|/path2"</span></span><br><span class="line">requestUriIgnorePattern=<span class="string">".*\.(ico|png|gif|jpg|css|js)$"</span></span><br><span class="line">transcoderFactoryClass=<span class="string">"de.javakaffee.web.msm.serializer.kryo.KryoTranscoderFactory"</span></span><br><span class="line">/&gt</span><br></pre></td></tr></table></figure>
     </div>
           <div class="post-tags">
-              <a href="/tags/高可用/" rel="tag"><i class="fa fa-tag">高可用</i></a>
-              <a href="/tags/redis/" rel="tag"><i class="fa fa-tag">redis</i></a>
               <a href="/tags/tomcat/" rel="tag"><i class="fa fa-tag">tomcat</i></a>
+              <a href="/tags/redis/" rel="tag"><i class="fa fa-tag">redis</i></a>
               <a href="/tags/集群/" rel="tag"><i class="fa fa-tag">集群</i></a>
+              <a href="/tags/msm/" rel="tag"><i class="fa fa-tag">msm</i></a>
               <a href="/tags/session/" rel="tag"><i class="fa fa-tag">session</i></a>
           </div>
     <div style="text-align:center;color: #ccc;font-size:14px;">------------------------------- The End -------------------------------</div>
@@ -397,7 +397,7 @@
     <strong>本文作者： </strong>Hechao</li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://hewanyue.com/blog/6254cc16.html" title="tomcat集群的session共享">https://hewanyue.com/blog/6254cc16.html</a>
+    <a href="https://hewanyue.com/blog/6254cc16.html" title="msm实现tomcat集群的session共享">https://hewanyue.com/blog/6254cc16.html</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
@@ -415,16 +415,13 @@
       <div class="popular-posts-title"><a href="/blog/14b8983d.html" rel="bookmark">redis高可用配置</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/f5daec50.html" rel="bookmark">企业级应用：负载均衡层——haproxy(二)</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/5aeb7732.html" rel="bookmark">企业级应用：负载均衡层——haproxy(一)</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/108203a7.html" rel="bookmark">myql数据库MHA实现高可用（多实例间实现）</a></div>
+      <div class="popular-posts-title"><a href="/blog/b365780e.html" rel="bookmark">linux上部署与配置tomcat</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/blog/f2c1a89e.html" rel="bookmark">一键源码编译安装redis</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/159ef64c.html" rel="bookmark">企业级应用：负载均衡层——LVS调度器详解</a></div>
     </li>
   </ul>
 </div>
@@ -492,7 +489,7 @@
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-count">57</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -517,7 +514,7 @@
       </div>
       <ul class="links-of-blogroll-list" style="padding-left: 30px;">
           <li>
-            <a href="/blog/6254cc16.html" title="tomcat集群的session共享" >tomcat集群的session共享</a>
+            <a href="/blog/6254cc16.html" title="msm实现tomcat集群的session共享" >msm实现tomcat集群的session共享</a>
           </li>
           <li>
             <a href="/blog/b365780e.html" title="linux上部署与配置tomcat" >linux上部署与配置tomcat</a>
