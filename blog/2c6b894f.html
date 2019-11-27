@@ -44,14 +44,14 @@
   };
 </script>
   <meta name="description" content="&emsp;&emsp;企业中，必不可少的应用就是VPN了，它可以帮助员工在外网中访问公司内网，常见开源实现方案有OpenVPN和jumpserver。&emsp;&emsp;OpenVPN是采用了端口转发的原理实现，是基于IP+端口的4层代理机制，一般是用于出差员工访问公司内部ERP系统等使用，而jumpserver是7层代理，所以功能更加强大却也更加复杂，一般适合运维人员管理维护企业内部服务器">
-<meta name="keywords" content="经验分享,OpenVPN,SSH,科学上网,企业级应用">
+<meta name="keywords" content="OpenVPN,SSH,科学上网,企业级应用,经验分享">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OpenVPN的搭建">
 <meta property="og:url" content="https://hewanyue.com/blog/2c6b894f.html">
 <meta property="og:site_name" content="BOHC!">
 <meta property="og:description" content="&emsp;&emsp;企业中，必不可少的应用就是VPN了，它可以帮助员工在外网中访问公司内网，常见开源实现方案有OpenVPN和jumpserver。&emsp;&emsp;OpenVPN是采用了端口转发的原理实现，是基于IP+端口的4层代理机制，一般是用于出差员工访问公司内部ERP系统等使用，而jumpserver是7层代理，所以功能更加强大却也更加复杂，一般适合运维人员管理维护企业内部服务器">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-26T03:20:55.989Z">
+<meta property="og:updated_time" content="2019-11-27T06:16:28.082Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OpenVPN的搭建">
 <meta name="twitter:description" content="&emsp;&emsp;企业中，必不可少的应用就是VPN了，它可以帮助员工在外网中访问公司内网，常见开源实现方案有OpenVPN和jumpserver。&emsp;&emsp;OpenVPN是采用了端口转发的原理实现，是基于IP+端口的4层代理机制，一般是用于出差员工访问公司内部ERP系统等使用，而jumpserver是7层代理，所以功能更加强大却也更加复杂，一般适合运维人员管理维护企业内部服务器">
@@ -345,7 +345,7 @@
 <p>&emsp;&emsp;然后<code>直接回车</code>，便生成了Mice的证书申请和私钥。<strong>进入easyrsa的server目录中</strong>，(注意，<code>一定要进入easyrsa-server目录</code>，否则会报错)，导入证书申请并给客户端的证书请求签发证书,记得输入<code>yes</code>确认。</p>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./easyrsa import-req /etc/openvpn/easyrsa-client/3/pki/reqs/Mice.req Mice</span><br><span class="line">./easyrsa sign<span class="built_in"> client </span>Mice</span><br></pre></td></tr></table></figure>
 <p>&emsp;&emsp;复制证书到server目录：</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> mkdir <span class="regexp">/etc/</span>openvpn/certs</span><br><span class="line"> cd <span class="regexp">/etc/</span>openvpn<span class="regexp">/certs/</span></span><br><span class="line"> cp <span class="regexp">/etc/</span>openvpn<span class="regexp">/easyrsa-server/</span><span class="number">3</span><span class="regexp">/pki/</span>dh.pem .</span><br><span class="line"> cp <span class="regexp">/etc/</span>openvpn<span class="regexp">/easyrsa-server/</span><span class="number">3</span><span class="regexp">/pki/</span>ca.crt .</span><br><span class="line"> cp <span class="regexp">/etc/</span>openvpn<span class="regexp">/easyrsa-server/</span><span class="number">3</span><span class="regexp">/pki/</span>issued/server.crt .</span><br><span class="line"> cp <span class="regexp">/etc/</span>openvpn<span class="regexp">/easyrsa-server/</span><span class="number">3</span><span class="regexp">/pki/</span><span class="keyword">private</span>/server.key .</span><br><span class="line">`</span><br></pre></td></tr></table></figure>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mkdir <span class="regexp">/etc/</span>openvpn/certs</span><br><span class="line">cd <span class="regexp">/etc/</span>openvpn<span class="regexp">/certs/</span></span><br><span class="line">cp <span class="regexp">/etc/</span>openvpn<span class="regexp">/easyrsa-server/</span><span class="number">3</span><span class="regexp">/pki/</span>dh.pem .</span><br><span class="line">cp <span class="regexp">/etc/</span>openvpn<span class="regexp">/easyrsa-server/</span><span class="number">3</span><span class="regexp">/pki/</span>ca.crt .</span><br><span class="line">cp <span class="regexp">/etc/</span>openvpn<span class="regexp">/easyrsa-server/</span><span class="number">3</span><span class="regexp">/pki/</span>issued/server.crt .</span><br><span class="line">cp <span class="regexp">/etc/</span>openvpn<span class="regexp">/easyrsa-server/</span><span class="number">3</span><span class="regexp">/pki/</span><span class="keyword">private</span>/server.key .</span><br></pre></td></tr></table></figure>
 <p>&emsp;&emsp;创建客户端配置文件</p>
 <figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir <span class="meta-keyword">/etc/</span>openvpn<span class="meta-keyword">/client/</span>Mice/</span><br><span class="line">vim <span class="meta-keyword">/etc/</span>openvpn<span class="meta-keyword">/client/</span>Mice/client.ovpn</span><br></pre></td></tr></table></figure>
 <figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">client #声明自己是个客户端</span><br><span class="line">dev tun #接口类型，必须和服务端保持一致</span><br><span class="line">proto tcp #使用的协议，必须和服务端保持一致</span><br><span class="line">remote <span class="number">172.18</span><span class="number">.32</span><span class="number">.71</span> <span class="number">1194</span> #server端的ip和端口，可以写域名但是需要可以解析成IP</span><br><span class="line">resolv-retry infinite #如果是写的server端的域名，那么就始终解析，如果域名发生变化，会重新连接到新>的域名对应的IP</span><br><span class="line">nobind #本机不绑定监听端口，客户端是随机打开端口连接到服务端的<span class="number">1194</span></span><br><span class="line">persist-<span class="type">key</span> #</span><br><span class="line">persist-tun</span><br><span class="line">ca ca.crt</span><br><span class="line">cert Mice.crt</span><br><span class="line"><span class="type">key</span> Mice.<span class="type">key</span></span><br><span class="line">remote-cert-tls server #指定采用服务器校验方式</span><br><span class="line">#tls-auth ta.<span class="type">key</span> <span class="number">1</span></span><br><span class="line">cipher AES<span class="number">-256</span>-CBC</span><br><span class="line">verb <span class="number">3</span></span><br></pre></td></tr></table></figure>
@@ -374,11 +374,11 @@
 <h2 id="OpenVPN客户端"><a href="#OpenVPN客户端" class="headerlink" title="OpenVPN客户端"></a>OpenVPN客户端</h2><p>&emsp;&emsp;官方客户端下载地址： <a href="https://openvpn.net/community-downloads/" rel="noopener external nofollow noreferrer" target="_blank">https://openvpn.net/community-downloads/</a><br>&emsp;&emsp;非官方地址：<a href="https://sourceforge.net/projects/securepoint/files/" rel="noopener external nofollow noreferrer" target="_blank">https://sourceforge.net/projects/securepoint/files/</a><br>&emsp;&emsp;如果是默认安装路径的话，保存证书到openvpn 客户端安装目录：C:\Program Files\OpenVPN\config<br>&emsp;&emsp;之后就可以直接启动OpenVPN。此时就可以用浏览器直接访问内网IP或者直接ssh登陆内部服务器了。</p>
     </div>
           <div class="post-tags">
-              <a href="/tags/经验分享/" rel="tag"><i class="fa fa-tag">经验分享</i></a>
               <a href="/tags/OpenVPN/" rel="tag"><i class="fa fa-tag">OpenVPN</i></a>
               <a href="/tags/SSH/" rel="tag"><i class="fa fa-tag">SSH</i></a>
               <a href="/tags/科学上网/" rel="tag"><i class="fa fa-tag">科学上网</i></a>
               <a href="/tags/企业级应用/" rel="tag"><i class="fa fa-tag">企业级应用</i></a>
+              <a href="/tags/经验分享/" rel="tag"><i class="fa fa-tag">经验分享</i></a>
           </div>
     <div style="text-align:center;color: #ccc;font-size:14px;">------------------------------- The End -------------------------------</div>
   <div class="post-widgets">
@@ -419,12 +419,6 @@
   <ul class="popular-posts" style="margin-top: 10px;
     margin-bottom: 10px;">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/57d66c4.html" rel="bookmark">LAMP架构实现PowerDNS</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/72c5296a.html" rel="bookmark">yum/dnf 安装mariadb10.4.8（最新版）</a></div>
-    </li>
-    <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/blog/b365780e.html" rel="bookmark">linux上部署与配置tomcat</a></div>
     </li>
     <li class="popular-posts-item">
@@ -432,6 +426,12 @@
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/blog/f2c1a89e.html" rel="bookmark">一键源码编译安装redis</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/f5daec50.html" rel="bookmark">企业级应用：负载均衡层——haproxy(二)</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/5aeb7732.html" rel="bookmark">企业级应用：负载均衡层——haproxy(一)</a></div>
     </li>
   </ul>
 </div>
