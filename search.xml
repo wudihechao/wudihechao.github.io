@@ -80,9 +80,6 @@
 <figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">vim</span> nginx/nginx.conf</span></pre></td></tr><tr><td class="code"><pre><span class="line">user  nginx;</span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="attribute">worker_processes</span>  <span class="number">2</span>;</span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="attribute">worker_cpu_affinity</span> <span class="number">0001</span> <span class="number">0010</span>;</span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="attribute">worker_priority</span> -<span class="number">10</span>;</span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="attribute">error_log</span>  logs/error.log  <span class="literal">info</span>;</span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="attribute">error_log</span>  /apps/nginx/logs/error.log  <span class="literal">error</span>;</span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="section">events</span> &#123;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    <span class="attribute">worker_connections</span>  <span class="number">65536</span>;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    <span class="attribute">use</span> <span class="literal">epoll</span>;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    <span class="attribute">accept_mutex</span> <span class="literal">on</span>;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    <span class="attribute">multi_accept</span> <span class="literal">on</span>;</span></pre></td></tr><tr><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="section">http</span> &#123;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    <span class="attribute">include</span>       mime.types;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    <span class="attribute">default_type</span>  application/octet-stream;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    <span class="attribute">log_format</span> access_json <span class="string">'&#123;"<span class="variable">@timestamp</span>":"<span class="variable">$time_iso8601</span>",'</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">        <span class="string">'"host":"<span class="variable">$server_addr</span>",'</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">        <span class="string">'"clientip":"<span class="variable">$remote_addr</span>",'</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">        <span class="string">'"size":<span class="variable">$body_bytes_sent</span>,'</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">        <span class="string">'"responsetime":<span class="variable">$request_time</span>,'</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">        <span class="string">'"upstreamtime":"<span class="variable">$upstream_response_time</span>",'</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">        <span class="string">'"upstreamhost":"<span class="variable">$upstream_addr</span>",'</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">        <span class="string">'"http_host":"<span class="variable">$host</span>",'</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">        <span class="string">'"uri":"<span class="variable">$uri</span>",'</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">        <span class="string">'"domain":"<span class="variable">$host</span>",'</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">        <span class="string">'"xff":"<span class="variable">$http_x_forwarded_for</span>",'</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">        <span class="string">'"referer":"<span class="variable">$http_referer</span>",'</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">        <span class="string">'"tcp_xff":"<span class="variable">$proxy_protocol_addr</span>",'</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">        <span class="string">'"http_user_agent":"<span class="variable">$http_user_agent</span>",'</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">        <span class="string">'"status":"<span class="variable">$status</span>"&#125;'</span>;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    <span class="attribute">access_log</span>  /apps/nginx/logs/access_json.log  access_json;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    <span class="attribute">sendfile</span>        <span class="literal">on</span>;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    <span class="attribute">keepalive_timeout</span>  <span class="number">65</span> <span class="number">65</span>;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    <span class="attribute">server_tokens</span> <span class="literal">off</span>;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    <span class="attribute">charset</span> utf-<span class="number">8</span>;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    <span class="attribute">gzip</span>  <span class="literal">on</span>;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    <span class="section">server</span> &#123;</span></pre></td></tr><tr><td class="code"><pre><span class="line">        <span class="attribute">listen</span>       <span class="number">80</span>;</span></pre></td></tr><tr><td class="code"><pre><span class="line">        <span class="attribute">server_name</span>  www.example.net;</span></pre></td></tr><tr><td class="code"><pre><span class="line">        <span class="attribute">location</span> = / &#123;</span></pre></td></tr><tr><td class="code"><pre><span class="line">            <span class="attribute">root</span>   html;</span></pre></td></tr><tr><td class="code"><pre><span class="line">            <span class="attribute">index</span>  index.html index.htm;</span></pre></td></tr><tr><td class="code"><pre><span class="line">        &#125;</span></pre></td></tr><tr><td class="code"><pre><span class="line">        <span class="attribute">error_page</span>   <span class="number">500</span> <span class="number">502</span> <span class="number">503</span> <span class="number">504</span>  /50x.html;</span></pre></td></tr><tr><td class="code"><pre><span class="line">        <span class="attribute">location</span> = /50x.html &#123;</span></pre></td></tr><tr><td class="code"><pre><span class="line">            <span class="attribute">root</span>   html;</span></pre></td></tr><tr><td class="code"><pre><span class="line">        &#125;</span></pre></td></tr><tr><td class="code"><pre><span class="line">        <span class="attribute">location</span> <span class="regexp">~ ^/(status|ping)$</span> &#123;</span></pre></td></tr><tr><td class="code"><pre><span class="line">             <span class="attribute">include</span> fastcgi_params;</span></pre></td></tr><tr><td class="code"><pre><span class="line">             <span class="attribute">fastcgi_pass</span> <span class="number">127.0.0.1:9000</span>;</span></pre></td></tr><tr><td class="code"><pre><span class="line">             <span class="attribute">fastcgi_param</span> PATH_TRANSLATED <span class="variable">$document_root</span><span class="variable">$fastcgi_script_name</span>;</span></pre></td></tr><tr><td class="code"><pre><span class="line">             <span class="attribute">fastcgi_hide_header</span> X-Powered-By;</span></pre></td></tr><tr><td class="code"><pre><span class="line">        &#125;</span></pre></td></tr><tr><td class="code"><pre><span class="line">        <span class="attribute">location</span> <span class="regexp">~ \.php$</span> &#123;</span></pre></td></tr><tr><td class="code"><pre><span class="line">            <span class="attribute">root</span>           html;</span></pre></td></tr><tr><td class="code"><pre><span class="line">            <span class="attribute">fastcgi_pass</span>   <span class="number">127.0.0.1:9000</span>;</span></pre></td></tr><tr><td class="code"><pre><span class="line">            <span class="attribute">fastcgi_index</span>  index.php;</span></pre></td></tr><tr><td class="code"><pre><span class="line">            <span class="attribute">fastcgi_param</span>  SCRIPT_FILENAME <span class="variable">$document_root</span><span class="variable">$fastcgi_script_name</span>;</span></pre></td></tr><tr><td class="code"><pre><span class="line">            <span class="attribute">include</span>        fastcgi_params;</span></pre></td></tr><tr><td class="code"><pre><span class="line">        &#125;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim php-fpm/php-fpm.sh</span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">DST=<span class="string">"/apps"</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">[ -a php-*.tar.* ] || &#123; <span class="built_in">echo</span> <span class="string">' the absence of php-7.3.10.tar.xz'</span> ;<span class="built_in">exit</span> 1;&#125;</span></pre></td></tr><tr><td class="code"><pre><span class="line">[ -a /usr/lib/systemd/system/php-fpm.service ] &amp;&amp; &#123; <span class="built_in">echo</span> <span class="string">' php-fpm is aready installed'</span> ;<span class="built_in">exit</span> 2;&#125;</span></pre></td></tr><tr><td class="code"><pre><span class="line">[ -a <span class="variable">$DST</span>/php* ] &amp;&amp; &#123; <span class="built_in">echo</span> <span class="string">' php is aready installed'</span> ;<span class="built_in">exit</span> 2;&#125;</span></pre></td></tr><tr><td class="code"><pre><span class="line">mkdir -p <span class="variable">$DST</span>/php</span></pre></td></tr><tr><td class="code"><pre><span class="line">yum install libxml2-devel bzip2-devel libmcrypt-devel -y || &#123; <span class="built_in">echo</span> <span class="string">'Dependencies is not installed'</span>;<span class="built_in">exit</span> 5;&#125;</span></pre></td></tr><tr><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="comment">#wget https://www.php.net/distributions/php-7.3.10.tar.xz</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">tar xvf php-*.tar.*</span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> php-7.3.10</span></pre></td></tr><tr><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="code"><pre><span class="line">./configure \</span></pre></td></tr><tr><td class="code"><pre><span class="line">--prefix=<span class="variable">$DST</span>/php \</span></pre></td></tr><tr><td class="code"><pre><span class="line">--<span class="built_in">enable</span>-mysqlnd \</span></pre></td></tr><tr><td class="code"><pre><span class="line">--with-mysqli=mysqlnd \</span></pre></td></tr><tr><td class="code"><pre><span class="line">--with-pdo-mysql=mysqlnd \</span></pre></td></tr><tr><td class="code"><pre><span class="line">--with-openssl \</span></pre></td></tr><tr><td class="code"><pre><span class="line">--with-freetype-dir \</span></pre></td></tr><tr><td class="code"><pre><span class="line">--with-jpeg-dir \</span></pre></td></tr><tr><td class="code"><pre><span class="line">--with-png-dir \</span></pre></td></tr><tr><td class="code"><pre><span class="line">--with-zlib \</span></pre></td></tr><tr><td class="code"><pre><span class="line">--with-libxml-dir=/usr \</span></pre></td></tr><tr><td class="code"><pre><span class="line">--with-config-file-path=/etc \</span></pre></td></tr><tr><td class="code"><pre><span class="line">--with-config-file-scan-dir=/etc/php.d \</span></pre></td></tr><tr><td class="code"><pre><span class="line">--<span class="built_in">enable</span>-mbstring \</span></pre></td></tr><tr><td class="code"><pre><span class="line">--<span class="built_in">enable</span>-xml \</span></pre></td></tr><tr><td class="code"><pre><span class="line">--<span class="built_in">enable</span>-sockets \</span></pre></td></tr><tr><td class="code"><pre><span class="line">--<span class="built_in">enable</span>-fpm \</span></pre></td></tr><tr><td class="code"><pre><span class="line">--<span class="built_in">enable</span>-maintainer-zts \</span></pre></td></tr><tr><td class="code"><pre><span class="line">--<span class="built_in">disable</span>-fileinfo</span></pre></td></tr><tr><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="code"><pre><span class="line"> make -j 4 &amp;&amp; make install</span></pre></td></tr><tr><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="code"><pre><span class="line">cp php.ini-production  /etc/php.ini</span></pre></td></tr><tr><td class="code"><pre><span class="line">cp sapi/fpm/php-fpm.service /usr/lib/systemd/system/</span></pre></td></tr><tr><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="code"><pre><span class="line">cp <span class="variable">$DST</span>/php/etc/php-fpm.conf.default  <span class="variable">$DST</span>/php/etc/php-fpm.conf</span></pre></td></tr><tr><td class="code"><pre><span class="line">cp <span class="variable">$DST</span>/php/etc/php-fpm.d/www.conf.default <span class="variable">$DST</span>/php/etc/php-fpm.d/www.conf</span></pre></td></tr><tr><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="code"><pre><span class="line">sed -i <span class="string">'s@nobody@nginx@g'</span> <span class="variable">$DST</span>/php/etc/php-fpm.d/www.conf</span></pre></td></tr><tr><td class="code"><pre><span class="line">sed -i <span class="string">'/#/!s@index  index.html index.htm@index index.php index.html index.htm@'</span> <span class="variable">$DST</span>/nginx/conf/nginx.conf</span></pre></td></tr><tr><td class="code"><pre><span class="line">sed -i <span class="string">'s@/scripts$fastcgi_script_name@$document_root$fastcgi_script_name@g'</span> <span class="variable">$DST</span>/nginx/conf/nginx.conf</span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="variable">$DST</span>/nginx/sbin/nginx -s reload</span></pre></td></tr><tr><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> --now php-fpm</span></pre></td></tr></table></figure>
 ]]></content>
-      <categories>
-        <category>KVM</category>
-      </categories>
       <tags>
         <tag>一键安装</tag>
         <tag>负载均衡</tag>
@@ -165,14 +162,14 @@
 <h2 id="OpenVPN客户端"><a href="#OpenVPN客户端" class="headerlink" title="OpenVPN客户端"></a>OpenVPN客户端</h2><p>&emsp;&emsp;官方客户端下载地址： <a href="https://openvpn.net/community-downloads/" target="_blank" rel="noopener">https://openvpn.net/community-downloads/</a><br>&emsp;&emsp;非官方地址：<a href="https://sourceforge.net/projects/securepoint/files/" target="_blank" rel="noopener">https://sourceforge.net/projects/securepoint/files/</a><br>&emsp;&emsp;如果是默认安装路径的话，保存证书到openvpn 客户端安装目录：C:\Program Files\OpenVPN\config<br>&emsp;&emsp;之后就可以直接启动OpenVPN。此时就可以用浏览器直接访问内网IP或者直接ssh登陆内部服务器了。</p>
 ]]></content>
       <categories>
-        <category>linux进阶</category>
+        <category>linux</category>
       </categories>
       <tags>
-        <tag>经验分享</tag>
         <tag>OpenVPN</tag>
         <tag>SSH</tag>
         <tag>科学上网</tag>
         <tag>企业级应用</tag>
+        <tag>经验分享</tag>
       </tags>
   </entry>
   <entry>
@@ -235,7 +232,7 @@
 <figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">&amp;ltManager className=<span class="string">"de.javakaffee.web.msm.MemcachedBackupSessionManager"</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">memcachedNodes=<span class="string">"redis://192.168.32.233:6379"</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">sticky=<span class="string">"false"</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">sessionBackupAsync=<span class="string">"false"</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">lockingMode=<span class="string">"uriPattern:/path1|/path2"</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">requestUriIgnorePattern=<span class="string">".*\.(ico|png|gif|jpg|css|js)$"</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">transcoderFactoryClass=<span class="string">"de.javakaffee.web.msm.serializer.kryo.KryoTranscoderFactory"</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">/&amp;gt</span></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>tomcat</category>
+        <category>linux</category>
       </categories>
       <tags>
         <tag>tomcat</tag>
@@ -295,7 +292,7 @@
 
 ]]></content>
       <categories>
-        <category>tomcat</category>
+        <category>linux</category>
       </categories>
       <tags>
         <tag>linux</tag>
@@ -378,7 +375,7 @@
 <p>&emsp;&emsp;主节点被删除之后，其之前它的 slave 自动称为了 Redis 集群中其他 master的 slave，此节点如果不需要也可以一并删除。</p>
 ]]></content>
       <categories>
-        <category>redis</category>
+        <category>SQL&#39;s</category>
       </categories>
       <tags>
         <tag>企业级应用</tag>
@@ -422,7 +419,7 @@
 
 ]]></content>
       <categories>
-        <category>redis</category>
+        <category>SQL&#39;s</category>
       </categories>
       <tags>
         <tag>企业级应用</tag>
@@ -447,7 +444,7 @@
 <p>&emsp;&emsp;挂载成功~问题解决！原来纯属自己挖的坑！<br>&emsp;&emsp;记录一下，也算，增长点见识，吸取些教训。</p>
 ]]></content>
       <categories>
-        <category>故障记录</category>
+        <category>故障</category>
       </categories>
       <tags>
         <tag>故障</tag>
@@ -639,7 +636,7 @@
 <p>&emsp;&emsp;详细信息查看官网<a href="http://cbonte.github.io/haproxy-dconv/2.0/configuration.html#7.4" target="_blank" rel="noopener">http://cbonte.github.io/haproxy-dconv/2.0/configuration.html#7.4</a></p>
 ]]></content>
       <categories>
-        <category>linux进阶</category>
+        <category>linux</category>
       </categories>
       <tags>
         <tag>企业级应用</tag>
@@ -804,7 +801,7 @@
 <p>&emsp;&emsp;需要注意的一点就是，多线程工作模式下，<strong>每个线程是独立的</strong>，设置1线程的权重，在其他线程上并不生效。这就意味着，如果想将某个服务器下线的话，需要在每个线程上都分别下线，上线是，也需要在每个线程中enable server。可以用脚本写一个循环来实现。</p>
 ]]></content>
       <categories>
-        <category>linux进阶</category>
+        <category>linux</category>
       </categories>
       <tags>
         <tag>企业级应用</tag>
@@ -825,7 +822,7 @@
 <p>&emsp;&emsp;希望不是因为阿里的安装包被人动过而导致秘钥检查不通过吧，姑且相信吧。记录一下，等后期如果有问题或者有空再来排查原因。<br>&emsp;&emsp;<br>&emsp;&emsp;<br>——————————————后记 ———————————–<br>&emsp;&emsp;原来当时配置yum源文件的时候不小心画蛇添足了，导致gpgkey文件路径不对，应为<code>gpgkey=https://mirrors.aliyun.com/epel/RPM-GPG-KEY-EPEL-$releaseve</code>，用file://的话，就不需要加协议了，直接写主机名或IP加路径。<br>&emsp;&emsp;要时刻提醒自己还是要仔细，一直不出错不代表没错。<br>&emsp;&emsp;<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;2019.11.10</p>
 ]]></content>
       <categories>
-        <category>故障记录</category>
+        <category>故障</category>
       </categories>
       <tags>
         <tag>故障</tag>
@@ -874,7 +871,7 @@
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>&emsp;&emsp;设置匹配规则时，必须符合其中的某一种，而不能想当然的把几种规则混合起来使用，想要放行的链接，一定要考虑好，到底确切适用于哪一种规则，才不会出现“误伤“、“漏网”的情况。</p>
 ]]></content>
       <categories>
-        <category>linux进阶</category>
+        <category>linux</category>
       </categories>
       <tags>
         <tag>nginx</tag>
@@ -985,7 +982,7 @@ server-address</code><br>&emsp;&emsp;rip[:port] 如省略port，不作端口映�
 
 ]]></content>
       <categories>
-        <category>linux进阶</category>
+        <category>linux</category>
       </categories>
       <tags>
         <tag>企业级应用</tag>
@@ -1060,7 +1057,7 @@ server-address</code><br>&emsp;&emsp;rip[:port] 如省略port，不作端口映�
 <p>至此，php页面就可以正常访问了</p>
 ]]></content>
       <categories>
-        <category>linux进阶</category>
+        <category>linux</category>
       </categories>
       <tags>
         <tag>编译安装</tag>
@@ -1094,7 +1091,7 @@ server-address</code><br>&emsp;&emsp;rip[:port] 如省略port，不作端口映�
 <p><img src="https://img-blog.csdnimg.cn/20191014135839135.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;7.设置完成，删除install目录<br>&emsp;&emsp;<code>\rm -rf install</code><br><img src="https://img-blog.csdnimg.cn/20191014132142570.png" alt="在这里插入图片描述"><br>&emsp;&emsp;如果不进行第6、7步就会报错，如上图所示。<br><img src="https://img-blog.csdnimg.cn/2019101413425982.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;8.输入用户名密码登陆<br><img src="https://img-blog.csdnimg.cn/20191014134306107.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;9.进入主页面。至此PowerDNS在web上展示就实现了~</p>
 ]]></content>
       <categories>
-        <category>linux进阶</category>
+        <category>linux</category>
       </categories>
       <tags>
         <tag>linux</tag>
@@ -1119,7 +1116,7 @@ server-address</code><br>&emsp;&emsp;rip[:port] 如省略port，不作端口映�
 <p>&emsp;&emsp;果然成功了。问题解决。</p>
 ]]></content>
       <categories>
-        <category>数据库</category>
+        <category>SQL&#39;s</category>
       </categories>
       <tags>
         <tag>经验分享</tag>
@@ -1417,7 +1414,7 @@ home=/app/user1 group=root&#39;</code><br><code>ansible srv -m user -a &#39;name
 <p>&emsp;&emsp; 在主数据库上将mysql进程杀掉后，MHA进程自动结束。<br><img src="https://img-blog.csdnimg.cn/20190927123356815.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp; 在3307端口数据库上查询，已经没有从节点信息了。<img src="https://img-blog.csdnimg.cn/20190927124323317.png" alt="在这里插入图片描述"><br>&emsp;&emsp; 在3308端口数据库以及3309端口数据上显示，主数据库已变为更为3307端口数据库，说明转换主从结构成功！<br><img src="https://img-blog.csdnimg.cn/20190927124330490.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp; PS：因为几个数据库都是源码编译安装，数据库路径和二进制文件储存位置都做出了调整，与默认位置不同，而yum安装的MHAmaster中如果配置文件中不写明master_binlog_dir的位置，则会默认去<code>/usr/bin/msyql/</code>目录下找主机二进制文件（当然，mysql数据库也是yum安装的可忽略这些配置，一切默认就好，而配置文件中添加server主机时，如果端口号不是默认3306，一定要记得写明port端口号，如本文中多实例用的不同端口，标记清楚即可。）</p>
 ]]></content>
       <categories>
-        <category>数据库</category>
+        <category>SQL&#39;s</category>
       </categories>
       <tags>
         <tag>多实例</tag>
@@ -1513,7 +1510,7 @@ home=/app/user1 group=root&#39;</code><br><code>ansible srv -m user -a &#39;name
 <p>&emsp;&emsp;在代理机上用命令测试相应读写的是哪个数据库：<br>&emsp;&emsp;mysql -uroot -pPASSWORD -P3306 -h127.0.0.1 -e ‘start transaction;select @@server_id;commit;select @@server_id’<br>+———————+<br>| @@server_id&emsp;  |<br>+———————+<br>|      &emsp; &emsp;   3306&emsp; &emsp;  |<br>+———————+<br>+———————+<br>| @@server_id&emsp;  |<br>+———————+<br>|      &emsp; &emsp;   3307 &emsp; &emsp; |<br>+———————+<br>&emsp;&emsp;说明读写分离，在两个终端上成功实现~</p>
 ]]></content>
       <categories>
-        <category>数据库</category>
+        <category>SQL&#39;s</category>
       </categories>
       <tags>
         <tag>多实例</tag>
@@ -1538,7 +1535,7 @@ home=/app/user1 group=root&#39;</code><br><code>ansible srv -m user -a &#39;name
 <p>&emsp;&emsp;重新对root@localhost用户授权取消unix_sock登陆，并设置密码。<br>&emsp;&emsp;至此，问题才真正解决。<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;后记写于 2019.9.23。</p>
 ]]></content>
       <categories>
-        <category>数据库</category>
+        <category>SQL&#39;s</category>
       </categories>
       <tags>
         <tag>踩坑</tag>
@@ -1598,7 +1595,7 @@ home=/app/user1 group=root&#39;</code><br><code>ansible srv -m user -a &#39;name
 <p>&emsp;&emsp;果然成功了。<br>&emsp;&emsp;至此，源码编译安装mariadb数据库就完成了~</p>
 ]]></content>
       <categories>
-        <category>数据库</category>
+        <category>SQL&#39;s</category>
       </categories>
       <tags>
         <tag>linux</tag>
@@ -1650,7 +1647,7 @@ home=/app/user1 group=root&#39;</code><br><code>ansible srv -m user -a &#39;name
 <p><img src="https://img-blog.csdnimg.cn/20190907192047527.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;再将菜单文件存入tftp服务器中 <strong>/linux.cfg目录</strong> 下 <strong>重命名</strong>为fault文件。tftp服务器最终目录机构如下图所示：<br><img src="https://img-blog.csdnimg.cn/20190907192456310.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;至此，基于PXE网卡，无人职守批量安装CentOS系统的配置就完成了。</p>
 ]]></content>
       <categories>
-        <category>linux基础</category>
+        <category>linux</category>
       </categories>
       <tags>
         <tag>linux</tag>
@@ -1715,7 +1712,7 @@ home=/app/user1 group=root&#39;</code><br><code>ansible srv -m user -a &#39;name
 <p>&emsp;&emsp;至此，新内核就装完啦~重启切换去去体验一下！</p>
 ]]></content>
       <categories>
-        <category>linux基础</category>
+        <category>linux</category>
       </categories>
       <tags>
         <tag>linux</tag>
@@ -1734,7 +1731,7 @@ home=/app/user1 group=root&#39;</code><br><code>ansible srv -m user -a &#39;name
 <p>&emsp;&emsp;脚本写的太复杂，可读性太差，等日后水平提升再来改进，留存！</p>
 ]]></content>
       <categories>
-        <category>linux基础</category>
+        <category>linux</category>
       </categories>
       <tags>
         <tag>linux</tag>
@@ -1804,7 +1801,7 @@ home=/app/user1 group=root&#39;</code><br><code>ansible srv -m user -a &#39;name
 <p>&emsp;&emsp;<strong>使用<code>mount -a</code> 命令可以立即挂载/etc/fstab中的所有文件系统</strong></p>
 ]]></content>
       <categories>
-        <category>linux基础</category>
+        <category>linux</category>
       </categories>
       <tags>
         <tag>linux</tag>
@@ -1821,7 +1818,7 @@ home=/app/user1 group=root&#39;</code><br><code>ansible srv -m user -a &#39;name
 <p>&emsp;&emsp;水平有限，都是简单代码，留存记录，方便日后查看整理改进。</p>
 ]]></content>
       <categories>
-        <category>linux基础</category>
+        <category>linux</category>
       </categories>
       <tags>
         <tag>script</tag>
@@ -1858,7 +1855,7 @@ home=/app/user1 group=root&#39;</code><br><code>ansible srv -m user -a &#39;name
 <p>&emsp;&emsp;这条命令单独执行，只会传递在screen中输出cp命令却并不执行，需要<br><code>screen -S $ScreenName -p 0 -X stuff $&#39;\n&#39;</code><br>&emsp;&emsp;命令执行时cp命令才会生效。exit命令亦是如此。<br>&emsp;&emsp;各位大佬如果还有别的更好的方法可以实现功能，希望可以多多交流，不吝赐教。</p>
 ]]></content>
       <categories>
-        <category>linux基础</category>
+        <category>linux</category>
       </categories>
       <tags>
         <tag>script</tag>
@@ -1929,7 +1926,7 @@ home=/app/user1 group=root&#39;</code><br><code>ansible srv -m user -a &#39;name
 <p><img src="https://img-blog.csdnimg.cn/20190725165202595.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="使用多个窗口"><br><img src="https://img-blog.csdnimg.cn/201907251652183.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="可视化模式"><br><img src="https://img-blog.csdnimg.cn/20190725165234682.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="编辑二进制文件"><br><img src="https://img-blog.csdnimg.cn/20190725165250630.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="定制vim工作特性"></p>
 ]]></content>
       <categories>
-        <category>linux基础</category>
+        <category>linux</category>
       </categories>
       <tags>
         <tag>linux</tag>
@@ -2059,17 +2056,12 @@ f：普通文件   </code></pre><p>   d：目录文件<br>   l：符号链接文
 <p>-print：输出至标准输出；默认动作<br>-ls：类似对查找到的文件执行“ls-l”<br>-delete：删除查找到的文件<br>-fls /PATH/TO/SOMEFILE 将查找到的文件信息长格式保存至指定路径。<br>-ok COMMAND {} ; 对找到的每个文件执行COMMAND命令（可能需要确认）<br>-exec COMMAND {} ; 对找到的每个文件执行COMMAND命定（无需确认）<br>ps：find传递查找到的文件路径之后面的命令时。实现查找出所有符合的文件路径，并一次性传递给后面的命令。但是有些命令不能接受过长的参数，此时命令执行会失效，可用管道find /… | xargs COMMAND执行。</p>
 ]]></content>
       <categories>
-        <category>linux基础</category>
+        <category>linux</category>
       </categories>
       <tags>
         <tag>linux</tag>
         <tag>find命令</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>bangumi</title>
-    <url>/bangumi/index.html</url>
-    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>about</title>
@@ -2105,14 +2097,9 @@ bot_ui_ini()
 ]]></content>
   </entry>
   <entry>
-    <title>client</title>
-    <url>/client/index.html</url>
-    <content><![CDATA[<p>直接下载 or 扫码下载：</p>
-
-<div style="text-align: center;">
-<img class="lazyload" data-src="https://view.moezx.cc/images/2018/06/08/app-download.png#in-center#width-50" style="width: 200px; height: 200px;" alt="">
-</div>
-]]></content>
+    <title>bangumi</title>
+    <url>/bangumi/index.html</url>
+    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>comment</title>
@@ -2151,6 +2138,16 @@ bot_ui_ini()
     <content><![CDATA[]]></content>
   </entry>
   <entry>
+    <title>client</title>
+    <url>/client/index.html</url>
+    <content><![CDATA[<p>直接下载 or 扫码下载：</p>
+
+<div style="text-align: center;">
+<img class="lazyload" data-src="https://view.moezx.cc/images/2018/06/08/app-download.png#in-center#width-50" style="width: 200px; height: 200px;" alt="">
+</div>
+]]></content>
+  </entry>
+  <entry>
     <title>music</title>
     <url>/music/index.html</url>
     <content><![CDATA[
@@ -2170,13 +2167,13 @@ bot_ui_ini()
 ]]></content>
   </entry>
   <entry>
-    <title>rss</title>
-    <url>/rss/index.html</url>
+    <title>tags</title>
+    <url>/tags/index.html</url>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
-    <title>tags</title>
-    <url>/tags/index.html</url>
+    <title>rss</title>
+    <url>/rss/index.html</url>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
