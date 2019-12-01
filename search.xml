@@ -174,20 +174,14 @@ bot_ui_ini()
     <content><![CDATA[]]></content>
   </entry>
   <entry>
-    <title>donate</title>
-    <url>/donate/index.html</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>lab</title>
-    <url>/lab/index.html</url>
-    <content><![CDATA[<h2 id="sakura主题"><a href="#sakura主题" class="headerlink" title="sakura主题"></a>sakura主题</h2><p>balabala</p>
+    <title>client</title>
+    <url>/client/index.html</url>
+    <content><![CDATA[<p>直接下载 or 扫码下载：</p>
+
+<div style="text-align: center;">
+<img class="lazyload" data-src="https://view.moezx.cc/images/2018/06/08/app-download.png#in-center#width-50" style="width: 200px; height: 200px;" alt="">
+</div>
 ]]></content>
-  </entry>
-  <entry>
-    <title>links</title>
-    <url>/links/index.html</url>
-    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>comment</title>
@@ -210,9 +204,36 @@ bot_ui_ini()
 ]]></content>
   </entry>
   <entry>
+    <title>donate</title>
+    <url>/donate/index.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>lab</title>
+    <url>/lab/index.html</url>
+    <content><![CDATA[<h2 id="sakura主题"><a href="#sakura主题" class="headerlink" title="sakura主题"></a>sakura主题</h2><p>balabala</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>links</title>
+    <url>/links/index.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>rss</title>
+    <url>/rss/index.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title>tags</title>
     <url>/tags/index.html</url>
     <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>theme-sakura</title>
+    <url>/theme-sakura/index.html</url>
+    <content><![CDATA[<p>Hexo主题Sakura修改自WordPress主题<a href="https://github.com/mashirozx/Sakura/" target="_blank" rel="noopener">Sakura</a>，感谢原作者<a href="https://2heng.xin/" target="_blank" rel="noopener">Mashiro</a></p>
+]]></content>
   </entry>
   <entry>
     <title>music</title>
@@ -231,27 +252,6 @@ bot_ui_ini()
   id="419239189"
   mutex="true">
 </meting-js>
-]]></content>
-  </entry>
-  <entry>
-    <title>theme-sakura</title>
-    <url>/theme-sakura/index.html</url>
-    <content><![CDATA[<p>Hexo主题Sakura修改自WordPress主题<a href="https://github.com/mashirozx/Sakura/" target="_blank" rel="noopener">Sakura</a>，感谢原作者<a href="https://2heng.xin/" target="_blank" rel="noopener">Mashiro</a></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>rss</title>
-    <url>/rss/index.html</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>client</title>
-    <url>/client/index.html</url>
-    <content><![CDATA[<p>直接下载 or 扫码下载：</p>
-
-<div style="text-align: center;">
-<img class="lazyload" data-src="https://view.moezx.cc/images/2018/06/08/app-download.png#in-center#width-50" style="width: 200px; height: 200px;" alt="">
-</div>
 ]]></content>
   </entry>
 </search>
