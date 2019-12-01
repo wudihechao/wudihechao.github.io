@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Hello World</title>
+    <url>//blog/4a17b156.html</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>CentOS6源码编译-安装linunx内核最新版5-2-9</title>
+    <url>//blog/b85693a3.html</url>
+    <content><![CDATA[<p>&emsp;&emsp;之前在CentOS7 上源码编译安装过新内核，不过有次在6上编译就遇到问题了，提示错误如下</p>
+<figure class="highlight gauss"><table><tr><td class="code"><pre><span class="line"><span class="built_in">make</span>[<span class="number">2</span>]: *** [scripts/sign-file] <span class="built_in">Error</span> <span class="number">1</span> <span class="built_in">make</span>[<span class="number">1</span>]: *** [scripts] <span class="built_in">Error</span> <span class="number">2</span> <span class="built_in">make</span></span></pre></td></tr></table></figure>
+<p>搞了好久，好像是参数设置不正确。</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">error: #<span class="builtin-name">error</span> Sorry, your compiler is too old - please<span class="built_in"> upgrade </span>it</span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;好像是说gcc版本过低。<br>&emsp;&emsp;去epel源找了一下，已经是最新版了啊~<br>&emsp;&emsp;查看了下之前CentOS7的gcc版本，是gcc-4.8.5，再去一查这个CentOS6的gcc版本，是gcc-4.4.7，可能就差在这几个小版本上了。<br>&emsp;&emsp;于是升级gcc版本就成了当务之急。<br>&emsp;&emsp;那就源码编译安装个新版的gcc吧。（后来朋友说可以直接把CentOS7上gcc的rpm包直接拿来用的，未尝试）</p>
+<h2 id="编译安装gcc"><a href="#编译安装gcc" class="headerlink" title="编译安装gcc"></a>编译安装gcc</h2><p>&emsp;&emsp;gcc有三个依赖包gmp、mpfr、mpc,要首先编译安装（虽然原本就有，不过如果编译高版本gcc，这三个依赖包不装新版本的话也会报错）<br>&emsp;&emsp;先去下载好三个依赖包源码包及gcc源码包</p>
+<figure class="highlight crystal"><table><tr><td class="code"><pre><span class="line">mkdir /data/gcc                                             <span class="comment">#创建目录/data/gcc</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">cd /data/gcc</span></pre></td></tr><tr><td class="code"><pre><span class="line">wget <span class="symbol">https:</span>/<span class="regexp">/gmplib.org/download</span><span class="regexp">/gmp/gmp</span>-<span class="number">6.1</span>.<span class="number">2</span>.tar.xz       <span class="comment">#下载gmp6.1.2</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">wget <span class="symbol">http:</span>/<span class="regexp">/www.mpfr.org/mpfr</span>-current/mpfr-<span class="number">3.1</span>.<span class="number">5</span>.tar.gz     <span class="comment">#下载mpfr3.1.5</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">wget <span class="symbol">ftp:</span>/<span class="regexp">/ftp.gnu.org/gnu</span><span class="regexp">/mpc/mpc</span>-<span class="number">1.0</span>.<span class="number">3</span>.tar.gz             <span class="comment">#下载mpc1.0.3</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">wget <span class="symbol">ftp:</span>/<span class="regexp">/ftp.gnu.org/gnu</span><span class="regexp">/gcc/gcc</span>-<span class="number">6.3</span>.<span class="number">0</span>/gcc-<span class="number">6.3</span>.<span class="number">0</span>.tar.gz   <span class="comment">#下载gcc6.3.0</span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;再挨个编译安装三个依赖包（注意这三个依赖包也有依赖关系，需先安装gmp，再安装mpfr，之后再装mpc）</p>
+<h3 id="gmp"><a href="#gmp" class="headerlink" title="gmp"></a>gmp</h3><p>&emsp;&emsp;先来第一个，编译安装装gmp</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">tar -xJf gmp<span class="number">-6.1</span><span class="number">.2</span>.tar.xz gmp<span class="number">-6.1</span><span class="number">.2</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">cd gmp<span class="number">-6.1</span><span class="number">.2</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">./configure --prefix=/usr/local/gcc/gmp --build=x86_64-linux</span></pre></td></tr><tr><td class="code"><pre><span class="line">make &amp;&amp; make install</span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;这当时有报错<br>&emsp;&emsp;<code>error: could not find a working compiler</code><br>&emsp;&emsp;当时没有加参数 –build=x86_64-linux，加上之后成功解决，参考: <a href="http://www.voidcn.com/article/p-zsgyngma-ug.html" target="_blank" rel="noopener">原文地址</a>. <a href="http://www.voidcn.com/article/p-zsgyngma-ug.html" target="_blank" rel="noopener">http://www.voidcn.com/article/p-zsgyngma-ug.html</a></p>
+<h3 id="mpfr"><a href="#mpfr" class="headerlink" title="mpfr"></a>mpfr</h3><p>&emsp;&emsp;之后编译安装mpfr</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">tar -xJf mpfr<span class="number">-3.1</span><span class="number">.5</span>.tar.xz mpfr<span class="number">-3.1</span><span class="number">.5</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">cd mpfr<span class="number">-3.1</span><span class="number">.5</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">./configure --prefix=/usr/local/gcc/mpfr --with-gmp=/usr/local/gcc/gmp</span></pre></td></tr><tr><td class="code"><pre><span class="line">make &amp;&amp; make install</span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;然后编译安装mpc</p>
+<figure class="highlight crystal"><table><tr><td class="code"><pre><span class="line">tar -xzf mpc-<span class="number">1.0</span>.<span class="number">3</span>.tar.gz mpc-<span class="number">1.0</span>.<span class="number">3</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">cd mpc-<span class="number">1.0</span>.<span class="number">3</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">./configure --prefix=<span class="regexp">/usr/local</span><span class="regexp">/gcc/mpc</span> --<span class="keyword">with</span>-gmp=<span class="regexp">/usr/local</span><span class="regexp">/gcc/gmp</span> -<span class="keyword">with</span>-mpfr=<span class="regexp">/usr/local</span><span class="regexp">/gcc/mpfr</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">make &amp;&amp; make install</span></pre></td></tr></table></figure>
+<h3 id="gcc"><a href="#gcc" class="headerlink" title="gcc"></a>gcc</h3><p>&emsp;&emsp;之后也没有报错，那就开始编译安装gcc。</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">tar xvf gcc-6.3.0.tar.gz</span></pre></td></tr><tr><td class="code"><pre><span class="line">cd gcc-6.3.0</span></pre></td></tr><tr><td class="code"><pre><span class="line">./configure <span class="attribute">--prefix</span>=/usr/local/gcc <span class="attribute">--enable-threads</span>=posix --disable-checking --disable-multilib <span class="attribute">--enable-languages</span>=c,c++ <span class="attribute">--with-gmp</span>=/usr/local/gcc/gmp <span class="attribute">--with-mpfr</span>=/usr/local/gcc/mpfr <span class="attribute">--with-mpc</span>=/usr/local/gcc/mpc</span></pre></td></tr><tr><td class="code"><pre><span class="line">make &amp;&amp; make install</span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;gcc中途有几次报错，不过也都解决了。<br>错误提示[1]：</p>
+<figure class="highlight gauss"><table><tr><td class="code"><pre><span class="line"><span class="built_in">make</span>: *** [sub-<span class="built_in">make</span>] <span class="built_in">Error</span> <span class="number">2</span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;显示这个问题编译不过去。这是因为找不到gmp依赖包导致的，可是我明明装了依赖包的，看来是路径设置有问题，因为当时我是把这三个依赖包都装在gcc下，不过在编译gcc的时候忘记改依赖包的地址了。<br>错误提示[2]：</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line"><span class="string">configure:</span> <span class="string">error:</span> cannot compute suffix of object <span class="string">files:</span> cannot compile</span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;解决办法是：<br>&emsp;&emsp;在/etc/profile里面加上以下内容：</p>
+<figure class="highlight crystal"><table><tr><td class="code"><pre><span class="line">export LD_LIBRARY_PATH=$<span class="symbol">LD_LIBRARY_PATH:</span>/usr/local/gcc/mpc-<span class="number">0.9</span>/<span class="class"><span class="keyword">lib</span>:/<span class="title">usr</span>/<span class="title">local</span>/<span class="title">gcc</span>/<span class="title">gmp</span>-5.0.1/<span class="title">lib</span>:/<span class="title">usr</span>/<span class="title">local</span>/<span class="title">gcc</span>/<span class="title">mpfr</span>-3.1.0/<span class="title">lib</span></span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;然后重新加载配置文件/etc/profile</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"><span class="keyword">source</span> <span class="regexp">/etc/</span>profile</span></pre></td></tr></table></figure>
+<h3 id="添加变量"><a href="#添加变量" class="headerlink" title="添加变量"></a>添加变量</h3><p>&emsp;&emsp;/usr/local/lib       &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; #这个是默认系统的变量<br>&emsp;&emsp;/usr/local/gmp/lib<br>&emsp;&emsp;/usr/local/mpfr/lib<br>&emsp;&emsp;/usr/local/mpc/lib<br>&emsp;&emsp;/usr/local/mysql/lib<br>&emsp;&emsp;/usr/local/openssl/lib &emsp; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;#openssl变量</p>
+<p>&emsp;&emsp;添加保存后记得更新动态库的缓存：<br>&emsp;&emsp;ldconfig -v</p>
+<h3 id="备份系统默认的gcc版本"><a href="#备份系统默认的gcc版本" class="headerlink" title="备份系统默认的gcc版本"></a>备份系统默认的gcc版本</h3><figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">mv <span class="regexp">/usr/</span>bin<span class="regexp">/gcc /u</span>sr<span class="regexp">/bin/g</span>cc-bak</span></pre></td></tr><tr><td class="code"><pre><span class="line">mv <span class="regexp">/usr/</span>bin<span class="regexp">/g++ /u</span>sr<span class="regexp">/bin/g</span>++-bak</span></pre></td></tr><tr><td class="code"><pre><span class="line">mv <span class="regexp">/usr/</span>bin<span class="regexp">/c++ /u</span>sr<span class="regexp">/bin/</span>c++-bak</span></pre></td></tr></table></figure>
+<h3 id="建新的gcc软连接"><a href="#建新的gcc软连接" class="headerlink" title="建新的gcc软连接"></a>建新的gcc软连接</h3><figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">ln -s <span class="regexp">/usr/</span>local<span class="regexp">/gcc/</span>bin<span class="regexp">/gcc /u</span>sr<span class="regexp">/bin/g</span>cc</span></pre></td></tr><tr><td class="code"><pre><span class="line">ln -s <span class="regexp">/usr/</span>local<span class="regexp">/gcc/</span>bin<span class="regexp">/c++ /u</span>sr<span class="regexp">/bin/</span>c++</span></pre></td></tr><tr><td class="code"><pre><span class="line">ln -s <span class="regexp">/usr/</span>local<span class="regexp">/gcc/</span>bin<span class="regexp">/g++ /u</span>sr<span class="regexp">/bin/g</span>++</span></pre></td></tr><tr><td class="code"><pre><span class="line">ln -s <span class="regexp">/usr/</span>local<span class="regexp">/gcc/</span>lib64<span class="regexp">/libstdc++.so.6.0.22 /u</span>sr<span class="regexp">/lib64/</span>libstdc++.so.<span class="number">6</span></span></pre></td></tr></table></figure>
+<h2 id="编译安装linux-kernel-5-2-9"><a href="#编译安装linux-kernel-5-2-9" class="headerlink" title="编译安装linux kernel 5.2.9"></a>编译安装linux kernel 5.2.9</h2><p>&emsp;&emsp;高高兴兴cd linux-5.2.9，进入解压好的内核目录，做好.config配置文件，准备用make menuconfig对内核进行自定义配置的时候，报错了：</p>
+<figure class="highlight subunit"><table><tr><td class="code"><pre><span class="line"><span class="keyword">error </span>while loading shared libraries: libmpc.so.3: cannot open shared object file: No such file or directory</span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;这又是怎么回事。好像是gcc出问题了。返回去检查。<br>&emsp;&emsp;原来添加完库忘了更新动态库,输入命令:</p>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">ldconfig -v</span></span></pre></td></tr></table></figure>
+<p>~<br>结果还报错：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">scripts/kconfig/mconf  Kconfig</span></pre></td></tr><tr><td class="code"><pre><span class="line">Your display is too small <span class="keyword">to</span> <span class="builtin-name">run</span> Menuconfig!</span></pre></td></tr><tr><td class="code"><pre><span class="line">It must be at least 19 lines by 80 columns.</span></pre></td></tr><tr><td class="code"><pre><span class="line">make[2]: *** [menuconfig] <span class="builtin-name">Error</span> 1</span></pre></td></tr><tr><td class="code"><pre><span class="line">make[1]: *** [menuconfig] <span class="builtin-name">Error</span> 2</span></pre></td></tr><tr><td class="code"><pre><span class="line">make: *** [sub-make] <span class="builtin-name">Error</span> 2</span></pre></td></tr></table></figure>
+<p>这是因为我的XSELL窗口太小了，把XSHELL放大最大化，果然就打开了熟悉的蓝色界面~<br><img src="https://img-blog.csdnimg.cn/20190829201133861.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>修改一些个性化的设置（例如改名、加NFS文件系统），就可以保存了。</p>
+<h3 id="编译内核"><a href="#编译内核" class="headerlink" title="编译内核"></a>编译内核</h3><p>&emsp;&emsp;因为编译内核时间比较长，为防止发生断网或者断电等意外，我们创建一个SCREEN来编译。<br>&emsp;&emsp;</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">screen</span> <span class="string">-S</span> <span class="string">linuxkernel</span></span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="literal">yes</span> <span class="string">|</span> <span class="string">make</span> <span class="string">-j</span> <span class="number">16</span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;用一个yes命令省去一直手动y了，等待他编译完成就好了。<br>&emsp;&emsp;<br>&emsp;&emsp;在这又遇到一个报错，贴出来和大家分享下：</p>
+<figure class="highlight actionscript"><table><tr><td class="code"><pre><span class="line">You are building kernel <span class="keyword">with</span> non-retpoline compiler.</span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;去查了下，网上都说是因为gcc版本过低，或内核版本过高。可我这明显不是gcc版本低的问题（都那么高了），问题是内核版本应该也不是问题，毕竟之前CentOS7编译就没这么多事。正犯愁不知道怎么解决的时候，发现了一篇文章<a href="http://tjtech.me/how-to-run-kernel-in-qemu-for-x86_64.html" target="_blank" rel="noopener">查看原文</a>，发现这个报错可以通过修改参数直接不启用RETPOLINE从而跳过（具体后果未知），于是修改配置文件重新来过：</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="keyword">make</span> clean</span></pre></td></tr><tr><td class="code"><pre><span class="line">sed -<span class="keyword">ri</span> <span class="string">'s@(CONFIG_RETPOLINE=).*@\1n@'</span> .config</span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="keyword">make</span> -<span class="keyword">j</span> <span class="number">16</span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;果然就顺利编译成功了。</p>
+<h3 id="编译模块"><a href="#编译模块" class="headerlink" title="编译模块"></a>编译模块</h3><p>&emsp;&emsp;然后安装模块：<br>&emsp;&emsp;</p>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line">make modules_ <span class="keyword">install</span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;安装模块的时候，有报错：<br>&emsp;&emsp;</p>
+<figure class="highlight subunit"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ERROR: </span>modinfo: could not find module *</span></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;不过查了相关文章<a href="https://blog.csdn.net/maokexu123/article/details/42554923?locationNum=12" target="_blank" rel="noopener">查看原文</a>，好像这些模块也都可以正常使用，于是乎无视之~<br>&emsp;&emsp;最后，安装内核相关文件。<br>&emsp;&emsp;</p>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line">make <span class="keyword">install</span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;至此，新内核就装完啦~重启切换去去体验一下！</p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>编译安装</tag>
+        <tag>kernel</tag>
+        <tag>踩坑</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CentOS7磁盘分区及文件系统</title>
+    <url>//blog/2bae1e5c.html</url>
+    <content><![CDATA[<p><strong>&emsp;&emsp;一般来说，硬盘上的空间，想要被我们利用，都要经过几个步骤：</strong></p>
+<ul>
+<li>1设备识别</li>
+<li>2磁盘分区</li>
+<li>3创建文件系统（并标记文件系统）</li>
+<li>4挂载新的文件系统</li>
+<li>5在/etc/fstab文件中创建新条目<br>&emsp;</li>
+</ul>
+<p><strong>&emsp;&emsp;只有当设备被挂载到文件系统中，才可以被我们访问且使用。</strong><br>&emsp;</p>
+<h2 id="1-设备识别"><a href="#1-设备识别" class="headerlink" title="1 设备识别"></a>1 设备识别</h2><p> 新插入硬盘设备，没法被系统立马识别到，需要手动扫描，才可以发现并识别新设备<br><code>echo &quot;- - -&quot; &gt; /sys/class/scsi_host/host0/scan</code><br>/sys/class/scsi_host/        目录下面有几个host 就扫描几次。<br>&emsp;<br>&emsp;</p>
+<h2 id="2-磁盘分区"><a href="#2-磁盘分区" class="headerlink" title="2 磁盘分区"></a>2 磁盘分区</h2><h3 id="2-1为什么要分区"><a href="#2-1为什么要分区" class="headerlink" title="2.1为什么要分区"></a>2.1为什么要分区</h3><ul>
+<li>优化I/O性能</li>
+<li>实现磁盘空间配额限制</li>
+<li>提高修复速度</li>
+<li>隔离系统和程序</li>
+<li>安装多个OS</li>
+<li>采用不同文件系统</li>
+</ul>
+<h3 id="2-2分区方式"><a href="#2-2分区方式" class="headerlink" title="2.2分区方式"></a>2.2分区方式</h3><p>&emsp;&emsp;一般来说有两种分区方式 ：<strong>MBR</strong>和<strong>GPT</strong>。</p>
+<ul>
+<li><p><strong>MBR</strong>：全程Master Boot Record，1982年，使用32位表示扇区，单个分区不超过2T。</p>
+</li>
+<li><p>如何分区：按柱面</p>
+</li>
+<li><p>0磁道0扇面：512bytes<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;446byets：boot loader<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;64bytes  ： 分区表，其中每16bytes标识一个分区<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;2byetes&emsp;：55AA</p>
+</li>
+<li><p>MBR分区中一块硬盘最多有4个主分区，也可以三主分区+1拓展（N个逻辑分区）<br>&emsp;</p>
+<h4 id="MBR分区结构"><a href="#MBR分区结构" class="headerlink" title="MBR分区结构"></a>MBR分区结构</h4><p><img src="https://img-blog.csdnimg.cn/20190815093309132.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="MBR硬盘分区结构图"></p>
+<h4 id="MBR分区表"><a href="#MBR分区表" class="headerlink" title="MBR分区表"></a>MBR分区表</h4><p>&emsp;&emsp;硬盘主导记录MBR由4个部分组成</p>
+</li>
+<li><p>主引导程序（偏移地址0000H–0088H），它负责从活动分区中装载，并运行系统引导程序</p>
+</li>
+<li><p>出错信息数据区，偏移地址0089H-00E1H为出错信息，00E2H-01BDH全为0字节</p>
+</li>
+<li><p>分区表（DPT,Disk Partition Table）含4个分区项，偏移地址01BEH–01FDH，每个分区表长16个字节，共64字节为分区项1、分区项2、分区项3、分区项4</p>
+</li>
+<li><p>结束标志字，偏移地址01FE–01FF的2个字节值为结束标志55AA<br><img src="https://img-blog.csdnimg.cn/20190815095231719.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="硬盘主导记录MBR"><br>&emsp;</p>
+<ul>
+<li><strong>GPT</strong>：GUID（Globals Unique Identifiers） partition table 支持128个分区，使用64位，支持8Z（ 512Byte/block ）64Z （ 4096Byte/block）</li>
+<li>使用128位UUID(Universally Unique Identifier) 表示磁盘和分区 GPT分区表<br>自动备份在头和尾两份，并有CRC校验位</li>
+<li>UEFI (Unified Extensible Firmware Interface 统一可扩展固件接口)硬件支持<br>GPT，使操作系统启动<br>&emsp;<h4 id="GPT分区结构"><a href="#GPT分区结构" class="headerlink" title="GPT分区结构"></a>GPT分区结构</h4><img src="https://img-blog.csdnimg.cn/20190815100433738.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="GPT分区机构图"><h3 id="2-3管理分区"><a href="#2-3管理分区" class="headerlink" title="2.3管理分区"></a>2.3管理分区</h3><h4 id="2-31列出块设备"><a href="#2-31列出块设备" class="headerlink" title="2.31列出块设备"></a>2.31列出块设备</h4><h4 id="2-32创建新分区"><a href="#2-32创建新分区" class="headerlink" title="2.32创建新分区"></a>2.32创建新分区</h4>&emsp;&emsp;parted命令：parted [选项]… [设备 [命令 [参数]…]…]<br>&emsp;&emsp;parted /dev/sdb mklabel gpt|msdos<br>&emsp;&emsp;parted /dev/sdb print<br>&emsp;&emsp;parted /dev/sdb mkpart primary 1 200 （默认M）<br>&emsp;&emsp;parted /dev/sdb rm 1<br>&emsp;&emsp;parted –l 列出分区信息</li>
+</ul>
+<p><strong>parted的操作都是实时生效的，小心使用</strong><br>&emsp;<br>&emsp;&emsp; fdisk -l [-u] [device…] 查看分区<br>&emsp;&emsp; fdisk /dev/sdb 管理分区<br>子命令：<br>&emsp;&emsp;&emsp;&emsp;&emsp;p 查看分区列表<br>&emsp;&emsp;&emsp;&emsp;&emsp;t 更改分区类型<br>&emsp;&emsp;&emsp;&emsp;&emsp;n 创建新分区<br>&emsp;&emsp;&emsp;&emsp;&emsp;d 删除分区<br>&emsp;&emsp;&emsp;&emsp;&emsp;v 校验分区<br>&emsp;&emsp;&emsp;&emsp;&emsp;u 转换单位<br>&emsp;&emsp;&emsp;&emsp;&emsp;w 保存并退出<br>&emsp;&emsp;&emsp;&emsp;&emsp;q 不保存并退出<br>&emsp;<br>gdisk命令与fdisk用法相同，用于创建GPT分区。</p>
+<h4 id="2-33同步内核与硬盘的分区表"><a href="#2-33同步内核与硬盘的分区表" class="headerlink" title="2.33同步内核与硬盘的分区表"></a>2.33同步内核与硬盘的分区表</h4><p>查看内核是否已经识别新的分区<br>cat /proc/partations<br><strong>centos6</strong>通知内核重新读取硬盘分区表<br>新增分区用<br>partx -a /dev/DEVICE<br>kpartx -a /dev/DEVICE -f: force<br>删除分区用<br>partx -d –nr M-N /dev/DEVICE<br><strong>CentOS 5，7</strong>: 使用partprobe<br>partprobe [/dev/DEVICE]</p>
+<h2 id="3-创建文件系统"><a href="#3-创建文件系统" class="headerlink" title="3 创建文件系统"></a>3 创建文件系统</h2><h3 id="3-1文件系统"><a href="#3-1文件系统" class="headerlink" title="3.1文件系统"></a>3.1文件系统</h3><p>&emsp;&emsp;文件系统是操作系统用于明确存储设备或分区上的文件的方法和数据结构；即在存储设备上组织文件的方法。操作系统中负责管理和存储文件信息的软件结<br>构称为文件管理系统，简称文件系统从系统角度来看，文件系统是对文件存储设备的空间进行组织和分配，负责文件存储并对存入的文件进行保护和检索的系统。具体地说，它负责为用户建立文件，存入、读出、修改、转储文件，控制文件的存取，安全控制，日志，压缩，加密等<br>&emsp;&emsp;&emsp;支持的文件系统：<code>/lib/modules/`uname –r`/kernel/fs</code><br>&emsp;&emsp;&emsp;各种文件系统：<a href="https://en.wikipedia.org/wiki/Comparison_of_file_systems" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Comparison_of_file_systems</a></p>
+<h4 id="3-11文件系统类型"><a href="#3-11文件系统类型" class="headerlink" title="3.11文件系统类型"></a>3.11文件系统类型</h4><p>Linux文件系统：<br>&emsp;&emsp;ext2(Extended file system)：适用于那些分区容量不是太大，更新也不频繁的情况，例如 /boot 分区<br>&emsp;&emsp;ext3：是 ext2 的改进版本，其支持日志功能，能够帮助系统从非正常关机导致的异常中恢复。它通常被用作通用的文件系统<br>&emsp;&emsp;ext4：是 ext 文件系统的最新版。提供了很多新的特性，包括纳秒级时间戳、创建和使用巨型文件(16TB)、最大1EB的文件系统，以及速度的提升<br>&emsp;&emsp;xfs：SGI，支持最大8EB的文件系统<br>&emsp;&emsp;btrfs（Oracle）, reiserfs, jfs（AIX）, swap<br>光盘：iso9660<br>Windows：FAT32, NTFS，exFAT<br>Unix：FFS（fast）, UFS（unix）, JFS2<br>网络文件系统：NFS, CIFS<br>集群文件系统：GFS2, OCFS2（oracle）<br>分布式文件系统：fastdfs,ceph, moosefs, mogilefs, glusterfs, Lustre<br>RAW：未经处理或者未经格式化产生的文件系统</p>
+</li>
+</ul>
+<h4 id="3-12文件系统分类"><a href="#3-12文件系统分类" class="headerlink" title="3.12文件系统分类"></a>3.12文件系统分类</h4><p>根据其是否支持”journal”功能：<br>&emsp;&emsp;日志型文件系统: ext3, ext4, xfs, …<br>&emsp;&emsp;非日志型文件系统: ext2, vfat<br>文件系统的组成部分：<br>&emsp;&emsp;内核中的模块：ext4, xfs, vfat<br>&emsp;&emsp;用户空间的管理工具：mkfs.ext4, mkfs.xfs,mkfs.vfat<br>Linux的虚拟文件系统：VFS<br><strong>查前支持的文件系统：<code>cat /proc/filesystems</code></strong><br><strong>查前目前的文件系统：<code>lsblk -f</code></strong></p>
+<h3 id="3-2创建文件系统"><a href="#3-2创建文件系统" class="headerlink" title="3.2创建文件系统"></a>3.2创建文件系统</h3><p>mkfs命令：<br>(1) mkfs.FS_TYPE /dev/DEVICE<br>&emsp;&emsp;&emsp;&emsp;ext4<br>&emsp;&emsp;&emsp;&emsp;xfs<br>&emsp;&emsp;&emsp;&emsp;btrfs<br>&emsp;&emsp;&emsp;&emsp;vfat<br>(2) mkfs -t FS_TYPE /dev/DEVICE<br>&emsp;&emsp;&emsp;&emsp;-L ‘LABEL’ 设定卷标<br>&emsp;mke2fs命令：ext系列文件系统专用管理工具<br>&emsp;&emsp;&emsp;-t {ext2|ext3|ext4} 指定文件系统类型<br>&emsp;&emsp;&emsp;-b {1024|2048|4096} 指定块大小<br>&emsp;&emsp;&emsp;-L ‘LABEL’ 设置卷标<br>&emsp;&emsp;&emsp;-j 相当于 -t ext3 <strong>(mkfs.ext3 = mkfs -t ext3 = mke2fs -j = mke2fs -t ext3)`</strong><br>&emsp;&emsp;&emsp;-i # 为数据空间中每多少个字节创建一个inode；不应该小于block大小<br>&emsp;&emsp;&emsp;-N # 指定分区中创建多少个inode<br>&emsp;&emsp;&emsp;-I 一个inode记录占用的磁盘空间大小，128—4096<br>&emsp;&emsp;&emsp;-m # 默认5%,为管理人员预留空间占总空间的百分比<br>&emsp;&emsp;&emsp;-O FEATURE[,…] 启用指定特性<br>&emsp;&emsp;&emsp;-O ^FEATURE 关闭指定特性</p>
+<h3 id="3-3文件系统标签"><a href="#3-3文件系统标签" class="headerlink" title="3.3文件系统标签"></a>3.3文件系统标签</h3><p>文件系统标签是指向设备的另一种方法。与设备无关<br><strong>blkid</strong>：块设备属性信息查看<br>blkid [OPTION]… [DEVICE]<br>&emsp;&emsp;&emsp;-U UUID 根据指定的UUID来查找对应的设备<br>&emsp;&emsp;&emsp;-L LABEL 根据指定的LABEL来查找对应的设备<br><strong>e2label</strong>：管理ext系列文件系统的LABEL<br>e2label DEVICE [LABEL]<br><strong>findfs</strong> ：查找分区<br>findfs [options] LABEL= &lt; label &gt;<br>findfs [options] UUID= &lt; uuid &gt;</p>
+<h3 id="3-4文件系统检测和修复"><a href="#3-4文件系统检测和修复" class="headerlink" title="3.4文件系统检测和修复"></a>3.4文件系统检测和修复</h3><p>文件系统夹故障常发生于死机或者非正常关机之后，挂载为文件系统标记为“no clean”<br> 注意：一定不要在挂载状态下执行下面命令修复<br> <strong>fsck: File System Check</strong><br>&emsp;&emsp;fsck.FS_TYPE<br>&emsp;&emsp;fsck -t FS_TYPE<br>注意：FS_TYPE 一定要与分区上已经文件类型相同<br>-a 自动修复<br>-r 交互式修复错误<br> <strong>e2fsck：ext系列文件专用的检测修复工具</strong><br>-y 自动回答为yes<br>-f 强制修复<br>-p 自动进行安全的修复文件系统问题<br><strong>xfs_repair：xfs文件系统专用检测修复工具</strong><br>-f 修复文件，而设备<br>-n 只检查<br>-d 允许修复只读的挂载设备，在单用户下修复 / 时使用，然后立即reboot</p>
+<h2 id="4-挂载新的文件系统"><a href="#4-挂载新的文件系统" class="headerlink" title="4 挂载新的文件系统"></a>4 挂载新的文件系统</h2><p><strong>挂载：</strong> 将额外文件系统与根文件系统某现存的目录建立起关联关系，进而使得此目录做为其它文件访问入口的行为<br><strong>卸载：</strong> 为解除此关联关系的过程<br>把设备关联挂载点：mount Point<br>&emsp;&emsp;mount  设备名   挂载点<br>卸载时：可使用设备，也可以使用挂载点<br>&emsp;&emsp;umount 设备名|挂载点<br>PS：挂载点下原有文件在挂载完成后会被临时隐藏<br>&emsp;&emsp; 挂载点目录一般为空</p>
+<h3 id="4-1用mount命令挂载文件系统"><a href="#4-1用mount命令挂载文件系统" class="headerlink" title="4.1用mount命令挂载文件系统"></a>4.1用mount命令挂载文件系统</h3><p><strong>挂载方法</strong>：mount DEVICE MOUNT_POINT<br>&emsp;&emsp;mount：通过查看/etc/mtab文件显示当前已挂载的所有设备<br>&emsp;&emsp;mount [-fnrsvw] [-t vfstype] [-o options] device dir<br>device：指明要挂载的设备；<br>&emsp;&emsp;(1) 设备文件：例如/dev/sda5<br>&emsp;&emsp;(2) 卷标：-L ‘LABEL’, 例如 -L ‘MYDATA’<br>&emsp;&emsp;(3) UUID, -U ‘UUID’：例如 -U ‘0c50523c-43f1-45e7-85c0-a126711d406e’<br>&emsp;&emsp;(4) 伪文件系统名称：proc, sysfs, devtmpfs, configfs<br>dir：挂载点需事先存在，建议使用空目录；进程正在使用中的设备无法被卸载。<br><strong>mount常用命令选项</strong><br>&emsp;&emsp;-t vsftype 指定要挂载的设备上的文件系统类型<br>&emsp;&emsp;-r readonly，只读挂载<br>&emsp;&emsp;-w read and write, 读写挂载<br>&emsp;&emsp;-n 不更新/etc/mtab，mount不可见<br>&emsp;&emsp;-a 自动挂载所有支持自动挂载的设备(定义在了/etc/fstab文件中，且挂载选项中有auto功能)<br>&emsp;&emsp;-L ‘LABEL’ 以卷标指定挂载设备<br>&emsp;&emsp;-U ‘UUID’ 以UUID指定要挂载的设备<br>&emsp;&emsp;-B, –bind 绑定目录到另一个目录上<br>&emsp;&emsp;查看内核追踪到的已挂载的所有设备：cat /proc/mounts</p>
+<p>&emsp;&emsp;-o options：(挂载文件系统的选项)，多个选项使用逗号分隔<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;async 异步模式 sync 同步模式,内存更改时，同时写磁盘<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;包含目录和文件<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;diratime/nodiratime 目录的访问时间戳<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;auto/noauto 是否支持自动挂载,是否支持-a选项<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;exec/noexec 是否支持将文件系统上运行应用程序<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;dev/nodev 是否支持在此文件系统上使用设备文件<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;suid/nosuid 是否支持suid和sgid权限<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;remount 重新挂载<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;ro 只读 rw 读写<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;user/nouser 是否允许普通用户挂载此设备，/etc/fstab使用<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;acl 启用此文件系统上的acl功能<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;loop 使用loop设备<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;_netdev 当网络可用时才对网络资源进行挂载，如：NFS文件系统<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;defaults 相当于rw, suid, dev, exec, auto, nouser, async</p>
+<h3 id="4-2卸载命令"><a href="#4-2卸载命令" class="headerlink" title="4.2卸载命令"></a>4.2卸载命令</h3><p>查看挂载情况<br>&emsp;&emsp;findmnt MOUNT_POINT|device<br>查看正在访问指定文件系统的进程<br>&emsp;&emsp;lsof MOUNT_POINT<br>&emsp;&emsp;fuser -v MOUNT_POINT<br>终止所有在正访问指定的文件系统的进程<br>&emsp;&emsp;fuser -km MOUNT_POINT<br>卸载<br>&emsp;&emsp;umount DEVICE<br>&emsp;&emsp;umount MOUNT_POINT</p>
+<h2 id="5-修改-etc-fstab配置文件"><a href="#5-修改-etc-fstab配置文件" class="headerlink" title="5 修改/etc/fstab配置文件"></a>5 修改/etc/fstab配置文件</h2><p>&emsp;&emsp;使用mount命令挂载设备都是临时挂载，每次开机后需要手动重新挂载，比较费时费力，如果需要实现自动挂载，就要修改文件系统挂载配置文件/etc/fstab文件。<br>/etc/fstab文件 下面的每行定义一个要挂载的文件系统<br>&emsp;&emsp;总共六列，分别对应设备、挂载点、文件系统类型、挂载选项、转储频率及是否自检。<br> 1、要挂载的设备或伪文件系统<br>设备文件<br>LABEL：LABEL=””<br>UUID：UUID=””<br>伪文件系统名称：proc, sysfs<br> 2、挂载点  一般为某文件或目录<br> 3、文件系统类型：ext4，xfs，iso9660，nfs，none<br> 4、挂载选项：defaults（包括rw suidi dev exac auto nouser async） ，acl，bind<br> 5、转储频率：0：不做备份 1：每天转储 2：每隔一天转储<br> 6、fsck检查的文件系统的顺序：允许的数字是0 1 2<br>&emsp;&emsp;0：不自检<br>&emsp;&emsp;1：首先自检；一般只有rootfs才用<br>&emsp;&emsp;2：非rootfs使用<br>&emsp;&emsp;可以使用cat 、echo 等命令 将这6个信息 追加至/etc/fstab文件中，也可以用sed 命令 。</p>
+<p>&emsp;&emsp;<strong>使用<code>mount -a</code> 命令可以立即挂载/etc/fstab中的所有文件系统</strong></p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>filesystem</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>bangumi</title>
+    <url>//blog/undefined.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>lab</title>
+    <url>//blog/61d6b1c4.html</url>
+    <content><![CDATA[<h2 id="sakura主题"><a href="#sakura主题" class="headerlink" title="sakura主题"></a>sakura主题</h2><p>balabala</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>theme-sakura</title>
+    <url>//blog/aa48e54c.html</url>
+    <content><![CDATA[<p>Hexo主题Sakura修改自WordPress主题<a href="https://github.com/mashirozx/Sakura/" target="_blank" rel="noopener">Sakura</a>，感谢原作者<a href="https://2heng.xin/" target="_blank" rel="noopener">Mashiro</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>music</title>
+    <url>//blog/cd52224a.html</url>
+    <content><![CDATA[
+<meting-js
+  server="netease"
+  type="playlist"
+  id="2731690811"
+  mutex="true">
+</meting-js>
+
+<meting-js
+  server="netease"
+  type="playlist"
+  id="419239189"
+  mutex="true">
+</meting-js>
+]]></content>
+  </entry>
+  <entry>
+    <title>comment</title>
+    <url>//blog/9474526c.html</url>
+    <content><![CDATA[
+<div class="entry-content">
+  <div class="poem-wrap">
+    <div class="poem-border poem-left">
+    </div>
+    <div class="poem-border poem-right">
+    </div>
+    <h1>
+    念两句诗</h1>
+    <p id="poem">
+    叙别梦、扬州一觉。</p>
+    <p id="info">
+    【宋代】吴文英《夜游宫·人去西楼雁杳》</p>
+  </div>
+</div>
+]]></content>
+  </entry>
+  <entry>
+    <title>client</title>
+    <url>//blog/c7440455.html</url>
+    <content><![CDATA[<p>直接下载 or 扫码下载：</p>
+
+<div style="text-align: center;">
+<img class="lazyload" data-src="https://view.moezx.cc/images/2018/06/08/app-download.png#in-center#width-50" style="width: 200px; height: 200px;" alt="">
+</div>
+]]></content>
+  </entry>
+  <entry>
+    <title>donate</title>
+    <url>//blog/undefined.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>rss</title>
+    <url>//blog/652a6f9f.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>links</title>
+    <url>//blog/undefined.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>about</title>
+    <url>//blog/b5f422e3.html</url>
+    <content><![CDATA[
+<!-- 因为vue和botui更新导至bug,现将对话移至js下的botui中配置 -->
+<div class="entry-content">
+  <div class="moe-mashiro" style="text-align:center; font-size: 50px; margin-bottom: 20px;">[さくら荘のhojun]</div>
+  <div id="hello-mashiro" class="popcontainer" style="min-height: 300px; padding: 2px 6px 4px; background-color: rgba(242, 242, 242, 0.5); border-radius: 10px;">
+    <center>
+    <p>
+    </p>
+    <h4>
+    与&nbsp;<ruby>
+    Mashiro&nbsp;<rp>
+    （</rp>
+    <rt>
+    真（ま）白（しろ）</rt>
+    <rp>
+    ）</rp>
+    </ruby>
+    对话中...</h4>
+    <p>
+    </p>
+    </center>
+    <bot-ui></botui>
+  </div>
+</div>
+<script src="/js/botui.js"></script>
+<script>
+bot_ui_ini()
+</script>
+]]></content>
+  </entry>
+  <entry>
+    <title>tags</title>
+    <url>//blog/6fbc9426.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+</search>
