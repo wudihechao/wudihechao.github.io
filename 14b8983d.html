@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  
+  <title itemprop="name">redis高可用配置 | BOHC!</title>
+  
+    <link rel="shortcut icon" href="/images/favicon.ico">
+  
+  <meta http-equiv="x-dns-prefetch-control" content="on">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+SerifMerriweather|Merriweather+Sans|Source+Code+Pro|Ubuntu:400,700|Noto+Serif+SC" media="all">
+  <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+  <link rel="stylesheet" id="saukra_css-css" href="/css/style.css" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/lib.min.css" media="all">
+  <link rel="stylesheet" href="/css/font.css" media="all">
+  <link rel="stylesheet" href="/css/insight.css" media="all">
+  <link rel="stylesheet" href="/css/jquery.fancybox.min.css" media="all">
+  <link rel="stylesheet" href="/css/zoom.css" media="all">
+  <link rel="stylesheet" type="text/css" href="/css/sharejs.css">
+<!--   <link rel="stylesheet" id="saukra_css-css" href="https://2heng.xin/wp-content/cache/autoptimize/css/autoptimize_ad42a61f4c7d4bdd9f91afcff6b5dda5.css
+" type="text/css" media="all"> -->
+  <script>
+  /*Initial Variables*/
+  var mashiro_option = new Object();
+  var mashiro_global = new Object();
+  mashiro_option.NProgressON = true;
+  /* 
+   * 邮箱信息之类的东西可以填在这里，这些js变量基本都作用于sakura-app.js
+   * 这样的设置仅是为了方便在基于PHP开发的主题中设置js变量，既然移植到了Node上，我想或许可以精简这一逻辑吧
+   */
+  mashiro_option.email_domain = "";
+  mashiro_option.email_name = "";
+  mashiro_option.cookie_version_control = "";
+  mashiro_option.qzone_autocomplete = false;
+  mashiro_option.site_name = "ウサギ没有人";
+  mashiro_option.author_name = "没有人";
+  mashiro_option.site_url = "https://wudihechao.github.io/";
+  mashiro_option.v_appId = "AVtPtVan0Ky5u33XhUzJlFKp-gzGzoHsz";
+  mashiro_option.v_appKey = "nx3XTnRJmaMQR3aLWYiigkgJ";
+  mashiro_option.mathjax = "0";
+  mashiro_option.qq_api_url = "https://api.mashiro.top/qqinfo/"; 
+  mashiro_option.qq_avatar_api_url = "https://api.mashiro.top/qqinfo/";
+
+  // mashiro_option.jsdelivr_css_src = "https://cdn.jsdelivr.net/gh/moezx/cdn@3.4.5/css/lib.min.css";
+  // mashiro_option.float_player_on = true;
+
+  /*End of Initial Variables*/
+  </script>
+  <script type="text/javascript">
+  var bg = "https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(1).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(2).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(3).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(4).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(5).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(6).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(7).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(8).jpg.webp".split(",");
+  var bgindex = Math.floor(Math.random()*bg.length);
+  if (!!window.ActiveXObject || "ActiveXObject" in window) { //is IE?
+    alert('朋友，IE浏览器未适配哦~');
+  }
+  </script>
+  <style type="text/css">
+  .hljs-ln{border-collapse:collapse}.hljs-ln td{padding:0}.hljs-ln-n:before{content:attr(data-line-number)}
+  </style>
+  <style type="text/css">.site-top .lower nav{display:block !important;}.author-profile i,.post-like a,.post-share .show-share,.sub-text,.we-info a,span.sitename,.post-more i:hover,#pagination a:hover,.post-content a:hover,.float-content i:hover{color:#FE9600}.feature i,.download,.navigator i:hover,.links ul li:before,.ar-time i,span.ar-circle,.object,.comment .comment-reply-link,.siren-checkbox-radio:checked + .siren-checkbox-radioInput:after{background:#FE9600}::-webkit-scrollbar-thumb{background:#FE9600}.download,.navigator i:hover,.link-title,.links ul li:hover,#pagination a:hover,.comment-respond input[type='submit']:hover{border-color:#FE9600}.entry-content a:hover,.site-info a:hover,.comment h4 a,#comments-navi a.prev,#comments-navi a.next,.comment h4 a:hover,.site-top ul li a:hover,.entry-title a:hover,#archives-temp h3,span.page-numbers.current,.sorry li a:hover,.site-title a:hover,i.iconfont.js-toggle-search.iconsearch:hover,.comment-respond input[type='submit']:hover{color:#FE9600}.comments .comments-main{display:block !important;}.comments .comments-hidden{display:none !important;}background-position:center center;background-attachment:inherit;}
+  </style>
+</head>
+
+<body class="page-template page-template-user page-template-page-analytics page-template-userpage-analytics-php page page-id-1297 chinese-font serif isWebKit">
+  <div class="scrollbar" id="bar">
+  </div>
+  <a href="#" class="cd-top faa-float animated"></a>
+  <section id="main-container">
+    <div class="headertop filter-dot">
+  <div id="banner_wave_1"></div>
+  <div id="banner_wave_2"></div>
+  <figure id="centerbg" class="centerbg">
+    <div class="focusinfo no-select">
+      <div class="header-tou">
+        <a href="https://wudihechao.github.io/">
+          <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6https://gravatar.loli.net/avatar/37019f5eb1f0b9951c06bfdc8342afd1">
+        </a>
+      </div>
+      <div class="header-info">
+        <p>自分にとして優しさは、貴方にとは辛いなんて、そんなの</p>
+        <div class="top-social_v2">
+          <li id="bg-pre">
+            <img class="flipx" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/next-b.svg">
+          </li>
+          
+            
+              
+                <li>
+                  <a href="http://github.com/wudihechao" target="_blank" class="social-github" title="github">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/github.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="http://weibo.com/u/1050367191" target="_blank" class="social-github" title="sina">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/sina.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="http://weibo.com/mashirozx?is_all=1" target="_blank" class="social-github" title="zhihu">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/zhihu.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="" target="_blank" class="social-github" title="email">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/email.svg">
+                  </a>
+                </li>
+              
+            
+          
+          <li id="bg-next">
+            <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/next-b.svg">
+          </li>
+        </div>
+      </div>
+    </div>
+  </figure>
+  <div id="video-container" style="">
+    <video style="object-fit: fill" id="bgvideo" class="video" video-name="" src="" width="auto" preload="auto">
+    </video>
+    <div id="video-btn" class="loadvideo videolive">
+    </div>
+    <div id="video-add">
+    </div>
+    <div class="video-stu">
+    </div>
+  </div>
+  <div class="headertop-down faa-float animated" onclick="headertop_down()">
+    <span>
+      <i class="fa fa-chevron-down" aria-hidden="true">
+      </i>
+    </span>
+  </div>
+</div>
+    <div id="page" class="site wrapper">
+      <header class="site-header no-select gizle sabit" role="banner">
+  <div class="site-top">
+    <div class="site-branding">
+      <span class="site-title">
+        <span class="logolink moe-mashiro">
+          <a href="/">
+            <span class="sakurasono">ウサギ</span>
+            <span class="shironeko">没有人</span>
+          </a>
+        </span>
+      </span>
+    </div>
+    <div class="searchbox search-form-submit">
+      <i class="iconfont js-toggle-search iconsearch icon-search">
+      </i>
+    </div>
+    <div id="show-nav" class="showNav mobile-fit">
+      <div class="line line1">
+      </div>
+      <div class="line line2">
+      </div>
+      <div class="line line3">
+      </div>
+    </div>
+    <div class="lower-cantiner">
+      <div class="lower">
+        <nav class="mobile-fit-control hide">
+          <ul id="menu-new" class="menu">
+            
+              <li>
+                <a href="/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-fort-awesome faa-shake" aria-hidden="true"></i>
+                    首页
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-archive faa-shake" aria-hidden="true"></i>
+                    归档
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/categories/linux/">
+                          <i class="fa fa-code" aria-hidden="true"></i>
+                          linux
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/categories/SQL/">
+                          <i class="fa fa-book" aria-hidden="true"></i>
+                          SQLs
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/categories/cloud/">
+                          <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                          cloud
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/categories/%E6%95%85%E9%9A%9C/">
+                          <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                          故 障
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/categories/%E6%83%85%E6%84%9F/">
+                          <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                          情 感
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+              <li>
+                <a href="javascript:;" target="_blank" rel="noopener">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-list-ul faa-vertical" aria-hidden="true"></i>
+                    清单
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/tags/%E6%82%A6%E8%AF%BB/">
+                          <i class="fa fa-th-list faa-bounce" aria-hidden="true"></i>
+                          书单
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/bangumi/">
+                          <i class="fa fa-film faa-vertical" aria-hidden="true"></i>
+                          番组
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/music/">
+                          <i class="fa fa-headphones" aria-hidden="true"></i>
+                          歌单
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/tags/%E5%9B%BE%E9%9B%86/">
+                          <i class="fa fa-photo" aria-hidden="true"></i>
+                          图集
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+              <li>
+                <a href="/comment/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-pencil-square-o faa-tada" aria-hidden="true"></i>
+                    留言板
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/links/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-link faa-shake" aria-hidden="true"></i>
+                    友人帐
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/donate/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-heart faa-pulse" aria-hidden="true"></i>
+                    赞赏
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-leaf faa-wrench" aria-hidden="true"></i>
+                    关于
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/about/">
+                          <i class="fa fa-meetup" aria-hidden="true"></i>
+                          我？
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/theme-sakura/">
+                          <i class="fa iconfont icon-sakura" aria-hidden="true"></i>
+                          主题
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/lab/">
+                          <i class="fa fa-cogs" aria-hidden="true"></i>
+                          Lab
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+              <li>
+                <a href="/atom.xml">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-rss faa-pulse" aria-hidden="true"></i>
+                    RSS
+                  </span>
+                </a>
+                
+              </li>
+            
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <link rel="stylesheet" type="text/css" href="/css/sharejs.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+<div class="pattern-center-blank"></div>
+
+<div id="content" class="site-content">
+  <div id="primary" class="content-area">
+    <main id="main" class="site-main" role="main">
+      <article id="post-1" class="post-1 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
+        <div class="toc"></div>
+        <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
+        
+          <header class="entry-header">
+            <h1 class="entry-title">redis高可用配置</h1>
+            <p class="entry-census">hechao&nbsp;·&nbsp;2019-11-15&nbsp;·&nbsp;<span id="busuanzi_value_page_pv"></span>次阅读</p></p>
+
+            <hr>
+          </header>
+        
+        <div class="entry-content">
+          <p>&emsp;&emsp;redis高可用一般有两种方式实现：哨兵和集群。在哨兵 sentinel 机制中，可以解决 redis 高可用的问题， 即当 master 故障后可以自动将 slave 提升为 master 从而可以保证 redis 服务的正常使用，但是无法解决 redis 单机写入的瓶颈问题， 即单机的 redis 写入性能受限于单机的内存大小、 并发数量、 网卡速率等因素。<br>&emsp;&emsp;redis 官方在 redis 3.0 版本之后推出了无中心架构的 redis cluster机制， 在无中心的 redis 集群当中，其每个节点保存当前节点数据和整个集群状态,每个节点都和其他所有节点连接， 特点如下：</p>
+<a id="more"></a>
+<p>&emsp;&emsp;1：所有 Redis 节点使用(PING 机制)互联。<br>&emsp;&emsp;2：集群中某个节点的失效， 是整个集群中超过半数的节点监测都失效才算真正的失效（类似Sdown和Odown） 。<br>&emsp;&emsp;3：客户端不需要 proxy 即可直接连接 redis， 应用程序需要写全部的 redis 服务器 IP。<br>&emsp;&emsp;4：redis cluster 把所有的 redis node 映射到 0-16383 个槽位(slot)上， 读写需要到指定的 redis node 上进行操作，因此有多少个 reids node 相当于 redis 并发扩展了多少倍。<br>&emsp;&emsp;5：Redis cluster 预先分配 16384 个(slot)槽位，当需要在 redis 集群中写入一个 key -value 的时候，会使用 CRC16(key) mod 16384 之后的值，决定将 key 写入值哪一个槽位从而决定写入哪一个 Redis 节点上， 从而有效解决单机瓶颈。</p>
+<h3 id="Sentinel-哨兵"><a href="#Sentinel-哨兵" class="headerlink" title="Sentinel(哨兵)"></a>Sentinel(哨兵)</h3><h4 id="手动配置主从"><a href="#手动配置主从" class="headerlink" title="手动配置主从"></a>手动配置主从</h4><p>&emsp;&emsp;需要手动先指定某一台 Redis 服务器为 master，然后将其他 slave 服务器修改配置文件或使用命令配置为 master 服务器的 slave。哨兵的前提是已经手动实现了一个 redis master-slave 的运行环境。<br>&emsp;&emsp;例如我们将192.168.32.81上的redis服务设置为master，192.168.32.82、192.168.32.83设置为slave，192.168.32.81中配置文件masterauth 设置为123456<br>&emsp;&emsp;在192.168.32.82上设置主节点信息<code>SLAVEOF 192.168.32.81 6379</code>(redis5版本命令为<code>REPLICAOF 192.168.7.101 6379</code>)</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">192.168.32.82:6379&gt; SLAVEOF 192.168.32.81 6379</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">OK</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">192.168.32.82:6379&gt;<span class="built_in"> CONFIG </span><span class="builtin-name">SET</span> masterauth <span class="string">"123456"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">OK</span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;同样,192.168.32.83也要设置主节点信息及密码</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">192.168.7.103:6379&gt; SLAVEOF 192.168.7.101 6379</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">OK</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">192.168.7.103:6379&gt;<span class="built_in"> CONFIG </span><span class="builtin-name">SET</span> masterauth <span class="string">"123456"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">OK</span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;此时通过<code>info Replication</code>命令，在两个从节点上可以看到角色已变更为slave,且<code>master_link_status</code>状态要为up，说明主从结构配置完成。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">6379</span>&gt; info Replication</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"># Replication</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">role:slave</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">master_host:<span class="number">192.168</span><span class="number">.32</span><span class="number">.81</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">master_port:<span class="number">6379</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">master_link_status:up</span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;需要注意的是：不同的 redis 版本之间存在兼容性问题， 因此各 master 和 slave 之间必须保持版本一致，且redis slave 也要开启持久化并设置和 master 同样的连接密码，此外，如果开启了安全模式，未设置密码的话也会导致主从无法连接。</p>
+<h4 id="配置Sentinel"><a href="#配置Sentinel" class="headerlink" title="配置Sentinel"></a>配置Sentinel</h4><p>&emsp;&emsp;哨兵可以不和 Redis 服务器部署在一起。可以使用另外不同的机子，一般采用单数个哨兵（至少3个）。不过为了节约服务器，我们还是和redis服务器部署到一起。<br>&emsp;&emsp;3个机子都手动添加Sentinel配置文件<br>&emsp;&emsp;<code>vim /apps/redis/etc/sentinel.conf</code></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="string">bind</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="string">port</span> <span class="number">26379</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="string">daemonize</span> <span class="literal">yes</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="string">pidfile</span> <span class="string">"redis-sentinel.pid"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="string">logfile</span> <span class="string">"sentinel_26379.log"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="string">dir</span> <span class="string">"/usr/local/redis"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="string">sentinel</span> <span class="string">monitor</span> <span class="string">mymaster</span> <span class="number">192.168</span><span class="number">.32</span><span class="number">.81</span> <span class="number">6379</span> <span class="number">2</span> <span class="comment">#法定人数限制(quorum)，即有几个slave 认为 master down 了就进行故障转移</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="string">sentinel</span> <span class="string">auth-pass</span> <span class="string">mymaster</span> <span class="number">123456</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="string">sentinel</span> <span class="string">down-after-milliseconds</span> <span class="string">mymaster</span> <span class="number">30000</span> <span class="comment">#(SDOWN)主观下线的时间</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="string">sentinel</span> <span class="string">parallel-syncs</span> <span class="string">mymaster</span> <span class="number">1</span> <span class="comment">#发生故障转移时候同时向新 master 同步数据的slave 数量， 数字越小总同步时间越长</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"><span class="string">sentinel</span> <span class="string">failover-timeout</span> <span class="string">mymaster</span> <span class="number">180000</span> <span class="comment">#所有 slaves 指向新的 master 所需的超时时间</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line"><span class="string">sentinel</span> <span class="string">deny-scripts-reconfig</span> <span class="literal">yes</span> <span class="comment">#禁止修改脚本</span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;通过<code>/apps/redis/bin/redis-sentinel /apps/redis/etc/sentinel.conf</code>命令指定配置文件，启动哨兵，此时通过<code>ss -tanl</code>命令可以看到已监听26379端口，说明哨兵服务已启动。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">[<span class="symbol">root@</span>CentOS8 ~]# redis-cli -h <span class="number">192.168</span><span class="number">.32</span><span class="number">.81</span> -p <span class="number">26379</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="number">192.168</span><span class="number">.32</span><span class="number">.81</span>:<span class="number">26379</span>&gt; info Sentinel</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"># Sentinel</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">sentinel_masters:<span class="number">1</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">sentinel_tilt:<span class="number">0</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">sentinel_running_scripts:<span class="number">0</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">sentinel_scripts_queue_length:<span class="number">0</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">sentinel_simulate_failure_flags:<span class="number">0</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">master0:name=mymaster,status=ok,address=<span class="number">192.168</span><span class="number">.32</span><span class="number">.81</span>:<span class="number">6379</span>,slaves=<span class="number">2</span>,sentinels=<span class="number">3</span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;可以通过<code>redis-cli</code>指定26379端口连接哨兵服务器，<code>info Sentinel</code>查看哨兵状态，显示<code>status=ok，slaves=2，sentinels=3</code>，与我们之前设计的相同，说明哨兵服务正常。<br>&emsp;&emsp;此时，当master故障后，哨兵会通过投票机制，选举一个slave作为新的master，继续实现主从结构，而程序应用也会在主从切换的时候收到通知，Jedis 会进行连接的切换（在 JedisPool 中添加了 Sentinel 和MasterName 参数， JRedis Sentinel 底层基于 Redis 订阅实现 Redis 主从服务的切换通知， 当 Reids 发生主从切换时， Sentinel 会发送通知主动通知 Jedis 进行连接的切换， JedisSentinelPool 在每次从连接池中获取链接对象的时候,都要对连接对象进行检测,如果此链接和 Sentinel 的 Master 服务连接参数不一致,则会关闭此连接,重新获取新的 Jedis 连接对象。），实现redis的高可用。</p>
+<h3 id="Redis-Cluster"><a href="#Redis-Cluster" class="headerlink" title="Redis Cluster"></a>Redis Cluster</h3><p>&emsp;&emsp;在哨兵 sentinel 机制中，可以解决 redis 高可用的问题， 即当 master 故障后可以自动将 slave 提升为 master 从而可以保证 redis 服务的正常使用，但是无法解决 redis 单机写入的瓶颈问题， 即单机的 redis 写入性能受限于单机的内存大小、 并发数量、 网卡速率等因素，所以Redis自带的Cluster就是很好的一个解决方案。</p>
+<h4 id="集群前提"><a href="#集群前提" class="headerlink" title="集群前提"></a>集群前提</h4><p>&emsp;&emsp;1.每个 redis node 节点采用相同的硬件配置、相同的密码、 相同的 redis 版本。<br>&emsp;&emsp;2.每个节点必须开启的参数<br>cluster-enabled yes #必须开启集群状态， 开启后 redis 进程会有 cluster 显示cluster-config-file nodes-6380.conf #此文件有 redis cluster 集群自动创建和维护，不需<br>要任何手动操作<br>&emsp;&emsp;3.所有 redis 服务器必须没有任何数据<br>&emsp;&emsp;4.先启动为单机 redis 且没有任何 key value</p>
+<h4 id="集群部署"><a href="#集群部署" class="headerlink" title="集群部署"></a>集群部署</h4><h5 id="Redis-3、4"><a href="#Redis-3、4" class="headerlink" title="Redis 3、4"></a>Redis 3、4</h5><p>&emsp;&emsp;Redis 3 和 4 版本需要使用到集群管理工具 redis-trib.rb，这个工具是 redis 官方推出的管理 redis 集群的工具，集成在 redis 的源码 src 目录下，是基于 redis 提供的集群命令封装成简单、便捷、实用的操作工具， redis-trib.rb 是 redis 作者用 ruby 开发完成的。所以需要有ruby环境，如果系统自带的ruby版本较低（需要Ruby version &gt;= 2.3.0），那就需要重新编译安装更高版本。</p>
+<h6 id="编译安装ruby"><a href="#编译安装ruby" class="headerlink" title="编译安装ruby"></a>编译安装ruby</h6><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"> yum <span class="built_in">remove</span> <span class="keyword">ruby</span> rubygems -<span class="keyword">y</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">wget http<span class="variable">s:</span>//cache.<span class="keyword">ruby</span>-lang.org/pub/<span class="keyword">ruby</span>/<span class="number">2.5</span>/<span class="keyword">ruby</span>-<span class="number">2.5</span>.<span class="number">5</span>.tar.gz</span></pre></td></tr></table></figure>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">tar xf ruby<span class="number">-2.5</span><span class="number">.5</span>.tar.gz</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">cd ruby<span class="number">-2.5</span><span class="number">.5</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">./configure</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"> make -j <span class="number">4</span> &amp;&amp; make install</span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;安装redis的gem包（Gem是一个管理Ruby库和程序的标准包，它通过Ruby Gem（如 <a href="http://rubygems.org/" target="_blank" rel="noopener">http://rubygems.org/</a> ）源来查找、安装、升级和卸载软件包，非常的便捷）。<br> <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">gem <span class="keyword">install</span> redis</span></pre></td></tr></table></figure><br>&emsp;&emsp;之后就可以使用<code>redis-trib.rb</code>命令来创建管理集群了。</p>
+<h6 id="集群创建"><a href="#集群创建" class="headerlink" title="集群创建"></a>集群创建</h6><p>&emsp;&emsp;通过命令<code>redis-trib.rb create</code>来创建集群，选项–replicas <arg> 指定 master 的slave数量.<br>&emsp;&emsp;需要注意的是，集群至少也需要3台master，（–replicas 指定的slave数量可以为0，不过一般不建议），如果指定slave数量为2的话就至少需要9个redis服务器了（3主6从），比较浪费资源，所以我们一般设置replicas数值为1。<br>&emsp;&emsp;如果设置<strong>slave数量为0</strong>，则所有的6个服务器均为master，无法实现高可，集群信息如下图所示：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">6379</span>&gt; cluster nodes</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">c65ab2a5e9d8a9435d54f0ef7db302c62b6f9308 <span class="number">192.168</span><span class="number">.32</span><span class="number">.82</span>:<span class="symbol">6379@</span><span class="number">16379</span> master - <span class="number">0</span> <span class="number">1573794294000</span> <span class="number">3</span> connected <span class="number">5461</span><span class="number">-8191</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">a13d711b6b54909e5aed44cc8f75195915bbfb95 <span class="number">192.168</span><span class="number">.32</span><span class="number">.85</span>:<span class="symbol">6379@</span><span class="number">16379</span> master - <span class="number">0</span> <span class="number">1573794293235</span> <span class="number">6</span> connected <span class="number">13653</span><span class="number">-16383</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="number">5</span>d614e18da36f9d7b3536566205281743adc95c5 <span class="number">192.168</span><span class="number">.32</span><span class="number">.8</span>:<span class="symbol">6379@</span><span class="number">16379</span> myself,master - <span class="number">0</span> <span class="number">1573794294000</span> <span class="number">1</span> connected <span class="number">0</span><span class="number">-2730</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="number">6fe42</span>df7ea9c4dbb00d9bae6f7e4238367b1089b <span class="number">192.168</span><span class="number">.32</span><span class="number">.81</span>:<span class="symbol">6379@</span><span class="number">16379</span> master - <span class="number">0</span> <span class="number">1573794292212</span> <span class="number">2</span> connected <span class="number">2731</span><span class="number">-5460</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">e3beb9f45b73b265050499ee093ed1a473a3d566 <span class="number">192.168</span><span class="number">.32</span><span class="number">.83</span>:<span class="symbol">6379@</span><span class="number">16379</span> master - <span class="number">0</span> <span class="number">1573794295286</span> <span class="number">4</span> connected <span class="number">8192</span><span class="number">-10922</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="number">8</span>ae323030e3ae28519a27058c6592b94d1aae734 <span class="number">192.168</span><span class="number">.32</span><span class="number">.84</span>:<span class="symbol">6379@</span><span class="number">16379</span> master - <span class="number">0</span> <span class="number">1573794295000</span> <span class="number">5</span> connected <span class="number">10923</span><span class="number">-13652</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">6379</span>&gt;</span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;如果设置slave数量为2，若创建集群是加入的服务器数量不够9台，则<strong>会报错：</strong></p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">[<span class="symbol">root@</span>CentOS8 ~]#redis-trib.rb create --replicas <span class="number">2</span> \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="number">192.168</span><span class="number">.32</span><span class="number">.8</span>:<span class="number">6379</span> \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="number">192.168</span><span class="number">.32</span><span class="number">.81</span>:<span class="number">6379</span> \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="number">192.168</span><span class="number">.32</span><span class="number">.82</span>:<span class="number">6379</span> \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="number">192.168</span><span class="number">.32</span><span class="number">.83</span>:<span class="number">6379</span> \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="number">192.168</span><span class="number">.32</span><span class="number">.84</span>:<span class="number">6379</span> \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="number">192.168</span><span class="number">.32</span><span class="number">.85</span>:<span class="number">6379</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; Creating cluster</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">*** ERROR: Invalid configuration <span class="keyword">for</span> cluster creation.</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">*** Redis Cluster requires at least <span class="number">3</span> master nodes.</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">*** This <span class="keyword">is</span> <span class="keyword">not</span> possible with <span class="number">6</span> nodes <span class="keyword">and</span> <span class="number">2</span> replicas per node.</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">*** At least <span class="number">9</span> nodes are required.</span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;若之前有创建集群失败的一些操作，或集群中有的redis服务器中有数据信息的话，也是无法创建成功的。会报类似如下如下信息：</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">/usr/local/share/gems/gems/redis-<span class="number">4.1</span>.<span class="number">3</span>/<span class="class"><span class="keyword">lib</span>/<span class="title">redis</span>/<span class="title">client</span>.<span class="title">rb</span>:126:<span class="title">in</span> `<span class="title">call</span>': <span class="title">ERR</span> <span class="title">Slot</span> 2823 <span class="title">is</span> <span class="title">already</span> <span class="title">busy</span> (<span class="title">Redis::CommandError</span>)</span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;所以我们一般在创建集群之前，先连上redis服务器清空数据，并重置集群关系，确保所有的redis服务器都没有数据且都为单机master。</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">FLUSHALL</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">cluster</span> <span class="keyword">reset</span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;然后执行创建集群命令</p>
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">redis-trib.rb create --replicas <span class="number">1</span> \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="number">192.168.32.8:6379</span> \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="number">192.168.32.81:6379</span> \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="number">192.168.32.82:6379</span> \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="number">192.168.32.83:6379</span> \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="number">192.168.32.84:6379</span> \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="number">192.168.32.85:6379</span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;即可成功创建集群。连接redis，登陆，即可看到集群主从关系。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">[<span class="symbol">root@</span>CentOS8 ~]#redis-cli</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">6379</span>&gt; cluster nodes</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">NOAUTH Authentication required.</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">6379</span>&gt; auth <span class="number">123456</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">OK</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">6379</span>&gt; cluster nodes</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">c65ab2a5e9d8a9435d54f0ef7db302c62b6f9308 <span class="number">192.168</span><span class="number">.32</span><span class="number">.82</span>:<span class="symbol">6379@</span><span class="number">16379</span> master - <span class="number">0</span> <span class="number">1573798716854</span> <span class="number">3</span> connected <span class="number">10923</span><span class="number">-16383</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">a13d711b6b54909e5aed44cc8f75195915bbfb95 <span class="number">192.168</span><span class="number">.32</span><span class="number">.85</span>:<span class="symbol">6379@</span><span class="number">16379</span> slave <span class="number">6fe42</span>df7ea9c4dbb00d9bae6f7e4238367b1089b <span class="number">0</span> <span class="number">1573798715000</span> <span class="number">6</span> connected</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="number">5</span>d614e18da36f9d7b3536566205281743adc95c5 <span class="number">192.168</span><span class="number">.32</span><span class="number">.8</span>:<span class="symbol">6379@</span><span class="number">16379</span> myself,master - <span class="number">0</span> <span class="number">1573798716000</span> <span class="number">1</span> connected <span class="number">0</span><span class="number">-5460</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="number">6fe42</span>df7ea9c4dbb00d9bae6f7e4238367b1089b <span class="number">192.168</span><span class="number">.32</span><span class="number">.81</span>:<span class="symbol">6379@</span><span class="number">16379</span> master - <span class="number">0</span> <span class="number">1573798717877</span> <span class="number">2</span> connected <span class="number">5461</span><span class="number">-10922</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"><span class="number">8</span>ae323030e3ae28519a27058c6592b94d1aae734 <span class="number">192.168</span><span class="number">.32</span><span class="number">.84</span>:<span class="symbol">6379@</span><span class="number">16379</span> slave <span class="number">5</span>d614e18da36f9d7b3536566205281743adc95c5 <span class="number">0</span> <span class="number">1573798715834</span> <span class="number">5</span> connected</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">e3beb9f45b73b265050499ee093ed1a473a3d566 <span class="number">192.168</span><span class="number">.32</span><span class="number">.83</span>:<span class="symbol">6379@</span><span class="number">16379</span> slave c65ab2a5e9d8a9435d54f0ef7db302c62b6f9308 <span class="number">0</span> <span class="number">1573798716000</span> <span class="number">4</span> connected</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">6379</span>&gt;</span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;监控集群状态</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">redis-trib.rb<span class="built_in"> check </span>192.168.32.8:6379</span></pre></td></tr></table></figure>
+<h5 id="Redis-5"><a href="#Redis-5" class="headerlink" title="Redis 5"></a>Redis 5</h5><p>&emsp;&emsp;Redis 5 版本可以直接用redis-cli客户端命令加各种命令参数来管理创建集群(配置文件中如果已配置正确的密码，则不需要-a 选项，-a选项会有warning警告)。<br>&emsp;&emsp;创建集群</p>
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">redis-cli -a <span class="number">123456</span> --cluster create --cluster-replicas <span class="number">1</span> \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="number">192.168.32.8:6379</span> \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="number">192.168.32.81:6379</span> \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="number">192.168.32.82:6379</span> \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="number">192.168.32.83:6379</span> \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="number">192.168.32.84:6379</span> \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="number">192.168.32.85:6379</span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;监控集群状态</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">redis-cli -a 123456 --cluster<span class="built_in"> check </span>192.168.32.8:6379</span></pre></td></tr></table></figure>
+<h4 id="集群管理维护"><a href="#集群管理维护" class="headerlink" title="集群管理维护"></a>集群管理维护</h4><p>&emsp;&emsp;集群运行时间长久之后，难免由于硬件故障、网络规划、 业务增长等原因对已有集群进行相应的调整， 比如增加 Redis node 节点、 减少节点、 节点迁移、更换服务器等。</p>
+<h5 id="动态添加节点"><a href="#动态添加节点" class="headerlink" title="动态添加节点"></a>动态添加节点</h5><p>&emsp;&emsp;同步之前 Redis node 的配置文件到 192.168.32.86 Redis 编译安装目录， 注意修改配置文件的监听 IP。</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">scp redis.conf <span class="number">192.168</span>.<span class="number">32.86</span><span class="symbol">:/apps/redis/etc/</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">scp redis_6380.conf <span class="number">192.168</span>.<span class="number">32.86</span><span class="symbol">:/apps/redis/etc/</span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;对预备加入的redis服务器清除数据并执行集群重置</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">FLUSHALL</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">cluster</span> <span class="keyword">reset</span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;<strong>redis3、4</strong> 中添加节点（Adding node 192.168.32.87:6379 to cluster 192.168.32.8:6379）</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">redis-trib.rb<span class="built_in"> add-node </span>192.168.32.87:6379 192.168.32.8:6379</span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;<strong>redis5</strong> 中添加节点（Adding node 192.168.32.87:6379 to cluster 192.168.32.8:6379）</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">redis-cli --cluster<span class="built_in"> add-node </span>192.168.32.87:6379 192.168.32.8:6379</span></pre></td></tr></table></figure>
+<h5 id="重新分配槽位"><a href="#重新分配槽位" class="headerlink" title="重新分配槽位"></a>重新分配槽位</h5><p>&emsp;&emsp;集群槽位迁移时，迁出的服务器中不能有数据，否则会迁移失败并终止，且<strong>需要修复集群</strong>，才可以进行第二次迁移。<br>&emsp;&emsp;<strong>redis3、4</strong> 中对新加的主机重新分配槽位(后可跟集群中任意主机ip:port):</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">redis-trib</span><span class="selector-class">.rb</span> <span class="selector-tag">reshard</span> 192<span class="selector-class">.168</span><span class="selector-class">.32</span><span class="selector-class">.8</span><span class="selector-pseudo">:6379</span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;<strong>redis5</strong> 对新加的主机重新分配槽位(后可跟集群中任意主机ip:port):</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">redis-cli --cluster reshard <span class="number">192.168</span><span class="number">.32</span><span class="number">.8</span>:<span class="number">6379</span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;输入命令后根据提示输入</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">How many slots <span class="keyword">do</span> you want <span class="keyword">to</span> <span class="keyword">move</span> (<span class="keyword">from</span> <span class="number">1</span> <span class="keyword">to</span> <span class="number">16384</span>)? <span class="number">4096</span>  <span class="comment">#需要迁移多少槽位</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">What <span class="keyword">is</span> the receiving node <span class="keyword">ID</span>? <span class="number">5</span>d614e18da36f9d7b3536566205281743adc95c5 <span class="comment">#选择迁移到哪个redis主机</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">What <span class="keyword">is</span> the receiving node <span class="keyword">ID</span>? <span class="number">6</span>bffc0037eea959f0dcc11aca657f928d86cfc75</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">Please enter <span class="keyword">all</span> the <span class="keyword">source</span> node IDs.</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">  <span class="keyword">Type</span> <span class="string">'all'</span> <span class="keyword">to</span> <span class="keyword">use</span> <span class="keyword">all</span> the nodes <span class="keyword">as</span> <span class="keyword">source</span> nodes <span class="keyword">for</span> the <span class="keyword">hash</span> slots.</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">  <span class="keyword">Type</span> <span class="string">'done'</span> once you entered <span class="keyword">all</span> the <span class="keyword">source</span> nodes IDs.</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">Source</span> node <span class="comment">#1:6bffc0037eea959f0dcc11aca657f928d86cfc75   #选择从哪个主机迁出</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">Source</span> node <span class="comment">#2:done             #输入done结束选择</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">Do</span> you want <span class="keyword">to</span> proceed <span class="keyword">with</span> the proposed reshard plan (yes/<span class="keyword">no</span>)? yes  <span class="comment">#是否执行，yes确认，之后就会迁移完毕</span></span></pre></td></tr></table></figure>
+<h5 id="修复集群"><a href="#修复集群" class="headerlink" title="修复集群"></a>修复集群</h5><p>&emsp;&emsp;如果迁移失败，则需要修复集群。</p>
+<p>&emsp;&emsp;<strong>redis3、4</strong> 中对对报错redis服务器进行单独修复(后跟需要修复的主机ip:port):</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">redis-trib</span><span class="selector-class">.rb</span> <span class="selector-tag">fix</span> 192<span class="selector-class">.168</span><span class="selector-class">.32</span><span class="selector-class">.82</span><span class="selector-pseudo">:6379</span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;<strong>redis5</strong> 中对对报错redis服务器进行单独修复(后跟需要修复的主机ip:port):</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">redis-cli --cluster fix <span class="number">192.168</span><span class="number">.32</span><span class="number">.82</span>:<span class="number">6379</span></span></pre></td></tr></table></figure>
+<h5 id="配置主从关系"><a href="#配置主从关系" class="headerlink" title="配置主从关系"></a>配置主从关系</h5><p>&emsp;&emsp;在整个 Redis cluster 集群中，每个 master 至少有一个 slave。也可以有多个，但是至少要有一个提供数据备份和服务高可用。<br>&emsp;&emsp;<code>redis-trib.rb info 192.168.32.8:6379</code></p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">[<span class="symbol">root@</span>CentOS8 ~]#redis-trib.rb info <span class="number">192.168</span><span class="number">.32</span><span class="number">.8</span>:<span class="number">6379</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="number">192.168</span><span class="number">.32</span><span class="number">.8</span>:<span class="number">6379</span> (<span class="number">5</span>d614e18...) -&gt; <span class="number">0</span> keys | <span class="number">4096</span> slots | <span class="number">1</span> slaves.</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="number">192.168</span><span class="number">.32</span><span class="number">.82</span>:<span class="number">6379</span> (c65ab2a5...) -&gt; <span class="number">0</span> keys | <span class="number">4096</span> slots | <span class="number">0</span> slaves.</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="number">192.168</span><span class="number">.32</span><span class="number">.81</span>:<span class="number">6379</span> (<span class="number">6fe42</span>df7...) -&gt; <span class="number">0</span> keys | <span class="number">4096</span> slots | <span class="number">1</span> slaves.</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="number">192.168</span><span class="number">.32</span><span class="number">.87</span>:<span class="number">6379</span> (<span class="number">6</span>bffc003...) -&gt; <span class="number">0</span> keys | <span class="number">4096</span> slots | <span class="number">1</span> slaves.</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="number">192.168</span><span class="number">.32</span><span class="number">.86</span>:<span class="number">6379</span> (e06732b2...) -&gt; <span class="number">0</span> keys | <span class="number">0</span> slots | <span class="number">0</span> slaves.</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">[OK] <span class="number">0</span> keys <span class="keyword">in</span> <span class="number">5</span> masters.</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="number">0.00</span> keys per slot on average.</span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;我们看到之前的3主3从结构因为我们加了两个服务器变成了5主3从，新加的两个服务器，我们需要将它们设置为一主一从来实现高可用。于是我们要将192.168.32.86变为192.168.32.82的slave。<br>&emsp;&emsp;连接登陆192.168.32.86上的redis服务器，先查好192.168。32.82的ID为c65ab2a5e9d8a9435d54f0ef7db302c62b6f9308，执行</p>
+<figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">cluster replicate <span class="keyword">c</span><span class="number">65</span>ab<span class="number">2</span>a<span class="number">5e9</span>d<span class="number">8</span>a<span class="number">9435</span>d<span class="number">54</span>f<span class="number">0</span>ef<span class="number">7</span>db<span class="number">302</span><span class="keyword">c</span><span class="number">62</span>b<span class="number">6</span>f<span class="number">9308</span></span></pre></td></tr></table></figure>
+<h5 id="删除节点"><a href="#删除节点" class="headerlink" title="删除节点"></a>删除节点</h5><p>&emsp;&emsp;<strong>删除节点，需要先将redis主机上的槽位都迁移到其他主机上才可以操作。</strong><br>&emsp;&emsp;迁移完成后，<strong>redis3、4</strong> 删除节点（要删除的redis主机要写节点号，集群可以写集群中任意主机ip+port）</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">[<span class="symbol">root@</span>CentOS8 ~]#redis-trib.rb del-node <span class="number">192.168</span><span class="number">.32</span><span class="number">.8</span>:<span class="number">6379</span> <span class="number">6</span>bffc0037eea959f0dcc11aca657f928d86cfc75</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; Removing node <span class="number">6</span>bffc0037eea959f0dcc11aca657f928d86cfc75 <span class="keyword">from</span> cluster <span class="number">192.168</span><span class="number">.32</span><span class="number">.8</span>:<span class="number">6379</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; Sending CLUSTER FORGET messages to the cluster...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; SHUTDOWN the node.</span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;<strong>redis5</strong> 删除节点</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">redis-cli --cluster del-node <span class="number">192.168</span><span class="number">.32</span><span class="number">.8</span>:<span class="number">6379</span> <span class="number">6</span>bffc0037eea959f0dcc11aca657f928d86cfc75</span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;主节点被删除之后，其之前它的 slave 自动称为了 Redis 集群中其他 master的 slave，此节点如果不需要也可以一并删除。</p>
+
+        </div>
+        <!-- .entry-content -->
+        <div class="single-reward">
+          <div class="reward-open">赏
+            <div class="reward-main">
+              <ul class="reward-row">
+                <li class="alipay-code"><img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6undefined"></li>
+                <li class="wechat-code"><img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/images/custom/donate/wechat-pay.png"></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div style="text-align:center; width: 100%" class="social-share share-mobile" data-disabled="diandian, tencent"></div>
+        <footer class="post-footer">
+          <div class="post-lincenses"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="nofollow"><i class="fa fa-creative-commons" aria-hidden="true"></i> 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></div>
+          <div class="post-tags">
+          </div>
+          <div class="post-share">
+            <div class="social-share sharehidden share-component"></div>
+            <i class="iconfont show-share icon-forward"></i>
+          </div>
+        </footer><!-- .entry-footer -->
+      </article>
+      <!-- #post-## -->
+      <div class="toc" style="background: none;"></div>
+      <section class="post-squares nextprev">
+        
+          
+            <div class="post-nepre half previous">
+          
+            <a href="/b365780e.html" rel="prev">
+              <div class="background">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="">
+              </div>
+              <span class="label">
+              Previous Post</span>
+              <div class="info">
+                <h3>
+                linux上部署与配置tomcat</h3>
+                <hr>
+              </div>
+            </a>
+          </div>
+        
+        
+          
+            <div class="post-nepre half next">
+          
+            <a href="/f2c1a89e.html" rel="next">
+              <div class="background">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="">
+              </div>
+              <span class="label">
+              Next Post</span>
+              <div class="info">
+                <h3>
+                一键源码编译安装redis</h3>
+                <hr>
+              </div>
+            </a>
+          </div>
+        
+      </section>
+      
+<div id="vcomments"></div>
+<script>
+  window.onload = function(){
+      var valine = new Valine();
+      valine.init({
+        el: '#vcomments',
+        appId: "AVtPtVan0Ky5u33XhUzJlFKp-gzGzoHsz",
+        appKey: "nx3XTnRJmaMQR3aLWYiigkgJ",
+        path: window.location.pathname,
+        placeholder: "你是我一生只会遇见一次的惊喜 ..."
+      })
+  }
+</script>
+
+      <section class="author-profile">
+        <div class="info" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <a href="hewanyue.com" class="profile gravatar"><img src="https://gravatar.loli.net/avatar/37019f5eb1f0b9951c06bfdc8342afd1" itemprop="image" alt="hechao" height="70" width="70"></a>
+          <div class="meta">
+            <span class="title">Author</span>
+            <h3 itemprop="name">
+            <a href="hewanyue.com" itemprop="url" rel="author">hechao</a>
+            </h3>
+          </div>
+        </div>
+        <hr>
+        <p><i class="iconfont icon-write"></i>一个奇怪的人</p>
+      </section>
+    </main><!-- #main -->
+  </div><!-- #primary -->
+</div>
+
+
+
+    </div>    
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..."/>
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            // PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+    <!-- <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Hechao<br>
+      powered_by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer> -->
+<footer id="colophon" class="site-footer" role="contentinfo">
+  <div class="site-info">
+    <div class="footertext">
+      <div class="img-preload">
+        <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/wordpress-rotating-ball-o.svg">
+        <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/disqus-preloader.svg">
+      </div>
+      <p style="color: #666666;">&copy 2018</p>
+    </div>
+    <div class="footer-device">
+    <p style="font-family: 'Ubuntu', sans-serif;">
+        <span style="color: #b9b9b9;">Theme <a href="https://github.com/honjun/hexo-theme-sakura" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Sakura</a> <i class="iconfont icon-sakura rotating" style="color: #ffc0cb;display:inline-block"></i> by <a href="https://2heng.xin/" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Mashiro</a>&<a href="https://www.hojun.cn/" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Hojun</a>, Powered by Hexo, Hosted by Coding Pages</a>
+        </span>
+      </p>
+    </div>
+  </div><!-- .site-info -->
+</footer>
+
+
+
+<!-- <script src="/js/tocbot.js"></script> -->
+<script type="text/javascript" src="/js/lib.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script type="text/javascript" src="/js/InsightSearch.js"></script>
+<script type="text/javascript" src="/js/jquery.fancybox.min.js"></script>
+<script type="text/javascript" src="/js/zoom.min.js"></script>
+<script type="text/javascript" src="/js/sakura-app.js"></script>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine@1.3.4/dist/Valine.min.js'></script>
+<script src="/js/botui.js"></script>
+<!-- 不蒜子 网页计数器 -->
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script> -->
+<script type="text/javascript">
+/* <![CDATA[ */
+if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+  var Poi = {"pjax":"1","movies":{"url": "https://cdn.jsdelivr.net/gh/honjun/hojun@1.2","name":"Unbroken.mp4","live":"close"},"windowheight":"fixed","codelamp":"close","ajaxurl":"","order":"asc","formpostion":"bottom"};
+} else {
+  var Poi = {"pjax":"1","movies":{"url": "https://cdn.jsdelivr.net/gh/honjun/hojun@1.2","name":"Unbroken.mp4","live":"open"},"windowheight":"auto","codelamp":"close","ajaxurl":"","order":"asc","formpostion":"bottom"};
+}
+/* ]]> */
+
+</script>
+<script>
+$(document).ready(function() {
+  if ($(".toc").length > 0 && document.body.clientWidth > 1200) {
+    if ($(".pattern-center").length > 0) { //有图的情况
+      tocbot.init({
+          // Where to render the table of contents.
+          tocSelector: '.toc', // 放置目录的容器
+          // Where to grab the headings to build the table of contents.
+          contentSelector: '.entry-content', // 正文内容所在
+          // Which headings to grab inside of the contentSelector element.
+          scrollSmooth: true,
+          headingSelector: 'h1, h2, h3, h4, h5', // 需要索引的标题级别
+          headingsOffset: -400,
+          scrollSmoothOffset: -85
+      });
+    } else {
+      tocbot.init({
+          // Where to render the table of contents.
+          tocSelector: '.toc', // 放置目录的容器
+          // Where to grab the headings to build the table of contents.
+          contentSelector: '.entry-content', // 正文内容所在
+          // Which headings to grab inside of the contentSelector element.
+          scrollSmooth: true,
+          headingSelector: 'h1, h2, h3, h4, h5', // 需要索引的标题级别
+          headingsOffset: -85,
+          scrollSmoothOffset: -85
+      });
+    }
+    var offsetTop = $('.toc').offset().top - 95;
+    window.onscroll = function() {
+      var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+      if (scrollTop >= offsetTop) {
+        $('.toc').addClass('toc-fixed');
+      } else {
+        $('.toc').removeClass('toc-fixed');
+      }
+    }
+  }
+});
+</script>
+
+    <div class="openNav no-select" style="height: 50px;">
+      <div class="iconflat no-select" style="width: 50px; height: 50px;">
+        <div class="icon"></div>
+      </div>
+      <div class="site-branding search-form-submit">
+        <i class="iconfont js-toggle-search iconsearch icon-search"></i>
+      </div>
+    </div>
+  </section>
+  <div id="mo-nav" class="">
+  <div class="m-avatar">
+    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6https://gravatar.loli.net/avatar/37019f5eb1f0b9951c06bfdc8342afd1">
+  </div>
+  <p style="text-align: center; color: #333; font-weight: 900; font-family: 'Ubuntu', sans-serif; letter-spacing: 1.5px">ウサギ没有人</p>
+  <p style="text-align: center; word-spacing: 20px;">
+    
+      
+        <a href="http://github.com/wudihechao" class="fa fa-github" target="_blank" style="color: #333; margin-left:20px"></a>
+      
+        <a href="http://weibo.com/u/1050367191" class="fa fa-weibo" target="_blank" style="color: #dd4b39; margin-left:20px"></a>
+      
+        <a href="https://wpa.qq.com/msgrd?v=3&uin=307802118&site=qq&menu=yes" class="fa fa-qq" target="_blank" style="color: #25c6fe; margin-left:20px"></a>
+      
+    
+  </p>
+  <ul id="menu-new-1" class="menu">
+    
+      <li>
+        <a href="/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-fort-awesome faa-shake" aria-hidden="true"></i>
+            首页
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/archives">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-archive faa-shake" aria-hidden="true"></i>
+            归档
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/categories/linux/">
+                  <i class="fa fa-code" aria-hidden="true"></i>
+                  linux
+                </a>
+              </li>
+            
+              <li>
+                <a href="/categories/SQL/">
+                  <i class="fa fa-book" aria-hidden="true"></i>
+                  SQLs
+                </a>
+              </li>
+            
+              <li>
+                <a href="/categories/cloud/">
+                  <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                  cloud
+                </a>
+              </li>
+            
+              <li>
+                <a href="/categories/%E6%95%85%E9%9A%9C/">
+                  <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                  故 障
+                </a>
+              </li>
+            
+              <li>
+                <a href="/categories/%E6%83%85%E6%84%9F/">
+                  <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                  情 感
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+      <li>
+        <a href="javascript:;" target="_blank" rel="noopener">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-list-ul faa-vertical" aria-hidden="true"></i>
+            清单
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/tags/%E6%82%A6%E8%AF%BB/">
+                  <i class="fa fa-th-list faa-bounce" aria-hidden="true"></i>
+                  书单
+                </a>
+              </li>
+            
+              <li>
+                <a href="/bangumi/">
+                  <i class="fa fa-film faa-vertical" aria-hidden="true"></i>
+                  番组
+                </a>
+              </li>
+            
+              <li>
+                <a href="/music/">
+                  <i class="fa fa-headphones" aria-hidden="true"></i>
+                  歌单
+                </a>
+              </li>
+            
+              <li>
+                <a href="/tags/%E5%9B%BE%E9%9B%86/">
+                  <i class="fa fa-photo" aria-hidden="true"></i>
+                  图集
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+      <li>
+        <a href="/comment/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-pencil-square-o faa-tada" aria-hidden="true"></i>
+            留言板
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/links/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-link faa-shake" aria-hidden="true"></i>
+            友人帐
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/donate/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-heart faa-pulse" aria-hidden="true"></i>
+            赞赏
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-leaf faa-wrench" aria-hidden="true"></i>
+            关于
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/about/">
+                  <i class="fa fa-meetup" aria-hidden="true"></i>
+                  我？
+                </a>
+              </li>
+            
+              <li>
+                <a href="/theme-sakura/">
+                  <i class="fa iconfont icon-sakura" aria-hidden="true"></i>
+                  主题
+                </a>
+              </li>
+            
+              <li>
+                <a href="/lab/">
+                  <i class="fa fa-cogs" aria-hidden="true"></i>
+                  Lab
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+      <li>
+        <a href="/atom.xml">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-rss faa-pulse" aria-hidden="true"></i>
+            RSS
+          </span>
+        </a>
+        
+      </li>
+    
+  </ul>
+  <p style="text-align: center; font-size: 13px; color: #b9b9b9;">&copy 2019 hexo-sakura</p>
+</div>
+<button onclick="topFunction()" class="mobile-cd-top" id="moblieGoTop" title="Go to top" style="display: none;"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<!-- require MetingJS -->
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<style>
+  .aplayer .aplayer-lrc {
+    height: 35px;
+  }
+  .aplayer .aplayer-lrc p{
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 18px !important;
+  }
+  .aplayer .aplayer-lrc p.aplayer-lrc-current{
+    color: #FF1493;
+  }
+  .aplayer.aplayer-narrow .aplayer-body{
+    left: -66px !important;
+  }
+  .aplayer.aplayer-fixed .aplayer-lrc {
+    display: none;
+  }
+  .aplayer .aplayer-lrc.aplayer-lrc-hide {
+      display:none !important;
+  }
+  .aplayer.aplayer-fixed .lrc-show {
+    display: block;
+    background: rgba(255, 255, 255, 0.8);
+  }
+</style>
+<meting-js
+
+    id="2660651585"
+
+    server="netease"
+
+    type="playlist"
+
+    fixed="true"
+
+    autoplay="false"
+
+    loop="all"
+
+    order="random"
+
+    preload="auto"
+
+    volume="0.7"
+
+    mutex="true"
+
+</meting-js>
+<script>
+  $(function(){
+    $('body').on('click', '.aplayer', function(){
+      if($('.aplayer-button').hasClass('aplayer-play')) {
+        $('.aplayer-lrc').removeClass('lrc-show');
+      } else {
+        $('.aplayer-lrc').addClass('lrc-show');
+      }
+    })
+  });
+</script>
+</body>
+</html>

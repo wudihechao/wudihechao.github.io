@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
   
-  <title itemprop="name">CentOS6源码编译-安装linunx内核最新版5-2-9 | BOHC!</title>
+  <title itemprop="name">Tag: nginx | BOHC!</title>
   
     <link rel="shortcut icon" href="/images/favicon.ico">
   
@@ -354,157 +354,64 @@
   </div>
 </header>
 
-      <link rel="stylesheet" type="text/css" href="/css/sharejs.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+      
 <div class="pattern-center-blank"></div>
-
+<div class="pattern-center ">
+  <div class="pattern-attachment-img">
+    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="nginx.img" class="lazyload" onerror="imgError(this,3)" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;">
+  </div>
+  <header class="pattern-header ">
+    <h1 class="cat-title">nginx</h1>
+  </header>
+</div>
 <div id="content" class="site-content">
   <div id="primary" class="content-area">
     <main id="main" class="site-main" role="main">
-      <article id="post-1" class="post-1 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
-        <div class="toc"></div>
-        <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
-        
-          <header class="entry-header">
-            <h1 class="entry-title">CentOS6源码编译-安装linunx内核最新版5-2-9</h1>
-            <p class="entry-census">hechao&nbsp;·&nbsp;2019-8-29&nbsp;·&nbsp;<span id="busuanzi_value_page_pv"></span>次阅读</p></p>
-
-            <hr>
-          </header>
-        
-        <div class="entry-content">
-          <p>&emsp;&emsp;之前在CentOS7 上源码编译安装过新内核，不过有次在6上编译就遇到问题了，提示错误如下</p>
-<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">make</span>[<span class="number">2</span>]: *** [scripts/sign-file] <span class="built_in">Error</span> <span class="number">1</span> <span class="built_in">make</span>[<span class="number">1</span>]: *** [scripts] <span class="built_in">Error</span> <span class="number">2</span> <span class="built_in">make</span></span></pre></td></tr></table></figure>
-<p>搞了好久，好像是参数设置不正确。</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">error: #<span class="builtin-name">error</span> Sorry, your compiler is too old - please<span class="built_in"> upgrade </span>it</span></pre></td></tr></table></figure>
-<p>&emsp;&emsp;好像是说gcc版本过低。<br>&emsp;&emsp;去epel源找了一下，已经是最新版了啊~<br>&emsp;&emsp;查看了下之前CentOS7的gcc版本，是gcc-4.8.5，再去一查这个CentOS6的gcc版本，是gcc-4.4.7，可能就差在这几个小版本上了。<br>&emsp;&emsp;于是升级gcc版本就成了当务之急。<br>&emsp;&emsp;那就源码编译安装个新版的gcc吧。（后来朋友说可以直接把CentOS7上gcc的rpm包直接拿来用的，未尝试）</p>
-<h2 id="编译安装gcc"><a href="#编译安装gcc" class="headerlink" title="编译安装gcc"></a>编译安装gcc</h2><p>&emsp;&emsp;gcc有三个依赖包gmp、mpfr、mpc,要首先编译安装（虽然原本就有，不过如果编译高版本gcc，这三个依赖包不装新版本的话也会报错）<br>&emsp;&emsp;先去下载好三个依赖包源码包及gcc源码包</p>
-<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">mkdir /data/gcc                                             <span class="comment">#创建目录/data/gcc</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">cd /data/gcc</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">wget <span class="symbol">https:</span>/<span class="regexp">/gmplib.org/download</span><span class="regexp">/gmp/gmp</span>-<span class="number">6.1</span>.<span class="number">2</span>.tar.xz       <span class="comment">#下载gmp6.1.2</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">wget <span class="symbol">http:</span>/<span class="regexp">/www.mpfr.org/mpfr</span>-current/mpfr-<span class="number">3.1</span>.<span class="number">5</span>.tar.gz     <span class="comment">#下载mpfr3.1.5</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">wget <span class="symbol">ftp:</span>/<span class="regexp">/ftp.gnu.org/gnu</span><span class="regexp">/mpc/mpc</span>-<span class="number">1.0</span>.<span class="number">3</span>.tar.gz             <span class="comment">#下载mpc1.0.3</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">wget <span class="symbol">ftp:</span>/<span class="regexp">/ftp.gnu.org/gnu</span><span class="regexp">/gcc/gcc</span>-<span class="number">6.3</span>.<span class="number">0</span>/gcc-<span class="number">6.3</span>.<span class="number">0</span>.tar.gz   <span class="comment">#下载gcc6.3.0</span></span></pre></td></tr></table></figure>
-<p>&emsp;&emsp;再挨个编译安装三个依赖包（注意这三个依赖包也有依赖关系，需先安装gmp，再安装mpfr，之后再装mpc）</p>
-<h3 id="gmp"><a href="#gmp" class="headerlink" title="gmp"></a>gmp</h3><p>&emsp;&emsp;先来第一个，编译安装装gmp</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">tar -xJf gmp<span class="number">-6.1</span><span class="number">.2</span>.tar.xz gmp<span class="number">-6.1</span><span class="number">.2</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">cd gmp<span class="number">-6.1</span><span class="number">.2</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">./configure --prefix=/usr/local/gcc/gmp --build=x86_64-linux</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">make &amp;&amp; make install</span></pre></td></tr></table></figure>
-<p>&emsp;&emsp;这当时有报错<br>&emsp;&emsp;<code>error: could not find a working compiler</code><br>&emsp;&emsp;当时没有加参数 –build=x86_64-linux，加上之后成功解决，参考: <a href="http://www.voidcn.com/article/p-zsgyngma-ug.html" target="_blank" rel="noopener">原文地址</a>. <a href="http://www.voidcn.com/article/p-zsgyngma-ug.html" target="_blank" rel="noopener">http://www.voidcn.com/article/p-zsgyngma-ug.html</a></p>
-<h3 id="mpfr"><a href="#mpfr" class="headerlink" title="mpfr"></a>mpfr</h3><p>&emsp;&emsp;之后编译安装mpfr</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">tar -xJf mpfr<span class="number">-3.1</span><span class="number">.5</span>.tar.xz mpfr<span class="number">-3.1</span><span class="number">.5</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">cd mpfr<span class="number">-3.1</span><span class="number">.5</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">./configure --prefix=/usr/local/gcc/mpfr --with-gmp=/usr/local/gcc/gmp</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">make &amp;&amp; make install</span></pre></td></tr></table></figure>
-<p>&emsp;&emsp;然后编译安装mpc</p>
-<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">tar -xzf mpc-<span class="number">1.0</span>.<span class="number">3</span>.tar.gz mpc-<span class="number">1.0</span>.<span class="number">3</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">cd mpc-<span class="number">1.0</span>.<span class="number">3</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">./configure --prefix=<span class="regexp">/usr/local</span><span class="regexp">/gcc/mpc</span> --<span class="keyword">with</span>-gmp=<span class="regexp">/usr/local</span><span class="regexp">/gcc/gmp</span> -<span class="keyword">with</span>-mpfr=<span class="regexp">/usr/local</span><span class="regexp">/gcc/mpfr</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">make &amp;&amp; make install</span></pre></td></tr></table></figure>
-<h3 id="gcc"><a href="#gcc" class="headerlink" title="gcc"></a>gcc</h3><p>&emsp;&emsp;之后也没有报错，那就开始编译安装gcc。</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">tar xvf gcc-6.3.0.tar.gz</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">cd gcc-6.3.0</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">./configure <span class="attribute">--prefix</span>=/usr/local/gcc <span class="attribute">--enable-threads</span>=posix --disable-checking --disable-multilib <span class="attribute">--enable-languages</span>=c,c++ <span class="attribute">--with-gmp</span>=/usr/local/gcc/gmp <span class="attribute">--with-mpfr</span>=/usr/local/gcc/mpfr <span class="attribute">--with-mpc</span>=/usr/local/gcc/mpc</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">make &amp;&amp; make install</span></pre></td></tr></table></figure>
-<p>&emsp;&emsp;gcc中途有几次报错，不过也都解决了。<br>错误提示[1]：</p>
-<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">make</span>: *** [sub-<span class="built_in">make</span>] <span class="built_in">Error</span> <span class="number">2</span></span></pre></td></tr></table></figure>
-<p>&emsp;&emsp;显示这个问题编译不过去。这是因为找不到gmp依赖包导致的，可是我明明装了依赖包的，看来是路径设置有问题，因为当时我是把这三个依赖包都装在gcc下，不过在编译gcc的时候忘记改依赖包的地址了。<br>错误提示[2]：</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="string">configure:</span> <span class="string">error:</span> cannot compute suffix of object <span class="string">files:</span> cannot compile</span></pre></td></tr></table></figure>
-<p>&emsp;&emsp;解决办法是：<br>&emsp;&emsp;在/etc/profile里面加上以下内容：</p>
-<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">export LD_LIBRARY_PATH=$<span class="symbol">LD_LIBRARY_PATH:</span>/usr/local/gcc/mpc-<span class="number">0.9</span>/<span class="class"><span class="keyword">lib</span>:/<span class="title">usr</span>/<span class="title">local</span>/<span class="title">gcc</span>/<span class="title">gmp</span>-5.0.1/<span class="title">lib</span>:/<span class="title">usr</span>/<span class="title">local</span>/<span class="title">gcc</span>/<span class="title">mpfr</span>-3.1.0/<span class="title">lib</span></span></span></pre></td></tr></table></figure>
-<p>&emsp;&emsp;然后重新加载配置文件/etc/profile</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">source</span> <span class="regexp">/etc/</span>profile</span></pre></td></tr></table></figure>
-<h3 id="添加变量"><a href="#添加变量" class="headerlink" title="添加变量"></a>添加变量</h3><p>&emsp;&emsp;/usr/local/lib       &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; #这个是默认系统的变量<br>&emsp;&emsp;/usr/local/gmp/lib<br>&emsp;&emsp;/usr/local/mpfr/lib<br>&emsp;&emsp;/usr/local/mpc/lib<br>&emsp;&emsp;/usr/local/mysql/lib<br>&emsp;&emsp;/usr/local/openssl/lib &emsp; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;#openssl变量</p>
-<p>&emsp;&emsp;添加保存后记得更新动态库的缓存：<br>&emsp;&emsp;ldconfig -v</p>
-<h3 id="备份系统默认的gcc版本"><a href="#备份系统默认的gcc版本" class="headerlink" title="备份系统默认的gcc版本"></a>备份系统默认的gcc版本</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">mv <span class="regexp">/usr/</span>bin<span class="regexp">/gcc /u</span>sr<span class="regexp">/bin/g</span>cc-bak</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">mv <span class="regexp">/usr/</span>bin<span class="regexp">/g++ /u</span>sr<span class="regexp">/bin/g</span>++-bak</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">mv <span class="regexp">/usr/</span>bin<span class="regexp">/c++ /u</span>sr<span class="regexp">/bin/</span>c++-bak</span></pre></td></tr></table></figure>
-<h3 id="建新的gcc软连接"><a href="#建新的gcc软连接" class="headerlink" title="建新的gcc软连接"></a>建新的gcc软连接</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">ln -s <span class="regexp">/usr/</span>local<span class="regexp">/gcc/</span>bin<span class="regexp">/gcc /u</span>sr<span class="regexp">/bin/g</span>cc</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">ln -s <span class="regexp">/usr/</span>local<span class="regexp">/gcc/</span>bin<span class="regexp">/c++ /u</span>sr<span class="regexp">/bin/</span>c++</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">ln -s <span class="regexp">/usr/</span>local<span class="regexp">/gcc/</span>bin<span class="regexp">/g++ /u</span>sr<span class="regexp">/bin/g</span>++</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">ln -s <span class="regexp">/usr/</span>local<span class="regexp">/gcc/</span>lib64<span class="regexp">/libstdc++.so.6.0.22 /u</span>sr<span class="regexp">/lib64/</span>libstdc++.so.<span class="number">6</span></span></pre></td></tr></table></figure>
-<h2 id="编译安装linux-kernel-5-2-9"><a href="#编译安装linux-kernel-5-2-9" class="headerlink" title="编译安装linux kernel 5.2.9"></a>编译安装linux kernel 5.2.9</h2><p>&emsp;&emsp;高高兴兴cd linux-5.2.9，进入解压好的内核目录，做好.config配置文件，准备用make menuconfig对内核进行自定义配置的时候，报错了：</p>
-<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">error </span>while loading shared libraries: libmpc.so.3: cannot open shared object file: No such file or directory</span></pre></td></tr></table></figure>
-<p>&emsp;&emsp;这又是怎么回事。好像是gcc出问题了。返回去检查。<br>&emsp;&emsp;原来添加完库忘了更新动态库,输入命令:</p>
-<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="attribute">ldconfig -v</span></span></pre></td></tr></table></figure>
-<p>~<br>结果还报错：</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">scripts/kconfig/mconf  Kconfig</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">Your display is too small <span class="keyword">to</span> <span class="builtin-name">run</span> Menuconfig!</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">It must be at least 19 lines by 80 columns.</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">make[2]: *** [menuconfig] <span class="builtin-name">Error</span> 1</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">make[1]: *** [menuconfig] <span class="builtin-name">Error</span> 2</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">make: *** [sub-make] <span class="builtin-name">Error</span> 2</span></pre></td></tr></table></figure>
-<p>这是因为我的XSELL窗口太小了，把XSHELL放大最大化，果然就打开了熟悉的蓝色界面~<br><img src="https://img-blog.csdnimg.cn/20190829201133861.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>修改一些个性化的设置（例如改名、加NFS文件系统），就可以保存了。</p>
-<h3 id="编译内核"><a href="#编译内核" class="headerlink" title="编译内核"></a>编译内核</h3><p>&emsp;&emsp;因为编译内核时间比较长，为防止发生断网或者断电等意外，我们创建一个SCREEN来编译。<br>&emsp;&emsp;</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="string">screen</span> <span class="string">-S</span> <span class="string">linuxkernel</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="literal">yes</span> <span class="string">|</span> <span class="string">make</span> <span class="string">-j</span> <span class="number">16</span></span></pre></td></tr></table></figure>
-<p>&emsp;&emsp;用一个yes命令省去一直手动y了，等待他编译完成就好了。<br>&emsp;&emsp;<br>&emsp;&emsp;在这又遇到一个报错，贴出来和大家分享下：</p>
-<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">You are building kernel <span class="keyword">with</span> non-retpoline compiler.</span></pre></td></tr></table></figure>
-<p>&emsp;&emsp;去查了下，网上都说是因为gcc版本过低，或内核版本过高。可我这明显不是gcc版本低的问题（都那么高了），问题是内核版本应该也不是问题，毕竟之前CentOS7编译就没这么多事。正犯愁不知道怎么解决的时候，发现了一篇文章<a href="http://tjtech.me/how-to-run-kernel-in-qemu-for-x86_64.html" target="_blank" rel="noopener">查看原文</a>，发现这个报错可以通过修改参数直接不启用RETPOLINE从而跳过（具体后果未知），于是修改配置文件重新来过：</p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">make</span> clean</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">sed -<span class="keyword">ri</span> <span class="string">'s@(CONFIG_RETPOLINE=).*@\1n@'</span> .config</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">make</span> -<span class="keyword">j</span> <span class="number">16</span></span></pre></td></tr></table></figure>
-<p>&emsp;&emsp;果然就顺利编译成功了。</p>
-<h3 id="编译模块"><a href="#编译模块" class="headerlink" title="编译模块"></a>编译模块</h3><p>&emsp;&emsp;然后安装模块：<br>&emsp;&emsp;</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">make modules_ <span class="keyword">install</span></span></pre></td></tr></table></figure>
-<p>&emsp;&emsp;安装模块的时候，有报错：<br>&emsp;&emsp;</p>
-<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">ERROR: </span>modinfo: could not find module *</span></pre></td></tr></table></figure>
-
-<p>&emsp;&emsp;不过查了相关文章<a href="https://blog.csdn.net/maokexu123/article/details/42554923?locationNum=12" target="_blank" rel="noopener">查看原文</a>，好像这些模块也都可以正常使用，于是乎无视之~<br>&emsp;&emsp;最后，安装内核相关文件。<br>&emsp;&emsp;</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">make <span class="keyword">install</span></span></pre></td></tr></table></figure>
-<p>&emsp;&emsp;至此，新内核就装完啦~重启切换去去体验一下！</p>
-
-        </div>
-        <!-- .entry-content -->
-        <div class="single-reward">
-          <div class="reward-open">赏
-            <div class="reward-main">
-              <ul class="reward-row">
-                <li class="alipay-code"><img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6undefined"></li>
-                <li class="wechat-code"><img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/images/custom/donate/wechat-pay.png"></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div style="text-align:center; width: 100%" class="social-share share-mobile" data-disabled="diandian, tencent"></div>
-        <footer class="post-footer">
-          <div class="post-lincenses"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="nofollow"><i class="fa fa-creative-commons" aria-hidden="true"></i> 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></div>
-          <div class="post-tags">
-          </div>
-          <div class="post-share">
-            <div class="social-share sharehidden share-component"></div>
-            <i class="iconfont show-share icon-forward"></i>
-          </div>
-        </footer><!-- .entry-footer -->
-      </article>
-      <!-- #post-## -->
-      <div class="toc" style="background: none;"></div>
-      <section class="post-squares nextprev">
-        
-        
-          
-            <div class="post-nepre full next">
-          
-            <a href="/blog/2bae1e5c.html" rel="next">
-              <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="">
-              </div>
-              <span class="label">
-              Next Post</span>
-              <div class="info">
-                <h3>
-                CentOS7磁盘分区及文件系统</h3>
-                <hr>
-              </div>
-            </a>
-          </div>
-        
-      </section>
       
-<div id="vcomments"></div>
-<script>
-  window.onload = function(){
-      var valine = new Valine();
-      valine.init({
-        el: '#vcomments',
-        appId: "AVtPtVan0Ky5u33XhUzJlFKp-gzGzoHsz",
-        appKey: "nx3XTnRJmaMQR3aLWYiigkgJ",
-        path: window.location.pathname,
-        placeholder: "你是我一生只会遇见一次的惊喜 ..."
-      })
-  }
-</script>
-
-      <section class="author-profile">
-        <div class="info" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-          <a href="hewanyue.com" class="profile gravatar"><img src="https://gravatar.loli.net/avatar/37019f5eb1f0b9951c06bfdc8342afd1" itemprop="image" alt="hechao" height="70" width="70"></a>
-          <div class="meta">
-            <span class="title">Author</span>
-            <h3 itemprop="name">
-            <a href="hewanyue.com" itemprop="url" rel="author">hechao</a>
-            </h3>
-          </div>
+  <!-- 首页默认取最最新文章集 -->
+  
+    <article class="post post-list" itemscope="" itemtype="http://schema.org/BlogPosting">
+  <div class="post-entry">
+    <div class="feature">
+      <a href="/e4415633.html">
+        <div class="overlay">
+          <i class="iconfont icon-text">
+          </i>
         </div>
-        <hr>
-        <p><i class="iconfont icon-write"></i>一个奇怪的人</p>
-      </section>
-    </main><!-- #main -->
-  </div><!-- #primary -->
+        <img width="150" height="150" src="" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="" >
+      </a>
+    </div>
+    <h1 class="entry-title">
+    <a href="/e4415633.html">
+    nginx防盗链设置的一些细节</a>
+    </h1>
+    <div class="p-time">
+      <i class="iconfont icon-time">
+      </i>
+    2019-10-30</div>
+    <p>
+    </p>
+    <footer class="entry-footer">
+      <div class="post-more">
+        <a href="/e4415633.html">
+          <i class="iconfont icon-caidan">
+          </i>
+        </a>
+      </div>
+    </footer>
+  </div>
+  <hr>
+</article>
+  
+
+
+      <div class="clearer">
+      </div>
+    </main>
+    <!--  -->
+    
+  </div>
 </div>
-
-
-
     </div>    
     <div class="ins-search">
     <div class="ins-search-mask"></div>

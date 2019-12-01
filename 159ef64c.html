@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  
+  <title itemprop="name">企业级应用：负载均衡层——LVS调度器详解 | BOHC!</title>
+  
+    <link rel="shortcut icon" href="/images/favicon.ico">
+  
+  <meta http-equiv="x-dns-prefetch-control" content="on">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+SerifMerriweather|Merriweather+Sans|Source+Code+Pro|Ubuntu:400,700|Noto+Serif+SC" media="all">
+  <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+  <link rel="stylesheet" id="saukra_css-css" href="/css/style.css" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/lib.min.css" media="all">
+  <link rel="stylesheet" href="/css/font.css" media="all">
+  <link rel="stylesheet" href="/css/insight.css" media="all">
+  <link rel="stylesheet" href="/css/jquery.fancybox.min.css" media="all">
+  <link rel="stylesheet" href="/css/zoom.css" media="all">
+  <link rel="stylesheet" type="text/css" href="/css/sharejs.css">
+<!--   <link rel="stylesheet" id="saukra_css-css" href="https://2heng.xin/wp-content/cache/autoptimize/css/autoptimize_ad42a61f4c7d4bdd9f91afcff6b5dda5.css
+" type="text/css" media="all"> -->
+  <script>
+  /*Initial Variables*/
+  var mashiro_option = new Object();
+  var mashiro_global = new Object();
+  mashiro_option.NProgressON = true;
+  /* 
+   * 邮箱信息之类的东西可以填在这里，这些js变量基本都作用于sakura-app.js
+   * 这样的设置仅是为了方便在基于PHP开发的主题中设置js变量，既然移植到了Node上，我想或许可以精简这一逻辑吧
+   */
+  mashiro_option.email_domain = "";
+  mashiro_option.email_name = "";
+  mashiro_option.cookie_version_control = "";
+  mashiro_option.qzone_autocomplete = false;
+  mashiro_option.site_name = "ウサギ没有人";
+  mashiro_option.author_name = "没有人";
+  mashiro_option.site_url = "https://wudihechao.github.io/";
+  mashiro_option.v_appId = "AVtPtVan0Ky5u33XhUzJlFKp-gzGzoHsz";
+  mashiro_option.v_appKey = "nx3XTnRJmaMQR3aLWYiigkgJ";
+  mashiro_option.mathjax = "0";
+  mashiro_option.qq_api_url = "https://api.mashiro.top/qqinfo/"; 
+  mashiro_option.qq_avatar_api_url = "https://api.mashiro.top/qqinfo/";
+
+  // mashiro_option.jsdelivr_css_src = "https://cdn.jsdelivr.net/gh/moezx/cdn@3.4.5/css/lib.min.css";
+  // mashiro_option.float_player_on = true;
+
+  /*End of Initial Variables*/
+  </script>
+  <script type="text/javascript">
+  var bg = "https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(1).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(2).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(3).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(4).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(5).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(6).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(7).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(8).jpg.webp".split(",");
+  var bgindex = Math.floor(Math.random()*bg.length);
+  if (!!window.ActiveXObject || "ActiveXObject" in window) { //is IE?
+    alert('朋友，IE浏览器未适配哦~');
+  }
+  </script>
+  <style type="text/css">
+  .hljs-ln{border-collapse:collapse}.hljs-ln td{padding:0}.hljs-ln-n:before{content:attr(data-line-number)}
+  </style>
+  <style type="text/css">.site-top .lower nav{display:block !important;}.author-profile i,.post-like a,.post-share .show-share,.sub-text,.we-info a,span.sitename,.post-more i:hover,#pagination a:hover,.post-content a:hover,.float-content i:hover{color:#FE9600}.feature i,.download,.navigator i:hover,.links ul li:before,.ar-time i,span.ar-circle,.object,.comment .comment-reply-link,.siren-checkbox-radio:checked + .siren-checkbox-radioInput:after{background:#FE9600}::-webkit-scrollbar-thumb{background:#FE9600}.download,.navigator i:hover,.link-title,.links ul li:hover,#pagination a:hover,.comment-respond input[type='submit']:hover{border-color:#FE9600}.entry-content a:hover,.site-info a:hover,.comment h4 a,#comments-navi a.prev,#comments-navi a.next,.comment h4 a:hover,.site-top ul li a:hover,.entry-title a:hover,#archives-temp h3,span.page-numbers.current,.sorry li a:hover,.site-title a:hover,i.iconfont.js-toggle-search.iconsearch:hover,.comment-respond input[type='submit']:hover{color:#FE9600}.comments .comments-main{display:block !important;}.comments .comments-hidden{display:none !important;}background-position:center center;background-attachment:inherit;}
+  </style>
+</head>
+
+<body class="page-template page-template-user page-template-page-analytics page-template-userpage-analytics-php page page-id-1297 chinese-font serif isWebKit">
+  <div class="scrollbar" id="bar">
+  </div>
+  <a href="#" class="cd-top faa-float animated"></a>
+  <section id="main-container">
+    <div class="headertop filter-dot">
+  <div id="banner_wave_1"></div>
+  <div id="banner_wave_2"></div>
+  <figure id="centerbg" class="centerbg">
+    <div class="focusinfo no-select">
+      <div class="header-tou">
+        <a href="https://wudihechao.github.io/">
+          <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6https://gravatar.loli.net/avatar/37019f5eb1f0b9951c06bfdc8342afd1">
+        </a>
+      </div>
+      <div class="header-info">
+        <p>自分にとして優しさは、貴方にとは辛いなんて、そんなの</p>
+        <div class="top-social_v2">
+          <li id="bg-pre">
+            <img class="flipx" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/next-b.svg">
+          </li>
+          
+            
+              
+                <li>
+                  <a href="http://github.com/wudihechao" target="_blank" class="social-github" title="github">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/github.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="http://weibo.com/u/1050367191" target="_blank" class="social-github" title="sina">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/sina.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="http://weibo.com/mashirozx?is_all=1" target="_blank" class="social-github" title="zhihu">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/zhihu.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="" target="_blank" class="social-github" title="email">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/email.svg">
+                  </a>
+                </li>
+              
+            
+          
+          <li id="bg-next">
+            <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/next-b.svg">
+          </li>
+        </div>
+      </div>
+    </div>
+  </figure>
+  <div id="video-container" style="">
+    <video style="object-fit: fill" id="bgvideo" class="video" video-name="" src="" width="auto" preload="auto">
+    </video>
+    <div id="video-btn" class="loadvideo videolive">
+    </div>
+    <div id="video-add">
+    </div>
+    <div class="video-stu">
+    </div>
+  </div>
+  <div class="headertop-down faa-float animated" onclick="headertop_down()">
+    <span>
+      <i class="fa fa-chevron-down" aria-hidden="true">
+      </i>
+    </span>
+  </div>
+</div>
+    <div id="page" class="site wrapper">
+      <header class="site-header no-select gizle sabit" role="banner">
+  <div class="site-top">
+    <div class="site-branding">
+      <span class="site-title">
+        <span class="logolink moe-mashiro">
+          <a href="/">
+            <span class="sakurasono">ウサギ</span>
+            <span class="shironeko">没有人</span>
+          </a>
+        </span>
+      </span>
+    </div>
+    <div class="searchbox search-form-submit">
+      <i class="iconfont js-toggle-search iconsearch icon-search">
+      </i>
+    </div>
+    <div id="show-nav" class="showNav mobile-fit">
+      <div class="line line1">
+      </div>
+      <div class="line line2">
+      </div>
+      <div class="line line3">
+      </div>
+    </div>
+    <div class="lower-cantiner">
+      <div class="lower">
+        <nav class="mobile-fit-control hide">
+          <ul id="menu-new" class="menu">
+            
+              <li>
+                <a href="/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-fort-awesome faa-shake" aria-hidden="true"></i>
+                    首页
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-archive faa-shake" aria-hidden="true"></i>
+                    归档
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/categories/linux/">
+                          <i class="fa fa-code" aria-hidden="true"></i>
+                          linux
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/categories/SQL/">
+                          <i class="fa fa-book" aria-hidden="true"></i>
+                          SQLs
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/categories/cloud/">
+                          <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                          cloud
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/categories/%E6%95%85%E9%9A%9C/">
+                          <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                          故 障
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/categories/%E6%83%85%E6%84%9F/">
+                          <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                          情 感
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+              <li>
+                <a href="javascript:;" target="_blank" rel="noopener">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-list-ul faa-vertical" aria-hidden="true"></i>
+                    清单
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/tags/%E6%82%A6%E8%AF%BB/">
+                          <i class="fa fa-th-list faa-bounce" aria-hidden="true"></i>
+                          书单
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/bangumi/">
+                          <i class="fa fa-film faa-vertical" aria-hidden="true"></i>
+                          番组
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/music/">
+                          <i class="fa fa-headphones" aria-hidden="true"></i>
+                          歌单
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/tags/%E5%9B%BE%E9%9B%86/">
+                          <i class="fa fa-photo" aria-hidden="true"></i>
+                          图集
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+              <li>
+                <a href="/comment/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-pencil-square-o faa-tada" aria-hidden="true"></i>
+                    留言板
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/links/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-link faa-shake" aria-hidden="true"></i>
+                    友人帐
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/donate/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-heart faa-pulse" aria-hidden="true"></i>
+                    赞赏
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-leaf faa-wrench" aria-hidden="true"></i>
+                    关于
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/about/">
+                          <i class="fa fa-meetup" aria-hidden="true"></i>
+                          我？
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/theme-sakura/">
+                          <i class="fa iconfont icon-sakura" aria-hidden="true"></i>
+                          主题
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/lab/">
+                          <i class="fa fa-cogs" aria-hidden="true"></i>
+                          Lab
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+              <li>
+                <a href="/atom.xml">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-rss faa-pulse" aria-hidden="true"></i>
+                    RSS
+                  </span>
+                </a>
+                
+              </li>
+            
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <link rel="stylesheet" type="text/css" href="/css/sharejs.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+<div class="pattern-center-blank"></div>
+
+<div id="content" class="site-content">
+  <div id="primary" class="content-area">
+    <main id="main" class="site-main" role="main">
+      <article id="post-1" class="post-1 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
+        <div class="toc"></div>
+        <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
+        
+          <header class="entry-header">
+            <h1 class="entry-title">企业级应用：负载均衡层——LVS调度器详解</h1>
+            <p class="entry-census">hechao&nbsp;·&nbsp;2019-10-24&nbsp;·&nbsp;<span id="busuanzi_value_page_pv"></span>次阅读</p></p>
+
+            <hr>
+          </header>
+        
+        <div class="entry-content">
+          <p>&emsp;&emsp;所谓LVS，是Linux Virtual Server的缩写，直译就是linux虚拟服务器。LVS说是虚拟服务器，并不是说这个服务器本身不存在，而是指一般用户访问企业web网站时，访问的都是LVS，而LVS本身上面没有任何web界面资源，真实的界面以及服务都在后端web服务器上，LVS服务器起到的是一个指引分流的作用，所以相对来说，后端的web服务器是real server,而LVS就被称为是virtual server（虚拟服务器）了。<br>&emsp;&emsp;既然这个服务器上没有页面资源，又无法提供服务，那为什么还有必要部署它来多此一举呢？因为通常来说，我们访问的web服务，都不是由单一服务器主机来支撑的，背后都有好几台、甚至成百上千台web服务器集群共同提供，一台单一主机是无法支撑大的访问并发的，需要很多台服务器来共同分担压力，这时就需要一个专门的服务器来进行调度，将大量访问请求分配到不同的web服务器上，减小每台服务器的压力，实现负载均衡。<br>&emsp;&emsp;本文将详细介绍LVS调度器的工作模式及配置实例。</p>
+<h3 id="集群和分布式"><a href="#集群和分布式" class="headerlink" title="集群和分布式"></a>集群和分布式</h3><p>&emsp;&emsp;集群：同一个业务系统，部署在多台服务器上。集群中，每一台服务器实现的功能没有差别，数据和代码都是一样的。<br>&emsp;&emsp;分布式：一个业务被拆成多个子业务，或者本身就是不同的业务，部署在多台服务器上。分布式中，每一台服务器实现的功能是有差别的，数据和代码也是不一样的，分布式每台服务器功能加起来，才是完整的业务。<br>&emsp;&emsp;分布式是以缩短单个任务的执行时间来提升效率的，而集群则是通过提高单位时间内执行的任务数来提升效率。<br>&emsp;&emsp;对于大型网站，访问用户很多，实现一个群集，在前面部署一个负载均衡服务器，后面几台服务器完成同一业务。如果有用户进行相应业务访问时，负载均衡器根据后端哪台服务器的负载情况，决定由给哪一台去完成响应，并且一台服务器垮了，其它的服务器可以顶上来。分布式的每一个节点，都完成不同的业务，如果一个节点垮了，那这个业务可能就会失败。</p>
+<h4 id="Cluster概念"><a href="#Cluster概念" class="headerlink" title="Cluster概念"></a>Cluster概念</h4><p>&emsp;&emsp;Cluster：集群,为解决某个特定问题将多台计算机组合起来形成的单个系统。<br>;Linux Cluster类型：</p>
+<ul>
+<li>LB：Load Balancing，负载均衡</li>
+<li>HA：High Availiablity，高可用，SPOF（single Point Of failure）<br>MTBF:Mean Time Between Failure 平均无故障时间<br>MTTR:Mean Time To Restoration（ repair）平均恢复前时间<br>A=MTBF/（MTBF+MTTR(0,1)：99%,99.5%,99.9%,99.99%,99.999%</li>
+<li>HPC：High-performance computing，高性能</li>
+</ul>
+<h5 id="LB-Cluster的实现"><a href="#LB-Cluster的实现" class="headerlink" title="LB Cluster的实现"></a>LB Cluster的实现</h5><ul>
+<li>硬件<br>F5 Big-IP<br>Citrix Netscaler<br>A10 A10</li>
+<li>软件<br>lvs：Linux Virtual Server，阿里四层SLB (Server Load Balance)使用网络传输的下四层,不支持应用层等数据的调度内核级:功能虽然弱,性能好,一般最为最前端的调度器.<br>nginx：支持七层调度，阿里七层SLB使用Tengine<br>haproxy：支持七层调度<br>ats：Apache Traffic Server，yahoo捐助给apache<br>perlbal：Perl 编写<br>pound</li>
+</ul>
+<h5 id="LB-Cluster基于工作的协议层次划分："><a href="#LB-Cluster基于工作的协议层次划分：" class="headerlink" title="LB Cluster基于工作的协议层次划分："></a>LB Cluster基于工作的协议层次划分：</h5><ul>
+<li>传输层（通用）：DPORT<br>LVS：<br>nginx：stream<br>haproxy：mode tcp</li>
+<li>应用层（专用）：针对特定协议，自定义的请求模型分类<br>proxy server：<br>http：nginx, httpd, haproxy(mode http), …<br>fastcgi：nginx, httpd, …<br>mysql：mysql-proxy, …</li>
+</ul>
+<h5 id="LB-Cluster中用户的会话保持"><a href="#LB-Cluster中用户的会话保持" class="headerlink" title="LB Cluster中用户的会话保持"></a>LB Cluster中用户的会话保持</h5><p>&emsp;&emsp;负载均衡之后，用户会话保持的解决方案：<br>&emsp;&emsp;(1) session sticky：同一用户调度固定服务器<br>&emsp;&emsp;      Source IP：LVS sh算法（对某一特定服务而言）(固定IP)<br>&emsp;&emsp;      Cookie   (LVS四层调度,无法识别cookie)<br>&emsp;&emsp;(2) session replication：每台服务器拥有全部session<br>&emsp;&emsp;      session multicast cluster<br>&emsp;&emsp;(3) session server：专门的session服务器，如Memcached，Redis</p>
+<h4 id="分布式系统："><a href="#分布式系统：" class="headerlink" title="分布式系统："></a>分布式系统：</h4><p>常见的分布式存储： Ceph，GlusterFS，FastDFS，MogileFS<br>常见的分布式计算：hadoop，Spark<br>这里不多介绍。</p>
+<h3 id="LVS介绍"><a href="#LVS介绍" class="headerlink" title="LVS介绍"></a>LVS介绍</h3><p>&emsp;&emsp;LVS：Linux Virtual Server，负载调度器，在linux内核集成。LVS项目在1998年5月由章文嵩博士成立，是中国国内最早出现的自由软件项目之一。<br>&emsp;&emsp;LVS实现负载均衡,自身的单点失败问题由keepalived解决(vrrp协议).<br>&emsp;&emsp;keepalived还可以实现检查后端服务器状态.</p>
+<h4 id="lvs集群类型中的术语："><a href="#lvs集群类型中的术语：" class="headerlink" title="lvs集群类型中的术语："></a>lvs集群类型中的术语：</h4><ul>
+<li>VS：Virtual Server，Director Server(DS)，Dispatcher(调度器)，Load Balancer</li>
+<li>RS：Real Server(lvs),，upstream server(nginx)，backend server(haproxy)</li>
+<li>CIP：Client IP</li>
+<li>VIP: Virtual serve IP VS外网的IP  (一般也是内网IP,由防火墙DNAT指向)</li>
+<li>DIP: Director IP VS内网的IP</li>
+<li>RIP: Real server IP<br>&emsp;&emsp;访问流程：CIP &lt;–&gt; VIP == DIP &lt;–&gt; RIP    </li>
+<li>lvs: ipvsadm/ipvs<br>&emsp;&emsp;ipvsadm：用户空间的命令行工具，规则管理器，用于管理集群服务及RealServer<br>&emsp;&emsp;ipvs：工作于内核空间netfilter的INPUT钩子上的框架</li>
+</ul>
+<h4 id="lvs的模式："><a href="#lvs的模式：" class="headerlink" title="lvs的模式："></a>lvs的模式：</h4><p>&emsp;&emsp;<strong>lvs-nat</strong>：修改请求报文的目标IP,多目标IP的DNAT<br>&emsp;&emsp;<strong>lvs-dr</strong>：操纵封装新的MAC地址<br>&emsp;&emsp;<strong>lvs-tun</strong>：在原请求IP报文之外新加一个IP首部<br>&emsp;&emsp;<strong>lvs-fullnat</strong>：修改请求报文的源和目标IP</p>
+<h5 id="lvs-nat："><a href="#lvs-nat：" class="headerlink" title="lvs-nat："></a>lvs-nat：</h5><p>&emsp;&emsp;本质是多目标IP的DNAT，通过将请求报文中的目标地址和目标端口修改为某挑出的RS的RIP和PORT实现转发<br>    （1）RIP和DIP应在同一个IP网络，且应使用私网地址；RS的网关要指向DIP<br>    （2）请求报文和响应报文都必须经由Director转发，Director易于成为系统瓶颈<br>    （3）支持端口映射，可修改请求报文的目标PORT<br>    （4）VS必须是Linux系统，RS可以是任意OS系统</p>
+<h5 id="LVS-DR："><a href="#LVS-DR：" class="headerlink" title="LVS-DR："></a>LVS-DR：</h5><p>&emsp;&emsp;Direct Routing，直接路由，LVS默认模式,应用最广泛,通过为请求报文重新封装一个MAC首部进行转发，源MAC是DIP所在的接口的MAC，目标MAC是某挑选出的RS的RIP所在接口的MAC地址；源IP/PORT，以及目标IP/PORT均保持不变<br>    （1） Director和各RS都配置有VIP<br>    （2） 确保前端路由器将目标IP为VIP的请求报文发往Director<br>        &emsp;&emsp;在前端网关做静态绑定VIP和Director的MAC地址<br>         &emsp;&emsp;在RS上使用arptables工具<br>            <code>arptables -A IN -d $VIP -j DROP</code><br>            <code>arptables -A OUT -s $VIP -j mangle --mangle-ip-s $RIP</code><br>         &emsp;&emsp;在RS上修改内核参数以限制arp通告及应答级别<br>            <code>/proc/sys/net/ipv4/conf/all/arp_ignore</code><br>            <code>/proc/sys/net/ipv4/conf/all/arp_announce</code><br>    （3）RS的RIP可以使用私网地址，也可以是公网地址；RIP与DIP在同一IP网络；RIP的网关不能指向DIP，以确保响应报文不会经由Director<br>    （4）RS和Director要在同一个物理网络<br>    （5）请求报文要经由Director，但响应报文不经由Director，而由RS直接发往Client<br>    （6）不支持端口映射（端口不能修败）<br>    （7）RS可使用大多数OS系统</p>
+<h5 id="lvs-tun："><a href="#lvs-tun：" class="headerlink" title="lvs-tun："></a>lvs-tun：</h5><p>&emsp;&emsp;转发方式：不修改请求报文的IP首部（源IP为CIP，目标IP为VIP），而在原IP报文之外再封装一个IP首部（源IP是DIP，目标IP是RIP），将报文发往挑选出的目标RS；RS直接响应给客户端（源IP是VIP，目标IP是CIP）<br>&emsp;&emsp;    (1) DIP, VIP, RIP都应该是公网地址<br>&emsp;&emsp;    (2) RS的网关一般不能指向DIP<br>&emsp;&emsp;    (3) 请求报文要经由Director，但响应不经由Director<br>&emsp;&emsp;    (4) 不支持端口映射<br>&emsp;&emsp;    (5) RS的OS须支持隧道功能</p>
+<h5 id="lvs-fullnat：通过同时修改请求报文的源IP地址和目标IP地址进行转发"><a href="#lvs-fullnat：通过同时修改请求报文的源IP地址和目标IP地址进行转发" class="headerlink" title="lvs-fullnat：通过同时修改请求报文的源IP地址和目标IP地址进行转发"></a>lvs-fullnat：通过同时修改请求报文的源IP地址和目标IP地址进行转发</h5><p>&emsp;&emsp;CIP –&gt; DIP<br>&emsp;&emsp;VIP –&gt; RIP<br>    (1) VIP是公网地址，RIP和DIP是私网地址，且通常不在同一IP网络；因此，RIP的网关一般不会指向DIP<br>    (2) RS收到的请求报文源地址是DIP，因此，只需响应给DIP；但Director还要将其发往Client<br>    (3) 请求和响应报文都经由Director<br>    (4) 支持端口映射<br><strong>注意：此类型kernel默认不支持</strong></p>
+<h4 id="LVS调度算法"><a href="#LVS调度算法" class="headerlink" title="LVS调度算法"></a>LVS调度算法</h4><p>ipvs scheduler：<br>&emsp;&emsp;根据其调度时是否考虑各RS当前的负载状态分为两种：静态方法和动态方法</p>
+<ul>
+<li><p>静态方法：仅根据算法本身进行调度</p>
+<pre><code>1、RR：roundrobin，轮询
+2、WRR：Weighted RR，加权轮询
+3、SH：Source Hashing，实现session sticky，源IP地址hash；将来自于同一个IP地址的请求始终发往第一次挑中的RS，从而实现会话绑定
+4、DH：Destination Hashing；目标地址哈希，第一次轮询调度至RS，后续将发往同一个目标地址的请求始终转发至第一次挑中的RS，典型使用场景是正向代理缓存场景中的负载均衡，如：宽带运营商</code></pre></li>
+<li><p>动态方法：主要根据每RS当前的负载状态及调度算法进行调度Overhead=value较小的RS将被调度</p>
+<pre><code>1、LC：least connections 适用于长连接应用
+Overhead=activeconns*256+inactiveconns
+2、WLC：Weighted LC，默认调度方法
+Overhead=(activeconns*256+inactiveconns)/weight
+3、SED：Shortest Expection Delay,初始连接高权重优先
+Overhead=(activeconns+1)*256/weight
+4、NQ：Never Queue，第一轮均匀分配，后续SED
+5、LBLC：Locality-Based LC，动态的DH算法，使用场景：根据负载状态实现正向代理
+6、LBLCR：LBLC with Replication，带复制功能的LBLC，解决LBLC负载不均衡问题，从负载重的复制到负载轻的RS</code></pre></li>
+</ul>
+<h4 id="ipvsadm-ipvs："><a href="#ipvsadm-ipvs：" class="headerlink" title="ipvsadm/ipvs："></a>ipvsadm/ipvs：</h4><h5 id="ipvs："><a href="#ipvs：" class="headerlink" title="ipvs："></a>ipvs：</h5><p>&emsp;&emsp;<code>grep -i -A 10 &quot;ipvs&quot; /boot/config-VERSION-RELEASE.x86_64</code><br>&emsp;&emsp;支持的协议：TCP， UDP， AH， ESP， AH_ESP, SCTP<br>ipvs集群：<br>&emsp;&emsp;管理集群服务<br>&emsp;&emsp;管理服务上的RS</p>
+<h5 id="ipvsadm："><a href="#ipvsadm：" class="headerlink" title="ipvsadm："></a>ipvsadm：</h5><p>&emsp;&emsp;程序包：ipvsadm<br>&emsp;&emsp;Unit File: ipvsadm.service<br>&emsp;&emsp;主程序：/usr/sbin/ipvsadm<br>&emsp;&emsp;规则保存工具：/usr/sbin/ipvsadm-save<br>&emsp;&emsp;规则重载工具：/usr/sbin/ipvsadm-restore<br>&emsp;&emsp;配置文件：/etc/sysconfig/ipvsadm-config<br><strong>ipvsadm命令</strong>：<br>核心功能：</p>
+<ul>
+<li>集群服务管理：增、删、改</li>
+<li>集群服务的RS管理：增、删、改</li>
+<li>查看</li>
+</ul>
+<p>&emsp;&emsp;例：命令总结：</p>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">ipvsadm -A|<span class="type">E</span> -t|<span class="type">u</span>|<span class="type">f</span> service-address [-s scheduler] [-p [<span class="built_in">timeout</span>]] [-M netmask] [--pepersistence_engine] [-b sched-flags]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">ipvsadm -D -t|<span class="type">u</span>|<span class="type">f</span> service-address 删除</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">ipvsadm –C 清空</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">ipvsadm –R 重载</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">ipvsadm -S [-n] 保存</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">ipvsadm -a|<span class="type">e</span> -t|<span class="type">u</span>|<span class="type">f</span> service-address -r server-address [options]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">ipvsadm -d -t|<span class="type">u</span>|<span class="type">f</span> service-address -r server-address</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">ipvsadm -L|<span class="type">l</span> [options]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">ipvsadm -Z [-t|<span class="type">u</span>|<span class="type">f</span> service-address]</span></pre></td></tr></table></figure>
+<h6 id="管理集群服务：增、改、删"><a href="#管理集群服务：增、改、删" class="headerlink" title="管理集群服务：增、改、删"></a>管理集群服务：增、改、删</h6><p>&emsp;&emsp;增、改：<br><code>ipvsadm -A|E -t|u|f service-address [-s scheduler] [-p [timeout]]</code><br>&emsp;&emsp;删除：<br><code>ipvsadm -D -t|u|f service-address</code><br>service-address： VIP<br>&emsp;&emsp;    -t|u|f：<br>&emsp;&emsp;    -t: TCP协议的端口，VIP:TCP_PORT<br>&emsp;&emsp;    -u: UDP协议的端口，VIP:UDP_PORT<br>&emsp;&emsp;    -f：firewall MARK，标记，一个数字<br>&emsp;&emsp;[-s scheduler]：指定集群的调度算法，默认为wlc</p>
+<h6 id="管理集群上的RS：增、改、删"><a href="#管理集群上的RS：增、改、删" class="headerlink" title="管理集群上的RS：增、改、删"></a>管理集群上的RS：增、改、删</h6><p>&emsp;&emsp;增、改：<br><code>ipvsadm -a|e -t|u|f service-address -r server-address [-g|i|m] [-w
+    weight]</code><br>&emsp;&emsp;删：<br><code>ipvsadm -d -t|u|f service-address -r server-address
+server-address</code><br>&emsp;&emsp;rip[:port] 如省略port，不作端口映射<br>选项：<br>&emsp;&emsp;lvs类型：<br>&emsp;&emsp;-g: gateway, dr类型，默认<br>&emsp;&emsp;-i: ipip, tun类型<br>&emsp;&emsp;-m: masquerade, nat类型<br>&emsp;&emsp;-w weight：权重</p>
+<p>&emsp;&emsp;清空定义的所有内容：<br><code>ipvsadm –C</code><br>清空计数器：<br><code>ipvsadm -Z [-t|u|f service-address]</code></p>
+<h6 id="查看："><a href="#查看：" class="headerlink" title="查看："></a>查看：</h6><p><code>ipvsadm -L|l [options]</code><br>&emsp;&emsp;–numeric, -n：以数字形式输出地址和端口号<br>&emsp;&emsp;–exact：扩展信息，精确值<br>&emsp;&emsp;–connection，-c：当前IPVS连接输出<br>&emsp;&emsp;–stats：统计信息<br>&emsp;&emsp;–rate ：输出速率信息</p>
+<p>ipvs规则：/proc/net/ip_vs<br>ipvs连接：/proc/net/ip_vs_conn</p>
+<h4 id="保存及重载规则"><a href="#保存及重载规则" class="headerlink" title="保存及重载规则"></a>保存及重载规则</h4><p>&emsp;&emsp;保存：建议保存至/etc/sysconfig/ipvsadm<br><code>ipvsadm-save &gt; /PATH/TO/IPVSADM_FILE</code><br><code>ipvsadm -S &gt; /PATH/TO/IPVSADM_FILE</code><br><code>systemctl stop ipvsadm.service</code><br>&emsp;&emsp;重载：<br><code>ipvsadm-restore &lt; /PATH/FROM/IPVSADM_FILE</code><br><code>systemctl restart ipvsadm.service</code></p>
+<h4 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h4><p>负载均衡集群设计时要注意的问题<br>&emsp;&emsp;(1) 是否需要会话保持<br>&emsp;&emsp;(2) 是否需要共享存储<br>    共享存储：NAS， SAN， DS（分布式存储）<br>    数据同步：</p>
+<h4 id="lvs-nat：-1"><a href="#lvs-nat：-1" class="headerlink" title="lvs-nat："></a>lvs-nat：</h4><p>设计要点：<br>&emsp;&emsp;(1) RIP与DIP在同一IP网络, RIP的网关要指向DIP<br>&emsp;&emsp;(2) 支持端口映射<br>&emsp;&emsp;(3) Director要打开核心转发功能</p>
+<h4 id="LVS-DR"><a href="#LVS-DR" class="headerlink" title="LVS-DR"></a>LVS-DR</h4><p>DR模型中各主机上均需要配置VIP，解决地址冲突的方式有三种：</p>
+<ul>
+<li>(1) 在前端网关做静态绑定</li>
+<li>(2) 在各RS使用arptables</li>
+<li>(3) 在各RS修改内核参数，来限制arp响应和通告的级别<br>限制响应级别：arp_ignore<br>  0：默认值，表示可使用本地任意接口上配置的任意地址进行响应<br>  1: 仅在请求的目标IP配置在本地主机的接收到请求报文的接口上时，才给予响应<br>限制通告级别：arp_announce<br>  0：默认值，把本机所有接口的所有信息向每个接口的网络进行通告<br>  1：尽量避免将接口信息向非直接连接网络进行通告<br>  2：必须避免将接口信息向非本网络进行通告</li>
+</ul>
+<h5 id="附："><a href="#附：" class="headerlink" title="附："></a>附：</h5><p>&emsp;&emsp;RS的配置脚本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">vip=10.0.0.100</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">mask=<span class="string">'255.255.255.255'</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">dev=lo:1</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="variable">$1</span> <span class="keyword">in</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">start)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> 1 &gt; /proc/sys/net/ipv4/conf/all/arp_ignore</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> 1 &gt; /proc/sys/net/ipv4/conf/lo/arp_ignore</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> 2 &gt; /proc/sys/net/ipv4/conf/all/arp_announce</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> 2 &gt; /proc/sys/net/ipv4/conf/lo/arp_announce</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">ifconfig <span class="variable">$dev</span> <span class="variable">$vip</span> netmask <span class="variable">$mask</span> <span class="comment">#broadcast $vip up</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line"><span class="comment">#route add -host $vip dev $dev</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">;;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">stop)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">ifconfig <span class="variable">$dev</span> down</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> 0 &gt; /proc/sys/net/ipv4/conf/all/arp_ignore</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> 0 &gt; /proc/sys/net/ipv4/conf/lo/arp_ignore</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> 0 &gt; /proc/sys/net/ipv4/conf/all/arp_announce</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> 0 &gt; /proc/sys/net/ipv4/conf/lo/arp_announce</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">;;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">*)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"Usage: <span class="variable">$(basename $0)</span> start|stop"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">exit</span> 1</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">;;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">esac</span></span></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;VS的配置脚本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">vip=<span class="string">'10.0.0.100'</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">iface=<span class="string">'lo:1'</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">mask=<span class="string">'255.255.255.255'</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">port=<span class="string">'80'</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">rs1=<span class="string">'192.168.0.101'</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">rs2=<span class="string">'192.168.0.102'</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">scheduler=<span class="string">'wrr'</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">type</span>=<span class="string">'-g'</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="variable">$1</span> <span class="keyword">in</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">start)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">ifconfig <span class="variable">$iface</span> <span class="variable">$vip</span> netmask <span class="variable">$mask</span> <span class="comment">#broadcast $vip up</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">iptables -F</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">ipvsadm -A -t <span class="variable">$&#123;vip&#125;</span>:<span class="variable">$&#123;port&#125;</span> -s <span class="variable">$scheduler</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">ipvsadm -a -t <span class="variable">$&#123;vip&#125;</span>:<span class="variable">$&#123;port&#125;</span> -r <span class="variable">$&#123;rs1&#125;</span> <span class="variable">$type</span> -w 1</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">ipvsadm -a -t <span class="variable">$&#123;vip&#125;</span>:<span class="variable">$&#123;port&#125;</span> -r <span class="variable">$&#123;rs2&#125;</span> <span class="variable">$type</span> -w 1</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">;;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">stop)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">ipvsadm -C</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">ifconfig <span class="variable">$iface</span> down</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">;;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">*)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"Usage <span class="variable">$(basename $0)</span> start|stop“</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line"><span class="string">exit 1</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line"><span class="string">esac</span></span></pre></td></tr></table></figure>
+
+
+
+
+<h3 id="FireWall-Mark"><a href="#FireWall-Mark" class="headerlink" title="FireWall Mark"></a>FireWall Mark</h3><p>&emsp;&emsp;FWM：FireWall Mark<br>&emsp;&emsp;MARK target 可用于给特定的报文打标记<br>&emsp;&emsp;–set-mark value<br>其中：value 可为0xffff格式，表示十六进制数字<br>&emsp;&emsp;借助于防火墙标记来分类报文，而后基于标记定义集群服务；可将多个不同的应用使用同一个集群服务进行调度<br>&emsp;&emsp;实现方法：<br>&emsp;&emsp;在Director主机打标记：<br><code>iptables -t mangle -A PREROUTING -d $vip -p $proto –m multiport -
+-dports $port1,$port2,… -j MARK --set-mark NUMBER</code><br>&emsp;&emsp;在Director主机基于标记定义集群服务：<br><code>ipvsadm -A -f NUMBER [options]</code></p>
+<h4 id="持久连接"><a href="#持久连接" class="headerlink" title="持久连接"></a>持久连接</h4><p>&emsp;&emsp;session 绑定：对共享同一组RS的多个集群服务，需要统一进行绑定，lvs sh算法无法实现<br>&emsp;&emsp;持久连接（ lvs persistence ）模板：实现无论使用任何调度算法，在一段时间内（默认360s ），能够实现将来自同一个地址的请求始终发往同一个RS<br><code>ipvsadm -A|E -t|u|f service-address [-s scheduler] [-p [timeout]]</code><br>&emsp;&emsp;持久连接实现方式：<br>&emsp;&emsp;每端口持久（PPC）：每个端口定义为一个集群服务，每集群服务单独调度<br>&emsp;&emsp;每防火墙标记持久（PFWMC）：基于防火墙标记定义集群服务；可实现将多个端口上的应用统一调度，即所谓的port Affinity<br>&emsp;&emsp;每客户端持久（PCC）：基于0端口（表示所有服务）定义集群服务，即将客户端对所有应用的请求都调度至后端主机，必须定义为持久模式</p>
+<h3 id="LVS高可用性"><a href="#LVS高可用性" class="headerlink" title="LVS高可用性"></a>LVS高可用性</h3><ul>
+<li>Director不可用，整个系统将不可用；SPoF Single Point of Failure<br>&emsp;&emsp;解决方案：高可用<br>&emsp;&emsp;keepalived heartbeat/corosync</li>
+<li>某RS不可用时，Director依然会调度请求至此RS<br>&emsp;&emsp;解决方案： 由Director对各RS健康状态进行检查，失败时禁用，成功时启用keepalived heartbeat/corosync ldirectord<br>&emsp;&emsp;检测方式：<br>&emsp;&emsp;(a) 网络层检测，icmp<br>&emsp;&emsp;(b) 传输层检测，端口探测<br>&emsp;&emsp;(c) 应用层检测，请求某关键资源<br>&emsp;&emsp;RS全不用时：backup server, sorry server</li>
+</ul>
+<h4 id="ldirectord"><a href="#ldirectord" class="headerlink" title="ldirectord"></a>ldirectord</h4><p>&emsp;&emsp;ldirectord：监控和控制LVS守护进程，可管理LVS规则<br>&emsp;&emsp;包名：ldirectord-3.9.6-0rc1.1.1.x86_64.rpm<br>&emsp;&emsp;下载：<a href="http://download.opensuse.org/repositories/network:/haclustering:/Stable/CentOS_CentOS-7/x86_64/" target="_blank" rel="noopener">http://download.opensuse.org/repositories/network:/haclustering:/Stable/CentOS_CentOS-7/x86_64/</a><br>&emsp;&emsp;文件：<br>&emsp;&emsp;/etc/ha.d/ldirectord.cf 主配置文件<br>&emsp;&emsp;/usr/share/doc/ldirectord-3.9.6/ldirectord.cf 配置模版<br>&emsp;&emsp;/usr/lib/systemd/system/ldirectord.service 服务<br>&emsp;&emsp;/usr/sbin/ldirectord 主程序,Perl实现<br>&emsp;&emsp;/var/log/ldirectord.log 日志<br>&emsp;&emsp;/var/run/ldirectord.ldirectord.pid pid文件</p>
+<p>&emsp;&emsp;Ldirectord配置文件示例</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="attribute">checktimeout</span>=3</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="attribute">checkinterval</span>=1</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="attribute">autoreload</span>=<span class="literal">yes</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="attribute">logfile</span>=“/var/log/ldirectord.log“ #日志文件</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="attribute">quiescent</span>=<span class="literal">no</span>   #down时<span class="literal">yes</span>权重为0，<span class="literal">no</span>为删除</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="attribute">virtual</span>=5      #指定VS的FWM 或 IP:PORT</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="attribute">real</span>=172.16.0.7:80 gate 2    #DR模型，权重为 2</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="attribute">real</span>=172.16.0.8:80 gate 1</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="attribute">fallback</span>=127.0.0.1:80 gate   #sorry server</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="attribute">service</span>=http</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"><span class="attribute">scheduler</span>=wrr</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line"><span class="attribute">checktype</span>=negotiate</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line"><span class="attribute">checkport</span>=80</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line"><span class="attribute">request</span>=<span class="string">"index.html"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line"><span class="attribute">receive</span>=“Test Ldirectord<span class="string">"</span></span></pre></td></tr></table></figure>
+
+
+        </div>
+        <!-- .entry-content -->
+        <div class="single-reward">
+          <div class="reward-open">赏
+            <div class="reward-main">
+              <ul class="reward-row">
+                <li class="alipay-code"><img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6undefined"></li>
+                <li class="wechat-code"><img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/images/custom/donate/wechat-pay.png"></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div style="text-align:center; width: 100%" class="social-share share-mobile" data-disabled="diandian, tencent"></div>
+        <footer class="post-footer">
+          <div class="post-lincenses"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="nofollow"><i class="fa fa-creative-commons" aria-hidden="true"></i> 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></div>
+          <div class="post-tags">
+          </div>
+          <div class="post-share">
+            <div class="social-share sharehidden share-component"></div>
+            <i class="iconfont show-share icon-forward"></i>
+          </div>
+        </footer><!-- .entry-footer -->
+      </article>
+      <!-- #post-## -->
+      <div class="toc" style="background: none;"></div>
+      <section class="post-squares nextprev">
+        
+          
+            <div class="post-nepre half previous">
+          
+            <a href="/e4415633.html" rel="prev">
+              <div class="background">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="">
+              </div>
+              <span class="label">
+              Previous Post</span>
+              <div class="info">
+                <h3>
+                nginx防盗链设置的一些细节</h3>
+                <hr>
+              </div>
+            </a>
+          </div>
+        
+        
+          
+            <div class="post-nepre half next">
+          
+            <a href="/dcaccc5a.html" rel="next">
+              <div class="background">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="">
+              </div>
+              <span class="label">
+              Next Post</span>
+              <div class="info">
+                <h3>
+                源码编译Apache和PHP实现lamp架构</h3>
+                <hr>
+              </div>
+            </a>
+          </div>
+        
+      </section>
+      
+<div id="vcomments"></div>
+<script>
+  window.onload = function(){
+      var valine = new Valine();
+      valine.init({
+        el: '#vcomments',
+        appId: "AVtPtVan0Ky5u33XhUzJlFKp-gzGzoHsz",
+        appKey: "nx3XTnRJmaMQR3aLWYiigkgJ",
+        path: window.location.pathname,
+        placeholder: "你是我一生只会遇见一次的惊喜 ..."
+      })
+  }
+</script>
+
+      <section class="author-profile">
+        <div class="info" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <a href="hewanyue.com" class="profile gravatar"><img src="https://gravatar.loli.net/avatar/37019f5eb1f0b9951c06bfdc8342afd1" itemprop="image" alt="hechao" height="70" width="70"></a>
+          <div class="meta">
+            <span class="title">Author</span>
+            <h3 itemprop="name">
+            <a href="hewanyue.com" itemprop="url" rel="author">hechao</a>
+            </h3>
+          </div>
+        </div>
+        <hr>
+        <p><i class="iconfont icon-write"></i>一个奇怪的人</p>
+      </section>
+    </main><!-- #main -->
+  </div><!-- #primary -->
+</div>
+
+
+
+    </div>    
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..."/>
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            // PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+    <!-- <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Hechao<br>
+      powered_by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer> -->
+<footer id="colophon" class="site-footer" role="contentinfo">
+  <div class="site-info">
+    <div class="footertext">
+      <div class="img-preload">
+        <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/wordpress-rotating-ball-o.svg">
+        <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/disqus-preloader.svg">
+      </div>
+      <p style="color: #666666;">&copy 2018</p>
+    </div>
+    <div class="footer-device">
+    <p style="font-family: 'Ubuntu', sans-serif;">
+        <span style="color: #b9b9b9;">Theme <a href="https://github.com/honjun/hexo-theme-sakura" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Sakura</a> <i class="iconfont icon-sakura rotating" style="color: #ffc0cb;display:inline-block"></i> by <a href="https://2heng.xin/" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Mashiro</a>&<a href="https://www.hojun.cn/" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Hojun</a>, Powered by Hexo, Hosted by Coding Pages</a>
+        </span>
+      </p>
+    </div>
+  </div><!-- .site-info -->
+</footer>
+
+
+
+<!-- <script src="/js/tocbot.js"></script> -->
+<script type="text/javascript" src="/js/lib.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script type="text/javascript" src="/js/InsightSearch.js"></script>
+<script type="text/javascript" src="/js/jquery.fancybox.min.js"></script>
+<script type="text/javascript" src="/js/zoom.min.js"></script>
+<script type="text/javascript" src="/js/sakura-app.js"></script>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine@1.3.4/dist/Valine.min.js'></script>
+<script src="/js/botui.js"></script>
+<!-- 不蒜子 网页计数器 -->
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script> -->
+<script type="text/javascript">
+/* <![CDATA[ */
+if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+  var Poi = {"pjax":"1","movies":{"url": "https://cdn.jsdelivr.net/gh/honjun/hojun@1.2","name":"Unbroken.mp4","live":"close"},"windowheight":"fixed","codelamp":"close","ajaxurl":"","order":"asc","formpostion":"bottom"};
+} else {
+  var Poi = {"pjax":"1","movies":{"url": "https://cdn.jsdelivr.net/gh/honjun/hojun@1.2","name":"Unbroken.mp4","live":"open"},"windowheight":"auto","codelamp":"close","ajaxurl":"","order":"asc","formpostion":"bottom"};
+}
+/* ]]> */
+
+</script>
+<script>
+$(document).ready(function() {
+  if ($(".toc").length > 0 && document.body.clientWidth > 1200) {
+    if ($(".pattern-center").length > 0) { //有图的情况
+      tocbot.init({
+          // Where to render the table of contents.
+          tocSelector: '.toc', // 放置目录的容器
+          // Where to grab the headings to build the table of contents.
+          contentSelector: '.entry-content', // 正文内容所在
+          // Which headings to grab inside of the contentSelector element.
+          scrollSmooth: true,
+          headingSelector: 'h1, h2, h3, h4, h5', // 需要索引的标题级别
+          headingsOffset: -400,
+          scrollSmoothOffset: -85
+      });
+    } else {
+      tocbot.init({
+          // Where to render the table of contents.
+          tocSelector: '.toc', // 放置目录的容器
+          // Where to grab the headings to build the table of contents.
+          contentSelector: '.entry-content', // 正文内容所在
+          // Which headings to grab inside of the contentSelector element.
+          scrollSmooth: true,
+          headingSelector: 'h1, h2, h3, h4, h5', // 需要索引的标题级别
+          headingsOffset: -85,
+          scrollSmoothOffset: -85
+      });
+    }
+    var offsetTop = $('.toc').offset().top - 95;
+    window.onscroll = function() {
+      var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+      if (scrollTop >= offsetTop) {
+        $('.toc').addClass('toc-fixed');
+      } else {
+        $('.toc').removeClass('toc-fixed');
+      }
+    }
+  }
+});
+</script>
+
+    <div class="openNav no-select" style="height: 50px;">
+      <div class="iconflat no-select" style="width: 50px; height: 50px;">
+        <div class="icon"></div>
+      </div>
+      <div class="site-branding search-form-submit">
+        <i class="iconfont js-toggle-search iconsearch icon-search"></i>
+      </div>
+    </div>
+  </section>
+  <div id="mo-nav" class="">
+  <div class="m-avatar">
+    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6https://gravatar.loli.net/avatar/37019f5eb1f0b9951c06bfdc8342afd1">
+  </div>
+  <p style="text-align: center; color: #333; font-weight: 900; font-family: 'Ubuntu', sans-serif; letter-spacing: 1.5px">ウサギ没有人</p>
+  <p style="text-align: center; word-spacing: 20px;">
+    
+      
+        <a href="http://github.com/wudihechao" class="fa fa-github" target="_blank" style="color: #333; margin-left:20px"></a>
+      
+        <a href="http://weibo.com/u/1050367191" class="fa fa-weibo" target="_blank" style="color: #dd4b39; margin-left:20px"></a>
+      
+        <a href="https://wpa.qq.com/msgrd?v=3&uin=307802118&site=qq&menu=yes" class="fa fa-qq" target="_blank" style="color: #25c6fe; margin-left:20px"></a>
+      
+    
+  </p>
+  <ul id="menu-new-1" class="menu">
+    
+      <li>
+        <a href="/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-fort-awesome faa-shake" aria-hidden="true"></i>
+            首页
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/archives">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-archive faa-shake" aria-hidden="true"></i>
+            归档
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/categories/linux/">
+                  <i class="fa fa-code" aria-hidden="true"></i>
+                  linux
+                </a>
+              </li>
+            
+              <li>
+                <a href="/categories/SQL/">
+                  <i class="fa fa-book" aria-hidden="true"></i>
+                  SQLs
+                </a>
+              </li>
+            
+              <li>
+                <a href="/categories/cloud/">
+                  <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                  cloud
+                </a>
+              </li>
+            
+              <li>
+                <a href="/categories/%E6%95%85%E9%9A%9C/">
+                  <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                  故 障
+                </a>
+              </li>
+            
+              <li>
+                <a href="/categories/%E6%83%85%E6%84%9F/">
+                  <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                  情 感
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+      <li>
+        <a href="javascript:;" target="_blank" rel="noopener">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-list-ul faa-vertical" aria-hidden="true"></i>
+            清单
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/tags/%E6%82%A6%E8%AF%BB/">
+                  <i class="fa fa-th-list faa-bounce" aria-hidden="true"></i>
+                  书单
+                </a>
+              </li>
+            
+              <li>
+                <a href="/bangumi/">
+                  <i class="fa fa-film faa-vertical" aria-hidden="true"></i>
+                  番组
+                </a>
+              </li>
+            
+              <li>
+                <a href="/music/">
+                  <i class="fa fa-headphones" aria-hidden="true"></i>
+                  歌单
+                </a>
+              </li>
+            
+              <li>
+                <a href="/tags/%E5%9B%BE%E9%9B%86/">
+                  <i class="fa fa-photo" aria-hidden="true"></i>
+                  图集
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+      <li>
+        <a href="/comment/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-pencil-square-o faa-tada" aria-hidden="true"></i>
+            留言板
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/links/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-link faa-shake" aria-hidden="true"></i>
+            友人帐
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/donate/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-heart faa-pulse" aria-hidden="true"></i>
+            赞赏
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-leaf faa-wrench" aria-hidden="true"></i>
+            关于
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/about/">
+                  <i class="fa fa-meetup" aria-hidden="true"></i>
+                  我？
+                </a>
+              </li>
+            
+              <li>
+                <a href="/theme-sakura/">
+                  <i class="fa iconfont icon-sakura" aria-hidden="true"></i>
+                  主题
+                </a>
+              </li>
+            
+              <li>
+                <a href="/lab/">
+                  <i class="fa fa-cogs" aria-hidden="true"></i>
+                  Lab
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+      <li>
+        <a href="/atom.xml">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-rss faa-pulse" aria-hidden="true"></i>
+            RSS
+          </span>
+        </a>
+        
+      </li>
+    
+  </ul>
+  <p style="text-align: center; font-size: 13px; color: #b9b9b9;">&copy 2019 hexo-sakura</p>
+</div>
+<button onclick="topFunction()" class="mobile-cd-top" id="moblieGoTop" title="Go to top" style="display: none;"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<!-- require MetingJS -->
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<style>
+  .aplayer .aplayer-lrc {
+    height: 35px;
+  }
+  .aplayer .aplayer-lrc p{
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 18px !important;
+  }
+  .aplayer .aplayer-lrc p.aplayer-lrc-current{
+    color: #FF1493;
+  }
+  .aplayer.aplayer-narrow .aplayer-body{
+    left: -66px !important;
+  }
+  .aplayer.aplayer-fixed .aplayer-lrc {
+    display: none;
+  }
+  .aplayer .aplayer-lrc.aplayer-lrc-hide {
+      display:none !important;
+  }
+  .aplayer.aplayer-fixed .lrc-show {
+    display: block;
+    background: rgba(255, 255, 255, 0.8);
+  }
+</style>
+<meting-js
+
+    id="2660651585"
+
+    server="netease"
+
+    type="playlist"
+
+    fixed="true"
+
+    autoplay="false"
+
+    loop="all"
+
+    order="random"
+
+    preload="auto"
+
+    volume="0.7"
+
+    mutex="true"
+
+</meting-js>
+<script>
+  $(function(){
+    $('body').on('click', '.aplayer', function(){
+      if($('.aplayer-button').hasClass('aplayer-play')) {
+        $('.aplayer-lrc').removeClass('lrc-show');
+      } else {
+        $('.aplayer-lrc').addClass('lrc-show');
+      }
+    })
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  
+  <title itemprop="name">CentOS7磁盘分区及文件系统 | BOHC!</title>
+  
+    <link rel="shortcut icon" href="/images/favicon.ico">
+  
+  <meta http-equiv="x-dns-prefetch-control" content="on">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+SerifMerriweather|Merriweather+Sans|Source+Code+Pro|Ubuntu:400,700|Noto+Serif+SC" media="all">
+  <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+  <link rel="stylesheet" id="saukra_css-css" href="/css/style.css" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/lib.min.css" media="all">
+  <link rel="stylesheet" href="/css/font.css" media="all">
+  <link rel="stylesheet" href="/css/insight.css" media="all">
+  <link rel="stylesheet" href="/css/jquery.fancybox.min.css" media="all">
+  <link rel="stylesheet" href="/css/zoom.css" media="all">
+  <link rel="stylesheet" type="text/css" href="/css/sharejs.css">
+<!--   <link rel="stylesheet" id="saukra_css-css" href="https://2heng.xin/wp-content/cache/autoptimize/css/autoptimize_ad42a61f4c7d4bdd9f91afcff6b5dda5.css
+" type="text/css" media="all"> -->
+  <script>
+  /*Initial Variables*/
+  var mashiro_option = new Object();
+  var mashiro_global = new Object();
+  mashiro_option.NProgressON = true;
+  /* 
+   * 邮箱信息之类的东西可以填在这里，这些js变量基本都作用于sakura-app.js
+   * 这样的设置仅是为了方便在基于PHP开发的主题中设置js变量，既然移植到了Node上，我想或许可以精简这一逻辑吧
+   */
+  mashiro_option.email_domain = "";
+  mashiro_option.email_name = "";
+  mashiro_option.cookie_version_control = "";
+  mashiro_option.qzone_autocomplete = false;
+  mashiro_option.site_name = "ウサギ没有人";
+  mashiro_option.author_name = "没有人";
+  mashiro_option.site_url = "https://wudihechao.github.io/";
+  mashiro_option.v_appId = "AVtPtVan0Ky5u33XhUzJlFKp-gzGzoHsz";
+  mashiro_option.v_appKey = "nx3XTnRJmaMQR3aLWYiigkgJ";
+  mashiro_option.mathjax = "0";
+  mashiro_option.qq_api_url = "https://api.mashiro.top/qqinfo/"; 
+  mashiro_option.qq_avatar_api_url = "https://api.mashiro.top/qqinfo/";
+
+  // mashiro_option.jsdelivr_css_src = "https://cdn.jsdelivr.net/gh/moezx/cdn@3.4.5/css/lib.min.css";
+  // mashiro_option.float_player_on = true;
+
+  /*End of Initial Variables*/
+  </script>
+  <script type="text/javascript">
+  var bg = "https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(1).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(2).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(3).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(4).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(5).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(6).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(7).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(8).jpg.webp".split(",");
+  var bgindex = Math.floor(Math.random()*bg.length);
+  if (!!window.ActiveXObject || "ActiveXObject" in window) { //is IE?
+    alert('朋友，IE浏览器未适配哦~');
+  }
+  </script>
+  <style type="text/css">
+  .hljs-ln{border-collapse:collapse}.hljs-ln td{padding:0}.hljs-ln-n:before{content:attr(data-line-number)}
+  </style>
+  <style type="text/css">.site-top .lower nav{display:block !important;}.author-profile i,.post-like a,.post-share .show-share,.sub-text,.we-info a,span.sitename,.post-more i:hover,#pagination a:hover,.post-content a:hover,.float-content i:hover{color:#FE9600}.feature i,.download,.navigator i:hover,.links ul li:before,.ar-time i,span.ar-circle,.object,.comment .comment-reply-link,.siren-checkbox-radio:checked + .siren-checkbox-radioInput:after{background:#FE9600}::-webkit-scrollbar-thumb{background:#FE9600}.download,.navigator i:hover,.link-title,.links ul li:hover,#pagination a:hover,.comment-respond input[type='submit']:hover{border-color:#FE9600}.entry-content a:hover,.site-info a:hover,.comment h4 a,#comments-navi a.prev,#comments-navi a.next,.comment h4 a:hover,.site-top ul li a:hover,.entry-title a:hover,#archives-temp h3,span.page-numbers.current,.sorry li a:hover,.site-title a:hover,i.iconfont.js-toggle-search.iconsearch:hover,.comment-respond input[type='submit']:hover{color:#FE9600}.comments .comments-main{display:block !important;}.comments .comments-hidden{display:none !important;}background-position:center center;background-attachment:inherit;}
+  </style>
+</head>
+
+<body class="page-template page-template-user page-template-page-analytics page-template-userpage-analytics-php page page-id-1297 chinese-font serif isWebKit">
+  <div class="scrollbar" id="bar">
+  </div>
+  <a href="#" class="cd-top faa-float animated"></a>
+  <section id="main-container">
+    <div class="headertop filter-dot">
+  <div id="banner_wave_1"></div>
+  <div id="banner_wave_2"></div>
+  <figure id="centerbg" class="centerbg">
+    <div class="focusinfo no-select">
+      <div class="header-tou">
+        <a href="https://wudihechao.github.io/">
+          <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6https://gravatar.loli.net/avatar/37019f5eb1f0b9951c06bfdc8342afd1">
+        </a>
+      </div>
+      <div class="header-info">
+        <p>自分にとして優しさは、貴方にとは辛いなんて、そんなの</p>
+        <div class="top-social_v2">
+          <li id="bg-pre">
+            <img class="flipx" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/next-b.svg">
+          </li>
+          
+            
+              
+                <li>
+                  <a href="http://github.com/wudihechao" target="_blank" class="social-github" title="github">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/github.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="http://weibo.com/u/1050367191" target="_blank" class="social-github" title="sina">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/sina.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="http://weibo.com/mashirozx?is_all=1" target="_blank" class="social-github" title="zhihu">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/zhihu.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="" target="_blank" class="social-github" title="email">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/email.svg">
+                  </a>
+                </li>
+              
+            
+          
+          <li id="bg-next">
+            <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/next-b.svg">
+          </li>
+        </div>
+      </div>
+    </div>
+  </figure>
+  <div id="video-container" style="">
+    <video style="object-fit: fill" id="bgvideo" class="video" video-name="" src="" width="auto" preload="auto">
+    </video>
+    <div id="video-btn" class="loadvideo videolive">
+    </div>
+    <div id="video-add">
+    </div>
+    <div class="video-stu">
+    </div>
+  </div>
+  <div class="headertop-down faa-float animated" onclick="headertop_down()">
+    <span>
+      <i class="fa fa-chevron-down" aria-hidden="true">
+      </i>
+    </span>
+  </div>
+</div>
+    <div id="page" class="site wrapper">
+      <header class="site-header no-select gizle sabit" role="banner">
+  <div class="site-top">
+    <div class="site-branding">
+      <span class="site-title">
+        <span class="logolink moe-mashiro">
+          <a href="/">
+            <span class="sakurasono">ウサギ</span>
+            <span class="shironeko">没有人</span>
+          </a>
+        </span>
+      </span>
+    </div>
+    <div class="searchbox search-form-submit">
+      <i class="iconfont js-toggle-search iconsearch icon-search">
+      </i>
+    </div>
+    <div id="show-nav" class="showNav mobile-fit">
+      <div class="line line1">
+      </div>
+      <div class="line line2">
+      </div>
+      <div class="line line3">
+      </div>
+    </div>
+    <div class="lower-cantiner">
+      <div class="lower">
+        <nav class="mobile-fit-control hide">
+          <ul id="menu-new" class="menu">
+            
+              <li>
+                <a href="/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-fort-awesome faa-shake" aria-hidden="true"></i>
+                    首页
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-archive faa-shake" aria-hidden="true"></i>
+                    归档
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/categories/linux/">
+                          <i class="fa fa-code" aria-hidden="true"></i>
+                          linux
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/categories/SQL/">
+                          <i class="fa fa-book" aria-hidden="true"></i>
+                          SQLs
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/categories/cloud/">
+                          <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                          cloud
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/categories/%E6%95%85%E9%9A%9C/">
+                          <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                          故 障
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/categories/%E6%83%85%E6%84%9F/">
+                          <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                          情 感
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+              <li>
+                <a href="javascript:;" target="_blank" rel="noopener">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-list-ul faa-vertical" aria-hidden="true"></i>
+                    清单
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/tags/%E6%82%A6%E8%AF%BB/">
+                          <i class="fa fa-th-list faa-bounce" aria-hidden="true"></i>
+                          书单
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/bangumi/">
+                          <i class="fa fa-film faa-vertical" aria-hidden="true"></i>
+                          番组
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/music/">
+                          <i class="fa fa-headphones" aria-hidden="true"></i>
+                          歌单
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/tags/%E5%9B%BE%E9%9B%86/">
+                          <i class="fa fa-photo" aria-hidden="true"></i>
+                          图集
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+              <li>
+                <a href="/comment/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-pencil-square-o faa-tada" aria-hidden="true"></i>
+                    留言板
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/links/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-link faa-shake" aria-hidden="true"></i>
+                    友人帐
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/donate/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-heart faa-pulse" aria-hidden="true"></i>
+                    赞赏
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-leaf faa-wrench" aria-hidden="true"></i>
+                    关于
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/about/">
+                          <i class="fa fa-meetup" aria-hidden="true"></i>
+                          我？
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/theme-sakura/">
+                          <i class="fa iconfont icon-sakura" aria-hidden="true"></i>
+                          主题
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/lab/">
+                          <i class="fa fa-cogs" aria-hidden="true"></i>
+                          Lab
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+              <li>
+                <a href="/atom.xml">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-rss faa-pulse" aria-hidden="true"></i>
+                    RSS
+                  </span>
+                </a>
+                
+              </li>
+            
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <link rel="stylesheet" type="text/css" href="/css/sharejs.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+<div class="pattern-center-blank"></div>
+
+<div id="content" class="site-content">
+  <div id="primary" class="content-area">
+    <main id="main" class="site-main" role="main">
+      <article id="post-1" class="post-1 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
+        <div class="toc"></div>
+        <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
+        
+          <header class="entry-header">
+            <h1 class="entry-title">CentOS7磁盘分区及文件系统</h1>
+            <p class="entry-census">hechao&nbsp;·&nbsp;2019-8-14&nbsp;·&nbsp;<span id="busuanzi_value_page_pv"></span>次阅读</p></p>
+
+            <hr>
+          </header>
+        
+        <div class="entry-content">
+          <p><strong>&emsp;&emsp;一般来说，硬盘上的空间，想要被我们利用，都要经过几个步骤：</strong></p>
+<ul>
+<li>1设备识别</li>
+<li>2磁盘分区</li>
+<li>3创建文件系统（并标记文件系统）</li>
+<li>4挂载新的文件系统</li>
+<li>5在/etc/fstab文件中创建新条目<br>&emsp;</li>
+</ul>
+<p><strong>&emsp;&emsp;只有当设备被挂载到文件系统中，才可以被我们访问且使用。</strong><br>&emsp;</p>
+<h2 id="1-设备识别"><a href="#1-设备识别" class="headerlink" title="1 设备识别"></a>1 设备识别</h2><p> 新插入硬盘设备，没法被系统立马识别到，需要手动扫描，才可以发现并识别新设备<br><code>echo &quot;- - -&quot; &gt; /sys/class/scsi_host/host0/scan</code><br>/sys/class/scsi_host/        目录下面有几个host 就扫描几次。<br>&emsp;<br>&emsp;</p>
+<h2 id="2-磁盘分区"><a href="#2-磁盘分区" class="headerlink" title="2 磁盘分区"></a>2 磁盘分区</h2><h3 id="2-1为什么要分区"><a href="#2-1为什么要分区" class="headerlink" title="2.1为什么要分区"></a>2.1为什么要分区</h3><ul>
+<li>优化I/O性能</li>
+<li>实现磁盘空间配额限制</li>
+<li>提高修复速度</li>
+<li>隔离系统和程序</li>
+<li>安装多个OS</li>
+<li>采用不同文件系统</li>
+</ul>
+<h3 id="2-2分区方式"><a href="#2-2分区方式" class="headerlink" title="2.2分区方式"></a>2.2分区方式</h3><p>&emsp;&emsp;一般来说有两种分区方式 ：<strong>MBR</strong>和<strong>GPT</strong>。</p>
+<ul>
+<li><p><strong>MBR</strong>：全程Master Boot Record，1982年，使用32位表示扇区，单个分区不超过2T。</p>
+</li>
+<li><p>如何分区：按柱面</p>
+</li>
+<li><p>0磁道0扇面：512bytes<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;446byets：boot loader<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;64bytes  ： 分区表，其中每16bytes标识一个分区<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;2byetes&emsp;：55AA</p>
+</li>
+<li><p>MBR分区中一块硬盘最多有4个主分区，也可以三主分区+1拓展（N个逻辑分区）<br>&emsp;</p>
+<h4 id="MBR分区结构"><a href="#MBR分区结构" class="headerlink" title="MBR分区结构"></a>MBR分区结构</h4><p><img src="https://img-blog.csdnimg.cn/20190815093309132.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="MBR硬盘分区结构图"></p>
+<h4 id="MBR分区表"><a href="#MBR分区表" class="headerlink" title="MBR分区表"></a>MBR分区表</h4><p>&emsp;&emsp;硬盘主导记录MBR由4个部分组成</p>
+</li>
+<li><p>主引导程序（偏移地址0000H–0088H），它负责从活动分区中装载，并运行系统引导程序</p>
+</li>
+<li><p>出错信息数据区，偏移地址0089H-00E1H为出错信息，00E2H-01BDH全为0字节</p>
+</li>
+<li><p>分区表（DPT,Disk Partition Table）含4个分区项，偏移地址01BEH–01FDH，每个分区表长16个字节，共64字节为分区项1、分区项2、分区项3、分区项4</p>
+</li>
+<li><p>结束标志字，偏移地址01FE–01FF的2个字节值为结束标志55AA<br><img src="https://img-blog.csdnimg.cn/20190815095231719.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="硬盘主导记录MBR"><br>&emsp;</p>
+<ul>
+<li><strong>GPT</strong>：GUID（Globals Unique Identifiers） partition table 支持128个分区，使用64位，支持8Z（ 512Byte/block ）64Z （ 4096Byte/block）</li>
+<li>使用128位UUID(Universally Unique Identifier) 表示磁盘和分区 GPT分区表<br>自动备份在头和尾两份，并有CRC校验位</li>
+<li>UEFI (Unified Extensible Firmware Interface 统一可扩展固件接口)硬件支持<br>GPT，使操作系统启动<br>&emsp;<h4 id="GPT分区结构"><a href="#GPT分区结构" class="headerlink" title="GPT分区结构"></a>GPT分区结构</h4><img src="https://img-blog.csdnimg.cn/20190815100433738.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="GPT分区机构图"><h3 id="2-3管理分区"><a href="#2-3管理分区" class="headerlink" title="2.3管理分区"></a>2.3管理分区</h3><h4 id="2-31列出块设备"><a href="#2-31列出块设备" class="headerlink" title="2.31列出块设备"></a>2.31列出块设备</h4><h4 id="2-32创建新分区"><a href="#2-32创建新分区" class="headerlink" title="2.32创建新分区"></a>2.32创建新分区</h4>&emsp;&emsp;parted命令：parted [选项]… [设备 [命令 [参数]…]…]<br>&emsp;&emsp;parted /dev/sdb mklabel gpt|msdos<br>&emsp;&emsp;parted /dev/sdb print<br>&emsp;&emsp;parted /dev/sdb mkpart primary 1 200 （默认M）<br>&emsp;&emsp;parted /dev/sdb rm 1<br>&emsp;&emsp;parted –l 列出分区信息</li>
+</ul>
+<p><strong>parted的操作都是实时生效的，小心使用</strong><br>&emsp;<br>&emsp;&emsp; fdisk -l [-u] [device…] 查看分区<br>&emsp;&emsp; fdisk /dev/sdb 管理分区<br>子命令：<br>&emsp;&emsp;&emsp;&emsp;&emsp;p 查看分区列表<br>&emsp;&emsp;&emsp;&emsp;&emsp;t 更改分区类型<br>&emsp;&emsp;&emsp;&emsp;&emsp;n 创建新分区<br>&emsp;&emsp;&emsp;&emsp;&emsp;d 删除分区<br>&emsp;&emsp;&emsp;&emsp;&emsp;v 校验分区<br>&emsp;&emsp;&emsp;&emsp;&emsp;u 转换单位<br>&emsp;&emsp;&emsp;&emsp;&emsp;w 保存并退出<br>&emsp;&emsp;&emsp;&emsp;&emsp;q 不保存并退出<br>&emsp;<br>gdisk命令与fdisk用法相同，用于创建GPT分区。</p>
+<h4 id="2-33同步内核与硬盘的分区表"><a href="#2-33同步内核与硬盘的分区表" class="headerlink" title="2.33同步内核与硬盘的分区表"></a>2.33同步内核与硬盘的分区表</h4><p>查看内核是否已经识别新的分区<br>cat /proc/partations<br><strong>centos6</strong>通知内核重新读取硬盘分区表<br>新增分区用<br>partx -a /dev/DEVICE<br>kpartx -a /dev/DEVICE -f: force<br>删除分区用<br>partx -d –nr M-N /dev/DEVICE<br><strong>CentOS 5，7</strong>: 使用partprobe<br>partprobe [/dev/DEVICE]</p>
+<h2 id="3-创建文件系统"><a href="#3-创建文件系统" class="headerlink" title="3 创建文件系统"></a>3 创建文件系统</h2><h3 id="3-1文件系统"><a href="#3-1文件系统" class="headerlink" title="3.1文件系统"></a>3.1文件系统</h3><p>&emsp;&emsp;文件系统是操作系统用于明确存储设备或分区上的文件的方法和数据结构；即在存储设备上组织文件的方法。操作系统中负责管理和存储文件信息的软件结<br>构称为文件管理系统，简称文件系统从系统角度来看，文件系统是对文件存储设备的空间进行组织和分配，负责文件存储并对存入的文件进行保护和检索的系统。具体地说，它负责为用户建立文件，存入、读出、修改、转储文件，控制文件的存取，安全控制，日志，压缩，加密等<br>&emsp;&emsp;&emsp;支持的文件系统：<code>/lib/modules/`uname –r`/kernel/fs</code><br>&emsp;&emsp;&emsp;各种文件系统：<a href="https://en.wikipedia.org/wiki/Comparison_of_file_systems" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Comparison_of_file_systems</a></p>
+<h4 id="3-11文件系统类型"><a href="#3-11文件系统类型" class="headerlink" title="3.11文件系统类型"></a>3.11文件系统类型</h4><p>Linux文件系统：<br>&emsp;&emsp;ext2(Extended file system)：适用于那些分区容量不是太大，更新也不频繁的情况，例如 /boot 分区<br>&emsp;&emsp;ext3：是 ext2 的改进版本，其支持日志功能，能够帮助系统从非正常关机导致的异常中恢复。它通常被用作通用的文件系统<br>&emsp;&emsp;ext4：是 ext 文件系统的最新版。提供了很多新的特性，包括纳秒级时间戳、创建和使用巨型文件(16TB)、最大1EB的文件系统，以及速度的提升<br>&emsp;&emsp;xfs：SGI，支持最大8EB的文件系统<br>&emsp;&emsp;btrfs（Oracle）, reiserfs, jfs（AIX）, swap<br>光盘：iso9660<br>Windows：FAT32, NTFS，exFAT<br>Unix：FFS（fast）, UFS（unix）, JFS2<br>网络文件系统：NFS, CIFS<br>集群文件系统：GFS2, OCFS2（oracle）<br>分布式文件系统：fastdfs,ceph, moosefs, mogilefs, glusterfs, Lustre<br>RAW：未经处理或者未经格式化产生的文件系统</p>
+</li>
+</ul>
+<h4 id="3-12文件系统分类"><a href="#3-12文件系统分类" class="headerlink" title="3.12文件系统分类"></a>3.12文件系统分类</h4><p>根据其是否支持”journal”功能：<br>&emsp;&emsp;日志型文件系统: ext3, ext4, xfs, …<br>&emsp;&emsp;非日志型文件系统: ext2, vfat<br>文件系统的组成部分：<br>&emsp;&emsp;内核中的模块：ext4, xfs, vfat<br>&emsp;&emsp;用户空间的管理工具：mkfs.ext4, mkfs.xfs,mkfs.vfat<br>Linux的虚拟文件系统：VFS<br><strong>查前支持的文件系统：<code>cat /proc/filesystems</code></strong><br><strong>查前目前的文件系统：<code>lsblk -f</code></strong></p>
+<h3 id="3-2创建文件系统"><a href="#3-2创建文件系统" class="headerlink" title="3.2创建文件系统"></a>3.2创建文件系统</h3><p>mkfs命令：<br>(1) mkfs.FS_TYPE /dev/DEVICE<br>&emsp;&emsp;&emsp;&emsp;ext4<br>&emsp;&emsp;&emsp;&emsp;xfs<br>&emsp;&emsp;&emsp;&emsp;btrfs<br>&emsp;&emsp;&emsp;&emsp;vfat<br>(2) mkfs -t FS_TYPE /dev/DEVICE<br>&emsp;&emsp;&emsp;&emsp;-L ‘LABEL’ 设定卷标<br>&emsp;mke2fs命令：ext系列文件系统专用管理工具<br>&emsp;&emsp;&emsp;-t {ext2|ext3|ext4} 指定文件系统类型<br>&emsp;&emsp;&emsp;-b {1024|2048|4096} 指定块大小<br>&emsp;&emsp;&emsp;-L ‘LABEL’ 设置卷标<br>&emsp;&emsp;&emsp;-j 相当于 -t ext3 <strong>(mkfs.ext3 = mkfs -t ext3 = mke2fs -j = mke2fs -t ext3)`</strong><br>&emsp;&emsp;&emsp;-i # 为数据空间中每多少个字节创建一个inode；不应该小于block大小<br>&emsp;&emsp;&emsp;-N # 指定分区中创建多少个inode<br>&emsp;&emsp;&emsp;-I 一个inode记录占用的磁盘空间大小，128—4096<br>&emsp;&emsp;&emsp;-m # 默认5%,为管理人员预留空间占总空间的百分比<br>&emsp;&emsp;&emsp;-O FEATURE[,…] 启用指定特性<br>&emsp;&emsp;&emsp;-O ^FEATURE 关闭指定特性</p>
+<h3 id="3-3文件系统标签"><a href="#3-3文件系统标签" class="headerlink" title="3.3文件系统标签"></a>3.3文件系统标签</h3><p>文件系统标签是指向设备的另一种方法。与设备无关<br><strong>blkid</strong>：块设备属性信息查看<br>blkid [OPTION]… [DEVICE]<br>&emsp;&emsp;&emsp;-U UUID 根据指定的UUID来查找对应的设备<br>&emsp;&emsp;&emsp;-L LABEL 根据指定的LABEL来查找对应的设备<br><strong>e2label</strong>：管理ext系列文件系统的LABEL<br>e2label DEVICE [LABEL]<br><strong>findfs</strong> ：查找分区<br>findfs [options] LABEL= &lt; label &gt;<br>findfs [options] UUID= &lt; uuid &gt;</p>
+<h3 id="3-4文件系统检测和修复"><a href="#3-4文件系统检测和修复" class="headerlink" title="3.4文件系统检测和修复"></a>3.4文件系统检测和修复</h3><p>文件系统夹故障常发生于死机或者非正常关机之后，挂载为文件系统标记为“no clean”<br> 注意：一定不要在挂载状态下执行下面命令修复<br> <strong>fsck: File System Check</strong><br>&emsp;&emsp;fsck.FS_TYPE<br>&emsp;&emsp;fsck -t FS_TYPE<br>注意：FS_TYPE 一定要与分区上已经文件类型相同<br>-a 自动修复<br>-r 交互式修复错误<br> <strong>e2fsck：ext系列文件专用的检测修复工具</strong><br>-y 自动回答为yes<br>-f 强制修复<br>-p 自动进行安全的修复文件系统问题<br><strong>xfs_repair：xfs文件系统专用检测修复工具</strong><br>-f 修复文件，而设备<br>-n 只检查<br>-d 允许修复只读的挂载设备，在单用户下修复 / 时使用，然后立即reboot</p>
+<h2 id="4-挂载新的文件系统"><a href="#4-挂载新的文件系统" class="headerlink" title="4 挂载新的文件系统"></a>4 挂载新的文件系统</h2><p><strong>挂载：</strong> 将额外文件系统与根文件系统某现存的目录建立起关联关系，进而使得此目录做为其它文件访问入口的行为<br><strong>卸载：</strong> 为解除此关联关系的过程<br>把设备关联挂载点：mount Point<br>&emsp;&emsp;mount  设备名   挂载点<br>卸载时：可使用设备，也可以使用挂载点<br>&emsp;&emsp;umount 设备名|挂载点<br>PS：挂载点下原有文件在挂载完成后会被临时隐藏<br>&emsp;&emsp; 挂载点目录一般为空</p>
+<h3 id="4-1用mount命令挂载文件系统"><a href="#4-1用mount命令挂载文件系统" class="headerlink" title="4.1用mount命令挂载文件系统"></a>4.1用mount命令挂载文件系统</h3><p><strong>挂载方法</strong>：mount DEVICE MOUNT_POINT<br>&emsp;&emsp;mount：通过查看/etc/mtab文件显示当前已挂载的所有设备<br>&emsp;&emsp;mount [-fnrsvw] [-t vfstype] [-o options] device dir<br>device：指明要挂载的设备；<br>&emsp;&emsp;(1) 设备文件：例如/dev/sda5<br>&emsp;&emsp;(2) 卷标：-L ‘LABEL’, 例如 -L ‘MYDATA’<br>&emsp;&emsp;(3) UUID, -U ‘UUID’：例如 -U ‘0c50523c-43f1-45e7-85c0-a126711d406e’<br>&emsp;&emsp;(4) 伪文件系统名称：proc, sysfs, devtmpfs, configfs<br>dir：挂载点需事先存在，建议使用空目录；进程正在使用中的设备无法被卸载。<br><strong>mount常用命令选项</strong><br>&emsp;&emsp;-t vsftype 指定要挂载的设备上的文件系统类型<br>&emsp;&emsp;-r readonly，只读挂载<br>&emsp;&emsp;-w read and write, 读写挂载<br>&emsp;&emsp;-n 不更新/etc/mtab，mount不可见<br>&emsp;&emsp;-a 自动挂载所有支持自动挂载的设备(定义在了/etc/fstab文件中，且挂载选项中有auto功能)<br>&emsp;&emsp;-L ‘LABEL’ 以卷标指定挂载设备<br>&emsp;&emsp;-U ‘UUID’ 以UUID指定要挂载的设备<br>&emsp;&emsp;-B, –bind 绑定目录到另一个目录上<br>&emsp;&emsp;查看内核追踪到的已挂载的所有设备：cat /proc/mounts</p>
+<p>&emsp;&emsp;-o options：(挂载文件系统的选项)，多个选项使用逗号分隔<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;async 异步模式 sync 同步模式,内存更改时，同时写磁盘<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;包含目录和文件<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;diratime/nodiratime 目录的访问时间戳<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;auto/noauto 是否支持自动挂载,是否支持-a选项<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;exec/noexec 是否支持将文件系统上运行应用程序<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;dev/nodev 是否支持在此文件系统上使用设备文件<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;suid/nosuid 是否支持suid和sgid权限<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;remount 重新挂载<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;ro 只读 rw 读写<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;user/nouser 是否允许普通用户挂载此设备，/etc/fstab使用<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;acl 启用此文件系统上的acl功能<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;loop 使用loop设备<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;_netdev 当网络可用时才对网络资源进行挂载，如：NFS文件系统<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;defaults 相当于rw, suid, dev, exec, auto, nouser, async</p>
+<h3 id="4-2卸载命令"><a href="#4-2卸载命令" class="headerlink" title="4.2卸载命令"></a>4.2卸载命令</h3><p>查看挂载情况<br>&emsp;&emsp;findmnt MOUNT_POINT|device<br>查看正在访问指定文件系统的进程<br>&emsp;&emsp;lsof MOUNT_POINT<br>&emsp;&emsp;fuser -v MOUNT_POINT<br>终止所有在正访问指定的文件系统的进程<br>&emsp;&emsp;fuser -km MOUNT_POINT<br>卸载<br>&emsp;&emsp;umount DEVICE<br>&emsp;&emsp;umount MOUNT_POINT</p>
+<h2 id="5-修改-etc-fstab配置文件"><a href="#5-修改-etc-fstab配置文件" class="headerlink" title="5 修改/etc/fstab配置文件"></a>5 修改/etc/fstab配置文件</h2><p>&emsp;&emsp;使用mount命令挂载设备都是临时挂载，每次开机后需要手动重新挂载，比较费时费力，如果需要实现自动挂载，就要修改文件系统挂载配置文件/etc/fstab文件。<br>/etc/fstab文件 下面的每行定义一个要挂载的文件系统<br>&emsp;&emsp;总共六列，分别对应设备、挂载点、文件系统类型、挂载选项、转储频率及是否自检。<br> 1、要挂载的设备或伪文件系统<br>设备文件<br>LABEL：LABEL=””<br>UUID：UUID=””<br>伪文件系统名称：proc, sysfs<br> 2、挂载点  一般为某文件或目录<br> 3、文件系统类型：ext4，xfs，iso9660，nfs，none<br> 4、挂载选项：defaults（包括rw suidi dev exac auto nouser async） ，acl，bind<br> 5、转储频率：0：不做备份 1：每天转储 2：每隔一天转储<br> 6、fsck检查的文件系统的顺序：允许的数字是0 1 2<br>&emsp;&emsp;0：不自检<br>&emsp;&emsp;1：首先自检；一般只有rootfs才用<br>&emsp;&emsp;2：非rootfs使用<br>&emsp;&emsp;可以使用cat 、echo 等命令 将这6个信息 追加至/etc/fstab文件中，也可以用sed 命令 。</p>
+<p>&emsp;&emsp;<strong>使用<code>mount -a</code> 命令可以立即挂载/etc/fstab中的所有文件系统</strong></p>
+
+        </div>
+        <!-- .entry-content -->
+        <div class="single-reward">
+          <div class="reward-open">赏
+            <div class="reward-main">
+              <ul class="reward-row">
+                <li class="alipay-code"><img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6undefined"></li>
+                <li class="wechat-code"><img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/images/custom/donate/wechat-pay.png"></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div style="text-align:center; width: 100%" class="social-share share-mobile" data-disabled="diandian, tencent"></div>
+        <footer class="post-footer">
+          <div class="post-lincenses"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="nofollow"><i class="fa fa-creative-commons" aria-hidden="true"></i> 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></div>
+          <div class="post-tags">
+          </div>
+          <div class="post-share">
+            <div class="social-share sharehidden share-component"></div>
+            <i class="iconfont show-share icon-forward"></i>
+          </div>
+        </footer><!-- .entry-footer -->
+      </article>
+      <!-- #post-## -->
+      <div class="toc" style="background: none;"></div>
+      <section class="post-squares nextprev">
+        
+          
+            <div class="post-nepre half previous">
+          
+            <a href="/a96e917a.html" rel="prev">
+              <div class="background">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="">
+              </div>
+              <span class="label">
+              Previous Post</span>
+              <div class="info">
+                <h3>
+                for循环实现的小脚本</h3>
+                <hr>
+              </div>
+            </a>
+          </div>
+        
+        
+          
+            <div class="post-nepre half next">
+          
+            <a href="/92724e23.html" rel="next">
+              <div class="background">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="">
+              </div>
+              <span class="label">
+              Next Post</span>
+              <div class="info">
+                <h3>
+                我的一键个性化系统脚本</h3>
+                <hr>
+              </div>
+            </a>
+          </div>
+        
+      </section>
+      
+<div id="vcomments"></div>
+<script>
+  window.onload = function(){
+      var valine = new Valine();
+      valine.init({
+        el: '#vcomments',
+        appId: "AVtPtVan0Ky5u33XhUzJlFKp-gzGzoHsz",
+        appKey: "nx3XTnRJmaMQR3aLWYiigkgJ",
+        path: window.location.pathname,
+        placeholder: "你是我一生只会遇见一次的惊喜 ..."
+      })
+  }
+</script>
+
+      <section class="author-profile">
+        <div class="info" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <a href="hewanyue.com" class="profile gravatar"><img src="https://gravatar.loli.net/avatar/37019f5eb1f0b9951c06bfdc8342afd1" itemprop="image" alt="hechao" height="70" width="70"></a>
+          <div class="meta">
+            <span class="title">Author</span>
+            <h3 itemprop="name">
+            <a href="hewanyue.com" itemprop="url" rel="author">hechao</a>
+            </h3>
+          </div>
+        </div>
+        <hr>
+        <p><i class="iconfont icon-write"></i>一个奇怪的人</p>
+      </section>
+    </main><!-- #main -->
+  </div><!-- #primary -->
+</div>
+
+
+
+    </div>    
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..."/>
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            // PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+    <!-- <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Hechao<br>
+      powered_by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer> -->
+<footer id="colophon" class="site-footer" role="contentinfo">
+  <div class="site-info">
+    <div class="footertext">
+      <div class="img-preload">
+        <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/wordpress-rotating-ball-o.svg">
+        <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/disqus-preloader.svg">
+      </div>
+      <p style="color: #666666;">&copy 2018</p>
+    </div>
+    <div class="footer-device">
+    <p style="font-family: 'Ubuntu', sans-serif;">
+        <span style="color: #b9b9b9;">Theme <a href="https://github.com/honjun/hexo-theme-sakura" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Sakura</a> <i class="iconfont icon-sakura rotating" style="color: #ffc0cb;display:inline-block"></i> by <a href="https://2heng.xin/" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Mashiro</a>&<a href="https://www.hojun.cn/" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Hojun</a>, Powered by Hexo, Hosted by Coding Pages</a>
+        </span>
+      </p>
+    </div>
+  </div><!-- .site-info -->
+</footer>
+
+
+
+<!-- <script src="/js/tocbot.js"></script> -->
+<script type="text/javascript" src="/js/lib.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script type="text/javascript" src="/js/InsightSearch.js"></script>
+<script type="text/javascript" src="/js/jquery.fancybox.min.js"></script>
+<script type="text/javascript" src="/js/zoom.min.js"></script>
+<script type="text/javascript" src="/js/sakura-app.js"></script>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine@1.3.4/dist/Valine.min.js'></script>
+<script src="/js/botui.js"></script>
+<!-- 不蒜子 网页计数器 -->
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script> -->
+<script type="text/javascript">
+/* <![CDATA[ */
+if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+  var Poi = {"pjax":"1","movies":{"url": "https://cdn.jsdelivr.net/gh/honjun/hojun@1.2","name":"Unbroken.mp4","live":"close"},"windowheight":"fixed","codelamp":"close","ajaxurl":"","order":"asc","formpostion":"bottom"};
+} else {
+  var Poi = {"pjax":"1","movies":{"url": "https://cdn.jsdelivr.net/gh/honjun/hojun@1.2","name":"Unbroken.mp4","live":"open"},"windowheight":"auto","codelamp":"close","ajaxurl":"","order":"asc","formpostion":"bottom"};
+}
+/* ]]> */
+
+</script>
+<script>
+$(document).ready(function() {
+  if ($(".toc").length > 0 && document.body.clientWidth > 1200) {
+    if ($(".pattern-center").length > 0) { //有图的情况
+      tocbot.init({
+          // Where to render the table of contents.
+          tocSelector: '.toc', // 放置目录的容器
+          // Where to grab the headings to build the table of contents.
+          contentSelector: '.entry-content', // 正文内容所在
+          // Which headings to grab inside of the contentSelector element.
+          scrollSmooth: true,
+          headingSelector: 'h1, h2, h3, h4, h5', // 需要索引的标题级别
+          headingsOffset: -400,
+          scrollSmoothOffset: -85
+      });
+    } else {
+      tocbot.init({
+          // Where to render the table of contents.
+          tocSelector: '.toc', // 放置目录的容器
+          // Where to grab the headings to build the table of contents.
+          contentSelector: '.entry-content', // 正文内容所在
+          // Which headings to grab inside of the contentSelector element.
+          scrollSmooth: true,
+          headingSelector: 'h1, h2, h3, h4, h5', // 需要索引的标题级别
+          headingsOffset: -85,
+          scrollSmoothOffset: -85
+      });
+    }
+    var offsetTop = $('.toc').offset().top - 95;
+    window.onscroll = function() {
+      var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+      if (scrollTop >= offsetTop) {
+        $('.toc').addClass('toc-fixed');
+      } else {
+        $('.toc').removeClass('toc-fixed');
+      }
+    }
+  }
+});
+</script>
+
+    <div class="openNav no-select" style="height: 50px;">
+      <div class="iconflat no-select" style="width: 50px; height: 50px;">
+        <div class="icon"></div>
+      </div>
+      <div class="site-branding search-form-submit">
+        <i class="iconfont js-toggle-search iconsearch icon-search"></i>
+      </div>
+    </div>
+  </section>
+  <div id="mo-nav" class="">
+  <div class="m-avatar">
+    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6https://gravatar.loli.net/avatar/37019f5eb1f0b9951c06bfdc8342afd1">
+  </div>
+  <p style="text-align: center; color: #333; font-weight: 900; font-family: 'Ubuntu', sans-serif; letter-spacing: 1.5px">ウサギ没有人</p>
+  <p style="text-align: center; word-spacing: 20px;">
+    
+      
+        <a href="http://github.com/wudihechao" class="fa fa-github" target="_blank" style="color: #333; margin-left:20px"></a>
+      
+        <a href="http://weibo.com/u/1050367191" class="fa fa-weibo" target="_blank" style="color: #dd4b39; margin-left:20px"></a>
+      
+        <a href="https://wpa.qq.com/msgrd?v=3&uin=307802118&site=qq&menu=yes" class="fa fa-qq" target="_blank" style="color: #25c6fe; margin-left:20px"></a>
+      
+    
+  </p>
+  <ul id="menu-new-1" class="menu">
+    
+      <li>
+        <a href="/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-fort-awesome faa-shake" aria-hidden="true"></i>
+            首页
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/archives">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-archive faa-shake" aria-hidden="true"></i>
+            归档
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/categories/linux/">
+                  <i class="fa fa-code" aria-hidden="true"></i>
+                  linux
+                </a>
+              </li>
+            
+              <li>
+                <a href="/categories/SQL/">
+                  <i class="fa fa-book" aria-hidden="true"></i>
+                  SQLs
+                </a>
+              </li>
+            
+              <li>
+                <a href="/categories/cloud/">
+                  <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                  cloud
+                </a>
+              </li>
+            
+              <li>
+                <a href="/categories/%E6%95%85%E9%9A%9C/">
+                  <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                  故 障
+                </a>
+              </li>
+            
+              <li>
+                <a href="/categories/%E6%83%85%E6%84%9F/">
+                  <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                  情 感
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+      <li>
+        <a href="javascript:;" target="_blank" rel="noopener">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-list-ul faa-vertical" aria-hidden="true"></i>
+            清单
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/tags/%E6%82%A6%E8%AF%BB/">
+                  <i class="fa fa-th-list faa-bounce" aria-hidden="true"></i>
+                  书单
+                </a>
+              </li>
+            
+              <li>
+                <a href="/bangumi/">
+                  <i class="fa fa-film faa-vertical" aria-hidden="true"></i>
+                  番组
+                </a>
+              </li>
+            
+              <li>
+                <a href="/music/">
+                  <i class="fa fa-headphones" aria-hidden="true"></i>
+                  歌单
+                </a>
+              </li>
+            
+              <li>
+                <a href="/tags/%E5%9B%BE%E9%9B%86/">
+                  <i class="fa fa-photo" aria-hidden="true"></i>
+                  图集
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+      <li>
+        <a href="/comment/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-pencil-square-o faa-tada" aria-hidden="true"></i>
+            留言板
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/links/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-link faa-shake" aria-hidden="true"></i>
+            友人帐
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/donate/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-heart faa-pulse" aria-hidden="true"></i>
+            赞赏
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-leaf faa-wrench" aria-hidden="true"></i>
+            关于
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/about/">
+                  <i class="fa fa-meetup" aria-hidden="true"></i>
+                  我？
+                </a>
+              </li>
+            
+              <li>
+                <a href="/theme-sakura/">
+                  <i class="fa iconfont icon-sakura" aria-hidden="true"></i>
+                  主题
+                </a>
+              </li>
+            
+              <li>
+                <a href="/lab/">
+                  <i class="fa fa-cogs" aria-hidden="true"></i>
+                  Lab
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+      <li>
+        <a href="/atom.xml">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-rss faa-pulse" aria-hidden="true"></i>
+            RSS
+          </span>
+        </a>
+        
+      </li>
+    
+  </ul>
+  <p style="text-align: center; font-size: 13px; color: #b9b9b9;">&copy 2019 hexo-sakura</p>
+</div>
+<button onclick="topFunction()" class="mobile-cd-top" id="moblieGoTop" title="Go to top" style="display: none;"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<!-- require MetingJS -->
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<style>
+  .aplayer .aplayer-lrc {
+    height: 35px;
+  }
+  .aplayer .aplayer-lrc p{
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 18px !important;
+  }
+  .aplayer .aplayer-lrc p.aplayer-lrc-current{
+    color: #FF1493;
+  }
+  .aplayer.aplayer-narrow .aplayer-body{
+    left: -66px !important;
+  }
+  .aplayer.aplayer-fixed .aplayer-lrc {
+    display: none;
+  }
+  .aplayer .aplayer-lrc.aplayer-lrc-hide {
+      display:none !important;
+  }
+  .aplayer.aplayer-fixed .lrc-show {
+    display: block;
+    background: rgba(255, 255, 255, 0.8);
+  }
+</style>
+<meting-js
+
+    id="2660651585"
+
+    server="netease"
+
+    type="playlist"
+
+    fixed="true"
+
+    autoplay="false"
+
+    loop="all"
+
+    order="random"
+
+    preload="auto"
+
+    volume="0.7"
+
+    mutex="true"
+
+</meting-js>
+<script>
+  $(function(){
+    $('body').on('click', '.aplayer', function(){
+      if($('.aplayer-button').hasClass('aplayer-play')) {
+        $('.aplayer-lrc').removeClass('lrc-show');
+      } else {
+        $('.aplayer-lrc').addClass('lrc-show');
+      }
+    })
+  });
+</script>
+</body>
+</html>

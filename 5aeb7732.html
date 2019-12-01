@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  
+  <title itemprop="name">企业级应用：负载均衡层——haproxy-一 | BOHC!</title>
+  
+    <link rel="shortcut icon" href="/images/favicon.ico">
+  
+  <meta http-equiv="x-dns-prefetch-control" content="on">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+SerifMerriweather|Merriweather+Sans|Source+Code+Pro|Ubuntu:400,700|Noto+Serif+SC" media="all">
+  <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+  <link rel="stylesheet" id="saukra_css-css" href="/css/style.css" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/lib.min.css" media="all">
+  <link rel="stylesheet" href="/css/font.css" media="all">
+  <link rel="stylesheet" href="/css/insight.css" media="all">
+  <link rel="stylesheet" href="/css/jquery.fancybox.min.css" media="all">
+  <link rel="stylesheet" href="/css/zoom.css" media="all">
+  <link rel="stylesheet" type="text/css" href="/css/sharejs.css">
+<!--   <link rel="stylesheet" id="saukra_css-css" href="https://2heng.xin/wp-content/cache/autoptimize/css/autoptimize_ad42a61f4c7d4bdd9f91afcff6b5dda5.css
+" type="text/css" media="all"> -->
+  <script>
+  /*Initial Variables*/
+  var mashiro_option = new Object();
+  var mashiro_global = new Object();
+  mashiro_option.NProgressON = true;
+  /* 
+   * 邮箱信息之类的东西可以填在这里，这些js变量基本都作用于sakura-app.js
+   * 这样的设置仅是为了方便在基于PHP开发的主题中设置js变量，既然移植到了Node上，我想或许可以精简这一逻辑吧
+   */
+  mashiro_option.email_domain = "";
+  mashiro_option.email_name = "";
+  mashiro_option.cookie_version_control = "";
+  mashiro_option.qzone_autocomplete = false;
+  mashiro_option.site_name = "ウサギ没有人";
+  mashiro_option.author_name = "没有人";
+  mashiro_option.site_url = "https://wudihechao.github.io/";
+  mashiro_option.v_appId = "AVtPtVan0Ky5u33XhUzJlFKp-gzGzoHsz";
+  mashiro_option.v_appKey = "nx3XTnRJmaMQR3aLWYiigkgJ";
+  mashiro_option.mathjax = "0";
+  mashiro_option.qq_api_url = "https://api.mashiro.top/qqinfo/"; 
+  mashiro_option.qq_avatar_api_url = "https://api.mashiro.top/qqinfo/";
+
+  // mashiro_option.jsdelivr_css_src = "https://cdn.jsdelivr.net/gh/moezx/cdn@3.4.5/css/lib.min.css";
+  // mashiro_option.float_player_on = true;
+
+  /*End of Initial Variables*/
+  </script>
+  <script type="text/javascript">
+  var bg = "https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(1).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(2).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(3).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(4).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(5).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(6).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(7).jpg.webp,https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(8).jpg.webp".split(",");
+  var bgindex = Math.floor(Math.random()*bg.length);
+  if (!!window.ActiveXObject || "ActiveXObject" in window) { //is IE?
+    alert('朋友，IE浏览器未适配哦~');
+  }
+  </script>
+  <style type="text/css">
+  .hljs-ln{border-collapse:collapse}.hljs-ln td{padding:0}.hljs-ln-n:before{content:attr(data-line-number)}
+  </style>
+  <style type="text/css">.site-top .lower nav{display:block !important;}.author-profile i,.post-like a,.post-share .show-share,.sub-text,.we-info a,span.sitename,.post-more i:hover,#pagination a:hover,.post-content a:hover,.float-content i:hover{color:#FE9600}.feature i,.download,.navigator i:hover,.links ul li:before,.ar-time i,span.ar-circle,.object,.comment .comment-reply-link,.siren-checkbox-radio:checked + .siren-checkbox-radioInput:after{background:#FE9600}::-webkit-scrollbar-thumb{background:#FE9600}.download,.navigator i:hover,.link-title,.links ul li:hover,#pagination a:hover,.comment-respond input[type='submit']:hover{border-color:#FE9600}.entry-content a:hover,.site-info a:hover,.comment h4 a,#comments-navi a.prev,#comments-navi a.next,.comment h4 a:hover,.site-top ul li a:hover,.entry-title a:hover,#archives-temp h3,span.page-numbers.current,.sorry li a:hover,.site-title a:hover,i.iconfont.js-toggle-search.iconsearch:hover,.comment-respond input[type='submit']:hover{color:#FE9600}.comments .comments-main{display:block !important;}.comments .comments-hidden{display:none !important;}background-position:center center;background-attachment:inherit;}
+  </style>
+</head>
+
+<body class="page-template page-template-user page-template-page-analytics page-template-userpage-analytics-php page page-id-1297 chinese-font serif isWebKit">
+  <div class="scrollbar" id="bar">
+  </div>
+  <a href="#" class="cd-top faa-float animated"></a>
+  <section id="main-container">
+    <div class="headertop filter-dot">
+  <div id="banner_wave_1"></div>
+  <div id="banner_wave_2"></div>
+  <figure id="centerbg" class="centerbg">
+    <div class="focusinfo no-select">
+      <div class="header-tou">
+        <a href="https://wudihechao.github.io/">
+          <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6https://gravatar.loli.net/avatar/37019f5eb1f0b9951c06bfdc8342afd1">
+        </a>
+      </div>
+      <div class="header-info">
+        <p>自分にとして優しさは、貴方にとは辛いなんて、そんなの</p>
+        <div class="top-social_v2">
+          <li id="bg-pre">
+            <img class="flipx" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/next-b.svg">
+          </li>
+          
+            
+              
+                <li>
+                  <a href="http://github.com/wudihechao" target="_blank" class="social-github" title="github">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/github.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="http://weibo.com/u/1050367191" target="_blank" class="social-github" title="sina">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/sina.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="http://weibo.com/mashirozx?is_all=1" target="_blank" class="social-github" title="zhihu">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/zhihu.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li>
+                  <a href="" target="_blank" class="social-github" title="email">
+                    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/social/email.svg">
+                  </a>
+                </li>
+              
+            
+          
+          <li id="bg-next">
+            <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/next-b.svg">
+          </li>
+        </div>
+      </div>
+    </div>
+  </figure>
+  <div id="video-container" style="">
+    <video style="object-fit: fill" id="bgvideo" class="video" video-name="" src="" width="auto" preload="auto">
+    </video>
+    <div id="video-btn" class="loadvideo videolive">
+    </div>
+    <div id="video-add">
+    </div>
+    <div class="video-stu">
+    </div>
+  </div>
+  <div class="headertop-down faa-float animated" onclick="headertop_down()">
+    <span>
+      <i class="fa fa-chevron-down" aria-hidden="true">
+      </i>
+    </span>
+  </div>
+</div>
+    <div id="page" class="site wrapper">
+      <header class="site-header no-select gizle sabit" role="banner">
+  <div class="site-top">
+    <div class="site-branding">
+      <span class="site-title">
+        <span class="logolink moe-mashiro">
+          <a href="/">
+            <span class="sakurasono">ウサギ</span>
+            <span class="shironeko">没有人</span>
+          </a>
+        </span>
+      </span>
+    </div>
+    <div class="searchbox search-form-submit">
+      <i class="iconfont js-toggle-search iconsearch icon-search">
+      </i>
+    </div>
+    <div id="show-nav" class="showNav mobile-fit">
+      <div class="line line1">
+      </div>
+      <div class="line line2">
+      </div>
+      <div class="line line3">
+      </div>
+    </div>
+    <div class="lower-cantiner">
+      <div class="lower">
+        <nav class="mobile-fit-control hide">
+          <ul id="menu-new" class="menu">
+            
+              <li>
+                <a href="/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-fort-awesome faa-shake" aria-hidden="true"></i>
+                    首页
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-archive faa-shake" aria-hidden="true"></i>
+                    归档
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/categories/linux/">
+                          <i class="fa fa-code" aria-hidden="true"></i>
+                          linux
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/categories/SQL/">
+                          <i class="fa fa-book" aria-hidden="true"></i>
+                          SQLs
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/categories/cloud/">
+                          <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                          cloud
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/categories/%E6%95%85%E9%9A%9C/">
+                          <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                          故 障
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/categories/%E6%83%85%E6%84%9F/">
+                          <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                          情 感
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+              <li>
+                <a href="javascript:;" target="_blank" rel="noopener">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-list-ul faa-vertical" aria-hidden="true"></i>
+                    清单
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/tags/%E6%82%A6%E8%AF%BB/">
+                          <i class="fa fa-th-list faa-bounce" aria-hidden="true"></i>
+                          书单
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/bangumi/">
+                          <i class="fa fa-film faa-vertical" aria-hidden="true"></i>
+                          番组
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/music/">
+                          <i class="fa fa-headphones" aria-hidden="true"></i>
+                          歌单
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/tags/%E5%9B%BE%E9%9B%86/">
+                          <i class="fa fa-photo" aria-hidden="true"></i>
+                          图集
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+              <li>
+                <a href="/comment/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-pencil-square-o faa-tada" aria-hidden="true"></i>
+                    留言板
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/links/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-link faa-shake" aria-hidden="true"></i>
+                    友人帐
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/donate/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-heart faa-pulse" aria-hidden="true"></i>
+                    赞赏
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-leaf faa-wrench" aria-hidden="true"></i>
+                    关于
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/about/">
+                          <i class="fa fa-meetup" aria-hidden="true"></i>
+                          我？
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/theme-sakura/">
+                          <i class="fa iconfont icon-sakura" aria-hidden="true"></i>
+                          主题
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/lab/">
+                          <i class="fa fa-cogs" aria-hidden="true"></i>
+                          Lab
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+              <li>
+                <a href="/atom.xml">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-rss faa-pulse" aria-hidden="true"></i>
+                    RSS
+                  </span>
+                </a>
+                
+              </li>
+            
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <link rel="stylesheet" type="text/css" href="/css/sharejs.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+<div class="pattern-center-blank"></div>
+
+<div id="content" class="site-content">
+  <div id="primary" class="content-area">
+    <main id="main" class="site-main" role="main">
+      <article id="post-1" class="post-1 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
+        <div class="toc"></div>
+        <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
+        
+          <header class="entry-header">
+            <h1 class="entry-title">企业级应用：负载均衡层——haproxy-一</h1>
+            <p class="entry-census">hechao&nbsp;·&nbsp;2019-11-4&nbsp;·&nbsp;<span id="busuanzi_value_page_pv"></span>次阅读</p></p>
+
+            <hr>
+          </header>
+        
+        <div class="entry-content">
+          <p>&emsp;&emsp;HAProxy是法国开发者 威利塔罗(Willy Tarreau) 在2000年使用C语言开发的一个开源软件，是一款具备高并发(一万以上)、高性能的TCP&gt;和HTTP负载均衡器，支持基于cookie的持久性，自动故障切换，支持正则表达式及web状态统计。<br>&emsp;&emsp;HAProxy特别适用于那些负载特大的web站点，这些站点通常又需要会话保持或七层处理。HAProxy运行在当前的硬件上，完全可以支持数以万计的并发连接。并且它的运行模式使得它可以很简单安全的整合进您当前的架构中， 同时可以保护你的web服务器不被暴露到网络上。<br>&emsp;&emsp;包括 GitHub、Bitbucket、Stack Overflow、Reddit、Tumblr、Twitter和 Tuenti[7]在内的知名网站，及亚马逊网络服务系统都使用了HAProxy。</p>
+<a id="more"></a>
+<h3 id="HAProxy功能"><a href="#HAProxy功能" class="headerlink" title="HAProxy功能"></a>HAProxy功能</h3><h4 id="HAProxy功能："><a href="#HAProxy功能：" class="headerlink" title="HAProxy功能："></a>HAProxy功能：</h4><ul>
+<li>TCP和HTTP反向代理</li>
+<li>SSL/TSL服务器</li>
+<li>可以针对HTTP请求添加cookie，进行路由后端服务器</li>
+<li>可平衡负载至后端服务器，并支持持久连接</li>
+<li>支持所有主服务器故障切换至备用服务器</li>
+<li>支持专用端口实现监控服务</li>
+<li>支持不影响现有连接情况下停止接受新连接请求</li>
+<li>可以在双向添加，修改或删除HTTP报文首部</li>
+<li>响应报文压缩</li>
+<li>支持基于pattern实现连接请求的访问控制</li>
+<li>通过特定的URI为授权用户提供详细的状态信息</li>
+</ul>
+<h4 id="不具备的功能："><a href="#不具备的功能：" class="headerlink" title="不具备的功能："></a>不具备的功能：</h4><ul>
+<li>正向代理–squid，nginx</li>
+<li>缓存代理–varnish</li>
+<li>web服务–nginx、tengine、apache、php、tomcat</li>
+<li>UDP–目前不支持UDP协议，2.1版本会支持UDP协议代理</li>
+<li>单机性能–LVS</li>
+</ul>
+<h3 id="HAProxy安装"><a href="#HAProxy安装" class="headerlink" title="HAProxy安装"></a>HAProxy安装</h3><p>&emsp;&emsp;HAProxy 支持基于lua实现功能扩展，lua是一种小巧的脚本语言，于1993年由巴西里约热内卢天主教大学（Pontifical Catholic University of Rio de Janeiro）里的一个研究小组开发，其设计目的是为了嵌入应用程序中，从而为应用程序提供灵活的扩展和定制功能。<br>&emsp;&emsp;由于centos自带的lua版本比较低并不符合HAProxy要求的lua最低版本(5.3)的要求，因此需要编译安装较新版本的lua环境，然后才能编译安装HAProxy。</p>
+<h4 id="安装lua环境"><a href="#安装lua环境" class="headerlink" title="安装lua环境"></a>安装lua环境</h4><p>&emsp;&emsp;配置lua环境</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">yum <span class="keyword">install</span> libtermcap-devel ncurses-devel libevent-devel readline-devel gcc make</span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;下载lua源码tar包</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">wget http:<span class="regexp">//</span>www.lua.org<span class="regexp">/ftp/</span>lua-<span class="number">5.3</span>.<span class="number">5</span>.tar.gz</span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;编译安装lua</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">tar</span> <span class="selector-tag">xvf</span> <span class="selector-tag">lua-5</span><span class="selector-class">.3</span><span class="selector-class">.5</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">cd</span> <span class="selector-tag">lua-5</span><span class="selector-class">.3</span><span class="selector-class">.5</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">make</span> <span class="selector-tag">linux</span> <span class="selector-tag">test</span></span></pre></td></tr></table></figure>
+<h4 id="安装HAProxy"><a href="#安装HAProxy" class="headerlink" title="安装HAProxy"></a>安装HAProxy</h4><p>&emsp;&emsp;下载haproxy源码包</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">wget http:<span class="regexp">//</span>www.haproxy.org<span class="regexp">/download/</span><span class="number">2.0</span><span class="regexp">/src/</span>haproxy-<span class="number">2.0</span>.<span class="number">8</span>.tar.gz</span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;安装依赖包</p>
+<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment">yum</span> <span class="comment">install</span> <span class="comment">gcc</span> <span class="comment">gcc</span><span class="literal">-</span><span class="comment">c</span>++ <span class="comment">glibc</span> <span class="comment">glibc</span><span class="literal">-</span><span class="comment">devel</span> <span class="comment">pcre</span> <span class="comment">pcre</span><span class="literal">-</span><span class="comment">devel</span> <span class="comment">openssl</span> <span class="comment">openssl</span><span class="literal">-</span><span class="comment">devel</span> <span class="comment">systemd</span><span class="literal">-</span><span class="comment">devel</span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;（附加工具包<code>net-tools vim iotop bc zip unzip zlib-devel lrzsz tree screen lsof tcpdump wget ntpdate</code>）<br>&emsp;&emsp;编译安装haproxy<br>&emsp;&emsp;<code>cd haproxy-2.0.8</code><br>&emsp;&emsp;HAProxy 1.8及1.9版本编译参数：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">make <span class="attribute">ARCH</span>=x86_64 \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="attribute">TARGET</span>=linux2628 \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="attribute">USE_PCRE</span>=1 \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="attribute">USE_OPENSSL</span>=1 \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="attribute">USE_ZLIB</span>=1 \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="attribute">USE_SYSTEMD</span>=1 \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="attribute">USE_CPU_AFFINITY</span>=1 \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="attribute">PREFIX</span>=/apps/haproxy</span></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;HAProxy 2.0编译参数：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">make <span class="attribute">ARCH</span>=x86_64 \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="attribute">TARGET</span>=linux-glibc <span class="attribute">USE_PCRE</span>=1 \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="attribute">USE_OPENSSL</span>=1 \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="attribute">USE_ZLIB</span>=1 \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="attribute">USE_SYSTEMD</span>=1 \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="attribute">USE_CPU_AFFINITY</span>=1 \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="attribute">USE_LUA</span>=1 \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="attribute">LUA_INC</span>=/data/tar/lua-5.3.5/src/ \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="attribute">LUA_LIB</span>=/data/tar/lua-5.3.5/src/ \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="attribute">PREFIX</span>=/apps/haproxy</span></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">make install PREFIX=<span class="regexp">/apps/</span>haproxy</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">cp haproxy <span class="regexp">/usr/</span>sbin<span class="regexp">/</span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;haproxy启动脚本<br>&emsp;&emsp;<code>vim /usr/lib/systemd/system/haproxy.service</code></p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">[Unit]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">Description=HAProxy Load Balancer</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">After=syslog.target network.target</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">[Service]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">ExecStartPre=<span class="regexp">/usr/sbin</span><span class="regexp">/haproxy -f /etc</span><span class="regexp">/haproxy/haproxy</span>.cfg -c -q</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">ExecStart=<span class="regexp">/usr/sbin</span><span class="regexp">/haproxy -Ws -f /etc</span><span class="regexp">/haproxy/haproxy</span>.cfg -p /var/<span class="class"><span class="keyword">lib</span>/<span class="title">haproxy</span>/<span class="title">haproxy</span>.<span class="title">pid</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">ExecReload=<span class="regexp">/bin/kill</span> -USR2 $MAINPID</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">[Install]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">WantedBy=multi-user.target\</span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;haproxy配置文件(基本配置文件)<br>&emsp;&emsp;<code>mkdir /etc/haproxy</code><br>&emsp;&emsp;<code>vim /etc/haproxy/haproxy.cfg</code></p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">global</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    chroot /apps/haproxy   #锁定运行目录</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    stats socket /var/lib/haproxy/haproxy.sock mode 600 level admin   #socket文件</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    uid 99       #运行haproxy的用户身份，也可设user，group</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    gid 99</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    daemon    #以守护进程运行</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="comment">#    nbproc 4    #指定每个haproxy进程开启的线程数，默认为每个进程一个线程</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="comment">#    cpu-map 1 0    #绑定haproxy 进程至指定CPU</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="comment">#    cpu-map 2 1</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="comment">#    cpu-map 3 2</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"><span class="comment">#    cpu-map 4 3</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">maxconn 100000   #每个haproxy进程的最大并发连接数</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line"><span class="comment">#maxsslconn          #每个haproxy进程ssl最大连接数,用于haproxy配置了证书的场景下</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line"><span class="comment">#spread-checks      #后端server状态check随机提前或延迟百分比时间，建议2-5(20%-50%)之间</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">pidfile /var/lib/haproxy/haproxy.pid</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">log 127.0.0.1 local3 <span class="builtin-name">info</span>   #定义全局的syslog服务器；最多可以定义两个</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">defaults</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">    option http-keep-alive</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">    option forwardfor</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">    maxconn 100000</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">    mode http</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">    timeout connect 300000ms</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">    timeout<span class="built_in"> client </span>300000ms</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line">    timeout<span class="built_in"> server </span>300000ms</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">28</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">29</span></pre></td><td class="code"><pre><span class="line">listen stats</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">30</span></pre></td><td class="code"><pre><span class="line">    mode http</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">31</span></pre></td><td class="code"><pre><span class="line">    bind 0.0.0.0:9999</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">32</span></pre></td><td class="code"><pre><span class="line">    stats enable</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">33</span></pre></td><td class="code"><pre><span class="line">    log global</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">34</span></pre></td><td class="code"><pre><span class="line">    stats uri /haproxy-status</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">35</span></pre></td><td class="code"><pre><span class="line">    stats auth haadmin:q1w2e3r4ys</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">36</span></pre></td><td class="code"><pre><span class="line">listen web_port</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">37</span></pre></td><td class="code"><pre><span class="line">    bind 192.168.32.84:80</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">38</span></pre></td><td class="code"><pre><span class="line">    mode http</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">39</span></pre></td><td class="code"><pre><span class="line">    log global</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">40</span></pre></td><td class="code"><pre><span class="line">   <span class="built_in"> server </span>web1 127.0.0.1:8080 check inter 3000 fall 2 rise 5</span></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;设置haproxypid及socket创建权限<br>&emsp;&emsp;<code>useradd -s /sbin/nologin -r -u 99 haproxy</code><br>&emsp;&emsp;<code>mkdir /var/lib/haproxy</code><br>&emsp;&emsp;<code>chown 99.99 /var/lib/haproxy/ -R</code></p>
+<p>&emsp;&emsp;至此，才完成haproxy的安装与配置,启动并查看haproxy的状态是否正常吧。<br>&emsp;&emsp;<code>systemctl enable --now haproxy</code><br>&emsp;&emsp;<code>systemctl status haproxy</code></p>
+<h3 id="配置web均衡"><a href="#配置web均衡" class="headerlink" title="配置web均衡"></a>配置web均衡</h3><p>&emsp;&emsp;haproxy最主要的功能就是为后端服务器做反向代理，例如我们要为后面的四个web服务器做反向代理，配置文件如下：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">global</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    maxconn <span class="number">100000</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    chroot /apps/haproxy</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    stats socket /var/lib/haproxy/haproxy.sock1 mode <span class="number">600</span> level admin process <span class="number">1</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    stats socket /var/lib/haproxy/haproxy.sock2 mode <span class="number">600</span> level admin process <span class="number">2</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    uid <span class="number">99</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    gid <span class="number">99</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    daemon</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    nbproc <span class="number">2</span>       #指定每个haproxy进程开启的线程数，默认为每个进程一个线程</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    cpu-map <span class="number">1</span> <span class="number">0</span>    #cpu工作线程绑定</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    cpu-map <span class="number">2</span> <span class="number">1</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">#    cpu-map <span class="number">3</span> <span class="number">2</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">#    cpu-map <span class="number">4</span> <span class="number">3</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">    pidfile /var/lib/haproxy/haproxy.pid</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">    log <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> local3 info</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">defaults</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">    option redispatch      #当server Id对应的服务器挂掉后，强制定向到其他健康的服务器</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">    option abortonclose    #当服务器负载很高的时候，自动结束掉当前队列处理比较久的链接</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">    option http-keep-alive #开启与客户端的会话保持</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">    option  forwardfor     #透传客户端真实IP至后端web服务器</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">    mode http #默认工作类型</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">    timeout connect <span class="number">600</span>s  #客户端请求到后端server的最长连接等待时间(TCP之前)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">    timeout server  <span class="number">600</span>s  #客户端请求到后端服务端的超时超时时长（TCP之后）</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">    timeout client  <span class="number">600</span>s  #与客户端的最长非活动时间</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">    timeout http-keep-alive <span class="number">120</span>s #session会话保持超时时间，范围内会转发到相同的后端服务器</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line">    timeout  check   <span class="number">50</span>s   #对后端服务器的检测超时时间option http-keep-alive</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">28</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">29</span></pre></td><td class="code"><pre><span class="line">#frontend WEB_PORT_80</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">30</span></pre></td><td class="code"><pre><span class="line">#    bind <span class="number">192.168</span><span class="number">.32</span><span class="number">.84</span>:<span class="number">80</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">31</span></pre></td><td class="code"><pre><span class="line">#    mode http</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">32</span></pre></td><td class="code"><pre><span class="line">#    use_backend web_prot_http_nodes</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">33</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">34</span></pre></td><td class="code"><pre><span class="line">#backend web_prot_http_nodes</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">35</span></pre></td><td class="code"><pre><span class="line">#    mode http</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">36</span></pre></td><td class="code"><pre><span class="line">#    option forwardfor</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">37</span></pre></td><td class="code"><pre><span class="line">#    balance static-rr</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">38</span></pre></td><td class="code"><pre><span class="line">#    server web0 <span class="number">192.168</span><span class="number">.32</span><span class="number">.8</span>:<span class="number">80</span> check <span class="built_in">int</span>er <span class="number">3000</span> fall <span class="number">3</span> rise <span class="number">5</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">39</span></pre></td><td class="code"><pre><span class="line">#    server web3 <span class="number">192.168</span><span class="number">.32</span><span class="number">.83</span>:<span class="number">80</span> check <span class="built_in">int</span>er <span class="number">3000</span> fall <span class="number">3</span> rise <span class="number">5</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">40</span></pre></td><td class="code"><pre><span class="line">#    server web2 <span class="number">192.168</span><span class="number">.32</span><span class="number">.82</span>:<span class="number">80</span> check <span class="built_in">int</span>er <span class="number">3000</span> fall <span class="number">3</span> rise <span class="number">5</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">41</span></pre></td><td class="code"><pre><span class="line">#    server web1 <span class="number">192.168</span><span class="number">.32</span><span class="number">.81</span>:<span class="number">80</span> check <span class="built_in">int</span>er <span class="number">3000</span> fall <span class="number">3</span> rise <span class="number">5</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">42</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">43</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">44</span></pre></td><td class="code"><pre><span class="line">listen stats</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">45</span></pre></td><td class="code"><pre><span class="line">    bind <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>:<span class="number">9999</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">46</span></pre></td><td class="code"><pre><span class="line">    mode http</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">47</span></pre></td><td class="code"><pre><span class="line">    stats enable</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">48</span></pre></td><td class="code"><pre><span class="line">    log global</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">49</span></pre></td><td class="code"><pre><span class="line">    stats uri /proxy_status         #进入后台状态页url路径</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">50</span></pre></td><td class="code"><pre><span class="line">    stats auth haadmin:hapasswd     #进入后台的账号密码</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">51</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">52</span></pre></td><td class="code"><pre><span class="line">listen web_host       #使用listen替换frontend+backend的配置方式</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">53</span></pre></td><td class="code"><pre><span class="line">    bind <span class="number">192.168</span><span class="number">.32</span><span class="number">.84</span>:<span class="number">80</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">54</span></pre></td><td class="code"><pre><span class="line">    mode http</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">55</span></pre></td><td class="code"><pre><span class="line">    log global</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">56</span></pre></td><td class="code"><pre><span class="line">    balance roundrobin  #定义调度算法为roundrobin</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">57</span></pre></td><td class="code"><pre><span class="line">    server web0 <span class="number">192.168</span><span class="number">.32</span><span class="number">.8</span>:<span class="number">80</span> weight <span class="number">1</span> check  addr <span class="number">192.168</span><span class="number">.32</span><span class="number">.8</span> port <span class="number">9000</span> <span class="built_in">int</span>er <span class="number">3000</span> fall <span class="number">2</span> rise <span class="number">5</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">58</span></pre></td><td class="code"><pre><span class="line">    server web1 <span class="number">192.168</span><span class="number">.32</span><span class="number">.81</span>:<span class="number">80</span> weight <span class="number">1</span> check addr <span class="number">192.168</span><span class="number">.32</span><span class="number">.81</span> port <span class="number">9000</span> <span class="built_in">int</span>er <span class="number">3000</span> fall <span class="number">2</span> rise <span class="number">5</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">59</span></pre></td><td class="code"><pre><span class="line">    server web2 <span class="number">192.168</span><span class="number">.32</span><span class="number">.82</span>:<span class="number">80</span> weight <span class="number">1</span> check addr <span class="number">192.168</span><span class="number">.32</span><span class="number">.82</span> port <span class="number">9000</span> <span class="built_in">int</span>er <span class="number">3000</span> fall <span class="number">2</span> rise <span class="number">5</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">60</span></pre></td><td class="code"><pre><span class="line">    server web3 <span class="number">192.168</span><span class="number">.32</span><span class="number">.83</span>:<span class="number">80</span> weight <span class="number">1</span> check addr <span class="number">192.168</span><span class="number">.32</span><span class="number">.83</span> port <span class="number">9000</span> <span class="built_in">int</span>er <span class="number">3000</span> fall <span class="number">2</span> rise <span class="number">5</span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;重启服务<code>systemctl restart haproxy</code>,便可登陆本机的状态页(haadmin:hapasswd)查看后端服务器状态。</p>
+<p><img src="https://img-blog.csdnimg.cn/20191104184953377.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;刷新几次可以看到，不同pid也就是不同线程提供的status页面。<br><img src="https://img-blog.csdnimg.cn/20191104185004804.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h4 id="配置详解"><a href="#配置详解" class="headerlink" title="配置详解"></a>配置详解</h4><h5 id="globe-全局配置段"><a href="#globe-全局配置段" class="headerlink" title="globe 全局配置段"></a>globe 全局配置段</h5><figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">进程及安全配置相关的参数</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">性能调整相关参数</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">Debug</span>参数</span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;全局配置一般大多类似不用多说，须注意的是nbproc若开启多线程，socket设置最好也分开设置，最好每个线程用process #指定固定的socket，方便后期用命令行socat工具管理(<code>echo &quot;disable server web_host/web1&quot; | socat stdio /var/lib/haproxy/haproxy.sock2</code>)，例如：</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">global</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">maxconn <span class="number">100000</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">chroot /apps/haproxy</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">stats socket /var/<span class="class"><span class="keyword">lib</span>/<span class="title">haproxy</span>/<span class="title">haproxy</span>.<span class="title">sock1</span> <span class="title">mode</span> 600 <span class="title">level</span> <span class="title">admin</span> <span class="title">process</span> 1</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">stats socket /var/<span class="class"><span class="keyword">lib</span>/<span class="title">haproxy</span>/<span class="title">haproxy</span>.<span class="title">sock2</span> <span class="title">mode</span> 600 <span class="title">level</span> <span class="title">admin</span> <span class="title">process</span> 2</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">uid <span class="number">99</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">gid <span class="number">99</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">daemon</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">nbproc <span class="number">2</span>       <span class="comment">#指定每个haproxy进程开启的线程数，默认为每个进程一个线程</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">cpu-map <span class="number">1</span> <span class="number">0</span>    <span class="comment">#cpu工作线程绑定</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">cpu-map <span class="number">2</span> <span class="number">1</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">pidfile /var/<span class="class"><span class="keyword">lib</span>/<span class="title">haproxy</span>/<span class="title">haproxy</span>.<span class="title">pid</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">log <span class="number">127.0</span>.<span class="number">0.1</span> local3 info</span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;其他详细信息参见官方文档：<a href="https://cbonte.github.io/haproxy-dconv/2.0/intro.html" target="_blank" rel="noopener">https://cbonte.github.io/haproxy-dconv/2.0/intro.html</a></p>
+<h5 id="proxies：代理配置段"><a href="#proxies：代理配置段" class="headerlink" title="proxies：代理配置段"></a>proxies：代理配置段</h5><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">defaults [<span class="variable">&amp;ltname</span><span class="variable">&amp;gt</span>]  <span class="meta">#默认配置项，针对以下的frontend、backend和lsiten生效，可以多个name</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">frontend <span class="variable">&amp;ltname</span><span class="variable">&amp;gt</span>  <span class="meta">#前端servername，类似于Nginx的一个虚拟主机 server。</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">backend <span class="variable">&amp;ltname</span><span class="variable">&amp;gt</span>  <span class="meta">#后端服务器组，等于nginx的upstream</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">listen <span class="variable">&amp;ltname</span><span class="variable">&amp;gt</span>  <span class="meta">#将frontend和backend合并在一起配置</span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;注：name字段只能使用”-”、”_”、”.”、和”:”，并且严格区分大小写，例如：Web和web是完全不同的两组服务器。</p>
+<ul>
+<li><strong>defaults</strong></li>
+</ul>
+<p><strong>option redispatch</strong> #当server Id对应的服务器挂掉后，强制定向到其他健康的服务器<br><strong>option abortonclose</strong> #当服务器负载很高的时候，自动结束掉当前队列处理比较久的链接<br><strong>option http-keep-alive</strong> #开启与客户端的会话保持<br><strong>option forwardfor</strong> #透传客户端真实IP至后端web服务器<br><strong>mode http</strong> #默认工作类型<br>timeout connect 120s #客户端请求到后端server的最长连接等待时间(TCP之前)<br>timeout server 600s #客户端请求到后端服务端的超时超时时长（TCP之后）<br>timeout client 600s #与客户端的最长非活动时间<br>timeout http-keep-alive 120s #session 会话保持超时时间，范围内会转发到相同的后端服务器<br>timeout check 5s #对后端服务器的检测超时时间</p>
+<ul>
+<li><strong>frontend</strong></li>
+</ul>
+<p><strong>bind</strong>：指定HAProxy的监听地址，可以是IPV4或IPV6，可以同时监听多个IP或端口，可同时用于listen字段中</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">bind [<span class="variable">&amp;ltaddress</span><span class="variable">&amp;gt</span>]:<span class="variable">&amp;ltport_range</span><span class="variable">&amp;gt</span> [, ...] [param*]</span></pre></td></tr></table></figure>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">listen http_proxy #监听http的多个IP的多个端口和sock文件</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    bind :<span class="number">80</span>,:<span class="number">443</span>,:<span class="number">8801</span><span class="number">-8810</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    bind <span class="number">10.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">10080</span>,<span class="number">10.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">10443</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    bind /var/run/ssl-frontend.sock user root mode <span class="number">600</span> accept-proxy</span></pre></td></tr></table></figure>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">listen</span> http_https_proxy <span class="comment">#https监听</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">bind</span> :<span class="number">80</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">bind</span> :<span class="number">443</span> ssl crt /etc/haproxy/site.pem</span></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">listen http_https_proxy_explicit #监听ipv6、ipv4和unix sock文件</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    bind ipv6@:80</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    bind ipv4@public_ssl:443 ssl crt /etc/haproxy/site.pem</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    bind unix@ssl-frontend.sock<span class="built_in"> user </span>root mode 600 accept-proxy</span></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">listen external_bind_app1 <span class="comment">#监听file descriptor</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="built_in">bind</span> <span class="string">"fd@<span class="variable">$&#123;FD_APP1&#125;</span>"</span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;<strong>企业生产示例：</strong></p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">frontend WEB_PORT</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    bind :<span class="number">80</span>,:<span class="number">8080</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    bind <span class="number">192.168</span><span class="number">.7</span><span class="number">.102</span>:<span class="number">10080</span>,:<span class="number">8801</span><span class="number">-8810</span>,<span class="number">192.168</span><span class="number">.7</span><span class="number">.101</span>:<span class="number">9001</span><span class="number">-9010</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    mode http/tcp #指定负载协议类型</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    use_backend backend_name #调用的后端服务器组名称</span></pre></td></tr></table></figure>
+<ul>
+<li><strong>backend</strong><br>定义一组后端服务器，backend服务器将被frontend进行调用。<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">mode http/tcp #指定负载协议类型</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">option #配置选项</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">server #定义后端real server</span></pre></td></tr></table></figure>
+&emsp;&emsp;注意：<strong>mode要与frontend一致</strong>。option后面加httpchk，smtpchk,mysql-check,pgsql-check，ssl-hello-chk方法，可用于实现更多应用层检测功能。<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">check</span> <span class="comment">#对指定real进行健康状态检查，默认不开启</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    addr IP <span class="comment">#可指定的健康状态监测IP</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    port <span class="keyword">num</span> <span class="comment">#指定的健康状态监测端口</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    inter <span class="keyword">num</span> <span class="comment">#健康状态检查间隔时间，默认2000 ms</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    fall <span class="keyword">num</span> <span class="comment">#后端服务器失效检查次数，默认为3</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    rise <span class="keyword">num</span> <span class="comment">#后端服务器从下线恢复检查次数，默认为2</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">weight <span class="comment">#默认为1，最大值为256，0表示不参与负载均衡</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">backup</span> <span class="comment">#将后端服务器标记为备份状态</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">disabled <span class="comment">#将后端服务器标记为不可用状态</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">redirect prefix <span class="keyword">http</span>://www.example.net/ <span class="comment">#将请求临时重定向至其它URL，只适用于http模式</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">maxconn &amp;ltmaxconn&amp;gt：当前后端<span class="keyword">server</span>的最大并发连接数</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">backlog &amp;ltbacklog&amp;gt：当<span class="keyword">server</span>的连接数达到上限后的后援队列长度</span></pre></td></tr></table></figure>
+&emsp;&emsp;<strong>frontend+backend配置实例：</strong><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">#官网业务访问入口======================================</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">frontend WEB_PORT_80</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    bind <span class="number">192.168</span><span class="number">.7</span><span class="number">.248</span>:<span class="number">80</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    mode http</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    use_backend web_prot_http_nodes</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">backend web_prot_http_nodes</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    mode http</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    option forwardfor</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    server <span class="number">192.168</span><span class="number">.7</span><span class="number">.101</span> <span class="number">192.168</span><span class="number">.7</span><span class="number">.101</span>:<span class="number">8080</span> check <span class="built_in">int</span>er <span class="number">3000</span> fall <span class="number">3</span> rise <span class="number">5</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    server <span class="number">192.168</span><span class="number">.7</span><span class="number">.102</span> <span class="number">192.168</span><span class="number">.7</span><span class="number">.102</span>:<span class="number">8080</span> check <span class="built_in">int</span>er <span class="number">3000</span> fall <span class="number">3</span> rise <span class="number">5</span></span></pre></td></tr></table></figure></li>
+<li><strong>listen</strong><br>listen相当于frontend+backend的结合，即定义前端监听代理，又定义了后端服务器，例如上面的frontend+backend组合可用下面这种listen方式代替：<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment">#官网业务访问入口=====================================</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">listen WEB_PORT_80</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    bind 192.168.7.102:80</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    mode http</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    option forwardfor</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">   <span class="built_in"> server </span>web1 192.168.7.101:80 check inter 3000 fall 3 rise 5</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">   <span class="built_in"> server </span>web2 192.168.7.101:80 check inter 3000 fall 3 rise 5</span></pre></td></tr></table></figure>
+<h3 id="haproxy调度算法"><a href="#haproxy调度算法" class="headerlink" title="haproxy调度算法"></a>haproxy调度算法</h3>&emsp;&emsp;HAProxy通过固定参数balance指明对后端服务器的调度算法，该参数可以配置在<strong>listen或backend选项中</strong>。<br>&emsp;&emsp;HAProxy的调度算法分为静态和动态调度算法，但是有些算法可以根据参数在静态和动态算法中相互转换。<h4 id="静态算法"><a href="#静态算法" class="headerlink" title="静态算法"></a>静态算法</h4></li>
+<li>static-rr<br>基于权重的轮询调度，不支持权重的运行时调整及后端服务器慢启动，其后端主机数量没有限制</li>
+<li>first<br>根据服务器在列表中的位置，自上而下进行调度，但是其只会当第一台服务器的连接数达到上限，新请求才会分配给下一台服务，因此会忽略服务器的权重设置。（生产不常用）</li>
+</ul>
+<h4 id="动态算法"><a href="#动态算法" class="headerlink" title="动态算法"></a>动态算法</h4><ul>
+<li>roundrobin<br>基于权重的轮询动态调度算法，支持权重的运行时调整，不完全等于lvs中的rr轮训模式，HAProxy中的roundrobin支持慢启动(新加的服务器会逐渐增加转发数)，其每个后端backend中最多支持4095个real server，roundrobin为<strong>默认调度算法</strong>，且支持对real server权重动态调整。</li>
+<li>leastconn<br>加权的最少连接的动态，支持权重的运行时调整和慢启动，即当前后端服务器连接最少的优先调度(新客户端连接)，比较适合长连接的场景使用，比如MySQL等场景。</li>
+</ul>
+<h4 id="其他算法"><a href="#其他算法" class="headerlink" title="其他算法"></a>其他算法</h4><h5 id="source"><a href="#source" class="headerlink" title="source"></a>source</h5><p>&emsp;&emsp;源地址hash，基于用户源地址hash并将请求转发到后端服务器，默认为静态即取模方式，但是可以通过hash-type支持的选项更改，后续同一个源地址请求将被转发至同一个后端web服务器，比较适用于session保持/缓存业务等场景。<br>&emsp;&emsp;源地址有两种转发客户端请求到后端服务器的服务器选取计算方式，分别是取模法和一致性hash</p>
+<ul>
+<li><p>map-base取模法<br>&emsp;&emsp;map-based：取模法，基于服务器总权重的hash数组取模，该hash是静态的即不支持在线调整权重，不支持慢启动，其对后端服务器调度均衡，缺点是当服务器的总权重发生变化时，即有服务器上线或下线，都会因权重发生变化而导致调度结果整体改变。<br>&emsp;&emsp;所谓取模运算，就是计算两个数相除之后的余数，10%7=3, 7%4=3，(2^32-1)%(1+1+2)<br>&emsp;&emsp;取模法示意图：<br><img src="https://img-blog.csdnimg.cn/201911042153353.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">取模法配置示例：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">listen web_host</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    bind <span class="number">192.168</span><span class="number">.7</span><span class="number">.101</span>:<span class="number">80</span>,:<span class="number">8801</span><span class="number">-8810</span>,<span class="number">192.168</span><span class="number">.7</span><span class="number">.101</span>:<span class="number">9001</span><span class="number">-9010</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    mode tcp</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    log global</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    balance source</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    server web1 <span class="number">192.168</span><span class="number">.7</span><span class="number">.103</span>:<span class="number">80</span> weight <span class="number">1</span> check <span class="built_in">int</span>er <span class="number">3000</span> fall <span class="number">2</span> rise <span class="number">5</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    server web2 <span class="number">192.168</span><span class="number">.7</span><span class="number">.104</span>:<span class="number">80</span> weight <span class="number">1</span> check <span class="built_in">int</span>er <span class="number">3000</span> fall <span class="number">2</span> rise <span class="number">5</span></span></pre></td></tr></table></figure>
+</li>
+<li><p>一致性hash<br>&emsp;&emsp;一致性哈希，该hash是动态的，支持在线调整权重，支持慢启动，优点在于当服务器的总权重发生变化时，对调度结果影响是局部的，不会引起大的变动，hash（o）mod n 。<br>&emsp;&emsp;Hash对象到后端服务器的映射关系：<br><img src="https://img-blog.csdnimg.cn/20191104221807725.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">&emsp;&emsp;一致性hash后端服务器在线与离线的调度方式示意图：<br><img src="https://img-blog.csdnimg.cn/20191104221921281.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;一致性hash配置示例：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">listen web_host</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    bind <span class="number">192.168</span><span class="number">.7</span><span class="number">.101</span>:<span class="number">80</span>,:<span class="number">8801</span><span class="number">-8810</span>,<span class="number">192.168</span><span class="number">.7</span><span class="number">.101</span>:<span class="number">9001</span><span class="number">-9010</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    mode tcp</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    log global</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    balance source</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    hash-type consistent</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    server web1 <span class="number">192.168</span><span class="number">.7</span><span class="number">.103</span>:<span class="number">80</span> weight <span class="number">1</span> check <span class="built_in">int</span>er <span class="number">3000</span> fall <span class="number">2</span> rise <span class="number">5</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    server web2 <span class="number">192.168</span><span class="number">.7</span><span class="number">.104</span>:<span class="number">80</span> weight <span class="number">1</span> check <span class="built_in">int</span>er <span class="number">3000</span> fall <span class="number">2</span> rise <span class="number">5</span></span></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<h5 id="uri"><a href="#uri" class="headerlink" title="uri"></a>uri</h5><p>&emsp;&emsp;基于对用户请求的uri做hash并将请求转发到后端指定服务器，也可以通过map-based和consistent定义使用取模法还是一致性hash。<br>&emsp;&emsp;uri 取模法配置示例：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">listen web_host</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    bind <span class="number">192.168</span><span class="number">.7</span><span class="number">.101</span>:<span class="number">80</span>,:<span class="number">8801</span><span class="number">-8810</span>,<span class="number">192.168</span><span class="number">.7</span><span class="number">.101</span>:<span class="number">9001</span><span class="number">-9010</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    mode http</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    log global</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    balance uri</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    server web1 <span class="number">192.168</span><span class="number">.7</span><span class="number">.103</span>:<span class="number">80</span> weight <span class="number">1</span> check <span class="built_in">int</span>er <span class="number">3000</span> fall <span class="number">2</span> rise <span class="number">5</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    server web2 <span class="number">192.168</span><span class="number">.7</span><span class="number">.104</span>:<span class="number">80</span> weight <span class="number">1</span> check <span class="built_in">int</span>er <span class="number">3000</span> fall <span class="number">2</span> rise <span class="number">5</span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;uri 一致性hash配置示例：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">listen web_host</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    bind <span class="number">192.168</span><span class="number">.7</span><span class="number">.101</span>:<span class="number">80</span>,:<span class="number">8801</span><span class="number">-8810</span>,<span class="number">192.168</span><span class="number">.7</span><span class="number">.101</span>:<span class="number">9001</span><span class="number">-9010</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    mode http</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    log global</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    balance uri</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    hash-type consistent</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    server web1 <span class="number">192.168</span><span class="number">.7</span><span class="number">.103</span>:<span class="number">80</span> weight <span class="number">1</span> check <span class="built_in">int</span>er <span class="number">3000</span> fall <span class="number">2</span> rise <span class="number">5</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    server web2 <span class="number">192.168</span><span class="number">.7</span><span class="number">.104</span>:<span class="number">80</span> weight <span class="number">1</span> check <span class="built_in">int</span>er <span class="number">3000</span> fall <span class="number">2</span> rise <span class="number">5</span></span></pre></td></tr></table></figure>
+<h5 id="url-param"><a href="#url-param" class="headerlink" title="url_param"></a>url_param</h5><p>&emsp;&emsp;url_param对用户请求的url中的 params 部分中的参数name作hash计算，并由服务器总权重相除以后派发至某挑出的服务器；通常用于追踪用户，以确保来自同一个用户的请求始终发往同一个real server</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">假设url = http://www.example.com/foo/bar/index.php?k1=v1&amp;k2=v2</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">则：</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">host = <span class="string">"www.example.com"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">url_param = <span class="string">"k1=v1&amp;k2=v2"</span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;url_param取模法配置示例:</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">listen web_host</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    bind <span class="number">192.168</span><span class="number">.7</span><span class="number">.101</span>:<span class="number">80</span>,:<span class="number">8801</span><span class="number">-8810</span>,<span class="number">192.168</span><span class="number">.7</span><span class="number">.101</span>:<span class="number">9001</span><span class="number">-9010</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    mode http</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    log global</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    balance url_param name,age #支持对单个及多个url_param 值hash</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    server web1 <span class="number">192.168</span><span class="number">.7</span><span class="number">.103</span>:<span class="number">80</span> weight <span class="number">1</span> check <span class="built_in">int</span>er <span class="number">3000</span> fall <span class="number">2</span> rise <span class="number">5</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    server web2 <span class="number">192.168</span><span class="number">.7</span><span class="number">.104</span>:<span class="number">80</span> weight <span class="number">1</span> check <span class="built_in">int</span>er <span class="number">3000</span> fall <span class="number">2</span> rise <span class="number">5</span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;url_param一致性hash配置示例：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">listen web_host</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    bind <span class="number">192.168</span><span class="number">.7</span><span class="number">.101</span>:<span class="number">80</span>,:<span class="number">8801</span><span class="number">-8810</span>,<span class="number">192.168</span><span class="number">.7</span><span class="number">.101</span>:<span class="number">9001</span><span class="number">-9010</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    mode http</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    log global</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    balance url_param name,age #支持对单个及多个url_param 值hash</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    hash-type consistent</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    server web1 <span class="number">192.168</span><span class="number">.7</span><span class="number">.103</span>:<span class="number">80</span> weight <span class="number">1</span> check <span class="built_in">int</span>er <span class="number">3000</span> fall <span class="number">2</span> rise <span class="number">5</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    server web2 <span class="number">192.168</span><span class="number">.7</span><span class="number">.104</span>:<span class="number">80</span> weight <span class="number">1</span> check <span class="built_in">int</span>er <span class="number">3000</span> fall <span class="number">2</span> rise <span class="number">5</span></span></pre></td></tr></table></figure>
+<h5 id="hdr"><a href="#hdr" class="headerlink" title="hdr"></a>hdr</h5><p>&emsp;&emsp;针对用户每个http头部(header)请求中的指定信息做hash，此处由 name 指定的http首部将会被取出并做hash计算，然后由服务器总权重相除以后派发至某挑出的服务器，假如无有效的值，则会使用默认的轮询调度。<br>&emsp;&emsp;hdr取模法配置示例：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">listen web_host</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    bind <span class="number">192.168</span><span class="number">.7</span><span class="number">.101</span>:<span class="number">80</span>,:<span class="number">8801</span><span class="number">-8810</span>,<span class="number">192.168</span><span class="number">.7</span><span class="number">.101</span>:<span class="number">9001</span><span class="number">-9010</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    mode http</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    log global</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    balance hdr(User-Agent)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    server web1 <span class="number">192.168</span><span class="number">.7</span><span class="number">.103</span>:<span class="number">80</span> weight <span class="number">1</span> check <span class="built_in">int</span>er <span class="number">3000</span> fall <span class="number">2</span> rise <span class="number">5</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    server web2 <span class="number">192.168</span><span class="number">.7</span><span class="number">.104</span>:<span class="number">80</span> weight <span class="number">1</span> check <span class="built_in">int</span>er <span class="number">3000</span> fall <span class="number">2</span> rise <span class="number">5</span></span></pre></td></tr></table></figure>
+<p>一致性hash配置示例：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">listen web_host</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    bind <span class="number">192.168</span><span class="number">.7</span><span class="number">.101</span>:<span class="number">80</span>,:<span class="number">8801</span><span class="number">-8810</span>,<span class="number">192.168</span><span class="number">.7</span><span class="number">.101</span>:<span class="number">9001</span><span class="number">-9010</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    mode http</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    log global</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    balance hdr(User-Agent)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    hash-type consistent</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    server web1 <span class="number">192.168</span><span class="number">.7</span><span class="number">.103</span>:<span class="number">80</span> weight <span class="number">1</span> check <span class="built_in">int</span>er <span class="number">3000</span> fall <span class="number">2</span> rise <span class="number">5</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    server web2 <span class="number">192.168</span><span class="number">.7</span><span class="number">.104</span>:<span class="number">80</span> weight <span class="number">1</span> check <span class="built_in">int</span>er <span class="number">3000</span> fall <span class="number">2</span> rise <span class="number">5</span></span></pre></td></tr></table></figure>
+<h5 id="rdp-cookie"><a href="#rdp-cookie" class="headerlink" title="rdp-cookie"></a>rdp-cookie</h5><p>&emsp;&emsp;rdp-cookie对远程桌面的负载，使用cookie保持会话<br>&emsp;&emsp;rdp-cookie取模法配置示例：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">listen RDP</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    bind <span class="number">192.168</span><span class="number">.7</span><span class="number">.101</span>:<span class="number">3389</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    balance rdp-cookie</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    mode tcp</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    server rdp0 <span class="number">172.18</span><span class="number">.132</span><span class="number">.20</span>:<span class="number">3389</span> check fall <span class="number">3</span> rise <span class="number">5</span> <span class="built_in">int</span>er <span class="number">2000</span> weight <span class="number">1</span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;rdp-cookie一致性hash配置示例：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">listen RDP</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    bind <span class="number">192.168</span><span class="number">.7</span><span class="number">.101</span>:<span class="number">3389</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    balance rdp-cookie</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    hash-type consistent</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    mode tcp</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    server rdp0 <span class="number">172.18</span><span class="number">.132</span><span class="number">.20</span>:<span class="number">3389</span> check fall <span class="number">3</span> rise <span class="number">5</span> <span class="built_in">int</span>er <span class="number">2000</span> weight <span class="number">1</span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;基于iptables实现：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">net.ipv4.ip_forward = <span class="number">1</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"># iptables -t nat -A PREROUTING -d <span class="number">192.168</span><span class="number">.7</span><span class="number">.101</span> -p tcp --dport <span class="number">3389</span> -j DNAT --todestination <span class="number">172.18</span><span class="number">.139</span><span class="number">.20</span>:<span class="number">3389</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"># iptables -t nat -A POSTROUTING -s <span class="number">192.168</span><span class="number">.0</span><span class="number">.0</span>/<span class="number">21</span> -j SNAT --to-source <span class="number">192.168</span><span class="number">.7</span><span class="number">.101</span></span></pre></td></tr></table></figure>
+<h5 id="random"><a href="#random" class="headerlink" title="random"></a>random</h5><p>&emsp;&emsp;在1.9版本开始增加一个叫做random的负载平衡算法，其基于一个随机数作为一致性hash的key，随机负载平衡对于大型服务器场或经常添加或删除服务器非常有用，因为它可以避免在这种情况下由roundrobin或leastconn导致的锤击效应。<br>&emsp;&emsp;random配置实例：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">listen web_host</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    bind <span class="number">192.168</span><span class="number">.7</span><span class="number">.101</span>:<span class="number">80</span>,:<span class="number">8801</span><span class="number">-8810</span>,<span class="number">192.168</span><span class="number">.7</span><span class="number">.101</span>:<span class="number">9001</span><span class="number">-9010</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    mode http</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    log global</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    balance random</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    server web1 <span class="number">192.168</span><span class="number">.7</span><span class="number">.103</span>:<span class="number">80</span> weight <span class="number">1</span> check <span class="built_in">int</span>er <span class="number">3000</span> fall <span class="number">2</span> rise <span class="number">5</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    server web2 <span class="number">192.168</span><span class="number">.7</span><span class="number">.104</span>:<span class="number">80</span> weight <span class="number">1</span> check <span class="built_in">int</span>er <span class="number">3000</span> fall <span class="number">2</span> rise <span class="number">5</span></span></pre></td></tr></table></figure>
+<h4 id="算法总结"><a href="#算法总结" class="headerlink" title="算法总结"></a>算法总结</h4><figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">static</span>-rr---------&gt;</span>tcp/http 静态</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">first</span>-------------&gt;</span>tcp/http 静态</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">roundrobin</span>--------&gt;</span>tcp/http 动态</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">leastconn</span>---------&gt;</span>tcp/http 动态</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">random</span>------------&gt;</span>tcp/http 动态</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">source</span>------------&gt;</span>tcp/http</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">U<span class="function"><span class="title">ri</span>---------------&gt;</span>http</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">url_param</span>---------&gt;</span>http 取决于hash_type是否consistent</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">hdr</span>---------------&gt;</span>http</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">rdp</span>-cookie--------&gt;</span>tcp</span></pre></td></tr></table></figure>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">first</span> <span class="comment">#使用较少</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">static-rr <span class="comment">#做了session共享的web集群</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">roundrobin</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">random</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">leastconn <span class="comment">#数据库</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">source <span class="comment">#基于客户端公网IP的会话保持</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">Uri<span class="comment">---------------&gt;http #缓存服务器，CDN服务商，蓝汛、百度、阿里云、腾讯</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">url_param<span class="comment">---------&gt;http</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">hdr <span class="comment">#基于客户端请求报文头部做下一步处理</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">rdp-cookie <span class="comment">#很少使用</span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;详细可参见官方文档：<a href="https://cbonte.github.io/haproxy-dconv/2.0/configuration.html#4" target="_blank" rel="noopener">https://cbonte.github.io/haproxy-dconv/2.0/configuration.html#4</a> </p>
+<h3 id="haproxy工作模式"><a href="#haproxy工作模式" class="headerlink" title="haproxy工作模式"></a>haproxy工作模式</h3><h4 id="tcp：四层负载"><a href="#tcp：四层负载" class="headerlink" title="tcp：四层负载"></a>tcp：四层负载</h4><p>&emsp;&emsp;在四层负载设备中，把client发送的报文目标地址(原来是负载均衡设备的IP地址)，根据均衡设备设置的选择web服务器的规则选择对应的web服务器IP地址，这样client就可以直接跟此服务器建立TCP连接并发送数据。</p>
+<h5 id="四层工作模式的IP透传："><a href="#四层工作模式的IP透传：" class="headerlink" title="四层工作模式的IP透传："></a>四层工作模式的IP透传：</h5><p>&emsp;&emsp;haproxy配置中在后端服务器定义中加入关键字<code>send-proxy</code>（注意不要加在check关键字属性的中间了），并重启服务。<br>&emsp;&emsp;在后端nginx服务器配置中监听端口处也加上协议名<code>proxy_protocol</code>,并修改日志格式，在开头加入变量<code>$proxy_protocol_addr</code>，重启服务后即可在日志中看到访问的源地址。<br>&emsp;&emsp;<code>send-proxy</code>是haproxy后端设置的关键字，写错会报错，可以用来启用代理协议<code>Proxy protocol</code>。Proxy protocol是HAProxy的作者Willy Tarreau于2010年开发和设计的一个Internet协议，通过为tcp添加一个很小的头信息，来方便的传递客户端信息（协议栈、源IP、目的IP、源端口、目的端口等)，在网络情况复杂又需要获取用户真实IP时非常有用。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">haproxy 配置：</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">listen web_prot_http_nodes</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    bind 172.18.32.249:80</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    mode tcp</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    balance roundrobin</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">   <span class="built_in"> server </span>web1 192.168.32.81:80 send-proxy check inter 3000 fall 3 rise 5</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">nginx配置：</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">http &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    log_format  main  <span class="string">'$proxy_protocol_addr  $remote_addr - $remote_user [$time_local] "$request" '</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">                      <span class="string">'$status $body_bytes_sent "$http_referer" '</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">                      <span class="string">'"$http_user_agent" '</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">server &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">    listen 80 proxy_protocol; </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">    #listen 80;</span></pre></td></tr></table></figure>
+<h5 id="内核参数优化"><a href="#内核参数优化" class="headerlink" title="内核参数优化"></a>内核参数优化</h5><p>&emsp;&emsp;haproxy在做四层负载时，如果要监听bind由keepalived生成的虚拟IP（VIP）时，需要修改内核参数，支持监听非本机IP，否则监听VIP的80端口时会导致haproxy服务无法启动。。<br>&emsp;&emsp;<code>vim /etc/sysctl.conf</code></p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="attr">net.ipv4.ip_nonlocal_bind</span> = <span class="number">1</span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;如果多网卡，且VIP与后端VIP不在一个网段，还需要加上地址转发参数。</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="attr">net.ipv4.ip_forward</span> = <span class="number">1</span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;然后<code>sysctl -p</code>使配置文件生效。</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="section">[root@CentOS8 ~]</span><span class="comment">#sysctl -p</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="attr">net.ipv4.ip_nonlocal_bind</span> = <span class="number">1</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="attr">net.ipv4.ip_forward</span> = <span class="number">1</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="section">[root@CentOS8 ~]</span><span class="comment">#</span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;当然，也可以将haproxy改为监听0.0.0.0:80，表示监听本机所有网卡的IP的80端口，当keepalived的VIP漂到本机是，自然也可以被haproxy监听，没有时也不影响启动。不过这样的话，haproxy只能对一个项目集群做负载均衡了，而我们实际生产中，都是同时代理多个服务项目集群的转发，需通过bind不同IP的80/443端口来实现，如果直接一个服务bind0.0.0.0：80，占用了所有的80/443端口，显然就没法和其他项目共存了。<br>&emsp;&emsp;<strong>所以我们建议在四层负载工作模式下，不要监听0.0.0.0:80，而是监听指定的VIP。</strong></p>
+<h4 id="http：七层代理"><a href="#http：七层代理" class="headerlink" title="http：七层代理"></a>http：七层代理</h4><p>&emsp;&emsp;七层负载均衡服务器起了一个反向代理服务器的作用，服务器建立一次TCP连接要三次握手，而client要访问webserver要先与七层负载设备进行三次握手后建立TCP连接，把要访问的报文信息发送给七层负载均衡；然后七层负载均衡再根据设置的均衡规则选择特定的webserver，然后通过三次握手与此台webserver建立TCP连接，然后webserver把需要的数据发送给七层负载均衡设备，负载均衡设备再把数据发送给client；所以，七层负载均衡设备起到了代理服务器的作用。</p>
+<h5 id="七层工作模式的IP透传："><a href="#七层工作模式的IP透传：" class="headerlink" title="七层工作模式的IP透传："></a>七层工作模式的IP透传：</h5><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">haproxy 配置：</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">defaults</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    option forwardfor</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">或者：</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    option forwardfor header X-Forwarded-xxx #自定义传递IP参数,后端web服务器写X-Forwardedxxx</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    #如果写option forwardfor则后端服务器web格式为X-Forwarded-For</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">listen配置：</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">listen web_host</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    bind <span class="number">192.168</span><span class="number">.7</span><span class="number">.101</span>:<span class="number">80</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    mode http</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    log global</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">    balance random</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">    server web1 <span class="number">192.168</span><span class="number">.32</span><span class="number">.81</span>:<span class="number">80</span> weight <span class="number">1</span> check <span class="built_in">int</span>er <span class="number">3000</span> fall <span class="number">2</span> rise <span class="number">5</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">    server web2 <span class="number">192.168</span><span class="number">.32</span><span class="number">.82</span>:<span class="number">80</span> weight <span class="number">1</span> check <span class="built_in">int</span>er <span class="number">3000</span> fall <span class="number">2</span> rise <span class="number">5</span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;配置web服务器，记录负载均衡透传的客户端IP地址</p>
+<figure class="highlight nsis"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment">#apache 配置：</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    LogFormat <span class="string">"%&#123;X-Forwarded-For&#125;i %a %l %u %t \"</span>%r\<span class="string">" %&gt;s %b \"</span>%&#123;Referer&#125;i\<span class="string">" \"</span>%&#123;UserAgent&#125;i\<span class="string">""</span> combined</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="comment">#tomcat 配置：</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    pattern=<span class="string">'%&#123;X-Forwarded-For&#125;i %l %T %t &amp;quot;%r&amp;quot; %s %b &amp;quot;%&#123;UserAgent&#125;i&amp;quot;'</span>/&gt;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="comment">#nginx 日志格式：</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    http &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        log_format  main  <span class="string">'"<span class="variable">$http_x_forwarded_For</span>" - <span class="variable">$remote_addr</span> - <span class="variable">$remote_user</span> [<span class="variable">$time_local</span>] "<span class="variable">$request</span>" '</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">                      <span class="string">'<span class="variable">$status</span> <span class="variable">$body_bytes_sent</span> "<span class="variable">$http_referer</span>" '</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">                      <span class="string">'"<span class="variable">$http_user_agent</span>" '</span><span class="comment">;</span></span></pre></td></tr></table></figure>
+<h3 id="haproxy功能实现"><a href="#haproxy功能实现" class="headerlink" title="haproxy功能实现"></a>haproxy功能实现</h3><p>&emsp;&emsp;初步调整好haproxy的配置文件之后，启动haproxy服务，就已经可以对后端服务器进行代理来实现负载均衡了，不过很多情况下我们需要对后端服务器进行动态操作，例如修改某些主机的负载权重，对某些主机上线或下线等等，而这时，再不影响业务正常访问的情况下，对haproxy动态操作方式一般有两种：在图形界面status状态页下操作，以及使用socat命令行工具通过socket通信。</p>
+<h4 id="图形界面"><a href="#图形界面" class="headerlink" title="图形界面"></a>图形界面</h4><p>&emsp;&emsp;想实现在status界面拥有修改权限，需在配置文件中加入选项<code>stats admin if TRUE</code>。注意，TRUE要大写，否则服务起不来会报错<code>parsing [/etc/haproxy/haproxy.cfg:52] : error detected while parsing a &#39;stats admin&#39; rule : no such ACL : &#39;true&#39;.</code><br>&emsp;&emsp;最终如下面所示</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="attr">listen</span> <span class="string">stats</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="attr">mode</span> <span class="string">http</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="attr">bind</span> <span class="string">0.0.0.0:9999</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    <span class="attr">stats</span> <span class="string">enable</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    <span class="attr">log</span> <span class="string">global</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    <span class="attr">stats</span> <span class="string">uri /proxy_status</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    <span class="attr">stats</span> <span class="string">auth haadmin:hapasswd</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    <span class="attr">stats</span> <span class="string">admin if TRUE</span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;这是再刷新status界面，就可以看到界面已经发生了变化<br><img src="https://img-blog.csdnimg.cn/20191106151518987.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20191106151645858.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;就可以对选择的主机进行操作了。</p>
+<h4 id="命令行方式"><a href="#命令行方式" class="headerlink" title="命令行方式"></a>命令行方式</h4><p>&emsp;&emsp;这是通过直接与haproxy的socekt通信，socket路径就是配置文件中指定的socket路径了，只支持本地通信。而且这需要借主socat的工具，需要先进行安装socat工具。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">yum <span class="keyword">install</span> socat</span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;用echo信息的方式通过管道传递给socat工具指定haproxy的socket，就可以发送与接收haproxy的信息了。<br>&emsp;&emsp;查看haproxy工作的详细信息</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">echo <span class="string">"show info"</span> | socat stdio /var/<span class="class"><span class="keyword">lib</span>/<span class="title">haproxy</span>/<span class="title">haproxy</span>.<span class="title">sock1</span></span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;查看haproxy控制命令</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">echo <span class="string">"help"</span> | socat stdio /var/<span class="class"><span class="keyword">lib</span>/<span class="title">haproxy</span>/<span class="title">haproxy</span>.<span class="title">sock1</span></span></span></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">help           : this message</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">prompt         : toggle interactive mode with prompt</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">quit           : disconnect</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">show tls-keys [id|*]: show tls keys references <span class="keyword">or</span> dump tls ticket keys when id specified</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">set</span> ssl tls-key [id|keyfile] &amp;lttlskey&amp;gt: <span class="builtin-name">set</span> the next TLS key <span class="keyword">for</span> the &amp;ltid&amp;gt <span class="keyword">or</span> &amp;ltkeyfile&amp;gt listener <span class="keyword">to</span> &amp;lttlskey&amp;gt</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">show sess [id] : report the list of current sessions <span class="keyword">or</span> dump this session</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">shutdown session : kill a specific session</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">shutdown sessions<span class="built_in"> server </span>: kill sessions on a server</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">clear counters : clear max statistics counters (<span class="builtin-name">add</span> <span class="string">'all'</span> <span class="keyword">for</span> all counters)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">show <span class="builtin-name">info</span>      : report information about the running process [json|typed]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">show stat      : report counters <span class="keyword">for</span> each<span class="built_in"> proxy </span><span class="keyword">and</span><span class="built_in"> server </span>[json|typed]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">show schema json : report schema used <span class="keyword">for</span> stats</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">disable</span> agent  : <span class="builtin-name">disable</span> agent checks (use <span class="string">'set server'</span> instead)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">disable</span><span class="built_in"> health </span>: <span class="builtin-name">disable</span><span class="built_in"> health </span>checks (use <span class="string">'set server'</span> instead)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">disable</span><span class="built_in"> server </span>: <span class="builtin-name">disable</span> a<span class="built_in"> server </span><span class="keyword">for</span> maintenance (use <span class="string">'set server'</span> instead)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">enable</span> agent   : <span class="builtin-name">enable</span> agent checks (use <span class="string">'set server'</span> instead)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">enable</span><span class="built_in"> health </span> : <span class="builtin-name">enable</span><span class="built_in"> health </span>checks (use <span class="string">'set server'</span> instead)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">enable</span><span class="built_in"> server </span> : <span class="builtin-name">enable</span> a disabled<span class="built_in"> server </span>(use <span class="string">'set server'</span> instead)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">set</span> maxconn<span class="built_in"> server </span>: change a server<span class="string">'s maxconn setting</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line"><span class="string">set server     : change a server'</span>s state, weight <span class="keyword">or</span> address</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">get</span> weight     : report a server<span class="string">'s current weight</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line"><span class="string">set weight     : change a server'</span>s weight (deprecated)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">show resolvers [id]: dumps counters <span class="keyword">from</span> all resolvers section <span class="keyword">and</span> associated name servers</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">clear table    : <span class="builtin-name">remove</span> an entry <span class="keyword">from</span> a table</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">set</span> table [id] : update <span class="keyword">or</span> create a table entry<span class="string">'s data</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line"><span class="string">show table [id]: report table usage stats or dump this table'</span>s contents</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line">show peers [peers section]: dump some information about all the peers <span class="keyword">or</span> this peers section</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">28</span></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">disable</span> frontend : temporarily <span class="builtin-name">disable</span> specific frontend</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">29</span></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">enable</span> frontend : re-<span class="builtin-name">enable</span> specific frontend</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">30</span></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">set</span> maxconn frontend : change a frontend<span class="string">'s maxconn setting</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">31</span></pre></td><td class="code"><pre><span class="line"><span class="string">show servers state [id]: dump volatile server information (for backend &amp;ltid&amp;gt)</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">32</span></pre></td><td class="code"><pre><span class="line"><span class="string">show backend   : list backends in the current running config</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">33</span></pre></td><td class="code"><pre><span class="line"><span class="string">shutdown frontend : stop a specific frontend</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">34</span></pre></td><td class="code"><pre><span class="line"><span class="string">set dynamic-cookie-key backend : change a backend secret key for dynamic cookies</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">35</span></pre></td><td class="code"><pre><span class="line"><span class="string">enable dynamic-cookie backend : enable dynamic cookies on a specific backend</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">36</span></pre></td><td class="code"><pre><span class="line"><span class="string">disable dynamic-cookie backend : disable dynamic cookies on a specific backend</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">37</span></pre></td><td class="code"><pre><span class="line"><span class="string">show errors    : report last request and response errors for each proxy</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">38</span></pre></td><td class="code"><pre><span class="line"><span class="string">set maxconn global : change the per-process maxconn setting</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">39</span></pre></td><td class="code"><pre><span class="line"><span class="string">set rate-limit : change a rate limiting value</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">40</span></pre></td><td class="code"><pre><span class="line"><span class="string">set severity-output [none|number|string] : set presence of severity level in feedback information</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">41</span></pre></td><td class="code"><pre><span class="line"><span class="string">set timeout    : change a timeout setting</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">42</span></pre></td><td class="code"><pre><span class="line"><span class="string">show env [var] : dump environment variables known to the process</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">43</span></pre></td><td class="code"><pre><span class="line"><span class="string">show cli sockets : dump list of cli sockets</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">44</span></pre></td><td class="code"><pre><span class="line"><span class="string">show cli level   : display the level of the current CLI session</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">45</span></pre></td><td class="code"><pre><span class="line"><span class="string">show fd [num] : dump list of file descriptors in use</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">46</span></pre></td><td class="code"><pre><span class="line"><span class="string">show activity : show per-thread activity stats (for support/developers)</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">47</span></pre></td><td class="code"><pre><span class="line"><span class="string">operator       : lower the level of the current CLI session to operator</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">48</span></pre></td><td class="code"><pre><span class="line"><span class="string">user           : lower the level of the current CLI session to user</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">49</span></pre></td><td class="code"><pre><span class="line"><span class="string">show startup-logs : report logs emitted during HAProxy startup</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">50</span></pre></td><td class="code"><pre><span class="line"><span class="string">show cache     : show cache status</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">51</span></pre></td><td class="code"><pre><span class="line"><span class="string">add acl        : add acl entry</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">52</span></pre></td><td class="code"><pre><span class="line"><span class="string">clear acl &amp;ltid&amp;gt : clear the content of this acl</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">53</span></pre></td><td class="code"><pre><span class="line"><span class="string">del acl        : delete acl entry</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">54</span></pre></td><td class="code"><pre><span class="line"><span class="string">get acl        : report the patterns matching a sample for an ACL</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">55</span></pre></td><td class="code"><pre><span class="line"><span class="string">show acl [id]  : report available acls or dump an acl'</span>s contents</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">56</span></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">add</span> map        : <span class="builtin-name">add</span> map entry</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">57</span></pre></td><td class="code"><pre><span class="line">clear map &amp;ltid&amp;gt : clear the content of this map</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">58</span></pre></td><td class="code"><pre><span class="line">del map        : delete map entry</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">59</span></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">get</span> map        : report the keys <span class="keyword">and</span> values matching a sample <span class="keyword">for</span> a map</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">60</span></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">set</span> map        : modify map entry</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">61</span></pre></td><td class="code"><pre><span class="line">show map [id]  : report available maps <span class="keyword">or</span> dump a map<span class="string">'s contents</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">62</span></pre></td><td class="code"><pre><span class="line"><span class="string">show pools     : report information about the memory pools usage</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">63</span></pre></td><td class="code"><pre><span class="line"><span class="string">show profiling : show CPU profiling options</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">64</span></pre></td><td class="code"><pre><span class="line"><span class="string">set  profiling : enable/disable CPU profiling</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">65</span></pre></td><td class="code"><pre><span class="line"><span class="string">show threads   : show some threads debugging information</span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;查看线程1工作下的web_host集群中web1主机的权重</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@CentOS8</span> ~]<span class="meta">#echo <span class="string">"get weight web_host/web1"</span> | socat stdio /var/lib/haproxy/haproxy.sock1</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> (initial <span class="number">1</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@CentOS8</span> ~]<span class="meta">#</span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;设置线程2工作下的web_host集群中web1主机的权重为2。设置时，不回应信息，说明设置成功。</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@CentOS8</span> ~]<span class="meta">#echo <span class="string">"set weight web_host/web1 2"</span> | socat stdio /var/lib/haproxy/haproxy.sock2</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@CentOS8</span> ~]<span class="meta">#</span></span></pre></td></tr></table></figure>
+<p>&emsp;&emsp;需要注意的一点就是，多线程工作模式下，<strong>每个线程是独立的</strong>，设置1线程的权重，在其他线程上并不生效。这就意味着，如果想将某个服务器下线的话，需要在每个线程上都分别下线，上线是，也需要在每个线程中enable server。可以用脚本写一个循环来实现。</p>
+
+        </div>
+        <!-- .entry-content -->
+        <div class="single-reward">
+          <div class="reward-open">赏
+            <div class="reward-main">
+              <ul class="reward-row">
+                <li class="alipay-code"><img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6undefined"></li>
+                <li class="wechat-code"><img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/images/custom/donate/wechat-pay.png"></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div style="text-align:center; width: 100%" class="social-share share-mobile" data-disabled="diandian, tencent"></div>
+        <footer class="post-footer">
+          <div class="post-lincenses"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="nofollow"><i class="fa fa-creative-commons" aria-hidden="true"></i> 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></div>
+          <div class="post-tags">
+          </div>
+          <div class="post-share">
+            <div class="social-share sharehidden share-component"></div>
+            <i class="iconfont show-share icon-forward"></i>
+          </div>
+        </footer><!-- .entry-footer -->
+      </article>
+      <!-- #post-## -->
+      <div class="toc" style="background: none;"></div>
+      <section class="post-squares nextprev">
+        
+          
+            <div class="post-nepre half previous">
+          
+            <a href="/f5daec50.html" rel="prev">
+              <div class="background">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="">
+              </div>
+              <span class="label">
+              Previous Post</span>
+              <div class="info">
+                <h3>
+                企业级应用：负载均衡层——haproxy-二</h3>
+                <hr>
+              </div>
+            </a>
+          </div>
+        
+        
+          
+            <div class="post-nepre half next">
+          
+            <a href="/5da16ceb.html" rel="next">
+              <div class="background">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="">
+              </div>
+              <span class="label">
+              Next Post</span>
+              <div class="info">
+                <h3>
+                报错：Header-V3-RSA-SHA256-Signature-key-ID-2f86d6a1-NOKEY</h3>
+                <hr>
+              </div>
+            </a>
+          </div>
+        
+      </section>
+      
+<div id="vcomments"></div>
+<script>
+  window.onload = function(){
+      var valine = new Valine();
+      valine.init({
+        el: '#vcomments',
+        appId: "AVtPtVan0Ky5u33XhUzJlFKp-gzGzoHsz",
+        appKey: "nx3XTnRJmaMQR3aLWYiigkgJ",
+        path: window.location.pathname,
+        placeholder: "你是我一生只会遇见一次的惊喜 ..."
+      })
+  }
+</script>
+
+      <section class="author-profile">
+        <div class="info" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <a href="hewanyue.com" class="profile gravatar"><img src="https://gravatar.loli.net/avatar/37019f5eb1f0b9951c06bfdc8342afd1" itemprop="image" alt="hechao" height="70" width="70"></a>
+          <div class="meta">
+            <span class="title">Author</span>
+            <h3 itemprop="name">
+            <a href="hewanyue.com" itemprop="url" rel="author">hechao</a>
+            </h3>
+          </div>
+        </div>
+        <hr>
+        <p><i class="iconfont icon-write"></i>一个奇怪的人</p>
+      </section>
+    </main><!-- #main -->
+  </div><!-- #primary -->
+</div>
+
+
+
+    </div>    
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..."/>
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            // PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+    <!-- <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Hechao<br>
+      powered_by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer> -->
+<footer id="colophon" class="site-footer" role="contentinfo">
+  <div class="site-info">
+    <div class="footertext">
+      <div class="img-preload">
+        <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/wordpress-rotating-ball-o.svg">
+        <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/disqus-preloader.svg">
+      </div>
+      <p style="color: #666666;">&copy 2018</p>
+    </div>
+    <div class="footer-device">
+    <p style="font-family: 'Ubuntu', sans-serif;">
+        <span style="color: #b9b9b9;">Theme <a href="https://github.com/honjun/hexo-theme-sakura" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Sakura</a> <i class="iconfont icon-sakura rotating" style="color: #ffc0cb;display:inline-block"></i> by <a href="https://2heng.xin/" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Mashiro</a>&<a href="https://www.hojun.cn/" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Hojun</a>, Powered by Hexo, Hosted by Coding Pages</a>
+        </span>
+      </p>
+    </div>
+  </div><!-- .site-info -->
+</footer>
+
+
+
+<!-- <script src="/js/tocbot.js"></script> -->
+<script type="text/javascript" src="/js/lib.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script type="text/javascript" src="/js/InsightSearch.js"></script>
+<script type="text/javascript" src="/js/jquery.fancybox.min.js"></script>
+<script type="text/javascript" src="/js/zoom.min.js"></script>
+<script type="text/javascript" src="/js/sakura-app.js"></script>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine@1.3.4/dist/Valine.min.js'></script>
+<script src="/js/botui.js"></script>
+<!-- 不蒜子 网页计数器 -->
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script> -->
+<script type="text/javascript">
+/* <![CDATA[ */
+if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+  var Poi = {"pjax":"1","movies":{"url": "https://cdn.jsdelivr.net/gh/honjun/hojun@1.2","name":"Unbroken.mp4","live":"close"},"windowheight":"fixed","codelamp":"close","ajaxurl":"","order":"asc","formpostion":"bottom"};
+} else {
+  var Poi = {"pjax":"1","movies":{"url": "https://cdn.jsdelivr.net/gh/honjun/hojun@1.2","name":"Unbroken.mp4","live":"open"},"windowheight":"auto","codelamp":"close","ajaxurl":"","order":"asc","formpostion":"bottom"};
+}
+/* ]]> */
+
+</script>
+<script>
+$(document).ready(function() {
+  if ($(".toc").length > 0 && document.body.clientWidth > 1200) {
+    if ($(".pattern-center").length > 0) { //有图的情况
+      tocbot.init({
+          // Where to render the table of contents.
+          tocSelector: '.toc', // 放置目录的容器
+          // Where to grab the headings to build the table of contents.
+          contentSelector: '.entry-content', // 正文内容所在
+          // Which headings to grab inside of the contentSelector element.
+          scrollSmooth: true,
+          headingSelector: 'h1, h2, h3, h4, h5', // 需要索引的标题级别
+          headingsOffset: -400,
+          scrollSmoothOffset: -85
+      });
+    } else {
+      tocbot.init({
+          // Where to render the table of contents.
+          tocSelector: '.toc', // 放置目录的容器
+          // Where to grab the headings to build the table of contents.
+          contentSelector: '.entry-content', // 正文内容所在
+          // Which headings to grab inside of the contentSelector element.
+          scrollSmooth: true,
+          headingSelector: 'h1, h2, h3, h4, h5', // 需要索引的标题级别
+          headingsOffset: -85,
+          scrollSmoothOffset: -85
+      });
+    }
+    var offsetTop = $('.toc').offset().top - 95;
+    window.onscroll = function() {
+      var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+      if (scrollTop >= offsetTop) {
+        $('.toc').addClass('toc-fixed');
+      } else {
+        $('.toc').removeClass('toc-fixed');
+      }
+    }
+  }
+});
+</script>
+
+    <div class="openNav no-select" style="height: 50px;">
+      <div class="iconflat no-select" style="width: 50px; height: 50px;">
+        <div class="icon"></div>
+      </div>
+      <div class="site-branding search-form-submit">
+        <i class="iconfont js-toggle-search iconsearch icon-search"></i>
+      </div>
+    </div>
+  </section>
+  <div id="mo-nav" class="">
+  <div class="m-avatar">
+    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6https://gravatar.loli.net/avatar/37019f5eb1f0b9951c06bfdc8342afd1">
+  </div>
+  <p style="text-align: center; color: #333; font-weight: 900; font-family: 'Ubuntu', sans-serif; letter-spacing: 1.5px">ウサギ没有人</p>
+  <p style="text-align: center; word-spacing: 20px;">
+    
+      
+        <a href="http://github.com/wudihechao" class="fa fa-github" target="_blank" style="color: #333; margin-left:20px"></a>
+      
+        <a href="http://weibo.com/u/1050367191" class="fa fa-weibo" target="_blank" style="color: #dd4b39; margin-left:20px"></a>
+      
+        <a href="https://wpa.qq.com/msgrd?v=3&uin=307802118&site=qq&menu=yes" class="fa fa-qq" target="_blank" style="color: #25c6fe; margin-left:20px"></a>
+      
+    
+  </p>
+  <ul id="menu-new-1" class="menu">
+    
+      <li>
+        <a href="/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-fort-awesome faa-shake" aria-hidden="true"></i>
+            首页
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/archives">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-archive faa-shake" aria-hidden="true"></i>
+            归档
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/categories/linux/">
+                  <i class="fa fa-code" aria-hidden="true"></i>
+                  linux
+                </a>
+              </li>
+            
+              <li>
+                <a href="/categories/SQL/">
+                  <i class="fa fa-book" aria-hidden="true"></i>
+                  SQLs
+                </a>
+              </li>
+            
+              <li>
+                <a href="/categories/cloud/">
+                  <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                  cloud
+                </a>
+              </li>
+            
+              <li>
+                <a href="/categories/%E6%95%85%E9%9A%9C/">
+                  <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                  故 障
+                </a>
+              </li>
+            
+              <li>
+                <a href="/categories/%E6%83%85%E6%84%9F/">
+                  <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                  情 感
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+      <li>
+        <a href="javascript:;" target="_blank" rel="noopener">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-list-ul faa-vertical" aria-hidden="true"></i>
+            清单
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/tags/%E6%82%A6%E8%AF%BB/">
+                  <i class="fa fa-th-list faa-bounce" aria-hidden="true"></i>
+                  书单
+                </a>
+              </li>
+            
+              <li>
+                <a href="/bangumi/">
+                  <i class="fa fa-film faa-vertical" aria-hidden="true"></i>
+                  番组
+                </a>
+              </li>
+            
+              <li>
+                <a href="/music/">
+                  <i class="fa fa-headphones" aria-hidden="true"></i>
+                  歌单
+                </a>
+              </li>
+            
+              <li>
+                <a href="/tags/%E5%9B%BE%E9%9B%86/">
+                  <i class="fa fa-photo" aria-hidden="true"></i>
+                  图集
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+      <li>
+        <a href="/comment/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-pencil-square-o faa-tada" aria-hidden="true"></i>
+            留言板
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/links/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-link faa-shake" aria-hidden="true"></i>
+            友人帐
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/donate/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-heart faa-pulse" aria-hidden="true"></i>
+            赞赏
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-leaf faa-wrench" aria-hidden="true"></i>
+            关于
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/about/">
+                  <i class="fa fa-meetup" aria-hidden="true"></i>
+                  我？
+                </a>
+              </li>
+            
+              <li>
+                <a href="/theme-sakura/">
+                  <i class="fa iconfont icon-sakura" aria-hidden="true"></i>
+                  主题
+                </a>
+              </li>
+            
+              <li>
+                <a href="/lab/">
+                  <i class="fa fa-cogs" aria-hidden="true"></i>
+                  Lab
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+      <li>
+        <a href="/atom.xml">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-rss faa-pulse" aria-hidden="true"></i>
+            RSS
+          </span>
+        </a>
+        
+      </li>
+    
+  </ul>
+  <p style="text-align: center; font-size: 13px; color: #b9b9b9;">&copy 2019 hexo-sakura</p>
+</div>
+<button onclick="topFunction()" class="mobile-cd-top" id="moblieGoTop" title="Go to top" style="display: none;"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<!-- require MetingJS -->
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<style>
+  .aplayer .aplayer-lrc {
+    height: 35px;
+  }
+  .aplayer .aplayer-lrc p{
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 18px !important;
+  }
+  .aplayer .aplayer-lrc p.aplayer-lrc-current{
+    color: #FF1493;
+  }
+  .aplayer.aplayer-narrow .aplayer-body{
+    left: -66px !important;
+  }
+  .aplayer.aplayer-fixed .aplayer-lrc {
+    display: none;
+  }
+  .aplayer .aplayer-lrc.aplayer-lrc-hide {
+      display:none !important;
+  }
+  .aplayer.aplayer-fixed .lrc-show {
+    display: block;
+    background: rgba(255, 255, 255, 0.8);
+  }
+</style>
+<meting-js
+
+    id="2660651585"
+
+    server="netease"
+
+    type="playlist"
+
+    fixed="true"
+
+    autoplay="false"
+
+    loop="all"
+
+    order="random"
+
+    preload="auto"
+
+    volume="0.7"
+
+    mutex="true"
+
+</meting-js>
+<script>
+  $(function(){
+    $('body').on('click', '.aplayer', function(){
+      if($('.aplayer-button').hasClass('aplayer-play')) {
+        $('.aplayer-lrc').removeClass('lrc-show');
+      } else {
+        $('.aplayer-lrc').addClass('lrc-show');
+      }
+    })
+  });
+</script>
+</body>
+</html>
