@@ -8,6 +8,7 @@
 <meta name="generator" content="Hexo 3.9.0">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.ico?v=7.4.0">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.ico?v=7.4.0">
+  <link rel="alternate" href="/atom.xml" title="BOHC!" type="application/atom+xml">
 <link rel="stylesheet" href="/css/main.css?v=7.4.0">
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
 <script id="hexo-configurations">
@@ -253,7 +254,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hechao">
       <meta itemprop="description" content="BOHC is just a blog of hechao.">
-      <meta itemprop="image" content="/images/touxiang.jpg">
+      <meta itemprop="image" content="/images/touxiang.gif">
     </span>
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="BOHC!">
@@ -325,32 +326,22 @@
 </ul>
 <h3 id="2-2分区方式"><a href="#2-2分区方式" class="headerlink" title="2.2分区方式"></a>2.2分区方式</h3><p>&emsp;&emsp;一般来说有两种分区方式 ：<strong>MBR</strong>和<strong>GPT</strong>。</p>
 <ul>
-<li><p><strong>MBR</strong>：全程Master Boot Record，1982年，使用32位表示扇区，单个分区不超过2T。</p>
-</li>
-<li><p>如何分区：按柱面</p>
-</li>
-<li><p>0磁道0扇面：512bytes<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;446byets：boot loader<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;64bytes  ： 分区表，其中每16bytes标识一个分区<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;2byetes&emsp;：55AA</p>
-</li>
+<li><strong>MBR</strong>：全程Master Boot Record，1982年，使用32位表示扇区，单个分区不超过2T。</li>
+<li>如何分区：按柱面</li>
+<li>0磁道0扇面：512bytes<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;446byets：boot loader<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;64bytes  ： 分区表，其中每16bytes标识一个分区<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;2byetes&emsp;：55AA</li>
 <li><p>MBR分区中一块硬盘最多有4个主分区，也可以三主分区+1拓展（N个逻辑分区）<br>&emsp;</p>
 <h4 id="MBR分区结构"><a href="#MBR分区结构" class="headerlink" title="MBR分区结构"></a>MBR分区结构</h4><p><img src="https://img-blog.csdnimg.cn/20190815093309132.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="MBR硬盘分区结构图"></p>
 <h4 id="MBR分区表"><a href="#MBR分区表" class="headerlink" title="MBR分区表"></a>MBR分区表</h4><p>&emsp;&emsp;硬盘主导记录MBR由4个部分组成</p>
 </li>
 <li><p>主引导程序（偏移地址0000H–0088H），它负责从活动分区中装载，并运行系统引导程序</p>
 </li>
-<li><p>出错信息数据区，偏移地址0089H-00E1H为出错信息，00E2H-01BDH全为0字节</p>
-</li>
-<li><p>分区表（DPT,Disk Partition Table）含4个分区项，偏移地址01BEH–01FDH，每个分区表长16个字节，共64字节为分区项1、分区项2、分区项3、分区项4</p>
-</li>
-<li><p>结束标志字，偏移地址01FE–01FF的2个字节值为结束标志55AA<br><img src="https://img-blog.csdnimg.cn/20190815095231719.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="硬盘主导记录MBR"><br>&emsp;</p>
-<ul>
+<li>出错信息数据区，偏移地址0089H-00E1H为出错信息，00E2H-01BDH全为0字节</li>
+<li>分区表（DPT,Disk Partition Table）含4个分区项，偏移地址01BEH–01FDH，每个分区表长16个字节，共64字节为分区项1、分区项2、分区项3、分区项4</li>
+<li>结束标志字，偏移地址01FE–01FF的2个字节值为结束标志55AA<br><img src="https://img-blog.csdnimg.cn/20190815095231719.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="硬盘主导记录MBR"><br>&emsp;<ul>
 <li><strong>GPT</strong>：GUID（Globals Unique Identifiers） partition table 支持128个分区，使用64位，支持8Z（ 512Byte/block ）64Z （ 4096Byte/block）</li>
 <li>使用128位UUID(Universally Unique Identifier) 表示磁盘和分区 GPT分区表<br>自动备份在头和尾两份，并有CRC校验位</li>
-<li>UEFI (Unified Extensible Firmware Interface 统一可扩展固件接口)硬件支持<br>GPT，使操作系统启动<br>&emsp;<h4 id="GPT分区结构"><a href="#GPT分区结构" class="headerlink" title="GPT分区结构"></a>GPT分区结构</h4><img src="https://img-blog.csdnimg.cn/20190815100433738.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="GPT分区机构图"><h3 id="2-3管理分区"><a href="#2-3管理分区" class="headerlink" title="2.3管理分区"></a>2.3管理分区</h3><h4 id="2-31列出块设备"><a href="#2-31列出块设备" class="headerlink" title="2.31列出块设备"></a>2.31列出块设备</h4><h4 id="2-32创建新分区"><a href="#2-32创建新分区" class="headerlink" title="2.32创建新分区"></a>2.32创建新分区</h4>&emsp;&emsp;parted命令：parted [选项]… [设备 [命令 [参数]…]…]<br>&emsp;&emsp;parted /dev/sdb mklabel gpt|msdos<br>&emsp;&emsp;parted /dev/sdb print<br>&emsp;&emsp;parted /dev/sdb mkpart primary 1 200 （默认M）<br>&emsp;&emsp;parted /dev/sdb rm 1<br>&emsp;&emsp;parted –l 列出分区信息</li>
+<li>UEFI (Unified Extensible Firmware Interface 统一可扩展固件接口)硬件支持<br>GPT，使操作系统启动<br>&emsp;<h4 id="GPT分区结构"><a href="#GPT分区结构" class="headerlink" title="GPT分区结构"></a>GPT分区结构</h4><img src="https://img-blog.csdnimg.cn/20190815100433738.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="GPT分区机构图"><h3 id="2-3管理分区"><a href="#2-3管理分区" class="headerlink" title="2.3管理分区"></a>2.3管理分区</h3><h4 id="2-31列出块设备"><a href="#2-31列出块设备" class="headerlink" title="2.31列出块设备"></a>2.31列出块设备</h4><h4 id="2-32创建新分区"><a href="#2-32创建新分区" class="headerlink" title="2.32创建新分区"></a>2.32创建新分区</h4>&emsp;&emsp;parted命令：parted [选项]… [设备 [命令 [参数]…]…]<br>&emsp;&emsp;parted /dev/sdb mklabel gpt|msdos<br>&emsp;&emsp;parted /dev/sdb print<br>&emsp;&emsp;parted /dev/sdb mkpart primary 1 200 （默认M）<br>&emsp;&emsp;parted /dev/sdb rm 1<br>&emsp;&emsp;parted –l 列出分区信息<br><strong>parted的操作都是实时生效的，小心使用</strong><br>&emsp;<br>&emsp;&emsp; fdisk -l [-u] [device…] 查看分区<br>&emsp;&emsp; fdisk /dev/sdb 管理分区<br>子命令：<br>&emsp;&emsp;&emsp;&emsp;&emsp;p 查看分区列表<br>&emsp;&emsp;&emsp;&emsp;&emsp;t 更改分区类型<br>&emsp;&emsp;&emsp;&emsp;&emsp;n 创建新分区<br>&emsp;&emsp;&emsp;&emsp;&emsp;d 删除分区<br>&emsp;&emsp;&emsp;&emsp;&emsp;v 校验分区<br>&emsp;&emsp;&emsp;&emsp;&emsp;u 转换单位<br>&emsp;&emsp;&emsp;&emsp;&emsp;w 保存并退出<br>&emsp;&emsp;&emsp;&emsp;&emsp;q 不保存并退出<br>&emsp;<br>gdisk命令与fdisk用法相同，用于创建GPT分区。<h4 id="2-33同步内核与硬盘的分区表"><a href="#2-33同步内核与硬盘的分区表" class="headerlink" title="2.33同步内核与硬盘的分区表"></a>2.33同步内核与硬盘的分区表</h4>查看内核是否已经识别新的分区<br>cat /proc/partations<br><strong>centos6</strong>通知内核重新读取硬盘分区表<br>新增分区用<br>partx -a /dev/DEVICE<br>kpartx -a /dev/DEVICE -f: force<br>删除分区用<br>partx -d –nr M-N /dev/DEVICE<br><strong>CentOS 5，7</strong>: 使用partprobe<br>partprobe [/dev/DEVICE]<h2 id="3-创建文件系统"><a href="#3-创建文件系统" class="headerlink" title="3 创建文件系统"></a>3 创建文件系统</h2><h3 id="3-1文件系统"><a href="#3-1文件系统" class="headerlink" title="3.1文件系统"></a>3.1文件系统</h3>&emsp;&emsp;文件系统是操作系统用于明确存储设备或分区上的文件的方法和数据结构；即在存储设备上组织文件的方法。操作系统中负责管理和存储文件信息的软件结<br>构称为文件管理系统，简称文件系统从系统角度来看，文件系统是对文件存储设备的空间进行组织和分配，负责文件存储并对存入的文件进行保护和检索的系统。具体地说，它负责为用户建立文件，存入、读出、修改、转储文件，控制文件的存取，安全控制，日志，压缩，加密等<br>&emsp;&emsp;&emsp;支持的文件系统：<code>/lib/modules/`uname –r`/kernel/fs</code><br>&emsp;&emsp;&emsp;各种文件系统：<a href="https://en.wikipedia.org/wiki/Comparison_of_file_systems" rel="noopener external nofollow noreferrer" target="_blank">https://en.wikipedia.org/wiki/Comparison_of_file_systems</a><h4 id="3-11文件系统类型"><a href="#3-11文件系统类型" class="headerlink" title="3.11文件系统类型"></a>3.11文件系统类型</h4>Linux文件系统：<br>&emsp;&emsp;ext2(Extended file system)：适用于那些分区容量不是太大，更新也不频繁的情况，例如 /boot 分区<br>&emsp;&emsp;ext3：是 ext2 的改进版本，其支持日志功能，能够帮助系统从非正常关机导致的异常中恢复。它通常被用作通用的文件系统<br>&emsp;&emsp;ext4：是 ext 文件系统的最新版。提供了很多新的特性，包括纳秒级时间戳、创建和使用巨型文件(16TB)、最大1EB的文件系统，以及速度的提升<br>&emsp;&emsp;xfs：SGI，支持最大8EB的文件系统<br>&emsp;&emsp;btrfs（Oracle）, reiserfs, jfs（AIX）, swap<br>光盘：iso9660<br>Windows：FAT32, NTFS，exFAT<br>Unix：FFS（fast）, UFS（unix）, JFS2<br>网络文件系统：NFS, CIFS<br>集群文件系统：GFS2, OCFS2（oracle）<br>分布式文件系统：fastdfs,ceph, moosefs, mogilefs, glusterfs, Lustre<br>RAW：未经处理或者未经格式化产生的文件系统</li>
 </ul>
-<p><strong>parted的操作都是实时生效的，小心使用</strong><br>&emsp;<br>&emsp;&emsp; fdisk -l [-u] [device…] 查看分区<br>&emsp;&emsp; fdisk /dev/sdb 管理分区<br>子命令：<br>&emsp;&emsp;&emsp;&emsp;&emsp;p 查看分区列表<br>&emsp;&emsp;&emsp;&emsp;&emsp;t 更改分区类型<br>&emsp;&emsp;&emsp;&emsp;&emsp;n 创建新分区<br>&emsp;&emsp;&emsp;&emsp;&emsp;d 删除分区<br>&emsp;&emsp;&emsp;&emsp;&emsp;v 校验分区<br>&emsp;&emsp;&emsp;&emsp;&emsp;u 转换单位<br>&emsp;&emsp;&emsp;&emsp;&emsp;w 保存并退出<br>&emsp;&emsp;&emsp;&emsp;&emsp;q 不保存并退出<br>&emsp;<br>gdisk命令与fdisk用法相同，用于创建GPT分区。</p>
-<h4 id="2-33同步内核与硬盘的分区表"><a href="#2-33同步内核与硬盘的分区表" class="headerlink" title="2.33同步内核与硬盘的分区表"></a>2.33同步内核与硬盘的分区表</h4><p>查看内核是否已经识别新的分区<br>cat /proc/partations<br><strong>centos6</strong>通知内核重新读取硬盘分区表<br>新增分区用<br>partx -a /dev/DEVICE<br>kpartx -a /dev/DEVICE -f: force<br>删除分区用<br>partx -d –nr M-N /dev/DEVICE<br><strong>CentOS 5，7</strong>: 使用partprobe<br>partprobe [/dev/DEVICE]</p>
-<h2 id="3-创建文件系统"><a href="#3-创建文件系统" class="headerlink" title="3 创建文件系统"></a>3 创建文件系统</h2><h3 id="3-1文件系统"><a href="#3-1文件系统" class="headerlink" title="3.1文件系统"></a>3.1文件系统</h3><p>&emsp;&emsp;文件系统是操作系统用于明确存储设备或分区上的文件的方法和数据结构；即在存储设备上组织文件的方法。操作系统中负责管理和存储文件信息的软件结<br>构称为文件管理系统，简称文件系统从系统角度来看，文件系统是对文件存储设备的空间进行组织和分配，负责文件存储并对存入的文件进行保护和检索的系统。具体地说，它负责为用户建立文件，存入、读出、修改、转储文件，控制文件的存取，安全控制，日志，压缩，加密等<br>&emsp;&emsp;&emsp;支持的文件系统：<code>/lib/modules/`uname –r`/kernel/fs</code><br>&emsp;&emsp;&emsp;各种文件系统：<a href="https://en.wikipedia.org/wiki/Comparison_of_file_systems" rel="noopener external nofollow noreferrer" target="_blank">https://en.wikipedia.org/wiki/Comparison_of_file_systems</a></p>
-<h4 id="3-11文件系统类型"><a href="#3-11文件系统类型" class="headerlink" title="3.11文件系统类型"></a>3.11文件系统类型</h4><p>Linux文件系统：<br>&emsp;&emsp;ext2(Extended file system)：适用于那些分区容量不是太大，更新也不频繁的情况，例如 /boot 分区<br>&emsp;&emsp;ext3：是 ext2 的改进版本，其支持日志功能，能够帮助系统从非正常关机导致的异常中恢复。它通常被用作通用的文件系统<br>&emsp;&emsp;ext4：是 ext 文件系统的最新版。提供了很多新的特性，包括纳秒级时间戳、创建和使用巨型文件(16TB)、最大1EB的文件系统，以及速度的提升<br>&emsp;&emsp;xfs：SGI，支持最大8EB的文件系统<br>&emsp;&emsp;btrfs（Oracle）, reiserfs, jfs（AIX）, swap<br>光盘：iso9660<br>Windows：FAT32, NTFS，exFAT<br>Unix：FFS（fast）, UFS（unix）, JFS2<br>网络文件系统：NFS, CIFS<br>集群文件系统：GFS2, OCFS2（oracle）<br>分布式文件系统：fastdfs,ceph, moosefs, mogilefs, glusterfs, Lustre<br>RAW：未经处理或者未经格式化产生的文件系统</p>
 </li>
 </ul>
 <h4 id="3-12文件系统分类"><a href="#3-12文件系统分类" class="headerlink" title="3.12文件系统分类"></a>3.12文件系统分类</h4><p>根据其是否支持”journal”功能：<br>&emsp;&emsp;日志型文件系统: ext3, ext4, xfs, …<br>&emsp;&emsp;非日志型文件系统: ext2, vfat<br>文件系统的组成部分：<br>&emsp;&emsp;内核中的模块：ext4, xfs, vfat<br>&emsp;&emsp;用户空间的管理工具：mkfs.ext4, mkfs.xfs,mkfs.vfat<br>Linux的虚拟文件系统：VFS<br><strong>查前支持的文件系统：<code>cat /proc/filesystems</code></strong><br><strong>查前目前的文件系统：<code>lsblk -f</code></strong></p>
@@ -469,7 +460,7 @@
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image"
-      src="/images/touxiang.jpg"
+      src="/images/touxiang.gif"
       alt="Hechao">
   <p class="site-author-name" itemprop="name">Hechao</p>
   <div class="site-description" itemprop="description">BOHC is just a blog of hechao.</div>
@@ -496,6 +487,11 @@
       </div>
   </nav>
 </div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
         <a href="https://github.com/wudihechao" title="GitHub &rarr; https://github.com/wudihechao" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i></a>

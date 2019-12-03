@@ -8,6 +8,7 @@
 <meta name="generator" content="Hexo 3.9.0">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.ico?v=7.4.0">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.ico?v=7.4.0">
+  <link rel="alternate" href="/atom.xml" title="BOHC!" type="application/atom+xml">
 <link rel="stylesheet" href="/css/main.css?v=7.4.0">
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
 <script id="hexo-configurations">
@@ -51,10 +52,12 @@
 <meta property="og:site_name" content="BOHC!">
 <meta property="og:description" content="find和locate介绍在linux中，查找文件一般使用locate和find，locate是根据事先构建好的缩影库或者数据库中的数据查找文件名（非实时，速度快，模糊查找），而find作为一个实时查找命令，通过遍历指定起始路径下文件系统层级结构完成文件查找，功能更加强大（实时查找，速度略慢，精确查找）。  find 命令一般用法find [OPTIONS] [查找起始路径] [查找条件] [处">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190505164447686.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
 <meta property="og:updated_time" content="2019-11-10T04:39:42.722Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux下find命令的一般用法。">
 <meta name="twitter:description" content="find和locate介绍在linux中，查找文件一般使用locate和find，locate是根据事先构建好的缩影库或者数据库中的数据查找文件名（非实时，速度快，模糊查找），而find作为一个实时查找命令，通过遍历指定起始路径下文件系统层级结构完成文件查找，功能更加强大（实时查找，速度略慢，精确查找）。  find 命令一般用法find [OPTIONS] [查找起始路径] [查找条件] [处">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190505164447686.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
   <link rel="canonical" href="https://hewanyue.com/blog/bc40fcc0">
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
@@ -249,7 +252,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hechao">
       <meta itemprop="description" content="BOHC is just a blog of hechao.">
-      <meta itemprop="image" content="/images/touxiang.jpg">
+      <meta itemprop="image" content="/images/touxiang.gif">
     </span>
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="BOHC!">
@@ -291,14 +294,14 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-file-word-o"></i>
               </span>
-              <span>2k</span>
+              <span>1.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
-              <span>5 分钟</span>
+              <span>4 分钟</span>
             </span>
         </div>
       </header>
@@ -308,28 +311,15 @@
 </li>
 <li><p><strong>find 命令一般用法</strong><br>find [OPTIONS] [查找起始路径] [查找条件] [处理动作]<br>[查找起始路径] ：制定具体搜索目标起始路径；默认为当前目录。<br>[查找条件]：指定的查找标准，可以根据文件名，大小，类型，从属关系，时间戳，权限等标准进行；默认为找出指定目录下的所有文件。<br>[处理动作]：对符合查找条件的文件做出的操作，例如删除等操作；默认为输出至标准输出。</p>
 </li>
-<li><p><strong>查找条件</strong></p>
+<li><p><strong>查找条件</strong><br><strong>根据文件名查找</strong>：-name，-iname（不区分文件名中的大小写）<br>ps：不支持正则表达式，支持globe风格的通配符如*、?、[]、[^]</p>
+<p><strong>根据文件大小查找</strong>：-size (+/-) #UNIT 常用单位：c、k、M、G<br>#UNIT :(#-1,#] 为精确查找#大小的文件（大于#-1大小的文件数值显示为#也符合）<br>-#UNIT:[0,#-1] 为查找小于等于#-1大小的文件<br>+#UNTI:(#,∞)为查找大于#大小的文件</p>
+<p><strong>根据文件类型查找</strong>：<br>-type [文件类型]<br>f：普通文件<br>d：目录文件<br>l：符号链接文件<br>b：块设备文件<br>c：字符设备文件<br>p：管道文件<br>s：套接字文件</p>
+<p><strong>根据从属关系查找</strong>：<br>-user USERNAME  或  -uid UID<br>-group GROUPNAME  或  -gid GID<br>查找无属主属组文件：-nouser  ,  -nogroup</p>
+<p><strong>根据时间戳查找</strong>：<br>以“天”为单位：-atime(访问时间)，-mtime(修改时间)（指文件内容修改），-ctime(改变时间)（指权限及从属关系等修改）<br> 以“分钟”为单位：-amin(访问时间)，-mmin(修改时间)（指文件内容修改），-cmin(改变时间)（指权限及从属关系等修改）<br> -atime (+/-) # ，其中#为以现在开始向过去计时的某时间数值。<br> #：[#，#-1)<br> -#：(#,0]<br> +#：(-∞,#-1)<br> <img src="https://img-blog.csdnimg.cn/20190505164447686.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="     #：[#，#-1)
+ -#：(#,0]
+ +#：(-∞,#-1)"><br><strong>根据权限查找</strong><br>-perm mode 指明确定权限；<br>-perm /mode 任何一类用户(u,g,o)的权限中的任何一项(r,w,x)符合条件即满足；<br>-perm -mode 每一个用户(u,g,o)的权限中的每一项(r,w,x)都同时符合条件即满足。</p>
 </li>
 </ol><a id="more"></a>
-<p> <strong>根据文件名查找</strong>：-name，-iname（不区分文件名中的大小写）<br> ps：不支持正则表达式，支持globe风格的通配符如*、?、[]、[^]</p>
-<pre><code>**根据文件大小查找**：-size (+/-) #UNIT 常用单位：c、k、M、G</code></pre><p>#UNIT :(#-1,#] 为精确查找#大小的文件（大于#-1大小的文件数值显示为#也符合）<br>-#UNIT:[0,#-1] 为查找小于等于#-1大小的文件<br>+#UNTI:(#,∞)为查找大于#大小的文件</p>
-<pre><code>**根据文件类型查找**：
--type [文件类型]
-f：普通文件   </code></pre><p>   d：目录文件<br>   l：符号链接文件<br>   b：块设备文件<br>   c：字符设备文件<br>   p：管道文件<br>   s：套接字文件</p>
-<pre><code>**根据从属关系查找**：
--user USERNAME  或  -uid UID
--group GROUPNAME  或  -gid GID
-查找无属主属组文件：-nouser  ,  -nogroup
-**根据时间戳查找**：
-以“天”为单位：-atime(访问时间)，-mtime(修改时间)（指文件内容修改），-ctime(改变时间)（指权限及从属关系等修改）
- 以“分钟”为单位：-amin(访问时间)，-mmin(修改时间)（指文件内容修改），-cmin(改变时间)（指权限及从属关系等修改）
- -atime (+/-) # ，其中#为以现在开始向过去计时的某时间数值。
- #：[#，#-1)
- -#：(#,0]
- +#：(-∞,#-1)
- ![     #：[#，#-1)
- -#：(#,0]
- +#：(-∞,#-1)](https://img-blog.csdnimg.cn/20190505164447686.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70)</code></pre><p> <strong>根据权限查找</strong><br> -perm mode 指明确定权限；<br> -perm /mode 任何一类用户(u,g,o)的权限中的任何一项(r,w,x)符合条件即满足；<br> -perm -mode 每一个用户(u,g,o)的权限中的每一项(r,w,x)都同时符合条件即满足。</p>
 <table>
 <thead>
 <tr>
@@ -338,7 +328,8 @@ f：普通文件   </code></pre><p>   d：目录文件<br>   l：符号链接文
 <th>八进制</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>- - -</td>
 <td>0 0 0</td>
 <td>0</td>
@@ -378,23 +369,15 @@ f：普通文件   </code></pre><p>   d：目录文件<br>   l：符号链接文
 <td>1 1 1</td>
 <td>7</td>
 </tr>
-<tr>
-<td>mode形式 &emsp;可以为 -perm /220</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;也可以为-perm /u+w,g+w 或 -perm /u=w,g=w</td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
+</tbody>
+</table>
+<p>mode形式 &emsp;可以为 -perm /220<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;也可以为-perm /u+w,g+w 或 -perm /u=w,g=w</p>
 <p><strong>组合条件查找</strong>：<br>同时满足：与：-a，-and;默认<br>满足任一：或：-o，-or<br>不满足：非：-not，!</p>
-<p>#]find /… ! A -a ! B  →→   #]find /… ! ( A -o B )  或  #]find /… -not ( A -o B )<br>#]find /… ! A -o ! B  →→   #]find /… ! ( A -a B )  或  #]find /… -not ( A -a B )  </p>
+<p>#]find /… ! A -a ! B  →→   #]find /… ! ( A -o B )  或  #]find /… -not ( A -o B )</p>
+<p>#]find /… ! A -o ! B  →→   #]find /… ! ( A -a B )  或  #]find /… -not ( A -a B )  </p>
 <ol start="4">
-<li><strong>处理动作</strong></li>
+<li><strong>处理动作</strong><br>-print：输出至标准输出；默认动作<br>-ls：类似对查找到的文件执行“ls-l”<br>-delete：删除查找到的文件<br>-fls /PATH/TO/SOMEFILE 将查找到的文件信息长格式保存至指定路径。<br>-ok COMMAND {} \; 对找到的每个文件执行COMMAND命令（可能需要确认）<br>-exec COMMAND {} \; 对找到的每个文件执行COMMAND命定（无需确认）<br>ps：find传递查找到的文件路径之后面的命令时。实现查找出所有符合的文件路径，并一次性传递给后面的命令。但是有些命令不能接受过长的参数，此时命令执行会失效，可用管道find /… | xargs COMMAND执行。</li>
 </ol>
-<p>-print：输出至标准输出；默认动作<br>-ls：类似对查找到的文件执行“ls-l”<br>-delete：删除查找到的文件<br>-fls /PATH/TO/SOMEFILE 将查找到的文件信息长格式保存至指定路径。<br>-ok COMMAND {} ; 对找到的每个文件执行COMMAND命令（可能需要确认）<br>-exec COMMAND {} ; 对找到的每个文件执行COMMAND命定（无需确认）<br>ps：find传递查找到的文件路径之后面的命令时。实现查找出所有符合的文件路径，并一次性传递给后面的命令。但是有些命令不能接受过长的参数，此时命令执行会失效，可用管道find /… | xargs COMMAND执行。</p>
     </div>
           <div class="post-tags">
               <a href="/tags/linux/" rel="tag"><i class="fa fa-tag">linux</i></a>
@@ -500,7 +483,7 @@ f：普通文件   </code></pre><p>   d：目录文件<br>   l：符号链接文
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image"
-      src="/images/touxiang.jpg"
+      src="/images/touxiang.gif"
       alt="Hechao">
   <p class="site-author-name" itemprop="name">Hechao</p>
   <div class="site-description" itemprop="description">BOHC is just a blog of hechao.</div>
@@ -527,6 +510,11 @@ f：普通文件   </code></pre><p>   d：目录文件<br>   l：符号链接文
       </div>
   </nav>
 </div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
         <a href="https://github.com/wudihechao" title="GitHub &rarr; https://github.com/wudihechao" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i></a>
