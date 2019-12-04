@@ -44,21 +44,21 @@
     sidebarPadding: 40
   };
 </script>
-  <meta name="description" content="&emsp;&emsp;一般来说，硬盘上的空间，想要被我们利用，都要经过几个步骤： 1设备识别 2磁盘分区 3创建文件系统（并标记文件系统） 4挂载新的文件系统 5在/etc/fstab文件中创建新条目&emsp; &emsp;&emsp;只有当设备被挂载到文件系统中，才可以被我们访问且使用。&emsp;">
+  <meta name="description" content="&emsp;&emsp;在CentOS系统的主机中加入一块全新的硬盘，是无法直接被我们使用的，因为这块硬盘上没有分区及文件系统，此时是无法被系统识别使用的。">
 <meta name="keywords" content="linux,filesystem">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CentOS7磁盘分区及文件系统">
 <meta property="og:url" content="https://hewanyue.com/blog/2bae1e5c.html">
 <meta property="og:site_name" content="BOHC!">
-<meta property="og:description" content="&emsp;&emsp;一般来说，硬盘上的空间，想要被我们利用，都要经过几个步骤： 1设备识别 2磁盘分区 3创建文件系统（并标记文件系统） 4挂载新的文件系统 5在/etc/fstab文件中创建新条目&emsp; &emsp;&emsp;只有当设备被挂载到文件系统中，才可以被我们访问且使用。&emsp;">
+<meta property="og:description" content="&emsp;&emsp;在CentOS系统的主机中加入一块全新的硬盘，是无法直接被我们使用的，因为这块硬盘上没有分区及文件系统，此时是无法被系统识别使用的。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190815093309132.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190815095231719.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190815100433738.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
-<meta property="og:updated_time" content="2019-11-10T04:33:36.877Z">
+<meta property="og:updated_time" content="2019-12-04T06:00:24.309Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CentOS7磁盘分区及文件系统">
-<meta name="twitter:description" content="&emsp;&emsp;一般来说，硬盘上的空间，想要被我们利用，都要经过几个步骤： 1设备识别 2磁盘分区 3创建文件系统（并标记文件系统） 4挂载新的文件系统 5在/etc/fstab文件中创建新条目&emsp; &emsp;&emsp;只有当设备被挂载到文件系统中，才可以被我们访问且使用。&emsp;">
+<meta name="twitter:description" content="&emsp;&emsp;在CentOS系统的主机中加入一块全新的硬盘，是无法直接被我们使用的，因为这块硬盘上没有分区及文件系统，此时是无法被系统识别使用的。">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190815093309132.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
   <link rel="canonical" href="https://hewanyue.com/blog/2bae1e5c">
 <script id="page-configurations">
@@ -201,10 +201,10 @@
     <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">65</span></a>
   </li>
         <li class="menu-item menu-item-categories">
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">7</span></a>
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">10</span></a>
   </li>
         <li class="menu-item menu-item-archives">
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">32</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">31</span></a>
   </li>
         <li class="menu-item menu-item-friends">
     <a href="/friends/" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i>友链</a>
@@ -296,25 +296,27 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-file-word-o"></i>
               </span>
-              <span>7.4k</span>
+              <span>7.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
-              <span>18 分钟</span>
+              <span>19 分钟</span>
             </span>
         </div>
       </header>
     <div class="post-body" itemprop="articleBody">
-        <p><strong>&emsp;&emsp;一般来说，硬盘上的空间，想要被我们利用，都要经过几个步骤：</strong></p><ul>
+        <p>&emsp;&emsp;在CentOS系统的主机中加入一块全新的硬盘，是无法直接被我们使用的，因为这块硬盘上没有分区及文件系统，此时是无法被系统识别使用的。<br><a id="more"></a><br>&emsp;&emsp;<strong>一般来说，硬盘上的空间，想要被我们利用，都要经过几个步骤：</strong></p>
+<ul>
 <li>1设备识别</li>
 <li>2磁盘分区</li>
 <li>3创建文件系统（并标记文件系统）</li>
 <li>4挂载新的文件系统</li>
 <li>5在/etc/fstab文件中创建新条目<br>&emsp;</li>
-</ul><p><strong>&emsp;&emsp;只有当设备被挂载到文件系统中，才可以被我们访问且使用。</strong><br>&emsp;</p><a id="more"></a>
+</ul>
+<p>&emsp;&emsp;<strong>只有当设备被挂载到文件系统中，才可以被我们访问且使用。</strong><br>&emsp;</p>
 <h2 id="1-设备识别"><a href="#1-设备识别" class="headerlink" title="1 设备识别"></a>1 设备识别</h2><p> 新插入硬盘设备，没法被系统立马识别到，需要手动扫描，才可以发现并识别新设备<br><code>echo "- - -" > /sys/class/scsi_host/host0/scan</code><br>/sys/class/scsi_host/        目录下面有几个host 就扫描几次。<br>&emsp;<br>&emsp;</p>
 <h2 id="2-磁盘分区"><a href="#2-磁盘分区" class="headerlink" title="2 磁盘分区"></a>2 磁盘分区</h2><h3 id="2-1为什么要分区"><a href="#2-1为什么要分区" class="headerlink" title="2.1为什么要分区"></a>2.1为什么要分区</h3><ul>
 <li>优化I/O性能</li>
@@ -398,19 +400,19 @@
   <ul class="popular-posts" style="margin-top: 10px;
     margin-bottom: 10px;">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/133d68.html" rel="bookmark">CentOS6源码编译 安装linunx内核最新版5.2.9</a></div>
+      <div class="popular-posts-title"><a href="/blog/b365780e.html" rel="bookmark">linux上部署与配置tomcat</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/bc40fcc0.html" rel="bookmark">Linux下find命令的一般用法。</a></div>
+      <div class="popular-posts-title"><a href="/blog/57d66c4.html" rel="bookmark">LAMP架构实现PowerDNS</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/a96e917a.html" rel="bookmark">for循环实现的小脚本</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/8dcd5ad7.html" rel="bookmark">VIM编辑器的整理总结</a></div>
+      <div class="popular-posts-title"><a href="/blog/8a189dcf.html" rel="bookmark">自动化运维之Ansible</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/blog/b124800c.html" rel="bookmark">二进制安装及源码编译安装mariadb数据库</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/8ddda8e.html" rel="bookmark">部署自动化安装及cobber(Http+TFTP+PXE+kickstart无人职守批量安装精简版Linux系统)</a></div>
     </li>
   </ul>
 </div>
@@ -469,13 +471,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>

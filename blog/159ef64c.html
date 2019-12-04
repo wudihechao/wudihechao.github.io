@@ -52,7 +52,7 @@
 <meta property="og:site_name" content="BOHC!">
 <meta property="og:description" content="&emsp;&emsp;所谓LVS，是Linux Virtual Server的缩写，直译就是linux虚拟服务器。LVS说是虚拟服务器，并不是说这个服务器本身不存在，而是指一般用户访问企业web网站时，访问的都是LVS，而LVS本身上面没有任何web界面资源，真实的界面以及服务都在后端web服务器上，LVS服务器起到的是一个指引分流的作用，所以相对来说，后端的web服务器是real server">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-10T04:33:36.907Z">
+<meta property="og:updated_time" content="2019-12-04T03:45:19.496Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="企业级应用：负载均衡层——LVS调度器详解">
 <meta name="twitter:description" content="&emsp;&emsp;所谓LVS，是Linux Virtual Server的缩写，直译就是linux虚拟服务器。LVS说是虚拟服务器，并不是说这个服务器本身不存在，而是指一般用户访问企业web网站时，访问的都是LVS，而LVS本身上面没有任何web界面资源，真实的界面以及服务都在后端web服务器上，LVS服务器起到的是一个指引分流的作用，所以相对来说，后端的web服务器是real server">
@@ -197,10 +197,10 @@
     <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">65</span></a>
   </li>
         <li class="menu-item menu-item-categories">
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">7</span></a>
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">10</span></a>
   </li>
         <li class="menu-item menu-item-archives">
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">32</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">31</span></a>
   </li>
         <li class="menu-item menu-item-friends">
     <a href="/friends/" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i>友链</a>
@@ -304,7 +304,7 @@
         </div>
       </header>
     <div class="post-body" itemprop="articleBody">
-        <p>&emsp;&emsp;所谓LVS，是Linux Virtual Server的缩写，直译就是linux虚拟服务器。LVS说是虚拟服务器，并不是说这个服务器本身不存在，而是指一般用户访问企业web网站时，访问的都是LVS，而LVS本身上面没有任何web界面资源，真实的界面以及服务都在后端web服务器上，LVS服务器起到的是一个指引分流的作用，所以相对来说，后端的web服务器是real server,而LVS就被称为是virtual server（虚拟服务器）了。<br>&emsp;&emsp;既然这个服务器上没有页面资源，又无法提供服务，那为什么还有必要部署它来多此一举呢？因为通常来说，我们访问的web服务，都不是由单一服务器主机来支撑的，背后都有好几台、甚至成百上千台web服务器集群共同提供，一台单一主机是无法支撑大的访问并发的，需要很多台服务器来共同分担压力，这时就需要一个专门的服务器来进行调度，将大量访问请求分配到不同的web服务器上，减小每台服务器的压力，实现负载均衡。<br>&emsp;&emsp;本文将详细介绍LVS调度器的工作模式及配置实例。</p><a id="more"></a>
+        <p>&emsp;&emsp;所谓LVS，是Linux Virtual Server的缩写，直译就是linux虚拟服务器。LVS说是虚拟服务器，并不是说这个服务器本身不存在，而是指一般用户访问企业web网站时，访问的都是LVS，而LVS本身上面没有任何web界面资源，真实的界面以及服务都在后端web服务器上，LVS服务器起到的是一个指引分流的作用，所以相对来说，后端的web服务器是real server,而LVS就被称为是virtual server（虚拟服务器）了。<br>&emsp;&emsp;既然这个服务器上没有页面资源，又无法提供服务，那为什么还有必要部署它来多此一举呢？因为通常来说，我们访问的web服务，都不是由单一服务器主机来支撑的，背后都有好几台、甚至成百上千台web服务器集群共同提供，一台单一主机是无法支撑大的访问并发的，需要很多台服务器来共同分担压力，这时就需要一个专门的服务器来进行调度，将大量访问请求分配到不同的web服务器上，减小每台服务器的压力，实现负载均衡。<br>&emsp;&emsp;本文将详细介绍LVS调度器的工作模式及配置实例。<br><a id="more"></a></p>
 <h3 id="集群和分布式"><a href="#集群和分布式" class="headerlink" title="集群和分布式"></a>集群和分布式</h3><p>&emsp;&emsp;集群：同一个业务系统，部署在多台服务器上。集群中，每一台服务器实现的功能没有差别，数据和代码都是一样的。<br>&emsp;&emsp;分布式：一个业务被拆成多个子业务，或者本身就是不同的业务，部署在多台服务器上。分布式中，每一台服务器实现的功能是有差别的，数据和代码也是不一样的，分布式每台服务器功能加起来，才是完整的业务。<br>&emsp;&emsp;分布式是以缩短单个任务的执行时间来提升效率的，而集群则是通过提高单位时间内执行的任务数来提升效率。<br>&emsp;&emsp;对于大型网站，访问用户很多，实现一个群集，在前面部署一个负载均衡服务器，后面几台服务器完成同一业务。如果有用户进行相应业务访问时，负载均衡器根据后端哪台服务器的负载情况，决定由给哪一台去完成响应，并且一台服务器垮了，其它的服务器可以顶上来。分布式的每一个节点，都完成不同的业务，如果一个节点垮了，那这个业务可能就会失败。</p>
 <h4 id="Cluster概念"><a href="#Cluster概念" class="headerlink" title="Cluster概念"></a>Cluster概念</h4><p>&emsp;&emsp;Cluster：集群,为解决某个特定问题将多台计算机组合起来形成的单个系统。<br>;Linux Cluster类型：</p>
 <ul>
@@ -510,13 +510,13 @@ server-address</code><br>&emsp;&emsp;rip[:port] 如省略port，不作端口映�
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>

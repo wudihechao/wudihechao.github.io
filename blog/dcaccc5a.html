@@ -44,19 +44,19 @@
     sidebarPadding: 40
   };
 </script>
-  <meta name="description" content="&emsp;&emsp;所谓LAMP架构，是指：&emsp;&emsp;&emsp;&emsp;L：linux&emsp;&emsp;&emsp;&emsp;A：apache (httpd)&emsp;&emsp;&emsp;&emsp;M：mysql, mariadb&emsp;&emsp;&emsp;&emsp;（或M：memcached）&emsp;&emsp;&emsp;&emsp;P：p">
+  <meta name="description" content="&emsp;&emsp;企业中web业务最常见的架构就是lamp架构、lnmp架构或者lnmt架构。本文将详细讲解lamp架构的源码编译方式的部署实现。">
 <meta name="keywords" content="编译安装,LAMP,总结">
 <meta property="og:type" content="article">
 <meta property="og:title" content="源码编译Apache和PHP实现lamp架构">
 <meta property="og:url" content="https://hewanyue.com/blog/dcaccc5a.html">
 <meta property="og:site_name" content="BOHC!">
-<meta property="og:description" content="&emsp;&emsp;所谓LAMP架构，是指：&emsp;&emsp;&emsp;&emsp;L：linux&emsp;&emsp;&emsp;&emsp;A：apache (httpd)&emsp;&emsp;&emsp;&emsp;M：mysql, mariadb&emsp;&emsp;&emsp;&emsp;（或M：memcached）&emsp;&emsp;&emsp;&emsp;P：p">
+<meta property="og:description" content="&emsp;&emsp;企业中web业务最常见的架构就是lamp架构、lnmp架构或者lnmt架构。本文将详细讲解lamp架构的源码编译方式的部署实现。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191018193028582.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
-<meta property="og:updated_time" content="2019-11-11T09:19:24.684Z">
+<meta property="og:updated_time" content="2019-12-04T06:13:26.626Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="源码编译Apache和PHP实现lamp架构">
-<meta name="twitter:description" content="&emsp;&emsp;所谓LAMP架构，是指：&emsp;&emsp;&emsp;&emsp;L：linux&emsp;&emsp;&emsp;&emsp;A：apache (httpd)&emsp;&emsp;&emsp;&emsp;M：mysql, mariadb&emsp;&emsp;&emsp;&emsp;（或M：memcached）&emsp;&emsp;&emsp;&emsp;P：p">
+<meta name="twitter:description" content="&emsp;&emsp;企业中web业务最常见的架构就是lamp架构、lnmp架构或者lnmt架构。本文将详细讲解lamp架构的源码编译方式的部署实现。">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20191018193028582.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
   <link rel="canonical" href="https://hewanyue.com/blog/dcaccc5a">
 <script id="page-configurations">
@@ -199,10 +199,10 @@
     <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">65</span></a>
   </li>
         <li class="menu-item menu-item-categories">
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">7</span></a>
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">10</span></a>
   </li>
         <li class="menu-item menu-item-archives">
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">32</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">31</span></a>
   </li>
         <li class="menu-item menu-item-friends">
     <a href="/friends/" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i>友链</a>
@@ -294,7 +294,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-file-word-o"></i>
               </span>
-              <span>4.9k</span>
+              <span>5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-divider">•</span>
@@ -306,7 +306,7 @@
         </div>
       </header>
     <div class="post-body" itemprop="articleBody">
-        <p>&emsp;&emsp;所谓LAMP架构，是指：<br>&emsp;&emsp;&emsp;&emsp;<strong>L</strong>：linux<br>&emsp;&emsp;&emsp;&emsp;<strong>A</strong>：apache (httpd)<br>&emsp;&emsp;&emsp;&emsp;<strong>M</strong>：mysql, mariadb<br>&emsp;&emsp;&emsp;&emsp;（或M：memcached）<br>&emsp;&emsp;&emsp;&emsp;<strong>P</strong>：php, perl, python<br>&emsp;&emsp;WEB资源类型：<br>&emsp;&emsp;&emsp;&emsp;静态资源：原始形式与响应内容一致，在客户端浏览器执行<br>&emsp;&emsp;&emsp;&emsp;动态资源：原始形式通常为程序文件，需要在服务器端执行之后，将执行结果返回给客户端</p><a id="more"></a>
+        <p>&emsp;&emsp;企业中web业务最常见的架构就是lamp架构、lnmp架构或者lnmt架构。本文将详细讲解lamp架构的源码编译方式的部署实现。<br><a id="more"></a><br>&emsp;&emsp;所谓LAMP架构，是指：<br>&emsp;&emsp;&emsp;&emsp;<strong>L</strong>：linux<br>&emsp;&emsp;&emsp;&emsp;<strong>A</strong>：apache (httpd)<br>&emsp;&emsp;&emsp;&emsp;<strong>M</strong>：mysql, mariadb<br>&emsp;&emsp;&emsp;&emsp;（或M：memcached）<br>&emsp;&emsp;&emsp;&emsp;<strong>P</strong>：php, perl, python<br>&emsp;&emsp;WEB资源类型：<br>&emsp;&emsp;&emsp;&emsp;静态资源：原始形式与响应内容一致，在客户端浏览器执行<br>&emsp;&emsp;&emsp;&emsp;动态资源：原始形式通常为程序文件，需要在服务器端执行之后，将执行结果返回给客户端</p>
 <h3 id="LAMP工作原理"><a href="#LAMP工作原理" class="headerlink" title="LAMP工作原理"></a>LAMP工作原理</h3><p><img src="https://img-blog.csdnimg.cn/20191018193028582.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;httpd：接收用户的web请求；静态资源则直接响应；动态资源为php脚本，对此类资源的请求将交由php来运行<br>&emsp;&emsp;php：运行php程序<br>&emsp;&emsp;MariaDB：数据管理系统</p>
 <h3 id="httpd与php结合的方式"><a href="#httpd与php结合的方式" class="headerlink" title="httpd与php结合的方式"></a>httpd与php结合的方式</h3><p>1、modules (将php编译成为httpd的模块,默认方式)<br> MPM:<br>prefork: libphp5.so<br>event, worker: libphp5-zts.so<br>2、FastCGI</p>
 <p>&emsp;&emsp;本文将分别展示以模块方式以及FCGI的方式，源码编译apache、php、mariadb来实现LAMP架构。</p>
@@ -387,10 +387,10 @@
   <ul class="popular-posts" style="margin-top: 10px;
     margin-bottom: 10px;">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/133d68.html" rel="bookmark">CentOS6源码编译 安装linunx内核最新版5.2.9</a></div>
+      <div class="popular-posts-title"><a href="/blog/b124800c.html" rel="bookmark">二进制安装及源码编译安装mariadb数据库</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/b124800c.html" rel="bookmark">二进制安装及源码编译安装mariadb数据库</a></div>
+      <div class="popular-posts-title"><a href="/blog/133d68.html" rel="bookmark">CentOS6源码编译 安装linunx内核最新版5.2.9</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/blog/57d66c4.html" rel="bookmark">LAMP架构实现PowerDNS</a></div>
@@ -455,13 +455,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>

@@ -196,10 +196,10 @@
     <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">65</span></a>
   </li>
         <li class="menu-item menu-item-categories">
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">7</span></a>
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">10</span></a>
   </li>
         <li class="menu-item menu-item-archives">
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">32</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">31</span></a>
   </li>
         <li class="menu-item menu-item-friends">
     <a href="/friends/" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i>友链</a>
@@ -271,6 +271,8 @@
                 <i class="fa fa-folder-o"></i>
               </span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/故障记录/" itemprop="url" rel="index"><span itemprop="name">故障记录</span></a></span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/故障记录/linux基础/" itemprop="url" rel="index"><span itemprop="name">linux基础</span></a></span>
             </span>
             <span id="/blog/5da16ceb.html" class="post-meta-item leancloud_visitors" data-flag-title="报错：Header V3 RSA_SHA256 Signature, key ID 2f86d6a1_ NOKEY" title="阅读次数">
               <span class="post-meta-divider">•</span>
@@ -304,7 +306,7 @@
         </div>
       </header>
     <div class="post-body" itemprop="articleBody">
-          <p>&emsp;&emsp;博主在CentOS8上dnf安装PHP的依赖包libmcrypt-devel的时候，死活装不上，一直报错。看了下说是依赖项libmcrypt装不上，报错原因说的是是秘钥校验时缺少主机名。这很奇怪，因为用的是阿里的epel源，之前安装各种软件包都没问题，这次突然就秘钥验证不过了。<br>
+          <p>&emsp;&emsp;博主在CentOS8上dnf安装PHP的依赖包libmcrypt-devel的时候，死活装不上，一直报错。看了下说是依赖项libmcrypt装不上，报错原因说的是是秘钥校验时缺少主机名。这很奇怪，因为用的是阿里的epel源，之前安装各种软件包都没问题，这次突然就秘钥验证不过了。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/blog/5da16ceb.html#more" rel="contents">
@@ -454,7 +456,7 @@
         </div>
       </header>
     <div class="post-body" itemprop="articleBody">
-          <p>&emsp;&emsp;所谓LVS，是Linux Virtual Server的缩写，直译就是linux虚拟服务器。LVS说是虚拟服务器，并不是说这个服务器本身不存在，而是指一般用户访问企业web网站时，访问的都是LVS，而LVS本身上面没有任何web界面资源，真实的界面以及服务都在后端web服务器上，LVS服务器起到的是一个指引分流的作用，所以相对来说，后端的web服务器是real server,而LVS就被称为是virtual server（虚拟服务器）了。<br>&emsp;&emsp;既然这个服务器上没有页面资源，又无法提供服务，那为什么还有必要部署它来多此一举呢？因为通常来说，我们访问的web服务，都不是由单一服务器主机来支撑的，背后都有好几台、甚至成百上千台web服务器集群共同提供，一台单一主机是无法支撑大的访问并发的，需要很多台服务器来共同分担压力，这时就需要一个专门的服务器来进行调度，将大量访问请求分配到不同的web服务器上，减小每台服务器的压力，实现负载均衡。<br>&emsp;&emsp;本文将详细介绍LVS调度器的工作模式及配置实例。</p>
+          <p>&emsp;&emsp;所谓LVS，是Linux Virtual Server的缩写，直译就是linux虚拟服务器。LVS说是虚拟服务器，并不是说这个服务器本身不存在，而是指一般用户访问企业web网站时，访问的都是LVS，而LVS本身上面没有任何web界面资源，真实的界面以及服务都在后端web服务器上，LVS服务器起到的是一个指引分流的作用，所以相对来说，后端的web服务器是real server,而LVS就被称为是virtual server（虚拟服务器）了。<br>&emsp;&emsp;既然这个服务器上没有页面资源，又无法提供服务，那为什么还有必要部署它来多此一举呢？因为通常来说，我们访问的web服务，都不是由单一服务器主机来支撑的，背后都有好几台、甚至成百上千台web服务器集群共同提供，一台单一主机是无法支撑大的访问并发的，需要很多台服务器来共同分担压力，这时就需要一个专门的服务器来进行调度，将大量访问请求分配到不同的web服务器上，减小每台服务器的压力，实现负载均衡。<br>&emsp;&emsp;本文将详细介绍LVS调度器的工作模式及配置实例。<br>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/blog/159ef64c.html#more" rel="contents">
@@ -517,7 +519,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-file-word-o"></i>
               </span>
-              <span>4.9k</span>
+              <span>5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-divider">•</span>
@@ -529,7 +531,7 @@
         </div>
       </header>
     <div class="post-body" itemprop="articleBody">
-          <p>&emsp;&emsp;所谓LAMP架构，是指：<br>&emsp;&emsp;&emsp;&emsp;<strong>L</strong>：linux<br>&emsp;&emsp;&emsp;&emsp;<strong>A</strong>：apache (httpd)<br>&emsp;&emsp;&emsp;&emsp;<strong>M</strong>：mysql, mariadb<br>&emsp;&emsp;&emsp;&emsp;（或M：memcached）<br>&emsp;&emsp;&emsp;&emsp;<strong>P</strong>：php, perl, python<br>&emsp;&emsp;WEB资源类型：<br>&emsp;&emsp;&emsp;&emsp;静态资源：原始形式与响应内容一致，在客户端浏览器执行<br>&emsp;&emsp;&emsp;&emsp;动态资源：原始形式通常为程序文件，需要在服务器端执行之后，将执行结果返回给客户端</p>
+          <p>&emsp;&emsp;企业中web业务最常见的架构就是lamp架构、lnmp架构或者lnmt架构。本文将详细讲解lamp架构的源码编译方式的部署实现。<br>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/blog/dcaccc5a.html#more" rel="contents">
@@ -604,7 +606,7 @@
         </div>
       </header>
     <div class="post-body" itemprop="articleBody">
-          <p>&emsp;&emsp;PowerDNS 是一个跨平台的开源DNS服务组件，它是高性能的域名服务器，除了支持普通的BIND配置文件，PowerDNS还可以从MySQL,Oracle,PostgreSQL等的数据库读取数据。PowerDNS安装了Poweradmin(基于php实现)，能实现Web管理DNS记录，非常方便。<br>&emsp;&emsp;ps:本次过程是在centos7系统上完成。</p>
+          <p>&emsp;&emsp;PowerDNS 是一个跨平台的开源DNS服务组件，它是高性能的域名服务器，除了支持普通的BIND配置文件，PowerDNS还可以从MySQL,Oracle,PostgreSQL等的数据库读取数据。PowerDNS安装了Poweradmin(基于php实现)，能实现Web管理DNS记录，非常方便。<br>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/blog/57d66c4.html#more" rel="contents">
@@ -679,7 +681,7 @@
         </div>
       </header>
     <div class="post-body" itemprop="articleBody">
-          <p>&emsp;&emsp;近期想在新出的CentOS8上安装一下最新版的mariadb10.4.8，不过又嫌源码编译太麻烦费时间。就想去找找有没有yum源可用。<br>&emsp;&emsp;果然官网上已经放出了yum安装的repo源了，也支持到CentOS8了——<a href="http://mirror.aarnet.edu.au/pub/MariaDB//mariadb-10.4.8/yum/centos/8/x86_64/" rel="noopener external nofollow noreferrer" target="_blank">http://mirror.aarnet.edu.au/pub/MariaDB//mariadb-10.4.8/yum/centos/8/x86_64/</a><br>&emsp;&emsp;那就手动加一个yum源吧。<br>&emsp;&emsp;<code>vim /etc/yum.repos.d/mariadb1048.repo</code><br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[mariadb10.4.8]</span></span><br><span class="line"><span class="attr">name</span>=Mariadb10.<span class="number">4.8</span> RPM repository for  Linux <span class="variable">$releasever</span> - <span class="variable">$basearch</span></span><br><span class="line"><span class="attr">baseurl</span>=http://mirror.aarnet.edu.au/pub/MariaDB//mariadb-<span class="number">10.4</span>.<span class="number">8</span>/yum/centos/<span class="variable">$releasever</span>/<span class="variable">$basearch</span>/</span><br><span class="line"><span class="attr">enabled</span>=<span class="number">1</span></span><br><span class="line"><span class="attr">gpgcheck</span>=<span class="number">0</span></span><br></pre></td></tr></table></figure></p>
+          <p>&emsp;&emsp;近期想在新出的CentOS8上安装一下最新版的mariadb10.4.8，不过又嫌源码编译太麻烦费时间。就想去找找有没有yum源可用。<br>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/blog/72c5296a.html#more" rel="contents">
@@ -720,7 +722,7 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/linux进阶/" itemprop="url" rel="index"><span itemprop="name">linux进阶</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a></span>
             </span>
             <span id="/blog/8a189dcf.html" class="post-meta-item leancloud_visitors" data-flag-title="自动化运维之Ansible" title="阅读次数">
               <span class="post-meta-divider">•</span>
@@ -754,9 +756,7 @@
         </div>
       </header>
     <div class="post-body" itemprop="articleBody">
-          <h3 id="企业实际应用场景分析"><a href="#企业实际应用场景分析" class="headerlink" title="企业实际应用场景分析"></a>企业实际应用场景分析</h3><ul>
-<li>Dev开发环境<br>&emsp;&emsp;使用者：程序员<br>&emsp;&emsp;功能：程序员开发软件，测试BUG的环境<br>&emsp;&emsp;管理者：程序员</li>
-<li>测试环境<br>&emsp;&emsp;使用者：QA测试工程师<br>&emsp;&emsp;功能：测试经过Dev环境测试通过的软件的功能<br>&emsp;&emsp;管理者：运维<br>&emsp;&emsp;说明：测试环境往往有多套,测试环境满足测试功能即可，不宜过多<br>&emsp;&emsp;1、测试人员希望测试环境有多套,公司的产品多产品线并发，即多个版本，<br>意味着多个版本同步测试<br>&emsp;&emsp;2、通常测试环境有多少套和产品线数量保持一样
+          <p>&emsp;&emsp;ansible是新出现的自动化运维工具，基于Python开发，集合了众多运维工具（puppet、cfengine、chef、func、fabric）的优点，实现了批量系统配置、批量程序部署、批量运行命令等功能。<br>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/blog/8a189dcf.html#more" rel="contents">
@@ -831,7 +831,10 @@
         </div>
       </header>
     <div class="post-body" itemprop="articleBody">
-          <p>&emsp;&emsp; MHA(master high   availability)目前是MySQL高可用方面是一个相对成熟的解决方案。在切换过程中，mha能做到0-30s内自动完成数据库的切换，并且在切换过程中最大的保持数据的一致性，以达到真正意义上的高可用</p><p>&emsp;&emsp; MHA的组成：</p>
+          <p>&emsp;&emsp; MHA(master high   availability)目前是MySQL高可用方面是一个相对成熟的解决方案。在切换过程中，mha能做到0-30s内自动完成数据库的切换，并且在切换过程中最大的保持数据的一致性，以达到真正意义上的高可用</p>
+<p>&emsp;&emsp; MHA的组成：</p>
+<p>&emsp;&emsp; MHA Manager(管理节点)和MHA Node(数据节点)。MHA Manager可以独立部署在一台独立的机器上，管理多个集群，也可以部署在从从库上。</p>
+<p>&emsp;&emsp; 当Master出现故障的时候，它可以自动将最新的数据的Slave提升为新的Master，然后将所有的Slave重新指向新的Master，整个故障转移过程是完全透明的。<br>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/blog/108203a7.html#more" rel="contents">
@@ -906,7 +909,7 @@
         </div>
       </header>
     <div class="post-body" itemprop="articleBody">
-          <p><strong>一、多实例</strong></p><p>1、概述</p><p>&emsp;&emsp; MySQL多实例就是在一台机器上开启多个不同的服务端口（如：3306,3307），运行多个MySQL服务进程，通过不同的socket监听不同的服务端口来提供各自的服务</p><p>2.1、优点</p><p>1）有效利用服务器资源</p><p>&emsp;&emsp; 当单个服务器资源过剩时，可以充分利用剩余的资源来提供更多的服务；<br>2）节约服务器资源</p>
+          <p>&emsp;&emsp; MySQL多实例就是在一台机器上开启多个不同的服务端口（如：3306,3307），运行多个MySQL服务进程，通过不同的socket监听不同的服>务端口来提供各自的服务,本文基于此，来展示如何实现级联复制和读写分离。<br>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/blog/d006fe9f.html#more" rel="contents">
@@ -948,6 +951,8 @@
                 <i class="fa fa-folder-o"></i>
               </span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/NotOnlySQL/" itemprop="url" rel="index"><span itemprop="name">NotOnlySQL</span></a></span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/NotOnlySQL/故障记录/" itemprop="url" rel="index"><span itemprop="name">故障记录</span></a></span>
             </span>
             <span id="/blog/4f0efae7.html" class="post-meta-item leancloud_visitors" data-flag-title="关于mariadb10.4.8二进制安装及源码编译后设置密码无效的一些发现" title="阅读次数">
               <span class="post-meta-divider">•</span>
@@ -1034,13 +1039,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>

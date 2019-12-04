@@ -44,19 +44,19 @@
     sidebarPadding: 40
   };
 </script>
-  <meta name="description" content="find和locate介绍在linux中，查找文件一般使用locate和find，locate是根据事先构建好的缩影库或者数据库中的数据查找文件名（非实时，速度快，模糊查找），而find作为一个实时查找命令，通过遍历指定起始路径下文件系统层级结构完成文件查找，功能更加强大（实时查找，速度略慢，精确查找）。  find 命令一般用法find [OPTIONS] [查找起始路径] [查找条件] [处">
+  <meta name="description" content="find和locate介绍在linux中，查找文件一般使用locate和find，locate是根据事先构建好的缩影库或者数据库中的数据查找文件名（非实时，速度快，模糊查找），而find作为一个实时查找命令，通过遍历指定起始路径下文件系统层级结构完成文件查找，功能更加强大（实时查找，速度略慢，精确查找）。">
 <meta name="keywords" content="linux,find命令">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux下find命令的一般用法。">
 <meta property="og:url" content="https://hewanyue.com/blog/bc40fcc0.html">
 <meta property="og:site_name" content="BOHC!">
-<meta property="og:description" content="find和locate介绍在linux中，查找文件一般使用locate和find，locate是根据事先构建好的缩影库或者数据库中的数据查找文件名（非实时，速度快，模糊查找），而find作为一个实时查找命令，通过遍历指定起始路径下文件系统层级结构完成文件查找，功能更加强大（实时查找，速度略慢，精确查找）。  find 命令一般用法find [OPTIONS] [查找起始路径] [查找条件] [处">
+<meta property="og:description" content="find和locate介绍在linux中，查找文件一般使用locate和find，locate是根据事先构建好的缩影库或者数据库中的数据查找文件名（非实时，速度快，模糊查找），而find作为一个实时查找命令，通过遍历指定起始路径下文件系统层级结构完成文件查找，功能更加强大（实时查找，速度略慢，精确查找）。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190505164447686.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
-<meta property="og:updated_time" content="2019-11-10T04:39:42.722Z">
+<meta property="og:updated_time" content="2019-12-04T03:45:58.183Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux下find命令的一般用法。">
-<meta name="twitter:description" content="find和locate介绍在linux中，查找文件一般使用locate和find，locate是根据事先构建好的缩影库或者数据库中的数据查找文件名（非实时，速度快，模糊查找），而find作为一个实时查找命令，通过遍历指定起始路径下文件系统层级结构完成文件查找，功能更加强大（实时查找，速度略慢，精确查找）。  find 命令一般用法find [OPTIONS] [查找起始路径] [查找条件] [处">
+<meta name="twitter:description" content="find和locate介绍在linux中，查找文件一般使用locate和find，locate是根据事先构建好的缩影库或者数据库中的数据查找文件名（非实时，速度快，模糊查找），而find作为一个实时查找命令，通过遍历指定起始路径下文件系统层级结构完成文件查找，功能更加强大（实时查找，速度略慢，精确查找）。">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190505164447686.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
   <link rel="canonical" href="https://hewanyue.com/blog/bc40fcc0">
 <script id="page-configurations">
@@ -199,10 +199,10 @@
     <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">65</span></a>
   </li>
         <li class="menu-item menu-item-categories">
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">7</span></a>
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">10</span></a>
   </li>
         <li class="menu-item menu-item-archives">
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">32</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">31</span></a>
   </li>
         <li class="menu-item menu-item-friends">
     <a href="/friends/" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i>友链</a>
@@ -307,10 +307,8 @@
       </header>
     <div class="post-body" itemprop="articleBody">
         <ol>
-<li><p><strong>find和locate介绍</strong><br>在linux中，查找文件一般使用locate和find，locate是根据事先构建好的缩影库或者数据库中的数据查找文件名（非实时，速度快，模糊查找），而find作为一个实时查找命令，通过遍历指定起始路径下文件系统层级结构完成文件查找，功能更加强大（实时查找，速度略慢，精确查找）。</p>
-</li>
-<li><p><strong>find 命令一般用法</strong><br>find [OPTIONS] [查找起始路径] [查找条件] [处理动作]<br>[查找起始路径] ：制定具体搜索目标起始路径；默认为当前目录。<br>[查找条件]：指定的查找标准，可以根据文件名，大小，类型，从属关系，时间戳，权限等标准进行；默认为找出指定目录下的所有文件。<br>[处理动作]：对符合查找条件的文件做出的操作，例如删除等操作；默认为输出至标准输出。</p>
-</li>
+<li><strong>find和locate介绍</strong><br>在linux中，查找文件一般使用locate和find，locate是根据事先构建好的缩影库或者数据库中的数据查找文件名（非实时，速度快，模糊查找），而find作为一个实时查找命令，通过遍历指定起始路径下文件系统层级结构完成文件查找，功能更加强大（实时查找，速度略慢，精确查找）。<a id="more"></a> </li>
+<li><strong>find 命令一般用法</strong><br>find [OPTIONS] [查找起始路径] [查找条件] [处理动作]<br>[查找起始路径] ：制定具体搜索目标起始路径；默认为当前目录。<br>[查找条件]：指定的查找标准，可以根据文件名，大小，类型，从属关系，时间戳，权限等标准进行；默认为找出指定目录下的所有文件。<br>[处理动作]：对符合查找条件的文件做出的操作，例如删除等操作；默认为输出至标准输出。</li>
 <li><p><strong>查找条件</strong><br><strong>根据文件名查找</strong>：-name，-iname（不区分文件名中的大小写）<br>ps：不支持正则表达式，支持globe风格的通配符如*、?、[]、[^]</p>
 <p><strong>根据文件大小查找</strong>：-size (+/-) #UNIT 常用单位：c、k、M、G<br>#UNIT :(#-1,#] 为精确查找#大小的文件（大于#-1大小的文件数值显示为#也符合）<br>-#UNIT:[0,#-1] 为查找小于等于#-1大小的文件<br>+#UNTI:(#,∞)为查找大于#大小的文件</p>
 <p><strong>根据文件类型查找</strong>：<br>-type [文件类型]<br>f：普通文件<br>d：目录文件<br>l：符号链接文件<br>b：块设备文件<br>c：字符设备文件<br>p：管道文件<br>s：套接字文件</p>
@@ -319,7 +317,7 @@
  -#：(#,0]
  +#：(-∞,#-1)"><br><strong>根据权限查找</strong><br>-perm mode 指明确定权限；<br>-perm /mode 任何一类用户(u,g,o)的权限中的任何一项(r,w,x)符合条件即满足；<br>-perm -mode 每一个用户(u,g,o)的权限中的每一项(r,w,x)都同时符合条件即满足。</p>
 </li>
-</ol><a id="more"></a>
+</ol>
 <table>
 <thead>
 <tr>
@@ -422,28 +420,25 @@
   <ul class="popular-posts" style="margin-top: 10px;
     margin-bottom: 10px;">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/133d68.html" rel="bookmark">CentOS6源码编译 安装linunx内核最新版5.2.9</a></div>
+      <div class="popular-posts-title"><a href="/blog/b365780e.html" rel="bookmark">linux上部署与配置tomcat</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/a96e917a.html" rel="bookmark">for循环实现的小脚本</a></div>
+      <div class="popular-posts-title"><a href="/blog/57d66c4.html" rel="bookmark">LAMP架构实现PowerDNS</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/8dcd5ad7.html" rel="bookmark">VIM编辑器的整理总结</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/2bae1e5c.html" rel="bookmark">CentOS7磁盘分区及文件系统</a></div>
+      <div class="popular-posts-title"><a href="/blog/8a189dcf.html" rel="bookmark">自动化运维之Ansible</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/blog/b124800c.html" rel="bookmark">二进制安装及源码编译安装mariadb数据库</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/8ddda8e.html" rel="bookmark">部署自动化安装及cobber(Http+TFTP+PXE+kickstart无人职守批量安装精简版Linux系统)</a></div>
     </li>
   </ul>
 </div>
       <footer class="post-footer">
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-                <a href="/blog/4a17b156.html" rel="next" title="Hello World">
-                  <i class="fa fa-chevron-left"></i> Hello World
-                </a>
             </div>
             <span class="post-nav-divider"></span>
             <div class="post-nav-prev post-nav-item">
@@ -492,13 +487,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
