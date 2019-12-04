@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+
+
+
+
+
 <html lang="zh-CN">
 <head>
   <meta name="baidu-site-verification" content="vT6Jf980C0" />
@@ -9,8 +14,13 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.ico?v=7.4.0">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.ico?v=7.4.0">
   <link rel="alternate" href="/atom.xml" title="BOHC!" type="application/atom+xml">
+
 <link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
 <script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
@@ -44,13 +54,16 @@
     sidebarPadding: 40
   };
 </script>
-  <meta name="description" content="&emsp;&emsp;Tomcat 服务器是一个免费的开放源代码的Web 应用服务器，属于轻量级应用服务器。因为Tomcat 技术先进、性能稳定，而且免费，因而深受Java 爱好者的喜爱并得到了部分软件开发商的认可，成为目前比较流行的Web 应用服务器。本文将详细讲解tomcat在linux环境(以CentOS为例)中的安装与配置。">
+
+
+
+  <meta name="description" content="&amp;emsp;&amp;emsp;Tomcat 服务器是一个免费的开放源代码的Web 应用服务器，属于轻量级应用服务器。因为Tomcat 技术先进、性能稳定，而且免费，因而深受Java 爱好者的喜爱并得到了部分软件开发商的认可，成为目前比较流行的Web 应用服务器。本文将详细讲解tomcat在linux环境(以CentOS为例)中的安装与配置。">
 <meta name="keywords" content="linux,企业级应用,tomcat,一键安装,JAVA">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux上部署与配置tomcat">
 <meta property="og:url" content="https://hewanyue.com/blog/b365780e.html">
 <meta property="og:site_name" content="BOHC!">
-<meta property="og:description" content="&emsp;&emsp;Tomcat 服务器是一个免费的开放源代码的Web 应用服务器，属于轻量级应用服务器。因为Tomcat 技术先进、性能稳定，而且免费，因而深受Java 爱好者的喜爱并得到了部分软件开发商的认可，成为目前比较流行的Web 应用服务器。本文将详细讲解tomcat在linux环境(以CentOS为例)中的安装与配置。">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;Tomcat 服务器是一个免费的开放源代码的Web 应用服务器，属于轻量级应用服务器。因为Tomcat 技术先进、性能稳定，而且免费，因而深受Java 爱好者的喜爱并得到了部分软件开发商的认可，成为目前比较流行的Web 应用服务器。本文将详细讲解tomcat在linux环境(以CentOS为例)中的安装与配置。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191121170929214.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191121192147674.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
@@ -58,9 +71,11 @@
 <meta property="og:updated_time" content="2019-11-22T01:54:03.124Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux上部署与配置tomcat">
-<meta name="twitter:description" content="&emsp;&emsp;Tomcat 服务器是一个免费的开放源代码的Web 应用服务器，属于轻量级应用服务器。因为Tomcat 技术先进、性能稳定，而且免费，因而深受Java 爱好者的喜爱并得到了部分软件开发商的认可，成为目前比较流行的Web 应用服务器。本文将详细讲解tomcat在linux环境(以CentOS为例)中的安装与配置。">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;Tomcat 服务器是一个免费的开放源代码的Web 应用服务器，属于轻量级应用服务器。因为Tomcat 技术先进、性能稳定，而且免费，因而深受Java 爱好者的喜爱并得到了部分软件开发商的认可，成为目前比较流行的Web 应用服务器。本文将详细讲解tomcat在linux环境(以CentOS为例)中的安装与配置。">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20191121170929214.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
   <link rel="canonical" href="https://hewanyue.com/blog/b365780e">
+
+
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
@@ -71,7 +86,17 @@
     isArchive: false
   };
 </script>
+
   <title>linux上部署与配置tomcat | BOHC!</title>
+  
+
+
+
+
+
+
+
+
   <noscript>
   <style>
   .use-motion .brand,
@@ -83,23 +108,31 @@
   .use-motion .post-header,
   .use-motion .post-body,
   .use-motion .collection-header { opacity: initial; }
+
   .use-motion .logo,
   .use-motion .site-title,
   .use-motion .site-subtitle {
     opacity: initial;
     top: initial;
   }
+
   .use-motion .logo-line-before i { left: initial; }
   .use-motion .logo-line-after i { right: initial; }
   </style>
 </noscript>
+
 <script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "https://hm.baidu.com/hm.js?a0d4e217e26da03ea5ca2acc76d543ae";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();</script>
+
+
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="/dist/APlayer.min.css" class="aplayer-style-marker">
 <script src="/dist/APlayer.min.js" class="aplayer-script-marker"></script>
 </head>
+
 <body oncontextmenu=self.event.returnValue=false>
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+
         <div id="aplayer" class="aplayer aplayer-withlist  aplayer-fixed aplayer-narrow" style="position: fixed; z-index: 5; left: 0px; width: 400px;">
             <pre class="aplayer-lrc-content"></pre>
         </div>
@@ -172,6 +205,7 @@
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-meta">
+
     <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
@@ -180,7 +214,9 @@
       </a>
     </div>
         <h1 class="site-subtitle" itemprop="description">blog of hechao!</h1>
+      
   </div>
+
   <div class="site-nav-toggle">
     <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
@@ -189,31 +225,147 @@
     </button>
   </div>
 </div>
+
+
 <nav class="site-nav">
+  
   <ul id="menu" class="menu">
+      
+      
+      
+        
         <li class="menu-item menu-item-home">
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i>首页</a>
+      
+    
+      
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-home&quot;&gt;&lt;&#x2F;i&gt;首页</a>
+
   </li>
+      
+      
+      
+        
         <li class="menu-item menu-item-about">
-    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i>关于</a>
+      
+    
+      
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/about/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-user&quot;&gt;&lt;&#x2F;i&gt;关于</a>
+
   </li>
+      
+      
+      
+        
         <li class="menu-item menu-item-tags">
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">65</span></a>
+      
+    
+      
+      
+        
+      
+        
+      
+        
+          
+        
+      
+    
+
+    <a href="/tags/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-tags&quot;&gt;&lt;&#x2F;i&gt;标签&lt;span class=&quot;badge&quot;&gt;65&lt;&#x2F;span&gt;</a>
+
   </li>
+      
+      
+      
+        
         <li class="menu-item menu-item-categories">
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">10</span></a>
+      
+    
+      
+      
+        
+      
+        
+          
+        
+      
+        
+      
+    
+
+    <a href="/categories/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-th&quot;&gt;&lt;&#x2F;i&gt;分类&lt;span class=&quot;badge&quot;&gt;10&lt;&#x2F;span&gt;</a>
+
   </li>
+      
+      
+      
+        
         <li class="menu-item menu-item-archives">
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">31</span></a>
+      
+    
+      
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/archives/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-archive&quot;&gt;&lt;&#x2F;i&gt;归档&lt;span class=&quot;badge&quot;&gt;31&lt;&#x2F;span&gt;</a>
+
   </li>
+      
+      
+      
+        
         <li class="menu-item menu-item-friends">
-    <a href="/friends/" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i>友链</a>
+      
+    
+      
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/friends/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-link&quot;&gt;&lt;&#x2F;i&gt;友链</a>
+
   </li>
       <li class="menu-item menu-item-search">
         <a href="javascript:;" rel="external nofollow noreferrer" class="popup-trigger">
+        
           <i class="menu-item-icon fa fa-search fa-fw"></i>搜索</a>
       </li>
+    
   </ul>
+
+    
+
 </nav>
   <div class="site-search">
     <div class="popup search-popup">
@@ -231,83 +383,143 @@
   </span>
 </div>
 <div id="search-result"></div>
+
 </div>
 <div class="search-pop-overlay"></div>
+
   </div>
 </div>
     </header>
+
+    
   <div class="back-to-top">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
   <div class="reading-progress-bar"></div>
   <a class="book-mark-link book-mark-link-fixed" href="#"></a>
-  <a href="https://github.com/wudihechao" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener external nofollow noreferrer" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+  <a href="https://github.com/wudihechao" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener external nofollow noreferrer" target="_blank">&lt;svg width=&quot;80&quot; height=&quot;80&quot; viewBox=&quot;0 0 250 250&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z&quot;&gt;&lt;&#x2F;path&gt;&lt;path d=&quot;M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2&quot; fill=&quot;currentColor&quot; style=&quot;transform-origin: 130px 106px;&quot; class=&quot;octo-arm&quot;&gt;&lt;&#x2F;path&gt;&lt;path d=&quot;M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z&quot; fill=&quot;currentColor&quot; class=&quot;octo-body&quot;&gt;&lt;&#x2F;path&gt;&lt;&#x2F;svg&gt;</a>
+
+
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
           <div id="content" class="content">
+            
+
   <div id="posts" class="posts-expand">
       <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
   <div class="post-block post">
     <link itemprop="mainEntityOfPage" href="https://hewanyue.com/blog/b365780e.html">
+
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hechao">
       <meta itemprop="description" content="BOHC is just a blog of hechao.">
       <meta itemprop="image" content="/images/touxiang.gif">
     </span>
+
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="BOHC!">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">linux上部署与配置tomcat
+
+          
         </h2>
+
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
+
+
+              
+                
+              
+
               <time title="创建时间：2019-11-21 18:58:03" itemprop="dateCreated datePublished" datetime="2019-11-21T18:58:03+08:00">2019-11-21</time>
             </span>
+          
             <span class="post-meta-item">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
+
+              
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/tomcat/" itemprop="url" rel="index"><span itemprop="name">tomcat</span></a></span>
+
+                
+                
+              
             </span>
+          
+
+          
             <span id="/blog/b365780e.html" class="post-meta-item leancloud_visitors" data-flag-title="linux上部署与配置tomcat" title="阅读次数">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
+
               <span class="leancloud-visitors-count"></span>
               <span>℃</span>
             </span>
+          
+
               <span class="post-meta-divider">•</span>
+  
   <span class="post-meta-item">
+    
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
     <a title="valine" href="/blog/b365780e.html#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/blog/b365780e.html" itemprop="commentCount"></span></a>
   </span>
+  
+  
+          
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-file-word-o"></i>
               </span>
+              
+
+              
               <span>6.6k</span>
             </span>
+          
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
+              
+
+              
               <span>17 分钟</span>
             </span>
+          
+
         </div>
       </header>
+
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
+
+      
         <p>&emsp;&emsp;Tomcat 服务器是一个免费的开放源代码的Web 应用服务器，属于轻量级应用服务器。因为Tomcat 技术先进、性能稳定，而且免费，因而深受Java 爱好者的喜爱并得到了部分软件开发商的认可，成为目前比较流行的Web 应用服务器。本文将详细讲解tomcat在linux环境(以CentOS为例)中的安装与配置。<br><a id="more"></a></p>
 <h3 id="安装jdk"><a href="#安装jdk" class="headerlink" title="安装jdk"></a>安装jdk</h3><p>&emsp;&emsp;JDK是java Development Kit的缩写，即java语言的软件开发包，是javac、javap、jdb等开发、调试、编译工具。<br>&emsp;&emsp;OpenJDK是Sun公司采用GPL v2协议发布的JDK开源版本，可以用于商业用途，于2009年正式发布。它是基于JDK7的beta版开发，但为了也将java SE 6开源，从OpenJDK7的b20构建反向分之开发，从中剥离了不符合java SE 6规范的代码，发布了OpenJDK 6。所以OpenJDK6和JDK6没有关系。<br>&emsp;&emsp;在CentOS中，可以选择yum安装openjdk<br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install java<span class="number">-1.8</span><span class="number">.0</span>-openjdk</span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;通过<code>java -version</code>可以看到版本信息为<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">openjdk version <span class="string">"1.8.0_212"</span></span><br><span class="line">OpenJDK Runtime Environment (build 1.8,0_212-b04)</span><br><span class="line">OpenJDK 64-Bit<span class="built_in"> Server </span>VM (build 25.212-b04,mixed mode)</span><br></pre></td></tr></table></figure></p>
@@ -317,105 +529,184 @@
 <p>&emsp;&emsp;解压到想要安装的任意指定目录，例如<code>/apps/tomcat/</code>目录<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar xvf apache-tomcat-<span class="number">8.5</span>.<span class="number">47</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span> -C /apps/</span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;更改目录名称(也可以用软连接方式)。<br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv /apps/apache-tomcat<span class="number">-8.5</span><span class="number">.47</span> /apps/tomcat</span><br></pre></td></tr></table></figure></p>
 <h3 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h3><p>&emsp;&emsp;jdk需要配置环境变量才可以找到，否则会无法访问jsp文件。<br>&emsp;&emsp;需要在环境变量配置文件中加入<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">export</span> <span class="attribute">JAVA_HOME</span>=/usr/java/default</span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">PATH</span>=<span class="variable">$JAVA_HOME</span>/bin:$PATH</span><br></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;于是，运行下面命令即可<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cat > /etc/profile.d/jdk.sh <<<span class="string">"END"</span></span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">JAVA_HOME</span>=/usr/java/default</span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">PATH</span>=<span class="variable">$JAVA_HOME</span>/bin:$PATH</span><br><span class="line">END</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;于是，运行下面命令即可<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; /etc/profile.d/jdk.sh &lt;&lt;<span class="string">"END"</span></span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">JAVA_HOME</span>=/usr/java/default</span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">PATH</span>=<span class="variable">$JAVA_HOME</span>/bin:$PATH</span><br><span class="line">END</span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;运行命令使环境变量生效<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">. /etc/<span class="keyword">profile</span>.d/jdk.<span class="keyword">sh</span></span><br></pre></td></tr></table></figure></p>
 <h3 id="修改进程属主"><a href="#修改进程属主" class="headerlink" title="修改进程属主"></a>修改进程属主</h3><p>&emsp;&emsp;一般来说，tomcat服务如果以root身份启动，风险还是很高的，因为tomcat本身bug还是有不少的，如果被别有用心之人加以利用，入侵进来，就可以获得root权限，这造成的后果绝对是灾难级的，这甚至会威胁到其他服务器的安全。为了规避这一风险，我们一般都会将tomcat服务以一个系统用户的身份启动，例如java用户。<br>&emsp;&emsp;创建java用户<code>useradd -r java</code><br>&emsp;&emsp;更改服务目录的属主属组<code>chown -R tomcat/*</code><br>&emsp;&emsp;启动服务时，我们使用命令<code>su - java -c &#39;/apps/tomcat/bin/startup.sh&#39;</code>来启动，就可以以java用户的身份来启动进程了。</p>
-<h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><p>&emsp;&emsp;tomcat中配置文件目录在tomcat/conf/server.xml,其中需要注意的是：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><Server <span class="attribute">port</span>=<span class="string">"8005"</span> <span class="attribute">shutdown</span>=<span class="string">"SHUTDOWN"</span>></span><br></pre></td></tr></table></figure></p>
+<h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><p>&emsp;&emsp;tomcat中配置文件目录在tomcat/conf/server.xml,其中需要注意的是：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Server <span class="attribute">port</span>=<span class="string">"8005"</span> <span class="attribute">shutdown</span>=<span class="string">"SHUTDOWN"</span>&gt;</span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;这代表管理端监听在8005端口，向管理端发送<code>SHUTDOWN</code>指令就会是tomcat直接终止，而且这是不需要密码权限控制的。如果在生产环境中，如果有任何人有意或者无意向tomcat服务器的8005端口发送了SHUTDOWN指令，整个服务都会被终止掉，，而且还不需要密码验证，这对我们的影响无疑是巨大的，所以我们通常都会将此处的管理监听端口改掉，或将shutdown指令设为别的复杂口令，让别人无法轻易或不小心将我们的服务器shutdown~<br>&emsp;&emsp;可采取MD5值的方式，选任一文件做MD5运算后得到的随机数值即为口令。<br><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed -i <span class="string">"s@SHUTDOWN@`md5sum /root/.ssh/authorized_keys |cut -d' ' -f1`@"</span> tomcat/conf/server.xml</span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;此时，就可以通过安装目录下的<code>tomcat/bin/startup.sh</code>来启动tomcat服务了。<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">su</span> - java -c <span class="string">' /apps/tomcat/bin/startup.sh'</span></span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;然后查看端口<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">ss -tanl</span></span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;即可看到8080端口已经处于监听状态了<br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[<span class="symbol">root@</span>localhost ~]# ss -tanl</span><br><span class="line">State       Recv-Q Send-Q                     Local Address:Port                                    Peer Address:Port              </span><br><span class="line">LISTEN      <span class="number">0</span>      <span class="number">128</span>                                    *:<span class="number">22</span>                                                 *:*                  </span><br><span class="line">LISTEN      <span class="number">0</span>      <span class="number">100</span>                            <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">25</span>                                                 *:*                  </span><br><span class="line">LISTEN      <span class="number">0</span>      <span class="number">100</span>                                   :::<span class="number">8009</span>                                              :::*                  </span><br><span class="line">LISTEN      <span class="number">0</span>      <span class="number">100</span>                                   :::<span class="number">8080</span>                                              :::*                  </span><br><span class="line">LISTEN      <span class="number">0</span>      <span class="number">128</span>                                   :::<span class="number">22</span>                                                :::*                  </span><br><span class="line">LISTEN      <span class="number">0</span>      <span class="number">100</span>                                  ::<span class="number">1</span>:<span class="number">25</span>                                                :::*                  </span><br><span class="line">LISTEN      <span class="number">0</span>      <span class="number">1</span>                       ::ffff:<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8005</span>                                              :::*                  </span><br><span class="line">[<span class="symbol">root@</span>localhost ~]#</span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;访问tomcat服务器的ip的8080端口，可看到如下图所示界面，即表示tomcat安装成功。<br><img src="https://img-blog.csdnimg.cn/20191121170929214.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;不过，想使用tomcat自带的Manager App及Host Manager工具，还需要做一些额外的配置,此时如果直接访问会显示403权限拒绝，如下图所示。<br><img src="https://img-blog.csdnimg.cn/20191121192147674.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<h4 id="修改应用访问控制"><a href="#修改应用访问控制" class="headerlink" title="修改应用访问控制"></a>修改应用访问控制</h4><p>&emsp;&emsp;错误提示说明已经说得很明白了，首先确保已经修改了应用的反问控制权限，，如果还没有，you’ll need to edit the Manager’s <code>context.xml</code> file。<br>&emsp;&emsp;那这个context.xml在哪里呢？它是指应用的上下文设置文件，路径就是tomcat目录下的<code>webapps/manager/META-INF/context.xml</code>文件，另一个应用Host Manager的路径就是tomcat目录下的<code>webapps/host-manager/META-INF/context.xml</code><br>&emsp;&emsp;所以我们要修改这两个配置文件中的访问控制，将我们的访问IP加到里面，这样我们的访问IP才有权限去访问这两个管理应用。<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><Context <span class="attribute">antiResourceLocking</span>=<span class="string">"false"</span> <span class="attribute">privileged</span>=<span class="string">"true"</span> ></span><br><span class="line">  <Valve <span class="attribute">className</span>=<span class="string">"org.apache.catalina.valves.RemoteAddrValve"</span></span><br><span class="line">         <span class="attribute">allow</span>=<span class="string">"127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1|172.18.*|192.168.32.*"</span> /></span><br></pre></td></tr></table></figure></p>
+<h4 id="修改应用访问控制"><a href="#修改应用访问控制" class="headerlink" title="修改应用访问控制"></a>修改应用访问控制</h4><p>&emsp;&emsp;错误提示说明已经说得很明白了，首先确保已经修改了应用的反问控制权限，，如果还没有，you’ll need to edit the Manager’s <code>context.xml</code> file。<br>&emsp;&emsp;那这个context.xml在哪里呢？它是指应用的上下文设置文件，路径就是tomcat目录下的<code>webapps/manager/META-INF/context.xml</code>文件，另一个应用Host Manager的路径就是tomcat目录下的<code>webapps/host-manager/META-INF/context.xml</code><br>&emsp;&emsp;所以我们要修改这两个配置文件中的访问控制，将我们的访问IP加到里面，这样我们的访问IP才有权限去访问这两个管理应用。<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;Context <span class="attribute">antiResourceLocking</span>=<span class="string">"false"</span> <span class="attribute">privileged</span>=<span class="string">"true"</span> &gt;</span><br><span class="line">  &lt;Valve <span class="attribute">className</span>=<span class="string">"org.apache.catalina.valves.RemoteAddrValve"</span></span><br><span class="line">         <span class="attribute">allow</span>=<span class="string">"127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1|172.18.*|192.168.32.*"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;在<code>allow=</code>标签后面，加上我们的ip，支持通配符写法和PCRE格式的正则表达式写法，用<code>|</code>隔开。两个应用的配置文件都要修改。</p>
-<h4 id="创建权限角色"><a href="#创建权限角色" class="headerlink" title="创建权限角色"></a>创建权限角色</h4><p>光将我们的来访IP加入许可白名单还是不够的，我们还需要一个有权限的账户才可以访问这些管理工具<br>路径是tomcat目录下的<code>conf/tomcat-users.xml</code>文件。<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><tomcat-users <span class="attribute">xmlns</span>=<span class="string">"http://tomcat.apache.org/xml"</span></span><br><span class="line">              xmlns:<span class="attribute">xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line">              xsi:<span class="attribute">schemaLocation</span>=<span class="string">"http://tomcat.apache.org/xml tomcat-users.xsd"</span></span><br><span class="line">              <span class="attribute">version</span>=<span class="string">"1.0"</span>></span><br><span class="line">    <role <span class="attribute">rolename</span>=<span class="string">"manager-gui"</span>/></span><br><span class="line">    <role <span class="attribute">rolename</span>=<span class="string">"admin-gui"</span>/></span><br><span class="line">    <user <span class="attribute">username</span>=<span class="string">"admin"</span> <span class="attribute">password</span>=<span class="string">"123456"</span> <span class="attribute">roles</span>=<span class="string">"manager-gui,admin-gui"</span>/></span><br></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;在下面加入后三行，先创建角色<code>"manager-gui"</code>和<code>"admin-gui"</code>,分别是Manager App的管理员和Host Manager的管理员。然后设置用户名密码及其所处的角色，也可以设置两个不同的用户来分别充当这两个角色。用户名密码可自行设置。<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><role <span class="attribute">rolename</span>=<span class="string">"manager-gui"</span>/></span><br><span class="line"><role <span class="attribute">rolename</span>=<span class="string">"admin-gui"</span>/></span><br><span class="line"><user <span class="attribute">username</span>=<span class="string">"admin"</span> <span class="attribute">password</span>=<span class="string">"123456"</span> <span class="attribute">roles</span>=<span class="string">"manager-gui,admin-gui"</span>/></span><br></pre></td></tr></table></figure></p>
+<h4 id="创建权限角色"><a href="#创建权限角色" class="headerlink" title="创建权限角色"></a>创建权限角色</h4><p>光将我们的来访IP加入许可白名单还是不够的，我们还需要一个有权限的账户才可以访问这些管理工具<br>路径是tomcat目录下的<code>conf/tomcat-users.xml</code>文件。<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;tomcat-users <span class="attribute">xmlns</span>=<span class="string">"http://tomcat.apache.org/xml"</span></span><br><span class="line">              xmlns:<span class="attribute">xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line">              xsi:<span class="attribute">schemaLocation</span>=<span class="string">"http://tomcat.apache.org/xml tomcat-users.xsd"</span></span><br><span class="line">              <span class="attribute">version</span>=<span class="string">"1.0"</span>&gt;</span><br><span class="line">    &lt;role <span class="attribute">rolename</span>=<span class="string">"manager-gui"</span>/&gt;</span><br><span class="line">    &lt;role <span class="attribute">rolename</span>=<span class="string">"admin-gui"</span>/&gt;</span><br><span class="line">    &lt;user <span class="attribute">username</span>=<span class="string">"admin"</span> <span class="attribute">password</span>=<span class="string">"123456"</span> <span class="attribute">roles</span>=<span class="string">"manager-gui,admin-gui"</span>/&gt;</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;在下面加入后三行，先创建角色<code>&quot;manager-gui&quot;</code>和<code>&quot;admin-gui&quot;</code>,分别是Manager App的管理员和Host Manager的管理员。然后设置用户名密码及其所处的角色，也可以设置两个不同的用户来分别充当这两个角色。用户名密码可自行设置。<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;role <span class="attribute">rolename</span>=<span class="string">"manager-gui"</span>/&gt;</span><br><span class="line">&lt;role <span class="attribute">rolename</span>=<span class="string">"admin-gui"</span>/&gt;</span><br><span class="line">&lt;user <span class="attribute">username</span>=<span class="string">"admin"</span> <span class="attribute">password</span>=<span class="string">"123456"</span> <span class="attribute">roles</span>=<span class="string">"manager-gui,admin-gui"</span>/&gt;</span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;有了管理员权限的账户，在被允许的客户端上就可以访问<code>Manager App</code>和<code>Host Manager</code>这两个工具了。点击图标访问，出现如下图所示的提示输入用户名密码弹窗，说明配置正确。<br><img src="https://img-blog.csdnimg.cn/20191121185100783.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<h3 id="附-一键部署tomcat脚本"><a href="#附-一键部署tomcat脚本" class="headerlink" title="附:一键部署tomcat脚本"></a>附:一键部署tomcat脚本</h3><p>&emsp;&emsp;附上我自己用的tomcat脚本供大家参考(未配置管理工具)<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">DST=<span class="string">"/apps"</span></span><br><span class="line">[ -a jdk-8u231-linux-x64.rpm ] || &#123; <span class="built_in">echo</span> <span class="string">' the absence of jdk'</span> ;<span class="built_in">exit</span> 1;&#125;</span><br><span class="line">[ -d <span class="variable">$DST</span>/*tomcat* ] && &#123; <span class="built_in">echo</span> <span class="string">"tomcat is aready installed into <span class="variable">$DST</span>/tomcat"</span> ;<span class="built_in">exit</span> 2;&#125;</span><br><span class="line">id java &>/dev/null && &#123; <span class="built_in">echo</span> <span class="string">'user java is exist,redis is aready installed'</span> ; <span class="built_in">exit</span> 3;&#125;</span><br><span class="line">iptables -F</span><br><span class="line">systemctl <span class="built_in">disable</span> firewalld</span><br><span class="line">sed -i <span class="string">'@SELINUX=enforcing@SELINUX=disabled@'</span> /etc/selinux/config</span><br><span class="line">setenforce 0</span><br><span class="line">mkdir -p /data<span class="variable">$DST</span></span><br><span class="line"><span class="comment">#mkdir -p $DST</span></span><br><span class="line">ln -s /data<span class="variable">$DST</span> <span class="variable">$DST</span></span><br><span class="line">yum install jdk-8u231-linux-x64.rpm</span><br><span class="line">tar xf *tomcat-*.tar.* -C <span class="variable">$DST</span>/</span><br><span class="line">mv <span class="variable">$DST</span>/*tomcat-* <span class="variable">$DST</span>/tomcat</span><br><span class="line">sed -i <span class="string">"s@SHUTDOWN@`md5sum /root/.ssh/authorized_keys |cut -d' ' -f1`@"</span> <span class="variable">$DST</span>/tomcat/conf/server.xml</span><br><span class="line">cat > /etc/profile.d/jdk.sh <<<span class="string">"END"</span></span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/java/default</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line">END</span><br><span class="line">. /etc/profile.d/jdk.sh</span><br><span class="line">useradd -r java</span><br><span class="line">chown -R java.java <span class="variable">$DST</span>/tomcat/*</span><br><span class="line">su - java -c <span class="string">'$DST/tomcat/bin/startup.sh'</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="附-一键部署tomcat脚本"><a href="#附-一键部署tomcat脚本" class="headerlink" title="附:一键部署tomcat脚本"></a>附:一键部署tomcat脚本</h3><p>&emsp;&emsp;附上我自己用的tomcat脚本供大家参考(未配置管理工具)<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">DST=<span class="string">"/apps"</span></span><br><span class="line">[ -a jdk-8u231-linux-x64.rpm ] || &#123; <span class="built_in">echo</span> <span class="string">' the absence of jdk'</span> ;<span class="built_in">exit</span> 1;&#125;</span><br><span class="line">[ -d <span class="variable">$DST</span>/*tomcat* ] &amp;&amp; &#123; <span class="built_in">echo</span> <span class="string">"tomcat is aready installed into <span class="variable">$DST</span>/tomcat"</span> ;<span class="built_in">exit</span> 2;&#125;</span><br><span class="line">id java &amp;&gt;/dev/null &amp;&amp; &#123; <span class="built_in">echo</span> <span class="string">'user java is exist,redis is aready installed'</span> ; <span class="built_in">exit</span> 3;&#125;</span><br><span class="line">iptables -F</span><br><span class="line">systemctl <span class="built_in">disable</span> firewalld</span><br><span class="line">sed -i <span class="string">'@SELINUX=enforcing@SELINUX=disabled@'</span> /etc/selinux/config</span><br><span class="line">setenforce 0</span><br><span class="line">mkdir -p /data<span class="variable">$DST</span></span><br><span class="line"><span class="comment">#mkdir -p $DST</span></span><br><span class="line">ln -s /data<span class="variable">$DST</span> <span class="variable">$DST</span></span><br><span class="line">yum install jdk-8u231-linux-x64.rpm</span><br><span class="line">tar xf *tomcat-*.tar.* -C <span class="variable">$DST</span>/</span><br><span class="line">mv <span class="variable">$DST</span>/*tomcat-* <span class="variable">$DST</span>/tomcat</span><br><span class="line">sed -i <span class="string">"s@SHUTDOWN@`md5sum /root/.ssh/authorized_keys |cut -d' ' -f1`@"</span> <span class="variable">$DST</span>/tomcat/conf/server.xml</span><br><span class="line">cat &gt; /etc/profile.d/jdk.sh &lt;&lt;<span class="string">"END"</span></span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/java/default</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line">END</span><br><span class="line">. /etc/profile.d/jdk.sh</span><br><span class="line">useradd -r java</span><br><span class="line">chown -R java.java <span class="variable">$DST</span>/tomcat/*</span><br><span class="line">su - java -c <span class="string">'$DST/tomcat/bin/startup.sh'</span></span><br></pre></td></tr></table></figure></p>
+
     </div>
+
+    
+    
+    
+          
+            
+          
           <div class="post-tags">
+            
               <a href="/tags/linux/" rel="tag"><i class="fa fa-tag">linux</i></a>
+            
               <a href="/tags/企业级应用/" rel="tag"><i class="fa fa-tag">企业级应用</i></a>
+            
               <a href="/tags/tomcat/" rel="tag"><i class="fa fa-tag">tomcat</i></a>
+            
               <a href="/tags/一键安装/" rel="tag"><i class="fa fa-tag">一键安装</i></a>
+            
               <a href="/tags/JAVA/" rel="tag"><i class="fa fa-tag">JAVA</i></a>
+            
           </div>
+        
+
     <div style="text-align:center;color: #ccc;font-size:14px;">------------------------------- The End -------------------------------</div>
+
+
+        
   <div class="post-widgets">
     <div class="wp_rating">
       <div id="wpac-rating"></div>
     </div>
+  
   </div>
+
+        
+      
         <div id="reward-container">
   <div>It's very nice of you to support me.</div>
   <button id="reward-button" disable="enable" onclick="var qr = document.getElementById('qr'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
     打赏
   </button>
   <div id="qr" style="display: none;">
+        
+      
       <div style="display: inline-block">
         <img src="/images/wechat-pay.png" alt="Hechao 微信支付">
         <p>微信支付</p>
       </div>
+
   </div>
 </div>
+
+      
+        
+
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
     <strong>本文作者： </strong>Hechao</li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://hewanyue.com/blog/b365780e.html" title="linux上部署与配置tomcat">https://hewanyue.com/blog/b365780e.html</a>
+    <a href="https://hewanyue.com/blog/b365780e.html" title="linux上部署与配置tomcat">https:&#x2F;&#x2F;hewanyue.com&#x2F;blog&#x2F;b365780e.html</a>
   </li>
   <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank">&lt;i class=&quot;fa fa-fw fa-creative-commons&quot;&gt;&lt;&#x2F;i&gt;BY-NC-SA</a> 许可协议。转载请注明出处！</li>
 </ul>
 </div>
+
+      
+        
+
 <div class="note info" style="background-color: #eff8f0;
     border-left: 3px solid #255188;
     opacity: 0.85;
     padding-left: 11px;
     padding-bottom: 1px;">
+
   <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts" style="margin-top: 10px;
     margin-bottom: 10px;">
     <li class="popular-posts-item">
+      
+      
       <div class="popular-posts-title"><a href="/blog/f2c1a89e.html" rel="bookmark">一键源码编译安装redis</a></div>
+      
     </li>
+  
     <li class="popular-posts-item">
+      
+      
       <div class="popular-posts-title"><a href="/blog/eaa1ac6e.html" rel="bookmark">Docker（一）——基础概念及部署</a></div>
+      
     </li>
+  
     <li class="popular-posts-item">
+      
+      
       <div class="popular-posts-title"><a href="/blog/b124800c.html" rel="bookmark">二进制安装及源码编译安装mariadb数据库</a></div>
+      
     </li>
+  
     <li class="popular-posts-item">
+      
+      
       <div class="popular-posts-title"><a href="/blog/8ddda8e.html" rel="bookmark">部署自动化安装及cobber(Http+TFTP+PXE+kickstart无人职守批量安装精简版Linux系统)</a></div>
+      
     </li>
+  
     <li class="popular-posts-item">
+      
+      
       <div class="popular-posts-title"><a href="/blog/133d68.html" rel="bookmark">CentOS6源码编译 安装linunx内核最新版5.2.9</a></div>
+      
     </li>
+  
   </ul>
+
 </div>
+
+      
+
       <footer class="post-footer">
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
+              
                 <a href="/blog/14b8983d.html" rel="next" title="redis高可用配置">
                   <i class="fa fa-chevron-left"></i> redis高可用配置
                 </a>
+              
             </div>
+
             <span class="post-nav-divider"></span>
+
             <div class="post-nav-prev post-nav-item">
+              
                 <a href="/blog/6254cc16.html" rel="prev" title="MSM实现tomcat集群的session共享">
                   MSM实现tomcat集群的session共享 <i class="fa fa-chevron-right"></i>
                 </a>
+              
             </div>
           </div>
+        
       </footer>
+    
   </div>
+  
+  
+  
   </article>
+
   </div>
+
+
           </div>
+          
+    
     <div class="comments" id="comments"></div>
+  
+
         </div>
+          
+  
   <div class="sidebar-toggle">
     <div class="sidebar-toggle-line-wrap">
       <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
@@ -423,8 +714,15 @@
       <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
     </div>
   </div>
+
   <aside class="sidebar">
     <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
           文章目录
@@ -433,11 +731,14 @@
           站点概览
         </li>
       </ul>
+
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
           <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装jdk"><span class="nav-number">1.</span> <span class="nav-text">安装jdk</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部署tomcat"><span class="nav-number">2.</span> <span class="nav-text">部署tomcat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置环境变量"><span class="nav-number">3.</span> <span class="nav-text">配置环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改进程属主"><span class="nav-number">4.</span> <span class="nav-text">修改进程属主</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置文件"><span class="nav-number">5.</span> <span class="nav-text">配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#修改应用访问控制"><span class="nav-number">5.1.</span> <span class="nav-text">修改应用访问控制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建权限角色"><span class="nav-number">5.2.</span> <span class="nav-text">创建权限角色</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#附-一键部署tomcat脚本"><span class="nav-number">6.</span> <span class="nav-text">附:一键部署tomcat脚本</span></a></li></ol></div>
+        
       </div>
       <!--/noindex-->
+
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image"
@@ -449,23 +750,38 @@
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
+        
           <a href="/archives/">
+        
           <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
+    
+      
+      
       <div class="site-state-item site-state-categories">
+        
           <a href="/categories/">
+        
         <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
+    
+      
+      
       <div class="site-state-item site-state-tags">
+        
+          
             <a href="/tags/">
+          
+        
         <span class="site-state-item-count">65</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
+    
   </nav>
 </div>
   <div class="feed-link motion-element">
@@ -475,15 +791,35 @@
   </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/wudihechao" title="GitHub &rarr; https://github.com/wudihechao" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      
+      
+      
+        
+      
+        <a href="https://github.com/wudihechao" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;wudihechao" rel="noopener external nofollow noreferrer" target="_blank">&lt;i class=&quot;fa fa-fw fa-github&quot;&gt;&lt;&#x2F;i&gt;</a>
       </span>
+    
       <span class="links-of-author-item">
-        <a href="mailto:wudihechao@163.com" title="E-Mail &rarr; mailto:wudihechao@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      
+      
+      
+        
+      
+        <a href="mailto:wudihechao@163.com" title="E-Mail &amp;rarr; mailto:wudihechao@163.com" rel="noopener external nofollow noreferrer" target="_blank">&lt;i class=&quot;fa fa-fw fa-envelope&quot;&gt;&lt;&#x2F;i&gt;</a>
       </span>
+    
       <span class="links-of-author-item">
-        <a href="https://weibo.com/u/1050367191" title="Weibo &rarr; https://weibo.com/u/1050367191" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-weibo"></i></a>
+      
+      
+      
+        
+      
+        <a href="https://weibo.com/u/1050367191" title="Weibo &amp;rarr; https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;1050367191" rel="noopener external nofollow noreferrer" target="_blank">&lt;i class=&quot;fa fa-fw fa-weibo&quot;&gt;&lt;&#x2F;i&gt;</a>
       </span>
+    
   </div>
+
+        
     <div class="links-of-blogroll motion-element links-of-blogroll-block">
       <div class="links-of-blogroll-title" style="padding-left: 10px;">
         <!-- modify icon to fire by szw -->
@@ -491,23 +827,31 @@
         近期文章
       </div>
       <ul class="links-of-blogroll-list" style="padding-left: 30px;">
+        
+        
           <li>
             <a href="/blog/eaa1ac6e.html" title="Docker（一）——基础概念及部署" >Docker（一）——基础概念及部署</a>
           </li>
+        
           <li>
             <a href="/blog/f989902e.html" title="KVM虚拟化" >KVM虚拟化</a>
           </li>
+        
           <li>
             <a href="/blog/2c6b894f.html" title="OpenVPN的搭建" >OpenVPN的搭建</a>
           </li>
+        
           <li>
             <a href="/blog/6254cc16.html" title="MSM实现tomcat集群的session共享" >MSM实现tomcat集群的session共享</a>
           </li>
+        
           <li>
             <a href="/blog/b365780e.html" title="linux上部署与配置tomcat" >linux上部署与配置tomcat</a>
           </li>
+        
       </ul>
     </div>
+
 <div id="days"></div>
 <script>
 function show_date_time(){
@@ -534,14 +878,27 @@ return i;
 }
 show_date_time();
 </script>
+
   <div class="cc-license motion-element" itemprop="license">
-    <a href="https://hewanyue.com/" class="cc-opacity"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+    
+  
+
+    <a href="https://hewanyue.com/" class="cc-opacity">&lt;img src=&quot;&#x2F;images&#x2F;cc-by-nc-sa.svg&quot; alt=&quot;Creative Commons&quot;&gt;</a>
   </div>
+
+
+
+
       </div>
+
+
  </aside>
   <div id="sidebar-dimmer"></div>
+
+
       </div>
     </main>
+
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
@@ -555,6 +912,8 @@ show_date_time();
     </span>
     <span title="站点总字数">292k</span>
 </div>
+
+        
 <div class="busuanzi-count">
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
@@ -565,7 +924,9 @@ show_date_time();
         <span id="busuanzi_value_site_uv"></span>
       </span>
     </span>
+  
     <span class="post-meta-divider">|</span>
+  
     <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="fa fa-eye"></i>
@@ -574,10 +935,28 @@ show_date_time();
         <span id="busuanzi_value_site_pv"></span>
       </span>
     </span>
+  
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
       </div>
     </footer>
   </div>
+
+  
+    
+  
   <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
   <script src="/lib/anime.min.js?v=3.1.0"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
@@ -585,6 +964,10 @@ show_date_time();
 <script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
 <script src="/js/schemes/muse.js?v=7.4.0"></script>
 <script src="/js/next-boot.js?v=7.4.0"></script><script src="/js/bookmark.js?v=7.4.0"></script>
+
+
+
+  
   <script>
     (function(){
       var bp = document.createElement('script');
@@ -594,6 +977,11 @@ show_date_time();
       s.parentNode.insertBefore(bp, s);
     })();
   </script>
+
+
+
+
+
   <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
@@ -614,7 +1002,28 @@ show_date_time();
     })();
   }
   </script>
+
+
+
   <script src="/js/local-search.js?v=7.4.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
 <script>
 NexT.utils.getScript('//hewanyue.com/js/Valine.min.js', () => {
   var GUEST = ['nick', 'mail','link'];
@@ -638,6 +1047,7 @@ NexT.utils.getScript('//hewanyue.com/js/Valine.min.js', () => {
   });
 }, window.Valine);
 </script>
+
 </body>
 </html>
   <!-- 页面点击小红心 -->

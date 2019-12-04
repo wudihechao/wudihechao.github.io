@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+
+
+
+
+
 <html lang="zh-CN">
 <head>
   <meta name="baidu-site-verification" content="vT6Jf980C0" />
@@ -9,8 +14,13 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.ico?v=7.4.0">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.ico?v=7.4.0">
   <link rel="alternate" href="/atom.xml" title="BOHC!" type="application/atom+xml">
+
 <link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
 <script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
@@ -44,19 +54,24 @@
     sidebarPadding: 40
   };
 </script>
-  <meta name="description" content="&emsp;&emsp;所谓LVS，是Linux Virtual Server的缩写，直译就是linux虚拟服务器。LVS说是虚拟服务器，并不是说这个服务器本身不存在，而是指一般用户访问企业web网站时，访问的都是LVS，而LVS本身上面没有任何web界面资源，真实的界面以及服务都在后端web服务器上，LVS服务器起到的是一个指引分流的作用，所以相对来说，后端的web服务器是real server">
+
+
+
+  <meta name="description" content="&amp;emsp;&amp;emsp;所谓LVS，是Linux Virtual Server的缩写，直译就是linux虚拟服务器。LVS说是虚拟服务器，并不是说这个服务器本身不存在，而是指一般用户访问企业web网站时，访问的都是LVS，而LVS本身上面没有任何web界面资源，真实的界面以及服务都在后端web服务器上，LVS服务器起到的是一个指引分流的作用，所以相对来说，后端的web服务器是real server">
 <meta name="keywords" content="企业级应用,负载均衡,调度算法,集群,LVS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="企业级应用：负载均衡层——LVS调度器详解">
 <meta property="og:url" content="https://hewanyue.com/blog/159ef64c.html">
 <meta property="og:site_name" content="BOHC!">
-<meta property="og:description" content="&emsp;&emsp;所谓LVS，是Linux Virtual Server的缩写，直译就是linux虚拟服务器。LVS说是虚拟服务器，并不是说这个服务器本身不存在，而是指一般用户访问企业web网站时，访问的都是LVS，而LVS本身上面没有任何web界面资源，真实的界面以及服务都在后端web服务器上，LVS服务器起到的是一个指引分流的作用，所以相对来说，后端的web服务器是real server">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;所谓LVS，是Linux Virtual Server的缩写，直译就是linux虚拟服务器。LVS说是虚拟服务器，并不是说这个服务器本身不存在，而是指一般用户访问企业web网站时，访问的都是LVS，而LVS本身上面没有任何web界面资源，真实的界面以及服务都在后端web服务器上，LVS服务器起到的是一个指引分流的作用，所以相对来说，后端的web服务器是real server">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2019-12-04T03:45:19.496Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="企业级应用：负载均衡层——LVS调度器详解">
-<meta name="twitter:description" content="&emsp;&emsp;所谓LVS，是Linux Virtual Server的缩写，直译就是linux虚拟服务器。LVS说是虚拟服务器，并不是说这个服务器本身不存在，而是指一般用户访问企业web网站时，访问的都是LVS，而LVS本身上面没有任何web界面资源，真实的界面以及服务都在后端web服务器上，LVS服务器起到的是一个指引分流的作用，所以相对来说，后端的web服务器是real server">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;所谓LVS，是Linux Virtual Server的缩写，直译就是linux虚拟服务器。LVS说是虚拟服务器，并不是说这个服务器本身不存在，而是指一般用户访问企业web网站时，访问的都是LVS，而LVS本身上面没有任何web界面资源，真实的界面以及服务都在后端web服务器上，LVS服务器起到的是一个指引分流的作用，所以相对来说，后端的web服务器是real server">
   <link rel="canonical" href="https://hewanyue.com/blog/159ef64c">
+
+
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
@@ -67,7 +82,17 @@
     isArchive: false
   };
 </script>
+
   <title>企业级应用：负载均衡层——LVS调度器详解 | BOHC!</title>
+  
+
+
+
+
+
+
+
+
   <noscript>
   <style>
   .use-motion .brand,
@@ -79,23 +104,31 @@
   .use-motion .post-header,
   .use-motion .post-body,
   .use-motion .collection-header { opacity: initial; }
+
   .use-motion .logo,
   .use-motion .site-title,
   .use-motion .site-subtitle {
     opacity: initial;
     top: initial;
   }
+
   .use-motion .logo-line-before i { left: initial; }
   .use-motion .logo-line-after i { right: initial; }
   </style>
 </noscript>
+
 <script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "https://hm.baidu.com/hm.js?a0d4e217e26da03ea5ca2acc76d543ae";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();</script>
+
+
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="/dist/APlayer.min.css" class="aplayer-style-marker">
 <script src="/dist/APlayer.min.js" class="aplayer-script-marker"></script>
 </head>
+
 <body oncontextmenu=self.event.returnValue=false>
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+
         <div id="aplayer" class="aplayer aplayer-withlist  aplayer-fixed aplayer-narrow" style="position: fixed; z-index: 5; left: 0px; width: 400px;">
             <pre class="aplayer-lrc-content"></pre>
         </div>
@@ -168,6 +201,7 @@
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-meta">
+
     <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
@@ -176,7 +210,9 @@
       </a>
     </div>
         <h1 class="site-subtitle" itemprop="description">blog of hechao!</h1>
+      
   </div>
+
   <div class="site-nav-toggle">
     <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
@@ -185,31 +221,147 @@
     </button>
   </div>
 </div>
+
+
 <nav class="site-nav">
+  
   <ul id="menu" class="menu">
+      
+      
+      
+        
         <li class="menu-item menu-item-home">
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i>首页</a>
+      
+    
+      
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-home&quot;&gt;&lt;&#x2F;i&gt;首页</a>
+
   </li>
+      
+      
+      
+        
         <li class="menu-item menu-item-about">
-    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i>关于</a>
+      
+    
+      
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/about/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-user&quot;&gt;&lt;&#x2F;i&gt;关于</a>
+
   </li>
+      
+      
+      
+        
         <li class="menu-item menu-item-tags">
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">65</span></a>
+      
+    
+      
+      
+        
+      
+        
+      
+        
+          
+        
+      
+    
+
+    <a href="/tags/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-tags&quot;&gt;&lt;&#x2F;i&gt;标签&lt;span class=&quot;badge&quot;&gt;65&lt;&#x2F;span&gt;</a>
+
   </li>
+      
+      
+      
+        
         <li class="menu-item menu-item-categories">
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">10</span></a>
+      
+    
+      
+      
+        
+      
+        
+          
+        
+      
+        
+      
+    
+
+    <a href="/categories/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-th&quot;&gt;&lt;&#x2F;i&gt;分类&lt;span class=&quot;badge&quot;&gt;10&lt;&#x2F;span&gt;</a>
+
   </li>
+      
+      
+      
+        
         <li class="menu-item menu-item-archives">
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">31</span></a>
+      
+    
+      
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/archives/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-archive&quot;&gt;&lt;&#x2F;i&gt;归档&lt;span class=&quot;badge&quot;&gt;31&lt;&#x2F;span&gt;</a>
+
   </li>
+      
+      
+      
+        
         <li class="menu-item menu-item-friends">
-    <a href="/friends/" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i>友链</a>
+      
+    
+      
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/friends/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-link&quot;&gt;&lt;&#x2F;i&gt;友链</a>
+
   </li>
       <li class="menu-item menu-item-search">
         <a href="javascript:;" rel="external nofollow noreferrer" class="popup-trigger">
+        
           <i class="menu-item-icon fa fa-search fa-fw"></i>搜索</a>
       </li>
+    
   </ul>
+
+    
+
 </nav>
   <div class="site-search">
     <div class="popup search-popup">
@@ -227,83 +379,143 @@
   </span>
 </div>
 <div id="search-result"></div>
+
 </div>
 <div class="search-pop-overlay"></div>
+
   </div>
 </div>
     </header>
+
+    
   <div class="back-to-top">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
   <div class="reading-progress-bar"></div>
   <a class="book-mark-link book-mark-link-fixed" href="#"></a>
-  <a href="https://github.com/wudihechao" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener external nofollow noreferrer" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+  <a href="https://github.com/wudihechao" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener external nofollow noreferrer" target="_blank">&lt;svg width=&quot;80&quot; height=&quot;80&quot; viewBox=&quot;0 0 250 250&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z&quot;&gt;&lt;&#x2F;path&gt;&lt;path d=&quot;M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2&quot; fill=&quot;currentColor&quot; style=&quot;transform-origin: 130px 106px;&quot; class=&quot;octo-arm&quot;&gt;&lt;&#x2F;path&gt;&lt;path d=&quot;M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z&quot; fill=&quot;currentColor&quot; class=&quot;octo-body&quot;&gt;&lt;&#x2F;path&gt;&lt;&#x2F;svg&gt;</a>
+
+
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
           <div id="content" class="content">
+            
+
   <div id="posts" class="posts-expand">
       <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
   <div class="post-block post">
     <link itemprop="mainEntityOfPage" href="https://hewanyue.com/blog/159ef64c.html">
+
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hechao">
       <meta itemprop="description" content="BOHC is just a blog of hechao.">
       <meta itemprop="image" content="/images/touxiang.gif">
     </span>
+
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="BOHC!">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">企业级应用：负载均衡层——LVS调度器详解
+
+          
         </h2>
+
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
+
+
+              
+                
+              
+
               <time title="创建时间：2019-10-24 22:26:16" itemprop="dateCreated datePublished" datetime="2019-10-24T22:26:16+08:00">2019-10-24</time>
             </span>
+          
             <span class="post-meta-item">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
+
+              
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/linux进阶/" itemprop="url" rel="index"><span itemprop="name">linux进阶</span></a></span>
+
+                
+                
+              
             </span>
+          
+
+          
             <span id="/blog/159ef64c.html" class="post-meta-item leancloud_visitors" data-flag-title="企业级应用：负载均衡层——LVS调度器详解" title="阅读次数">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
+
               <span class="leancloud-visitors-count"></span>
               <span>℃</span>
             </span>
+          
+
               <span class="post-meta-divider">•</span>
+  
   <span class="post-meta-item">
+    
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
     <a title="valine" href="/blog/159ef64c.html#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/blog/159ef64c.html" itemprop="commentCount"></span></a>
   </span>
+  
+  
+          
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-file-word-o"></i>
               </span>
+              
+
+              
               <span>11k</span>
             </span>
+          
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
+              
+
+              
               <span>28 分钟</span>
             </span>
+          
+
         </div>
       </header>
+
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
+
+      
         <p>&emsp;&emsp;所谓LVS，是Linux Virtual Server的缩写，直译就是linux虚拟服务器。LVS说是虚拟服务器，并不是说这个服务器本身不存在，而是指一般用户访问企业web网站时，访问的都是LVS，而LVS本身上面没有任何web界面资源，真实的界面以及服务都在后端web服务器上，LVS服务器起到的是一个指引分流的作用，所以相对来说，后端的web服务器是real server,而LVS就被称为是virtual server（虚拟服务器）了。<br>&emsp;&emsp;既然这个服务器上没有页面资源，又无法提供服务，那为什么还有必要部署它来多此一举呢？因为通常来说，我们访问的web服务，都不是由单一服务器主机来支撑的，背后都有好几台、甚至成百上千台web服务器集群共同提供，一台单一主机是无法支撑大的访问并发的，需要很多台服务器来共同分担压力，这时就需要一个专门的服务器来进行调度，将大量访问请求分配到不同的web服务器上，减小每台服务器的压力，实现负载均衡。<br>&emsp;&emsp;本文将详细介绍LVS调度器的工作模式及配置实例。<br><a id="more"></a></p>
 <h3 id="集群和分布式"><a href="#集群和分布式" class="headerlink" title="集群和分布式"></a>集群和分布式</h3><p>&emsp;&emsp;集群：同一个业务系统，部署在多台服务器上。集群中，每一台服务器实现的功能没有差别，数据和代码都是一样的。<br>&emsp;&emsp;分布式：一个业务被拆成多个子业务，或者本身就是不同的业务，部署在多台服务器上。分布式中，每一台服务器实现的功能是有差别的，数据和代码也是不一样的，分布式每台服务器功能加起来，才是完整的业务。<br>&emsp;&emsp;分布式是以缩短单个任务的执行时间来提升效率的，而集群则是通过提高单位时间内执行的任务数来提升效率。<br>&emsp;&emsp;对于大型网站，访问用户很多，实现一个群集，在前面部署一个负载均衡服务器，后面几台服务器完成同一业务。如果有用户进行相应业务访问时，负载均衡器根据后端哪台服务器的负载情况，决定由给哪一台去完成响应，并且一台服务器垮了，其它的服务器可以顶上来。分布式的每一个节点，都完成不同的业务，如果一个节点垮了，那这个业务可能就会失败。</p>
 <h4 id="Cluster概念"><a href="#Cluster概念" class="headerlink" title="Cluster概念"></a>Cluster概念</h4><p>&emsp;&emsp;Cluster：集群,为解决某个特定问题将多台计算机组合起来形成的单个系统。<br>;Linux Cluster类型：</p>
@@ -336,7 +548,7 @@
 <h5 id="lvs-nat："><a href="#lvs-nat：" class="headerlink" title="lvs-nat："></a>lvs-nat：</h5><p>&emsp;&emsp;本质是多目标IP的DNAT，通过将请求报文中的目标地址和目标端口修改为某挑出的RS的RIP和PORT实现转发<br>    （1）RIP和DIP应在同一个IP网络，且应使用私网地址；RS的网关要指向DIP<br>    （2）请求报文和响应报文都必须经由Director转发，Director易于成为系统瓶颈<br>    （3）支持端口映射，可修改请求报文的目标PORT<br>    （4）VS必须是Linux系统，RS可以是任意OS系统</p>
 <h5 id="LVS-DR："><a href="#LVS-DR：" class="headerlink" title="LVS-DR："></a>LVS-DR：</h5><p>&emsp;&emsp;Direct Routing，直接路由，LVS默认模式,应用最广泛,通过为请求报文重新封装一个MAC首部进行转发，源MAC是DIP所在的接口的MAC，目标MAC是某挑选出的RS的RIP所在接口的MAC地址；源IP/PORT，以及目标IP/PORT均保持不变<br>    （1） Director和各RS都配置有VIP<br>    （2） 确保前端路由器将目标IP为VIP的请求报文发往Director<br>        &emsp;&emsp;在前端网关做静态绑定VIP和Director的MAC地址<br>         &emsp;&emsp;在RS上使用arptables工具<br>            <code>arptables -A IN -d $VIP -j DROP</code><br>            <code>arptables -A OUT -s $VIP -j mangle --mangle-ip-s $RIP</code><br>         &emsp;&emsp;在RS上修改内核参数以限制arp通告及应答级别<br>            <code>/proc/sys/net/ipv4/conf/all/arp_ignore</code><br>            <code>/proc/sys/net/ipv4/conf/all/arp_announce</code><br>    （3）RS的RIP可以使用私网地址，也可以是公网地址；RIP与DIP在同一IP网络；RIP的网关不能指向DIP，以确保响应报文不会经由Director<br>    （4）RS和Director要在同一个物理网络<br>    （5）请求报文要经由Director，但响应报文不经由Director，而由RS直接发往Client<br>    （6）不支持端口映射（端口不能修败）<br>    （7）RS可使用大多数OS系统</p>
 <h5 id="lvs-tun："><a href="#lvs-tun：" class="headerlink" title="lvs-tun："></a>lvs-tun：</h5><p>&emsp;&emsp;转发方式：不修改请求报文的IP首部（源IP为CIP，目标IP为VIP），而在原IP报文之外再封装一个IP首部（源IP是DIP，目标IP是RIP），将报文发往挑选出的目标RS；RS直接响应给客户端（源IP是VIP，目标IP是CIP）<br>&emsp;&emsp;    (1) DIP, VIP, RIP都应该是公网地址<br>&emsp;&emsp;    (2) RS的网关一般不能指向DIP<br>&emsp;&emsp;    (3) 请求报文要经由Director，但响应不经由Director<br>&emsp;&emsp;    (4) 不支持端口映射<br>&emsp;&emsp;    (5) RS的OS须支持隧道功能</p>
-<h5 id="lvs-fullnat：通过同时修改请求报文的源IP地址和目标IP地址进行转发"><a href="#lvs-fullnat：通过同时修改请求报文的源IP地址和目标IP地址进行转发" class="headerlink" title="lvs-fullnat：通过同时修改请求报文的源IP地址和目标IP地址进行转发"></a>lvs-fullnat：通过同时修改请求报文的源IP地址和目标IP地址进行转发</h5><p>&emsp;&emsp;CIP –> DIP<br>&emsp;&emsp;VIP –> RIP<br>    (1) VIP是公网地址，RIP和DIP是私网地址，且通常不在同一IP网络；因此，RIP的网关一般不会指向DIP<br>    (2) RS收到的请求报文源地址是DIP，因此，只需响应给DIP；但Director还要将其发往Client<br>    (3) 请求和响应报文都经由Director<br>    (4) 支持端口映射<br><strong>注意：此类型kernel默认不支持</strong></p>
+<h5 id="lvs-fullnat：通过同时修改请求报文的源IP地址和目标IP地址进行转发"><a href="#lvs-fullnat：通过同时修改请求报文的源IP地址和目标IP地址进行转发" class="headerlink" title="lvs-fullnat：通过同时修改请求报文的源IP地址和目标IP地址进行转发"></a>lvs-fullnat：通过同时修改请求报文的源IP地址和目标IP地址进行转发</h5><p>&emsp;&emsp;CIP –&gt; DIP<br>&emsp;&emsp;VIP –&gt; RIP<br>    (1) VIP是公网地址，RIP和DIP是私网地址，且通常不在同一IP网络；因此，RIP的网关一般不会指向DIP<br>    (2) RS收到的请求报文源地址是DIP，因此，只需响应给DIP；但Director还要将其发往Client<br>    (3) 请求和响应报文都经由Director<br>    (4) 支持端口映射<br><strong>注意：此类型kernel默认不支持</strong></p>
 <h4 id="LVS调度算法"><a href="#LVS调度算法" class="headerlink" title="LVS调度算法"></a>LVS调度算法</h4><p>ipvs scheduler：<br>&emsp;&emsp;根据其调度时是否考虑各RS当前的负载状态分为两种：静态方法和动态方法</p>
 <ul>
 <li><p>静态方法：仅根据算法本身进行调度</p>
@@ -357,7 +569,7 @@ Overhead=(activeconns+1)*256/weight
 6、LBLCR：LBLC with Replication，带复制功能的LBLC，解决LBLC负载不均衡问题，从负载重的复制到负载轻的RS
 </code></pre></li>
 </ul>
-<h4 id="ipvsadm-ipvs："><a href="#ipvsadm-ipvs：" class="headerlink" title="ipvsadm/ipvs："></a>ipvsadm/ipvs：</h4><h5 id="ipvs："><a href="#ipvs：" class="headerlink" title="ipvs："></a>ipvs：</h5><p>&emsp;&emsp;<code>grep -i -A 10 "ipvs" /boot/config-VERSION-RELEASE.x86_64</code><br>&emsp;&emsp;支持的协议：TCP， UDP， AH， ESP， AH_ESP, SCTP<br>ipvs集群：<br>&emsp;&emsp;管理集群服务<br>&emsp;&emsp;管理服务上的RS</p>
+<h4 id="ipvsadm-ipvs："><a href="#ipvsadm-ipvs：" class="headerlink" title="ipvsadm/ipvs："></a>ipvsadm/ipvs：</h4><h5 id="ipvs："><a href="#ipvs：" class="headerlink" title="ipvs："></a>ipvs：</h5><p>&emsp;&emsp;<code>grep -i -A 10 &quot;ipvs&quot; /boot/config-VERSION-RELEASE.x86_64</code><br>&emsp;&emsp;支持的协议：TCP， UDP， AH， ESP， AH_ESP, SCTP<br>ipvs集群：<br>&emsp;&emsp;管理集群服务<br>&emsp;&emsp;管理服务上的RS</p>
 <h5 id="ipvsadm："><a href="#ipvsadm：" class="headerlink" title="ipvsadm："></a>ipvsadm：</h5><p>&emsp;&emsp;程序包：ipvsadm<br>&emsp;&emsp;Unit File: ipvsadm.service<br>&emsp;&emsp;主程序：/usr/sbin/ipvsadm<br>&emsp;&emsp;规则保存工具：/usr/sbin/ipvsadm-save<br>&emsp;&emsp;规则重载工具：/usr/sbin/ipvsadm-restore<br>&emsp;&emsp;配置文件：/etc/sysconfig/ipvsadm-config<br><strong>ipvsadm命令</strong>：<br>核心功能：</p>
 <ul>
 <li>集群服务管理：增、删、改</li>
@@ -372,7 +584,7 @@ server-address</code><br>&emsp;&emsp;rip[:port] 如省略port，不作端口映�
 <p>&emsp;&emsp;清空定义的所有内容：<br><code>ipvsadm –C</code><br>清空计数器：<br><code>ipvsadm -Z [-t|u|f service-address]</code></p>
 <h6 id="查看："><a href="#查看：" class="headerlink" title="查看："></a>查看：</h6><p><code>ipvsadm -L|l [options]</code><br>&emsp;&emsp;–numeric, -n：以数字形式输出地址和端口号<br>&emsp;&emsp;–exact：扩展信息，精确值<br>&emsp;&emsp;–connection，-c：当前IPVS连接输出<br>&emsp;&emsp;–stats：统计信息<br>&emsp;&emsp;–rate ：输出速率信息</p>
 <p>ipvs规则：/proc/net/ip_vs<br>ipvs连接：/proc/net/ip_vs_conn</p>
-<h4 id="保存及重载规则"><a href="#保存及重载规则" class="headerlink" title="保存及重载规则"></a>保存及重载规则</h4><p>&emsp;&emsp;保存：建议保存至/etc/sysconfig/ipvsadm<br><code>ipvsadm-save > /PATH/TO/IPVSADM_FILE</code><br><code>ipvsadm -S > /PATH/TO/IPVSADM_FILE</code><br><code>systemctl stop ipvsadm.service</code><br>&emsp;&emsp;重载：<br><code>ipvsadm-restore < /PATH/FROM/IPVSADM_FILE</code><br><code>systemctl restart ipvsadm.service</code></p>
+<h4 id="保存及重载规则"><a href="#保存及重载规则" class="headerlink" title="保存及重载规则"></a>保存及重载规则</h4><p>&emsp;&emsp;保存：建议保存至/etc/sysconfig/ipvsadm<br><code>ipvsadm-save &gt; /PATH/TO/IPVSADM_FILE</code><br><code>ipvsadm -S &gt; /PATH/TO/IPVSADM_FILE</code><br><code>systemctl stop ipvsadm.service</code><br>&emsp;&emsp;重载：<br><code>ipvsadm-restore &lt; /PATH/FROM/IPVSADM_FILE</code><br><code>systemctl restart ipvsadm.service</code></p>
 <h4 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h4><p>负载均衡集群设计时要注意的问题<br>&emsp;&emsp;(1) 是否需要会话保持<br>&emsp;&emsp;(2) 是否需要共享存储<br>    共享存储：NAS， SAN， DS（分布式存储）<br>    数据同步：</p>
 <h4 id="lvs-nat：-1"><a href="#lvs-nat：-1" class="headerlink" title="lvs-nat："></a>lvs-nat：</h4><p>设计要点：<br>&emsp;&emsp;(1) RIP与DIP在同一IP网络, RIP的网关要指向DIP<br>&emsp;&emsp;(2) 支持端口映射<br>&emsp;&emsp;(3) Director要打开核心转发功能</p>
 <h4 id="LVS-DR"><a href="#LVS-DR" class="headerlink" title="LVS-DR"></a>LVS-DR</h4><p>DR模型中各主机上均需要配置VIP，解决地址冲突的方式有三种：</p>
@@ -381,7 +593,7 @@ server-address</code><br>&emsp;&emsp;rip[:port] 如省略port，不作端口映�
 <li>(2) 在各RS使用arptables</li>
 <li>(3) 在各RS修改内核参数，来限制arp响应和通告的级别<br>限制响应级别：arp_ignore<br>  0：默认值，表示可使用本地任意接口上配置的任意地址进行响应<br>  1: 仅在请求的目标IP配置在本地主机的接收到请求报文的接口上时，才给予响应<br>限制通告级别：arp_announce<br>  0：默认值，把本机所有接口的所有信息向每个接口的网络进行通告<br>  1：尽量避免将接口信息向非直接连接网络进行通告<br>  2：必须避免将接口信息向非本网络进行通告</li>
 </ul>
-<h5 id="附："><a href="#附：" class="headerlink" title="附："></a>附：</h5><p>&emsp;&emsp;RS的配置脚本<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">vip=10.0.0.100</span><br><span class="line">mask=<span class="string">'255.255.255.255'</span></span><br><span class="line">dev=lo:1</span><br><span class="line"><span class="keyword">case</span> <span class="variable">$1</span> <span class="keyword">in</span></span><br><span class="line">start)</span><br><span class="line"><span class="built_in">echo</span> 1 > /proc/sys/net/ipv4/conf/all/arp_ignore</span><br><span class="line"><span class="built_in">echo</span> 1 > /proc/sys/net/ipv4/conf/lo/arp_ignore</span><br><span class="line"><span class="built_in">echo</span> 2 > /proc/sys/net/ipv4/conf/all/arp_announce</span><br><span class="line"><span class="built_in">echo</span> 2 > /proc/sys/net/ipv4/conf/lo/arp_announce</span><br><span class="line">ifconfig <span class="variable">$dev</span> <span class="variable">$vip</span> netmask <span class="variable">$mask</span> <span class="comment">#broadcast $vip up</span></span><br><span class="line"><span class="comment">#route add -host $vip dev $dev</span></span><br><span class="line">;;</span><br><span class="line">stop)</span><br><span class="line">ifconfig <span class="variable">$dev</span> down</span><br><span class="line"><span class="built_in">echo</span> 0 > /proc/sys/net/ipv4/conf/all/arp_ignore</span><br><span class="line"><span class="built_in">echo</span> 0 > /proc/sys/net/ipv4/conf/lo/arp_ignore</span><br><span class="line"><span class="built_in">echo</span> 0 > /proc/sys/net/ipv4/conf/all/arp_announce</span><br><span class="line"><span class="built_in">echo</span> 0 > /proc/sys/net/ipv4/conf/lo/arp_announce</span><br><span class="line">;;</span><br><span class="line">*)</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Usage: <span class="variable">$(basename $0)</span> start|stop"</span></span><br><span class="line"><span class="built_in">exit</span> 1</span><br><span class="line">;;</span><br><span class="line"><span class="keyword">esac</span></span><br></pre></td></tr></table></figure></p>
+<h5 id="附："><a href="#附：" class="headerlink" title="附："></a>附：</h5><p>&emsp;&emsp;RS的配置脚本<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">vip=10.0.0.100</span><br><span class="line">mask=<span class="string">'255.255.255.255'</span></span><br><span class="line">dev=lo:1</span><br><span class="line"><span class="keyword">case</span> <span class="variable">$1</span> <span class="keyword">in</span></span><br><span class="line">start)</span><br><span class="line"><span class="built_in">echo</span> 1 &gt; /proc/sys/net/ipv4/conf/all/arp_ignore</span><br><span class="line"><span class="built_in">echo</span> 1 &gt; /proc/sys/net/ipv4/conf/lo/arp_ignore</span><br><span class="line"><span class="built_in">echo</span> 2 &gt; /proc/sys/net/ipv4/conf/all/arp_announce</span><br><span class="line"><span class="built_in">echo</span> 2 &gt; /proc/sys/net/ipv4/conf/lo/arp_announce</span><br><span class="line">ifconfig <span class="variable">$dev</span> <span class="variable">$vip</span> netmask <span class="variable">$mask</span> <span class="comment">#broadcast $vip up</span></span><br><span class="line"><span class="comment">#route add -host $vip dev $dev</span></span><br><span class="line">;;</span><br><span class="line">stop)</span><br><span class="line">ifconfig <span class="variable">$dev</span> down</span><br><span class="line"><span class="built_in">echo</span> 0 &gt; /proc/sys/net/ipv4/conf/all/arp_ignore</span><br><span class="line"><span class="built_in">echo</span> 0 &gt; /proc/sys/net/ipv4/conf/lo/arp_ignore</span><br><span class="line"><span class="built_in">echo</span> 0 &gt; /proc/sys/net/ipv4/conf/all/arp_announce</span><br><span class="line"><span class="built_in">echo</span> 0 &gt; /proc/sys/net/ipv4/conf/lo/arp_announce</span><br><span class="line">;;</span><br><span class="line">*)</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Usage: <span class="variable">$(basename $0)</span> start|stop"</span></span><br><span class="line"><span class="built_in">exit</span> 1</span><br><span class="line">;;</span><br><span class="line"><span class="keyword">esac</span></span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;VS的配置脚本<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">vip=<span class="string">'10.0.0.100'</span></span><br><span class="line">iface=<span class="string">'lo:1'</span></span><br><span class="line">mask=<span class="string">'255.255.255.255'</span></span><br><span class="line">port=<span class="string">'80'</span></span><br><span class="line">rs1=<span class="string">'192.168.0.101'</span></span><br><span class="line">rs2=<span class="string">'192.168.0.102'</span></span><br><span class="line">scheduler=<span class="string">'wrr'</span></span><br><span class="line"><span class="built_in">type</span>=<span class="string">'-g'</span></span><br><span class="line"><span class="keyword">case</span> <span class="variable">$1</span> <span class="keyword">in</span></span><br><span class="line">start)</span><br><span class="line">ifconfig <span class="variable">$iface</span> <span class="variable">$vip</span> netmask <span class="variable">$mask</span> <span class="comment">#broadcast $vip up</span></span><br><span class="line">iptables -F</span><br><span class="line">ipvsadm -A -t <span class="variable">$&#123;vip&#125;</span>:<span class="variable">$&#123;port&#125;</span> -s <span class="variable">$scheduler</span></span><br><span class="line">ipvsadm -a -t <span class="variable">$&#123;vip&#125;</span>:<span class="variable">$&#123;port&#125;</span> -r <span class="variable">$&#123;rs1&#125;</span> <span class="variable">$type</span> -w 1</span><br><span class="line">ipvsadm -a -t <span class="variable">$&#123;vip&#125;</span>:<span class="variable">$&#123;port&#125;</span> -r <span class="variable">$&#123;rs2&#125;</span> <span class="variable">$type</span> -w 1</span><br><span class="line">;;</span><br><span class="line">stop)</span><br><span class="line">ipvsadm -C</span><br><span class="line">ifconfig <span class="variable">$iface</span> down</span><br><span class="line">;;</span><br><span class="line">*)</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Usage <span class="variable">$(basename $0)</span> start|stop“</span></span><br><span class="line"><span class="string">exit 1</span></span><br><span class="line"><span class="string">esac</span></span><br></pre></td></tr></table></figure></p>
 <h3 id="FireWall-Mark"><a href="#FireWall-Mark" class="headerlink" title="FireWall Mark"></a>FireWall Mark</h3><p>&emsp;&emsp;FWM：FireWall Mark<br>&emsp;&emsp;MARK target 可用于给特定的报文打标记<br>&emsp;&emsp;–set-mark value<br>其中：value 可为0xffff格式，表示十六进制数字<br>&emsp;&emsp;借助于防火墙标记来分类报文，而后基于标记定义集群服务；可将多个不同的应用使用同一个集群服务进行调度<br>&emsp;&emsp;实现方法：<br>&emsp;&emsp;在Director主机打标记：<br><code>iptables -t mangle -A PREROUTING -d $vip -p $proto –m multiport -
 -dports $port1,$port2,… -j MARK --set-mark NUMBER</code><br>&emsp;&emsp;在Director主机基于标记定义集群服务：<br><code>ipvsadm -A -f NUMBER [options]</code></p>
@@ -392,90 +604,169 @@ server-address</code><br>&emsp;&emsp;rip[:port] 如省略port，不作端口映�
 </ul>
 <h4 id="ldirectord"><a href="#ldirectord" class="headerlink" title="ldirectord"></a>ldirectord</h4><p>&emsp;&emsp;ldirectord：监控和控制LVS守护进程，可管理LVS规则<br>&emsp;&emsp;包名：ldirectord-3.9.6-0rc1.1.1.x86_64.rpm<br>&emsp;&emsp;下载：<a href="http://download.opensuse.org/repositories/network:/haclustering:/Stable/CentOS_CentOS-7/x86_64/" rel="noopener external nofollow noreferrer" target="_blank">http://download.opensuse.org/repositories/network:/haclustering:/Stable/CentOS_CentOS-7/x86_64/</a><br>&emsp;&emsp;文件：<br>&emsp;&emsp;/etc/ha.d/ldirectord.cf 主配置文件<br>&emsp;&emsp;/usr/share/doc/ldirectord-3.9.6/ldirectord.cf 配置模版<br>&emsp;&emsp;/usr/lib/systemd/system/ldirectord.service 服务<br>&emsp;&emsp;/usr/sbin/ldirectord 主程序,Perl实现<br>&emsp;&emsp;/var/log/ldirectord.log 日志<br>&emsp;&emsp;/var/run/ldirectord.ldirectord.pid pid文件</p>
 <p>&emsp;&emsp;Ldirectord配置文件示例<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">checktimeout</span>=3</span><br><span class="line"><span class="attribute">checkinterval</span>=1</span><br><span class="line"><span class="attribute">autoreload</span>=<span class="literal">yes</span></span><br><span class="line"><span class="attribute">logfile</span>=“/var/log/ldirectord.log“ #日志文件</span><br><span class="line"><span class="attribute">quiescent</span>=<span class="literal">no</span>   #down时<span class="literal">yes</span>权重为0，<span class="literal">no</span>为删除</span><br><span class="line"><span class="attribute">virtual</span>=5      #指定VS的FWM 或 IP:PORT</span><br><span class="line"><span class="attribute">real</span>=172.16.0.7:80 gate 2    #DR模型，权重为 2</span><br><span class="line"><span class="attribute">real</span>=172.16.0.8:80 gate 1</span><br><span class="line"><span class="attribute">fallback</span>=127.0.0.1:80 gate   #sorry server</span><br><span class="line"><span class="attribute">service</span>=http</span><br><span class="line"><span class="attribute">scheduler</span>=wrr</span><br><span class="line"><span class="attribute">checktype</span>=negotiate</span><br><span class="line"><span class="attribute">checkport</span>=80</span><br><span class="line"><span class="attribute">request</span>=<span class="string">"index.html"</span></span><br><span class="line"><span class="attribute">receive</span>=“Test Ldirectord<span class="string">"</span></span><br></pre></td></tr></table></figure></p>
+
     </div>
+
+    
+    
+    
+          
+            
+          
           <div class="post-tags">
+            
               <a href="/tags/企业级应用/" rel="tag"><i class="fa fa-tag">企业级应用</i></a>
+            
               <a href="/tags/负载均衡/" rel="tag"><i class="fa fa-tag">负载均衡</i></a>
+            
               <a href="/tags/调度算法/" rel="tag"><i class="fa fa-tag">调度算法</i></a>
+            
               <a href="/tags/集群/" rel="tag"><i class="fa fa-tag">集群</i></a>
+            
               <a href="/tags/LVS/" rel="tag"><i class="fa fa-tag">LVS</i></a>
+            
           </div>
+        
+
     <div style="text-align:center;color: #ccc;font-size:14px;">------------------------------- The End -------------------------------</div>
+
+
+        
   <div class="post-widgets">
     <div class="wp_rating">
       <div id="wpac-rating"></div>
     </div>
+  
   </div>
+
+        
+      
         <div id="reward-container">
   <div>It's very nice of you to support me.</div>
   <button id="reward-button" disable="enable" onclick="var qr = document.getElementById('qr'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
     打赏
   </button>
   <div id="qr" style="display: none;">
+        
+      
       <div style="display: inline-block">
         <img src="/images/wechat-pay.png" alt="Hechao 微信支付">
         <p>微信支付</p>
       </div>
+
   </div>
 </div>
+
+      
+        
+
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
     <strong>本文作者： </strong>Hechao</li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://hewanyue.com/blog/159ef64c.html" title="企业级应用：负载均衡层——LVS调度器详解">https://hewanyue.com/blog/159ef64c.html</a>
+    <a href="https://hewanyue.com/blog/159ef64c.html" title="企业级应用：负载均衡层——LVS调度器详解">https:&#x2F;&#x2F;hewanyue.com&#x2F;blog&#x2F;159ef64c.html</a>
   </li>
   <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank">&lt;i class=&quot;fa fa-fw fa-creative-commons&quot;&gt;&lt;&#x2F;i&gt;BY-NC-SA</a> 许可协议。转载请注明出处！</li>
 </ul>
 </div>
+
+      
+        
+
 <div class="note info" style="background-color: #eff8f0;
     border-left: 3px solid #255188;
     opacity: 0.85;
     padding-left: 11px;
     padding-bottom: 1px;">
+
   <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts" style="margin-top: 10px;
     margin-bottom: 10px;">
     <li class="popular-posts-item">
+      
+      
       <div class="popular-posts-title"><a href="/blog/f5daec50.html" rel="bookmark">企业级应用：负载均衡层——haproxy(二)</a></div>
+      
     </li>
+  
     <li class="popular-posts-item">
+      
+      
       <div class="popular-posts-title"><a href="/blog/5aeb7732.html" rel="bookmark">企业级应用：负载均衡层——haproxy(一)</a></div>
+      
     </li>
+  
     <li class="popular-posts-item">
+      
+      
       <div class="popular-posts-title"><a href="/blog/14b8983d.html" rel="bookmark">redis高可用配置</a></div>
+      
     </li>
+  
     <li class="popular-posts-item">
+      
+      
       <div class="popular-posts-title"><a href="/blog/eaa1ac6e.html" rel="bookmark">Docker（一）——基础概念及部署</a></div>
+      
     </li>
+  
     <li class="popular-posts-item">
+      
+      
       <div class="popular-posts-title"><a href="/blog/2c6b894f.html" rel="bookmark">OpenVPN的搭建</a></div>
+      
     </li>
+  
   </ul>
+
 </div>
+
+      
+
       <footer class="post-footer">
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
+              
                 <a href="/blog/dcaccc5a.html" rel="next" title="源码编译Apache和PHP实现lamp架构">
                   <i class="fa fa-chevron-left"></i> 源码编译Apache和PHP实现lamp架构
                 </a>
+              
             </div>
+
             <span class="post-nav-divider"></span>
+
             <div class="post-nav-prev post-nav-item">
+              
                 <a href="/blog/e4415633.html" rel="prev" title="nginx防盗链设置的一些细节">
                   nginx防盗链设置的一些细节 <i class="fa fa-chevron-right"></i>
                 </a>
+              
             </div>
           </div>
+        
       </footer>
+    
   </div>
+  
+  
+  
   </article>
+
   </div>
+
+
           </div>
+          
+    
     <div class="comments" id="comments"></div>
+  
+
         </div>
+          
+  
   <div class="sidebar-toggle">
     <div class="sidebar-toggle-line-wrap">
       <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
@@ -483,8 +774,15 @@ server-address</code><br>&emsp;&emsp;rip[:port] 如省略port，不作端口映�
       <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
     </div>
   </div>
+
   <aside class="sidebar">
     <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
           文章目录
@@ -493,11 +791,14 @@ server-address</code><br>&emsp;&emsp;rip[:port] 如省略port，不作端口映�
           站点概览
         </li>
       </ul>
+
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
           <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#集群和分布式"><span class="nav-number">1.</span> <span class="nav-text">集群和分布式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Cluster概念"><span class="nav-number">1.1.</span> <span class="nav-text">Cluster概念</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#LB-Cluster的实现"><span class="nav-number">1.1.1.</span> <span class="nav-text">LB Cluster的实现</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#LB-Cluster基于工作的协议层次划分："><span class="nav-number">1.1.2.</span> <span class="nav-text">LB Cluster基于工作的协议层次划分：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#LB-Cluster中用户的会话保持"><span class="nav-number">1.1.3.</span> <span class="nav-text">LB Cluster中用户的会话保持</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分布式系统："><span class="nav-number">1.2.</span> <span class="nav-text">分布式系统：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LVS介绍"><span class="nav-number">2.</span> <span class="nav-text">LVS介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#lvs集群类型中的术语："><span class="nav-number">2.1.</span> <span class="nav-text">lvs集群类型中的术语：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#lvs的模式："><span class="nav-number">2.2.</span> <span class="nav-text">lvs的模式：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#lvs-nat："><span class="nav-number">2.2.1.</span> <span class="nav-text">lvs-nat：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#LVS-DR："><span class="nav-number">2.2.2.</span> <span class="nav-text">LVS-DR：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#lvs-tun："><span class="nav-number">2.2.3.</span> <span class="nav-text">lvs-tun：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#lvs-fullnat：通过同时修改请求报文的源IP地址和目标IP地址进行转发"><span class="nav-number">2.2.4.</span> <span class="nav-text">lvs-fullnat：通过同时修改请求报文的源IP地址和目标IP地址进行转发</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LVS调度算法"><span class="nav-number">2.3.</span> <span class="nav-text">LVS调度算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ipvsadm-ipvs："><span class="nav-number">2.4.</span> <span class="nav-text">ipvsadm/ipvs：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#ipvs："><span class="nav-number">2.4.1.</span> <span class="nav-text">ipvs：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ipvsadm："><span class="nav-number">2.4.2.</span> <span class="nav-text">ipvsadm：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#保存及重载规则"><span class="nav-number">2.5.</span> <span class="nav-text">保存及重载规则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#注意事项"><span class="nav-number">2.6.</span> <span class="nav-text">注意事项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#lvs-nat：-1"><span class="nav-number">2.7.</span> <span class="nav-text">lvs-nat：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LVS-DR"><span class="nav-number">2.8.</span> <span class="nav-text">LVS-DR</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#附："><span class="nav-number">2.8.1.</span> <span class="nav-text">附：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FireWall-Mark"><span class="nav-number">3.</span> <span class="nav-text">FireWall Mark</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#持久连接"><span class="nav-number">3.1.</span> <span class="nav-text">持久连接</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LVS高可用性"><span class="nav-number">4.</span> <span class="nav-text">LVS高可用性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ldirectord"><span class="nav-number">4.1.</span> <span class="nav-text">ldirectord</span></a></li></ol></li></ol></div>
+        
       </div>
       <!--/noindex-->
+
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image"
@@ -509,23 +810,38 @@ server-address</code><br>&emsp;&emsp;rip[:port] 如省略port，不作端口映�
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
+        
           <a href="/archives/">
+        
           <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
+    
+      
+      
       <div class="site-state-item site-state-categories">
+        
           <a href="/categories/">
+        
         <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
+    
+      
+      
       <div class="site-state-item site-state-tags">
+        
+          
             <a href="/tags/">
+          
+        
         <span class="site-state-item-count">65</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
+    
   </nav>
 </div>
   <div class="feed-link motion-element">
@@ -535,15 +851,35 @@ server-address</code><br>&emsp;&emsp;rip[:port] 如省略port，不作端口映�
   </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/wudihechao" title="GitHub &rarr; https://github.com/wudihechao" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      
+      
+      
+        
+      
+        <a href="https://github.com/wudihechao" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;wudihechao" rel="noopener external nofollow noreferrer" target="_blank">&lt;i class=&quot;fa fa-fw fa-github&quot;&gt;&lt;&#x2F;i&gt;</a>
       </span>
+    
       <span class="links-of-author-item">
-        <a href="mailto:wudihechao@163.com" title="E-Mail &rarr; mailto:wudihechao@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      
+      
+      
+        
+      
+        <a href="mailto:wudihechao@163.com" title="E-Mail &amp;rarr; mailto:wudihechao@163.com" rel="noopener external nofollow noreferrer" target="_blank">&lt;i class=&quot;fa fa-fw fa-envelope&quot;&gt;&lt;&#x2F;i&gt;</a>
       </span>
+    
       <span class="links-of-author-item">
-        <a href="https://weibo.com/u/1050367191" title="Weibo &rarr; https://weibo.com/u/1050367191" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-weibo"></i></a>
+      
+      
+      
+        
+      
+        <a href="https://weibo.com/u/1050367191" title="Weibo &amp;rarr; https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;1050367191" rel="noopener external nofollow noreferrer" target="_blank">&lt;i class=&quot;fa fa-fw fa-weibo&quot;&gt;&lt;&#x2F;i&gt;</a>
       </span>
+    
   </div>
+
+        
     <div class="links-of-blogroll motion-element links-of-blogroll-block">
       <div class="links-of-blogroll-title" style="padding-left: 10px;">
         <!-- modify icon to fire by szw -->
@@ -551,23 +887,31 @@ server-address</code><br>&emsp;&emsp;rip[:port] 如省略port，不作端口映�
         近期文章
       </div>
       <ul class="links-of-blogroll-list" style="padding-left: 30px;">
+        
+        
           <li>
             <a href="/blog/eaa1ac6e.html" title="Docker（一）——基础概念及部署" >Docker（一）——基础概念及部署</a>
           </li>
+        
           <li>
             <a href="/blog/f989902e.html" title="KVM虚拟化" >KVM虚拟化</a>
           </li>
+        
           <li>
             <a href="/blog/2c6b894f.html" title="OpenVPN的搭建" >OpenVPN的搭建</a>
           </li>
+        
           <li>
             <a href="/blog/6254cc16.html" title="MSM实现tomcat集群的session共享" >MSM实现tomcat集群的session共享</a>
           </li>
+        
           <li>
             <a href="/blog/b365780e.html" title="linux上部署与配置tomcat" >linux上部署与配置tomcat</a>
           </li>
+        
       </ul>
     </div>
+
 <div id="days"></div>
 <script>
 function show_date_time(){
@@ -594,14 +938,27 @@ return i;
 }
 show_date_time();
 </script>
+
   <div class="cc-license motion-element" itemprop="license">
-    <a href="https://hewanyue.com/" class="cc-opacity"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+    
+  
+
+    <a href="https://hewanyue.com/" class="cc-opacity">&lt;img src=&quot;&#x2F;images&#x2F;cc-by-nc-sa.svg&quot; alt=&quot;Creative Commons&quot;&gt;</a>
   </div>
+
+
+
+
       </div>
+
+
  </aside>
   <div id="sidebar-dimmer"></div>
+
+
       </div>
     </main>
+
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
@@ -615,6 +972,8 @@ show_date_time();
     </span>
     <span title="站点总字数">292k</span>
 </div>
+
+        
 <div class="busuanzi-count">
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
@@ -625,7 +984,9 @@ show_date_time();
         <span id="busuanzi_value_site_uv"></span>
       </span>
     </span>
+  
     <span class="post-meta-divider">|</span>
+  
     <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="fa fa-eye"></i>
@@ -634,10 +995,28 @@ show_date_time();
         <span id="busuanzi_value_site_pv"></span>
       </span>
     </span>
+  
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
       </div>
     </footer>
   </div>
+
+  
+    
+  
   <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
   <script src="/lib/anime.min.js?v=3.1.0"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
@@ -645,6 +1024,10 @@ show_date_time();
 <script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
 <script src="/js/schemes/muse.js?v=7.4.0"></script>
 <script src="/js/next-boot.js?v=7.4.0"></script><script src="/js/bookmark.js?v=7.4.0"></script>
+
+
+
+  
   <script>
     (function(){
       var bp = document.createElement('script');
@@ -654,6 +1037,11 @@ show_date_time();
       s.parentNode.insertBefore(bp, s);
     })();
   </script>
+
+
+
+
+
   <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
@@ -674,7 +1062,28 @@ show_date_time();
     })();
   }
   </script>
+
+
+
   <script src="/js/local-search.js?v=7.4.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
 <script>
 NexT.utils.getScript('//hewanyue.com/js/Valine.min.js', () => {
   var GUEST = ['nick', 'mail','link'];
@@ -698,6 +1107,7 @@ NexT.utils.getScript('//hewanyue.com/js/Valine.min.js', () => {
   });
 }, window.Valine);
 </script>
+
 </body>
 </html>
   <!-- 页面点击小红心 -->

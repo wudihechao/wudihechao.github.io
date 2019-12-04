@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+
+
+
+
+
 <html lang="zh-CN">
 <head>
   <meta name="baidu-site-verification" content="vT6Jf980C0" />
@@ -9,8 +14,13 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.ico?v=7.4.0">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.ico?v=7.4.0">
   <link rel="alternate" href="/atom.xml" title="BOHC!" type="application/atom+xml">
+
 <link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
 <script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
@@ -44,13 +54,16 @@
     sidebarPadding: 40
   };
 </script>
-  <meta name="description" content="&emsp;&emsp;KVM 是Kernel-based Virtual Machine的简称，是一个开源的系统虚拟化模块，自Linux 2.6.20之后集成在Linux的各个主要发行版本中，KVM目前已成为学术界的主流 VMM (virtual machine monitor，虚拟机监视器，也称为hypervisor)之一。">
+
+
+
+  <meta name="description" content="&amp;emsp;&amp;emsp;KVM 是Kernel-based Virtual Machine的简称，是一个开源的系统虚拟化模块，自Linux 2.6.20之后集成在Linux的各个主要发行版本中，KVM目前已成为学术界的主流 VMM (virtual machine monitor，虚拟机监视器，也称为hypervisor)之一。">
 <meta name="keywords" content="一键安装,负载均衡,虚拟化,KVM,ubuntu">
 <meta property="og:type" content="article">
 <meta property="og:title" content="KVM虚拟化">
 <meta property="og:url" content="https://hewanyue.com/blog/f989902e.html">
 <meta property="og:site_name" content="BOHC!">
-<meta property="og:description" content="&emsp;&emsp;KVM 是Kernel-based Virtual Machine的简称，是一个开源的系统虚拟化模块，自Linux 2.6.20之后集成在Linux的各个主要发行版本中，KVM目前已成为学术界的主流 VMM (virtual machine monitor，虚拟机监视器，也称为hypervisor)之一。">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;KVM 是Kernel-based Virtual Machine的简称，是一个开源的系统虚拟化模块，自Linux 2.6.20之后集成在Linux的各个主要发行版本中，KVM目前已成为学术界的主流 VMM (virtual machine monitor，虚拟机监视器，也称为hypervisor)之一。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191129111043897.png">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191129142617354.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
@@ -59,9 +72,11 @@
 <meta property="og:updated_time" content="2019-12-04T02:03:42.614Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="KVM虚拟化">
-<meta name="twitter:description" content="&emsp;&emsp;KVM 是Kernel-based Virtual Machine的简称，是一个开源的系统虚拟化模块，自Linux 2.6.20之后集成在Linux的各个主要发行版本中，KVM目前已成为学术界的主流 VMM (virtual machine monitor，虚拟机监视器，也称为hypervisor)之一。">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;KVM 是Kernel-based Virtual Machine的简称，是一个开源的系统虚拟化模块，自Linux 2.6.20之后集成在Linux的各个主要发行版本中，KVM目前已成为学术界的主流 VMM (virtual machine monitor，虚拟机监视器，也称为hypervisor)之一。">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20191129111043897.png">
   <link rel="canonical" href="https://hewanyue.com/blog/f989902e">
+
+
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
@@ -72,7 +87,17 @@
     isArchive: false
   };
 </script>
+
   <title>KVM虚拟化 | BOHC!</title>
+  
+
+
+
+
+
+
+
+
   <noscript>
   <style>
   .use-motion .brand,
@@ -84,23 +109,31 @@
   .use-motion .post-header,
   .use-motion .post-body,
   .use-motion .collection-header { opacity: initial; }
+
   .use-motion .logo,
   .use-motion .site-title,
   .use-motion .site-subtitle {
     opacity: initial;
     top: initial;
   }
+
   .use-motion .logo-line-before i { left: initial; }
   .use-motion .logo-line-after i { right: initial; }
   </style>
 </noscript>
+
 <script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "https://hm.baidu.com/hm.js?a0d4e217e26da03ea5ca2acc76d543ae";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();</script>
+
+
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="/dist/APlayer.min.css" class="aplayer-style-marker">
 <script src="/dist/APlayer.min.js" class="aplayer-script-marker"></script>
 </head>
+
 <body oncontextmenu=self.event.returnValue=false>
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+
         <div id="aplayer" class="aplayer aplayer-withlist  aplayer-fixed aplayer-narrow" style="position: fixed; z-index: 5; left: 0px; width: 400px;">
             <pre class="aplayer-lrc-content"></pre>
         </div>
@@ -173,6 +206,7 @@
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-meta">
+
     <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
@@ -181,7 +215,9 @@
       </a>
     </div>
         <h1 class="site-subtitle" itemprop="description">blog of hechao!</h1>
+      
   </div>
+
   <div class="site-nav-toggle">
     <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
@@ -190,31 +226,147 @@
     </button>
   </div>
 </div>
+
+
 <nav class="site-nav">
+  
   <ul id="menu" class="menu">
+      
+      
+      
+        
         <li class="menu-item menu-item-home">
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i>首页</a>
+      
+    
+      
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-home&quot;&gt;&lt;&#x2F;i&gt;首页</a>
+
   </li>
+      
+      
+      
+        
         <li class="menu-item menu-item-about">
-    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i>关于</a>
+      
+    
+      
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/about/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-user&quot;&gt;&lt;&#x2F;i&gt;关于</a>
+
   </li>
+      
+      
+      
+        
         <li class="menu-item menu-item-tags">
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">65</span></a>
+      
+    
+      
+      
+        
+      
+        
+      
+        
+          
+        
+      
+    
+
+    <a href="/tags/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-tags&quot;&gt;&lt;&#x2F;i&gt;标签&lt;span class=&quot;badge&quot;&gt;65&lt;&#x2F;span&gt;</a>
+
   </li>
+      
+      
+      
+        
         <li class="menu-item menu-item-categories">
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">10</span></a>
+      
+    
+      
+      
+        
+      
+        
+          
+        
+      
+        
+      
+    
+
+    <a href="/categories/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-th&quot;&gt;&lt;&#x2F;i&gt;分类&lt;span class=&quot;badge&quot;&gt;10&lt;&#x2F;span&gt;</a>
+
   </li>
+      
+      
+      
+        
         <li class="menu-item menu-item-archives">
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">31</span></a>
+      
+    
+      
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/archives/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-archive&quot;&gt;&lt;&#x2F;i&gt;归档&lt;span class=&quot;badge&quot;&gt;31&lt;&#x2F;span&gt;</a>
+
   </li>
+      
+      
+      
+        
         <li class="menu-item menu-item-friends">
-    <a href="/friends/" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i>友链</a>
+      
+    
+      
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/friends/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-link&quot;&gt;&lt;&#x2F;i&gt;友链</a>
+
   </li>
       <li class="menu-item menu-item-search">
         <a href="javascript:;" rel="external nofollow noreferrer" class="popup-trigger">
+        
           <i class="menu-item-icon fa fa-search fa-fw"></i>搜索</a>
       </li>
+    
   </ul>
+
+    
+
 </nav>
   <div class="site-search">
     <div class="popup search-popup">
@@ -232,83 +384,143 @@
   </span>
 </div>
 <div id="search-result"></div>
+
 </div>
 <div class="search-pop-overlay"></div>
+
   </div>
 </div>
     </header>
+
+    
   <div class="back-to-top">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
   <div class="reading-progress-bar"></div>
   <a class="book-mark-link book-mark-link-fixed" href="#"></a>
-  <a href="https://github.com/wudihechao" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener external nofollow noreferrer" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+  <a href="https://github.com/wudihechao" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener external nofollow noreferrer" target="_blank">&lt;svg width=&quot;80&quot; height=&quot;80&quot; viewBox=&quot;0 0 250 250&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z&quot;&gt;&lt;&#x2F;path&gt;&lt;path d=&quot;M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2&quot; fill=&quot;currentColor&quot; style=&quot;transform-origin: 130px 106px;&quot; class=&quot;octo-arm&quot;&gt;&lt;&#x2F;path&gt;&lt;path d=&quot;M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z&quot; fill=&quot;currentColor&quot; class=&quot;octo-body&quot;&gt;&lt;&#x2F;path&gt;&lt;&#x2F;svg&gt;</a>
+
+
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
           <div id="content" class="content">
+            
+
   <div id="posts" class="posts-expand">
       <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
   <div class="post-block post">
     <link itemprop="mainEntityOfPage" href="https://hewanyue.com/blog/f989902e.html">
+
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hechao">
       <meta itemprop="description" content="BOHC is just a blog of hechao.">
       <meta itemprop="image" content="/images/touxiang.gif">
     </span>
+
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="BOHC!">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">KVM虚拟化
+
+          
         </h2>
+
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
+
+
+              
+                
+              
+
               <time title="创建时间：2019-11-29 22:28:35" itemprop="dateCreated datePublished" datetime="2019-11-29T22:28:35+08:00">2019-11-29</time>
             </span>
+          
             <span class="post-meta-item">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
+
+              
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Cloud/" itemprop="url" rel="index"><span itemprop="name">Cloud</span></a></span>
+
+                
+                
+              
             </span>
+          
+
+          
             <span id="/blog/f989902e.html" class="post-meta-item leancloud_visitors" data-flag-title="KVM虚拟化" title="阅读次数">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
+
               <span class="leancloud-visitors-count"></span>
               <span>℃</span>
             </span>
+          
+
               <span class="post-meta-divider">•</span>
+  
   <span class="post-meta-item">
+    
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
     <a title="valine" href="/blog/f989902e.html#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/blog/f989902e.html" itemprop="commentCount"></span></a>
   </span>
+  
+  
+          
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-file-word-o"></i>
               </span>
+              
+
+              
               <span>18k</span>
             </span>
+          
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
+              
+
+              
               <span>46 分钟</span>
             </span>
+          
+
         </div>
       </header>
+
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
+
+      
         <p>&emsp;&emsp;KVM 是Kernel-based Virtual Machine的简称，是一个开源的系统虚拟化模块，自Linux 2.6.20之后集成在Linux的各个主要发行版本中，KVM目前已成为学术界的主流 VMM (virtual machine monitor，虚拟机监视器，也称为hypervisor)之一。<br><a id="more"></a><br>&emsp;&emsp;可参考红帽官方对kvm的定义：<a href="https://www.redhat.com/zh/topics/virtualization/what-is-KVM" rel="noopener external nofollow noreferrer" target="_blank">https://www.redhat.com/zh/topics/virtualization/what-is-KVM</a><br>&emsp;&emsp;KVM的虚拟化需要硬件支持（如Intel VT技术或者AMD V技术)，是基于硬件的完全虚拟化，而Xen早期则是基于软件模拟的半虚拟化，新版本则是支持基于硬件支持的完全虚拟化，但Xen本身有自己的进程调度器，存储管理模块等，所以代码较为庞大，广为流传的商业系统虚拟化软件VMware ESXI系列是Full-Virtualization，（IBM文档：<a href="http://www.ibm.com/developerworks/cn/linux/l-using-kvm/" rel="noopener external nofollow noreferrer" target="_blank">http://www.ibm.com/developerworks/cn/linux/l-using-kvm/</a> ）<br>&emsp;&emsp;简单地说，KVM就是基于硬件支持实现，将单台主机，分隔成多个互不干扰的虚拟主机的技术，不受困于底层操作系统，可以为每个主机提供单独的、所需的的运行环境，如下图所示：<br><img src="https://img-blog.csdnimg.cn/20191129111043897.png" alt="KVM示意图"><br>&emsp;&emsp;如果每个节点都是用共享存储如NAS，则可实现跨主机的虚拟机快速迁移，这也是我们在生产环境中经常采用的架构。本文将以下面架构，来具体展示KVM在实际生产中的应用。<br><img src="https://img-blog.csdnimg.cn/20191129142617354.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="KVMweb负载均衡">&emsp;&emsp;三个主机，其中两个主机node1和node2上运行KVM，另一台是NAS共享存储服务器，通过10.0.0.0/16网段内网连接。在node1上的用KVM构建虚拟机H1和W1分别运行haproxy+keepalived服务和nginx服务，其中H1桥接方式到node1的两块网卡上，W1桥接到内网网卡eth1上。node2节点中也是如此。于是，将Client端请求通过haproxy反向代理只内网的web服务集群中，保证负载均衡和高可用，哪怕一个物理节点服务器down掉也不影响客户服务访问。<br>&emsp;&emsp;NAS服务器的搭建很容易，这里就先不详细介绍了，本文之后主要介绍KVM服务的配置及虚拟机集群的搭建。</p>
 <h2 id="宿主机环境准备："><a href="#宿主机环境准备：" class="headerlink" title="宿主机环境准备："></a>宿主机环境准备：</h2><p>&emsp;&emsp;KVM需要宿主机CPU必须支持虚拟化功能，因此如果是在vmware workstation上使用虚拟机做宿主机，那么必须要在虚拟机配置界面的处理器选项中开启虚拟机化功能（VMware支持嵌套虚拟化，而KVM不支持，大部分云服务器如阿里云就是基于KVM技术二次研发制作的，所以云服务器都不支持从中再建虚拟机）。<br>&emsp;&emsp;KVM模块因为已经被集成到linux内核之中，所以我们只需要安装KVM管理工具就可以直接使用KVM创建虚拟机了。<br>&emsp;&emsp;可用命令验证是否开启虚拟化（也可通过lscpu命令,grep -o选项只看匹配词本身，也可以用egrep代替grep -E）<br><figure class="highlight tcl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# grep -Eo <span class="string">"vmx|svm"</span> /<span class="keyword">proc</span>/cpuinfo |<span class="title"> wc</span> -l</span><br><span class="line">vmx</span><br><span class="line">vmx</span><br></pre></td></tr></table></figure></p>
 <h3 id="KVM软件包安装"><a href="#KVM软件包安装" class="headerlink" title="KVM软件包安装"></a>KVM软件包安装</h3><p>&emsp;&emsp;在Ubuntu 18.04中：<br>&emsp;&emsp;可参考官网<a href="https://ubuntu.com/server/docs/virtualization-libvirt" rel="noopener external nofollow noreferrer" target="_blank">https://ubuntu.com/server/docs/virtualization-libvirt</a><br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">apt <span class="keyword">install</span> qemu-kvm virt-manager libvirt-daemon-<span class="keyword">system</span></span><br><span class="line">kvm-ok <span class="comment">#验证是否支持kvm</span></span><br></pre></td></tr></table></figure></p>
@@ -336,7 +548,7 @@
 <figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ll -h /var/<span class="class"><span class="keyword">lib</span>/<span class="title">libvirt</span>/<span class="title">images</span>/<span class="title">CentOS7</span>.<span class="title">qcow2</span></span></span><br><span class="line">-rw-r--r-- <span class="number">1</span> root root <span class="number">193</span>K Nov <span class="number">29</span> <span class="number">16</span>:<span class="number">36</span> /var/<span class="class"><span class="keyword">lib</span>/<span class="title">libvirt</span>/<span class="title">images</span>/<span class="title">centos</span>.<span class="title">qcow2</span></span></span><br></pre></td></tr></table></figure>
 <p>&emsp;&emsp;我们选用qcow2格式的磁盘，先创建H1虚拟机，<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qemu-img create -f qcow2 /var/<span class="class"><span class="keyword">lib</span>/<span class="title">libvirt</span>/<span class="title">images</span>/<span class="title">H1</span>.<span class="title">qcow2</span> 10<span class="title">G</span></span></span><br></pre></td></tr></table></figure></p>
 <h3 id="创建虚拟机"><a href="#创建虚拟机" class="headerlink" title="创建虚拟机"></a>创建虚拟机</h3><p>&emsp;&emsp;先导入ISO光盘镜像文件,可以使用共享存储上的ISO文件，也可本机导入，本机上传的话一般习惯性放到<code>/usr/local/src/</code>目录下<br>&emsp;&emsp;使用<code>virt-install</code>命令创建虚拟机，参数可<code>virt-install --help</code>查看帮助信息<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virt-<span class="keyword">install</span> <span class="comment">--help</span></span><br></pre></td></tr></table></figure></p>
-<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br></pre></td><td class="code"><pre><span class="line">usage: virt-install <span class="params">--name</span> NAME <span class="params">--ram</span> RAM STORAGE INSTALL [options]</span><br><span class="line">使用指定安装介质新建虚拟机。</span><br><span class="line">optional arguments:</span><br><span class="line">-h, <span class="params">--help</span> show this <span class="keyword">help</span> message and exit</span><br><span class="line"><span class="params">--version</span> show program's <span class="keyword">version</span> number and exit</span><br><span class="line"><span class="params">--connect</span> URI 使用 libvirt URI 连接到 hypervisor</span><br><span class="line">通用选项:</span><br><span class="line">-n NAME, <span class="params">--name</span> NAME 客户端事件名称</span><br><span class="line"><span class="params">--memory</span> MEMORY 配置虚拟机内存分配。例如：</span><br><span class="line"><span class="params">--memory</span> 1024 <span class="params">(in MiB)</span></span><br><span class="line"><span class="params">--memory</span> 512,maxmemory=1024</span><br><span class="line"><span class="params">--vcpus</span> VCPUS 为虚拟机配置的 vcpus 数。例如：</span><br><span class="line"><span class="params">--vcpus</span> 5</span><br><span class="line"><span class="params">--vcpus</span> 5,maxcpus=10,cpuset=1-4,6,8</span><br><span class="line"><span class="params">--vcpus</span> sockets=2,cores=4,threads=2,</span><br><span class="line"><span class="params">--cpu</span> CPU CPU 型号及功能。例如：</span><br><span class="line"><span class="params">--cpu</span> coreduo,+x2apic</span><br><span class="line"><span class="params">--cpu</span> host</span><br><span class="line"><span class="params">--metadata</span> METADATA 配置虚拟机元数据。例如：</span><br><span class="line"><span class="params">--metadata</span> name=foo,title=<span class="string">"My pretty title"</span>,uuid=<span class="string">...</span></span><br><span class="line"><span class="params">--metadata</span> description=<span class="string">"My nice long description"</span></span><br><span class="line">安装方法选项:</span><br><span class="line"><span class="params">--cdrom</span> CDROM 光驱安装介质</span><br><span class="line">-l LOCATION, <span class="params">--location</span> LOCATION</span><br><span class="line">安装源<span class="params">(例如：nfs:host:/path、http://host/path</span></span><br><span class="line"><span class="params">ftp://host/path)</span></span><br><span class="line"><span class="params">--pxe</span> 使用 PXE 协议从网络引导</span><br><span class="line"><span class="params">--import</span> 在磁盘映像中构建虚拟机</span><br><span class="line"><span class="params">--livecd</span> 将光驱介质视为 Live CD</span><br><span class="line">-x EXTRA_ARGS, <span class="params">--extra-args</span> EXTRA_ARGS</span><br><span class="line">附加到使用 <span class="params">--location</span> 引导的内核的参数</span><br><span class="line"><span class="params">--initrd-inject</span> INITRD_INJECT</span><br><span class="line">使用 <span class="params">--location</span> 为 initrd 的 root</span><br><span class="line">添加给定文件</span><br><span class="line"><span class="params">--os-variant</span> DISTRO_VARIANT</span><br><span class="line">在其中安装 OS 变体的虚拟机，比如</span><br><span class="line">'fedora18'、'rhel6'、'winxp' 等等。</span><br><span class="line"><span class="params">--boot</span> BOOT 配置虚拟机引导设置。例如：</span><br><span class="line"><span class="params">--boot</span> hd,cdrom,menu=on</span><br><span class="line"><span class="params">--boot</span> init=<span class="string">/sbin/init</span> <span class="params">(for containers)</span></span><br><span class="line"><span class="params">--idmap</span> IDMAP 为 LXC 容器启用用户名称空间。例如：</span><br><span class="line"><span class="params">--idmap</span> uid_start=0,uid_target=1000,uid_count=10</span><br><span class="line">设备选项:</span><br><span class="line"><span class="params">--disk</span> DISK 使用不同选项指定存储。例如：</span><br><span class="line"><span class="params">--disk</span> size=10 <span class="params">(new 10GiB image in default location)</span></span><br><span class="line"><span class="params">--disk</span> <span class="string">/my/existing/disk</span>,cache=none</span><br><span class="line"><span class="params">--disk</span> device=cdrom,bus=scsi</span><br><span class="line"><span class="params">--disk=</span>?</span><br><span class="line">-w NETWORK, <span class="params">--network</span> NETWORK</span><br><span class="line">配置虚拟机网络接口。例如：</span><br><span class="line"><span class="params">--network</span> bridge=mybr0</span><br><span class="line"><span class="params">--network</span> network=my_libvirt_virtual_net</span><br><span class="line"><span class="params">--network</span> network=mynet,model=virtio,mac=00<span class="function">:11...</span></span><br><span class="line"><span class="params">--network</span> none</span><br><span class="line"><span class="params">--network</span> <span class="keyword">help</span></span><br><span class="line"><span class="params">--graphics</span> GRAPHICS 配置虚拟机显示设置。例如：</span><br><span class="line"><span class="params">--graphics</span> vnc</span><br><span class="line"><span class="params">--graphics</span> spice,port=5901,tlsport=5902</span><br><span class="line"><span class="params">--graphics</span> none</span><br><span class="line"><span class="params">--graphics</span> vnc,password=foobar,port=5910,keymap=ja</span><br><span class="line"><span class="params">--controller</span> CONTROLLER</span><br><span class="line">配置虚拟机控制程序设备。例如：</span><br><span class="line"><span class="params">--controller</span> type=usb,model=ich9-ehci1</span><br><span class="line"><span class="params">--input</span> INPUT 配置虚拟机输入设备。例如：</span><br><span class="line"><span class="params">--input</span> tablet</span><br><span class="line"><span class="params">--input</span> keyboard,bus=usb</span><br><span class="line"><span class="params">--serial</span> SERIAL 配置虚拟机串口设备</span><br><span class="line"><span class="params">--parallel</span> PARALLEL 配置虚拟机并口设备</span><br><span class="line"><span class="params">--channel</span> CHANNEL 配置虚拟机沟通频道</span><br><span class="line"><span class="params">--console</span> CONSOLE 配置虚拟机与主机之间的文本控制台连接</span><br><span class="line"><span class="params">--hostdev</span> HOSTDEV 将物理 USB/PCI/etc</span><br><span class="line">主机设备配置为与虚拟机共享</span><br><span class="line"><span class="params">--filesystem</span> FILESYSTEM</span><br><span class="line">将主机目录传递给虚拟机。例如：</span><br><span class="line"><span class="params">--filesystem</span> <span class="string">/my/source/dir</span>,<span class="string">/dir/in/guest</span></span><br><span class="line"><span class="params">--filesystem</span> template_name,/,type=template</span><br><span class="line"><span class="params">--sound</span> [SOUND] 配置虚拟机声音设备模拟</span><br><span class="line"><span class="params">--watchdog</span> WATCHDOG 配置虚拟机 watchdog 设备</span><br><span class="line"><span class="params">--video</span> VIDEO 配置虚拟机视频硬件。</span><br><span class="line"><span class="params">--smartcard</span> SMARTCARD</span><br><span class="line">配置虚拟机智能卡设备。例如：</span><br><span class="line"><span class="params">--smartcard</span> mode=passthrough</span><br><span class="line"><span class="params">--redirdev</span> REDIRDEV 配置虚拟机重定向设备。例如：</span><br><span class="line"><span class="params">--redirdev</span> usb,type=tcp,server=192.168.1.1<span class="function">:4000</span></span><br><span class="line"><span class="params">--memballoon</span> MEMBALLOON</span><br><span class="line">配置虚拟机 memballoon 设备。例如：</span><br><span class="line"><span class="params">--memballoon</span> model=virtio</span><br><span class="line"><span class="params">--tpm</span> TPM 配置虚拟机 TPM 设备。例如：</span><br><span class="line"><span class="params">--tpm</span> <span class="string">/dev/tpm</span></span><br><span class="line"><span class="params">--rng</span> RNG 配置虚拟机 RNG 设备。例如：</span><br><span class="line"><span class="params">--rng</span> <span class="string">/dev/random</span></span><br><span class="line"><span class="params">--panic</span> PANIC 配置虚拟机 panic 设备。例如：</span><br><span class="line"><span class="params">--panic</span> default</span><br><span class="line">虚拟机配置选项:</span><br><span class="line"><span class="params">--security</span> SECURITY 设定域安全驱动器配置。</span><br><span class="line"><span class="params">--numatune</span> NUMATUNE 为域进程调整 NUMA 策略。</span><br><span class="line"><span class="params">--memtune</span> MEMTUNE 为域进程调整内粗策略。</span><br><span class="line"><span class="params">--blkiotune</span> BLKIOTUNE</span><br><span class="line">为域进程调整 blkio 策略。</span><br><span class="line"><span class="params">--memorybacking</span> MEMORYBACKING</span><br><span class="line">为域进程设置内存后备策略。例如：</span><br><span class="line"><span class="params">--memorybacking</span> hugepages=on</span><br><span class="line"><span class="params">--features</span> FEATURES 设置域 <features> XML。例如：</span><br><span class="line"><span class="params">--features</span> acpi=off</span><br><span class="line"><span class="params">--features</span> apic=on,eoi=on</span><br><span class="line"><span class="params">--clock</span> CLOCK 设置域 <clock> XML。例如：</span><br><span class="line"><span class="params">--clock</span> offset=localtime,rtc_tickpolicy=catchup</span><br><span class="line"><span class="params">--pm</span> PM 配置 VM 电源管理功能</span><br><span class="line"><span class="params">--events</span> EVENTS 配置 VM 生命周期管理策略</span><br><span class="line"><span class="params">--resource</span> RESOURCE 配置 VM 资源分区（cgroups）</span><br><span class="line">虚拟化平台选项:</span><br><span class="line">-v, <span class="params">--hvm</span> 客户端应该是一个全虚拟客户端</span><br><span class="line">-p, <span class="params">--paravirt</span> 这个客户端一个是一个半虚拟客户端</span><br><span class="line"><span class="params">--container</span> 这台虚拟机需要一个容器客户端</span><br><span class="line"><span class="params">--virt-type</span> HV_TYPE 要使用的管理程序名称<span class="params">(kvm、qemu、xen</span></span><br><span class="line"><span class="params">等等)</span></span><br><span class="line"><span class="params">--arch</span> ARCH 模拟的 CPU 构架</span><br><span class="line"><span class="params">--machine</span> MACHINE 要模拟的机器类型</span><br><span class="line">其它选项:</span><br><span class="line"><span class="params">--autostart</span> 引导主机时自动启动域。</span><br><span class="line"><span class="params">--wait</span> WAIT 等待安装完成的分钟数。</span><br><span class="line"><span class="params">--noautoconsole</span> 不要自动尝试连接到客户端控制台</span><br><span class="line"><span class="params">--noreboot</span> 完成安装后不要引导虚拟机。</span><br><span class="line"><span class="params">--print-xml</span> [XMLONLY]</span><br><span class="line">输出所生成域 XML，而不是创建虚拟机。</span><br><span class="line"><span class="params">--dry-run</span> 完成安装步骤，但不要创建设备或者定义</span><br><span class="line">虚拟机。</span><br><span class="line"><span class="params">--check</span> CHECK 启用或禁用验证检查。例如：</span><br><span class="line"><span class="params">--check</span> path_in_use=off</span><br><span class="line"><span class="params">--check</span> all=off</span><br><span class="line">-q, <span class="params">--quiet</span> 禁止无错误输出</span><br><span class="line">-d, <span class="params">--debug</span> 输入故障排除信息</span><br></pre></td></tr></table></figure>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br></pre></td><td class="code"><pre><span class="line">usage: virt-install <span class="params">--name</span> NAME <span class="params">--ram</span> RAM STORAGE INSTALL [options]</span><br><span class="line">使用指定安装介质新建虚拟机。</span><br><span class="line">optional arguments:</span><br><span class="line">-h, <span class="params">--help</span> show this <span class="keyword">help</span> message and exit</span><br><span class="line"><span class="params">--version</span> show program's <span class="keyword">version</span> number and exit</span><br><span class="line"><span class="params">--connect</span> URI 使用 libvirt URI 连接到 hypervisor</span><br><span class="line">通用选项:</span><br><span class="line">-n NAME, <span class="params">--name</span> NAME 客户端事件名称</span><br><span class="line"><span class="params">--memory</span> MEMORY 配置虚拟机内存分配。例如：</span><br><span class="line"><span class="params">--memory</span> 1024 <span class="params">(in MiB)</span></span><br><span class="line"><span class="params">--memory</span> 512,maxmemory=1024</span><br><span class="line"><span class="params">--vcpus</span> VCPUS 为虚拟机配置的 vcpus 数。例如：</span><br><span class="line"><span class="params">--vcpus</span> 5</span><br><span class="line"><span class="params">--vcpus</span> 5,maxcpus=10,cpuset=1-4,6,8</span><br><span class="line"><span class="params">--vcpus</span> sockets=2,cores=4,threads=2,</span><br><span class="line"><span class="params">--cpu</span> CPU CPU 型号及功能。例如：</span><br><span class="line"><span class="params">--cpu</span> coreduo,+x2apic</span><br><span class="line"><span class="params">--cpu</span> host</span><br><span class="line"><span class="params">--metadata</span> METADATA 配置虚拟机元数据。例如：</span><br><span class="line"><span class="params">--metadata</span> name=foo,title=<span class="string">"My pretty title"</span>,uuid=<span class="string">...</span></span><br><span class="line"><span class="params">--metadata</span> description=<span class="string">"My nice long description"</span></span><br><span class="line">安装方法选项:</span><br><span class="line"><span class="params">--cdrom</span> CDROM 光驱安装介质</span><br><span class="line">-l LOCATION, <span class="params">--location</span> LOCATION</span><br><span class="line">安装源<span class="params">(例如：nfs:host:/path、http://host/path</span></span><br><span class="line"><span class="params">ftp://host/path)</span></span><br><span class="line"><span class="params">--pxe</span> 使用 PXE 协议从网络引导</span><br><span class="line"><span class="params">--import</span> 在磁盘映像中构建虚拟机</span><br><span class="line"><span class="params">--livecd</span> 将光驱介质视为 Live CD</span><br><span class="line">-x EXTRA_ARGS, <span class="params">--extra-args</span> EXTRA_ARGS</span><br><span class="line">附加到使用 <span class="params">--location</span> 引导的内核的参数</span><br><span class="line"><span class="params">--initrd-inject</span> INITRD_INJECT</span><br><span class="line">使用 <span class="params">--location</span> 为 initrd 的 root</span><br><span class="line">添加给定文件</span><br><span class="line"><span class="params">--os-variant</span> DISTRO_VARIANT</span><br><span class="line">在其中安装 OS 变体的虚拟机，比如</span><br><span class="line">'fedora18'、'rhel6'、'winxp' 等等。</span><br><span class="line"><span class="params">--boot</span> BOOT 配置虚拟机引导设置。例如：</span><br><span class="line"><span class="params">--boot</span> hd,cdrom,menu=on</span><br><span class="line"><span class="params">--boot</span> init=<span class="string">/sbin/init</span> <span class="params">(for containers)</span></span><br><span class="line"><span class="params">--idmap</span> IDMAP 为 LXC 容器启用用户名称空间。例如：</span><br><span class="line"><span class="params">--idmap</span> uid_start=0,uid_target=1000,uid_count=10</span><br><span class="line">设备选项:</span><br><span class="line"><span class="params">--disk</span> DISK 使用不同选项指定存储。例如：</span><br><span class="line"><span class="params">--disk</span> size=10 <span class="params">(new 10GiB image in default location)</span></span><br><span class="line"><span class="params">--disk</span> <span class="string">/my/existing/disk</span>,cache=none</span><br><span class="line"><span class="params">--disk</span> device=cdrom,bus=scsi</span><br><span class="line"><span class="params">--disk=</span>?</span><br><span class="line">-w NETWORK, <span class="params">--network</span> NETWORK</span><br><span class="line">配置虚拟机网络接口。例如：</span><br><span class="line"><span class="params">--network</span> bridge=mybr0</span><br><span class="line"><span class="params">--network</span> network=my_libvirt_virtual_net</span><br><span class="line"><span class="params">--network</span> network=mynet,model=virtio,mac=00<span class="function">:11...</span></span><br><span class="line"><span class="params">--network</span> none</span><br><span class="line"><span class="params">--network</span> <span class="keyword">help</span></span><br><span class="line"><span class="params">--graphics</span> GRAPHICS 配置虚拟机显示设置。例如：</span><br><span class="line"><span class="params">--graphics</span> vnc</span><br><span class="line"><span class="params">--graphics</span> spice,port=5901,tlsport=5902</span><br><span class="line"><span class="params">--graphics</span> none</span><br><span class="line"><span class="params">--graphics</span> vnc,password=foobar,port=5910,keymap=ja</span><br><span class="line"><span class="params">--controller</span> CONTROLLER</span><br><span class="line">配置虚拟机控制程序设备。例如：</span><br><span class="line"><span class="params">--controller</span> type=usb,model=ich9-ehci1</span><br><span class="line"><span class="params">--input</span> INPUT 配置虚拟机输入设备。例如：</span><br><span class="line"><span class="params">--input</span> tablet</span><br><span class="line"><span class="params">--input</span> keyboard,bus=usb</span><br><span class="line"><span class="params">--serial</span> SERIAL 配置虚拟机串口设备</span><br><span class="line"><span class="params">--parallel</span> PARALLEL 配置虚拟机并口设备</span><br><span class="line"><span class="params">--channel</span> CHANNEL 配置虚拟机沟通频道</span><br><span class="line"><span class="params">--console</span> CONSOLE 配置虚拟机与主机之间的文本控制台连接</span><br><span class="line"><span class="params">--hostdev</span> HOSTDEV 将物理 USB/PCI/etc</span><br><span class="line">主机设备配置为与虚拟机共享</span><br><span class="line"><span class="params">--filesystem</span> FILESYSTEM</span><br><span class="line">将主机目录传递给虚拟机。例如：</span><br><span class="line"><span class="params">--filesystem</span> <span class="string">/my/source/dir</span>,<span class="string">/dir/in/guest</span></span><br><span class="line"><span class="params">--filesystem</span> template_name,/,type=template</span><br><span class="line"><span class="params">--sound</span> [SOUND] 配置虚拟机声音设备模拟</span><br><span class="line"><span class="params">--watchdog</span> WATCHDOG 配置虚拟机 watchdog 设备</span><br><span class="line"><span class="params">--video</span> VIDEO 配置虚拟机视频硬件。</span><br><span class="line"><span class="params">--smartcard</span> SMARTCARD</span><br><span class="line">配置虚拟机智能卡设备。例如：</span><br><span class="line"><span class="params">--smartcard</span> mode=passthrough</span><br><span class="line"><span class="params">--redirdev</span> REDIRDEV 配置虚拟机重定向设备。例如：</span><br><span class="line"><span class="params">--redirdev</span> usb,type=tcp,server=192.168.1.1<span class="function">:4000</span></span><br><span class="line"><span class="params">--memballoon</span> MEMBALLOON</span><br><span class="line">配置虚拟机 memballoon 设备。例如：</span><br><span class="line"><span class="params">--memballoon</span> model=virtio</span><br><span class="line"><span class="params">--tpm</span> TPM 配置虚拟机 TPM 设备。例如：</span><br><span class="line"><span class="params">--tpm</span> <span class="string">/dev/tpm</span></span><br><span class="line"><span class="params">--rng</span> RNG 配置虚拟机 RNG 设备。例如：</span><br><span class="line"><span class="params">--rng</span> <span class="string">/dev/random</span></span><br><span class="line"><span class="params">--panic</span> PANIC 配置虚拟机 panic 设备。例如：</span><br><span class="line"><span class="params">--panic</span> default</span><br><span class="line">虚拟机配置选项:</span><br><span class="line"><span class="params">--security</span> SECURITY 设定域安全驱动器配置。</span><br><span class="line"><span class="params">--numatune</span> NUMATUNE 为域进程调整 NUMA 策略。</span><br><span class="line"><span class="params">--memtune</span> MEMTUNE 为域进程调整内粗策略。</span><br><span class="line"><span class="params">--blkiotune</span> BLKIOTUNE</span><br><span class="line">为域进程调整 blkio 策略。</span><br><span class="line"><span class="params">--memorybacking</span> MEMORYBACKING</span><br><span class="line">为域进程设置内存后备策略。例如：</span><br><span class="line"><span class="params">--memorybacking</span> hugepages=on</span><br><span class="line"><span class="params">--features</span> FEATURES 设置域 &lt;features&gt; XML。例如：</span><br><span class="line"><span class="params">--features</span> acpi=off</span><br><span class="line"><span class="params">--features</span> apic=on,eoi=on</span><br><span class="line"><span class="params">--clock</span> CLOCK 设置域 &lt;clock&gt; XML。例如：</span><br><span class="line"><span class="params">--clock</span> offset=localtime,rtc_tickpolicy=catchup</span><br><span class="line"><span class="params">--pm</span> PM 配置 VM 电源管理功能</span><br><span class="line"><span class="params">--events</span> EVENTS 配置 VM 生命周期管理策略</span><br><span class="line"><span class="params">--resource</span> RESOURCE 配置 VM 资源分区（cgroups）</span><br><span class="line">虚拟化平台选项:</span><br><span class="line">-v, <span class="params">--hvm</span> 客户端应该是一个全虚拟客户端</span><br><span class="line">-p, <span class="params">--paravirt</span> 这个客户端一个是一个半虚拟客户端</span><br><span class="line"><span class="params">--container</span> 这台虚拟机需要一个容器客户端</span><br><span class="line"><span class="params">--virt-type</span> HV_TYPE 要使用的管理程序名称<span class="params">(kvm、qemu、xen</span></span><br><span class="line"><span class="params">等等)</span></span><br><span class="line"><span class="params">--arch</span> ARCH 模拟的 CPU 构架</span><br><span class="line"><span class="params">--machine</span> MACHINE 要模拟的机器类型</span><br><span class="line">其它选项:</span><br><span class="line"><span class="params">--autostart</span> 引导主机时自动启动域。</span><br><span class="line"><span class="params">--wait</span> WAIT 等待安装完成的分钟数。</span><br><span class="line"><span class="params">--noautoconsole</span> 不要自动尝试连接到客户端控制台</span><br><span class="line"><span class="params">--noreboot</span> 完成安装后不要引导虚拟机。</span><br><span class="line"><span class="params">--print-xml</span> [XMLONLY]</span><br><span class="line">输出所生成域 XML，而不是创建虚拟机。</span><br><span class="line"><span class="params">--dry-run</span> 完成安装步骤，但不要创建设备或者定义</span><br><span class="line">虚拟机。</span><br><span class="line"><span class="params">--check</span> CHECK 启用或禁用验证检查。例如：</span><br><span class="line"><span class="params">--check</span> path_in_use=off</span><br><span class="line"><span class="params">--check</span> all=off</span><br><span class="line">-q, <span class="params">--quiet</span> 禁止无错误输出</span><br><span class="line">-d, <span class="params">--debug</span> 输入故障排除信息</span><br></pre></td></tr></table></figure>
 <p>&emsp;&emsp;我们使用命令创建虚拟机(网卡配置选择default的话默认是nat模式)<br><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">virt-install --virt-type kvm \</span><br><span class="line">-<span class="ruby">-name H1 --ram <span class="number">1024</span> --vcpus <span class="number">2</span> \</span></span><br><span class="line"><span class="ruby">--cdrom=<span class="regexp">/usr/local</span><span class="regexp">/src/</span>CentOS-<span class="number">7</span>-x86_64-Minimal-<span class="number">1908</span>.iso \</span></span><br><span class="line"><span class="ruby">--disk=<span class="regexp">/var/lib</span><span class="regexp">/libvirt/images</span><span class="regexp">/H1.qcow2 \</span></span></span><br><span class="line"><span class="ruby">--network network=default \</span></span><br><span class="line"><span class="ruby">--graphics vnc,listen=<span class="number">0</span>.<span class="number">0</span>.<span class="number">0</span>.<span class="number">0</span> \</span></span><br><span class="line"><span class="ruby">--noautoconsole</span></span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;输入<code>virt-manage</code>r可开启xshellmanager的终端窗口如下图<img src="https://img-blog.csdnimg.cn/20191129164736147.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="H"><br>&emsp;&emsp;双击图标打开，可以看到已经开始自动从光盘启动安装了，配置完毕，手动安装CentOS7系统。<br>如果输入<code>virt-manage</code>不能启动xmanager的窗口，检查一下项目</p>
 <ul>
@@ -353,97 +565,176 @@
 <p>&emsp;&emsp;然后将W1强制终止，因为第一次是默认从光驱启动的，我们已经有系统了，不需要重装，重启后就发现已经是装好的系统，与H1一模一样的。<br>&emsp;&emsp;然后修改主机名为web1，将网卡桥接在eth1上,修改网卡配置。<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">TYPE</span>=<span class="string">"Ethernet"</span></span><br><span class="line"><span class="attr">BOOTPROTO</span>=<span class="string">"static"</span></span><br><span class="line"><span class="attr">IPADDR</span>=<span class="string">"10.0.0.175"</span></span><br><span class="line"><span class="attr">PREFIX</span>=<span class="string">"16"</span></span><br><span class="line"><span class="attr">DEFROUTE</span>=<span class="string">"yes"</span></span><br><span class="line"><span class="attr">NAME</span>=<span class="string">"eth0"</span></span><br><span class="line"><span class="attr">DEVICE</span>=<span class="string">"eth0"</span></span><br><span class="line"><span class="attr">ONBOOT</span>=<span class="string">"yes"</span></span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;对node2上的两个虚拟机采用同样方式创建。<br>&emsp;&emsp;之后分别通过脚本装HAProxy+keepadlived服务和nginx+PHP服务。<br>&emsp;&emsp;修改完几个服务的配置文件(可参考之前文章<a href="https://blog.csdn.net/MicePro/article/details/102901024" rel="noopener external nofollow noreferrer" target="_blank">企业级应用：负载均衡层——haproxy(一)</a>)之后，就可以将通过客户机就可以访问，后端web服务器了。</p>
 <h2 id="附一键安装脚本"><a href="#附一键安装脚本" class="headerlink" title="附一键安装脚本"></a>附一键安装脚本</h2><h3 id="HAProxy一键安装脚本"><a href="#HAProxy一键安装脚本" class="headerlink" title="HAProxy一键安装脚本"></a>HAProxy一键安装脚本</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-attr">[root@HAProxy1 haproxy]</span># <span class="selector-tag">tree</span></span><br><span class="line">.</span><br><span class="line">├── <span class="selector-tag">haproxy-2</span><span class="selector-class">.0</span><span class="selector-class">.8</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span></span><br><span class="line">├── <span class="selector-tag">haproxy84</span><span class="selector-class">.cfg</span></span><br><span class="line">├── <span class="selector-tag">haproxy</span><span class="selector-class">.cfg</span></span><br><span class="line">├── <span class="selector-tag">haproxy</span><span class="selector-class">.service</span></span><br><span class="line">├── <span class="selector-tag">haproxy</span><span class="selector-class">.sh</span></span><br><span class="line">└── <span class="selector-tag">lua-5</span><span class="selector-class">.3</span><span class="selector-class">.5</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span></span><br><span class="line"></span><br><span class="line">0 <span class="selector-tag">directories</span>, 6 <span class="selector-tag">files</span></span><br><span class="line"><span class="selector-attr">[root@HAProxy1 haproxy]</span># <span class="selector-tag">bash</span> <span class="selector-tag">haproxy</span><span class="selector-class">.sh</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/bin/bash</span></span><br><span class="line">DST=<span class="string">"/apps"</span></span><br><span class="line">[ -a haproxy.cfg ] || &#123; echo <span class="string">' the absence of haproxy.conf'</span> ;exit <span class="number">1</span>;&#125;</span><br><span class="line">[ -a haproxy-<span class="number">2.0</span>.<span class="number">8</span>.tar.gz ] || &#123; echo <span class="string">' the absence of haproxy-2.0.8.tar.gz'</span> ;exit <span class="number">1</span>;&#125;</span><br><span class="line">[ -a haproxy.service ] || &#123; echo <span class="string">' the absence of haproxy.service'</span> ;exit <span class="number">2</span>;&#125;</span><br><span class="line">[ -a /usr/<span class="class"><span class="keyword">lib</span>/<span class="title">systemd</span>/<span class="title">system</span>/<span class="title">haproxy</span>.<span class="title">service</span> ] && &#123; <span class="title">echo</span> ' <span class="title">haproxy</span> <span class="title">is</span> <span class="title">aready</span> <span class="title">installed</span>' ;</span>exit <span class="number">3</span>;&#125;</span><br><span class="line">id haproxy &><span class="regexp">/dev/null</span> && &#123; echo <span class="string">'user haproxy is exist'</span> ; exit <span class="number">4</span>;&#125; || useradd -r -s /sbin/nologin -u <span class="number">79</span> haproxy</span><br><span class="line">yum install -y libtermcap-devel ncurses-devel libevent-devel readline-devel gcc make</span><br><span class="line">[ -a lua-<span class="number">5.3</span>.<span class="number">5</span>.tar.gz ] || wget <span class="symbol">http:</span>/<span class="regexp">/www.lua.org/ftp</span><span class="regexp">/lua-5.3.5.tar.gz</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">tar xvf lua-5.3.5.tar.gz</span></span><br><span class="line"><span class="regexp">cd lua-5.3.5</span></span><br><span class="line"><span class="regexp">make linux test</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">yum install gcc gcc-c++ glibc glibc-devel pcre pcre-devel openssl openssl-devel systemd-devel -y</span></span><br><span class="line"><span class="regexp">mkdir -p $DST/haproxy</span></span><br><span class="line"><span class="comment">#[ -a haproxy-2.0.8.tar.gz ] || wget http://www.haproxy.org/download/2.0/src/haproxy-2.0.8.tar.gz</span></span><br><span class="line">cd ..</span><br><span class="line">tar xvf haproxy-<span class="number">2.0</span>.<span class="number">8</span>.tar.gz</span><br><span class="line">sleep <span class="number">1</span></span><br><span class="line">cd haproxy-<span class="number">2.0</span>.<span class="number">8</span></span><br><span class="line"></span><br><span class="line">make ARCH=x86_64 \</span><br><span class="line">TARGET=linux-glibc USE_PCRE=<span class="number">1</span> \</span><br><span class="line">USE_OPENSSL=<span class="number">1</span> \</span><br><span class="line">USE_ZLIB=<span class="number">1</span> \</span><br><span class="line">USE_SYSTEMD=<span class="number">1</span> \</span><br><span class="line">USE_CPU_AFFINITY=<span class="number">1</span> \</span><br><span class="line">USE_LUA=<span class="number">1</span> \</span><br><span class="line">LUA_INC=../lua-<span class="number">5.3</span>.<span class="number">5</span>/src/ \</span><br><span class="line">LUA_LIB=../lua-<span class="number">5.3</span>.<span class="number">5</span>/src/ \</span><br><span class="line">PREFIX=$DST/haproxy</span><br><span class="line">make install PREFIX=$DST/haproxy</span><br><span class="line"></span><br><span class="line">cat > <span class="regexp">/usr/lib</span><span class="regexp">/systemd/system</span><span class="regexp">/haproxy.service << "END"</span></span><br><span class="line"><span class="regexp">[Unit]</span></span><br><span class="line"><span class="regexp">Description=HAProxy Load Balancer</span></span><br><span class="line"><span class="regexp">After=syslog.target network.target</span></span><br><span class="line"><span class="regexp">[Service]</span></span><br><span class="line"><span class="regexp">ExecStartPre=/usr</span><span class="regexp">/sbin/haproxy</span> -f /etc/haproxy/haproxy.cfg -c -q</span><br><span class="line">ExecStart=<span class="regexp">/usr/sbin</span><span class="regexp">/haproxy -Ws -f /etc</span><span class="regexp">/haproxy/haproxy</span>.cfg -p /var/<span class="class"><span class="keyword">lib</span>/<span class="title">haproxy</span>/<span class="title">haproxy</span>.<span class="title">pid</span></span></span><br><span class="line">ExecReload=<span class="regexp">/bin/kill</span> -USR2 $MAINPID</span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target\</span><br><span class="line">END</span><br><span class="line">sed -i <span class="string">"s@/usr@$DST/haproxy@"</span> /usr/<span class="class"><span class="keyword">lib</span>/<span class="title">systemd</span>/<span class="title">system</span>/<span class="title">haproxy</span>.<span class="title">service</span></span></span><br><span class="line"></span><br><span class="line">mkdir -p /etc/haproxy</span><br><span class="line">cd ..</span><br><span class="line">cp haproxy.cfg /etc/haproxy/</span><br><span class="line">sed -i <span class="string">"s@chroot /apps/haproxy@chroot $DST/haproxy@"</span> /etc/haproxy/haproxy.cfg</span><br><span class="line">mkdir -p /var/<span class="class"><span class="keyword">lib</span>/<span class="title">haproxy</span></span></span><br><span class="line">chown <span class="number">99.99</span> /var/<span class="class"><span class="keyword">lib</span>/<span class="title">haproxy</span>/ -<span class="title">R</span></span></span><br><span class="line"></span><br><span class="line">cat >> <span class="regexp">/etc/sysctl</span>.conf << END</span><br><span class="line">net.ipv4.ip_forward = <span class="number">1</span></span><br><span class="line">net.ipv4.ip_nonlocal_bind = <span class="number">1</span></span><br><span class="line">END</span><br><span class="line">sysctl -p <span class="comment">#修改内核参数之后生效，systemctl daemon-reload 是重读启动脚本</span></span><br><span class="line"></span><br><span class="line">systemctl enable --now haproxy</span><br><span class="line">systemctl status haproxy</span><br></pre></td></tr></table></figure>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/bin/bash</span></span><br><span class="line">DST=<span class="string">"/apps"</span></span><br><span class="line">[ -a haproxy.cfg ] || &#123; echo <span class="string">' the absence of haproxy.conf'</span> ;exit <span class="number">1</span>;&#125;</span><br><span class="line">[ -a haproxy-<span class="number">2.0</span>.<span class="number">8</span>.tar.gz ] || &#123; echo <span class="string">' the absence of haproxy-2.0.8.tar.gz'</span> ;exit <span class="number">1</span>;&#125;</span><br><span class="line">[ -a haproxy.service ] || &#123; echo <span class="string">' the absence of haproxy.service'</span> ;exit <span class="number">2</span>;&#125;</span><br><span class="line">[ -a /usr/<span class="class"><span class="keyword">lib</span>/<span class="title">systemd</span>/<span class="title">system</span>/<span class="title">haproxy</span>.<span class="title">service</span> ] &amp;&amp; &#123; <span class="title">echo</span> ' <span class="title">haproxy</span> <span class="title">is</span> <span class="title">aready</span> <span class="title">installed</span>' ;</span>exit <span class="number">3</span>;&#125;</span><br><span class="line">id haproxy &amp;&gt;<span class="regexp">/dev/null</span> &amp;&amp; &#123; echo <span class="string">'user haproxy is exist'</span> ; exit <span class="number">4</span>;&#125; || useradd -r -s /sbin/nologin -u <span class="number">79</span> haproxy</span><br><span class="line">yum install -y libtermcap-devel ncurses-devel libevent-devel readline-devel gcc make</span><br><span class="line">[ -a lua-<span class="number">5.3</span>.<span class="number">5</span>.tar.gz ] || wget <span class="symbol">http:</span>/<span class="regexp">/www.lua.org/ftp</span><span class="regexp">/lua-5.3.5.tar.gz</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">tar xvf lua-5.3.5.tar.gz</span></span><br><span class="line"><span class="regexp">cd lua-5.3.5</span></span><br><span class="line"><span class="regexp">make linux test</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">yum install gcc gcc-c++ glibc glibc-devel pcre pcre-devel openssl openssl-devel systemd-devel -y</span></span><br><span class="line"><span class="regexp">mkdir -p $DST/haproxy</span></span><br><span class="line"><span class="comment">#[ -a haproxy-2.0.8.tar.gz ] || wget http://www.haproxy.org/download/2.0/src/haproxy-2.0.8.tar.gz</span></span><br><span class="line">cd ..</span><br><span class="line">tar xvf haproxy-<span class="number">2.0</span>.<span class="number">8</span>.tar.gz</span><br><span class="line">sleep <span class="number">1</span></span><br><span class="line">cd haproxy-<span class="number">2.0</span>.<span class="number">8</span></span><br><span class="line"></span><br><span class="line">make ARCH=x86_64 \</span><br><span class="line">TARGET=linux-glibc USE_PCRE=<span class="number">1</span> \</span><br><span class="line">USE_OPENSSL=<span class="number">1</span> \</span><br><span class="line">USE_ZLIB=<span class="number">1</span> \</span><br><span class="line">USE_SYSTEMD=<span class="number">1</span> \</span><br><span class="line">USE_CPU_AFFINITY=<span class="number">1</span> \</span><br><span class="line">USE_LUA=<span class="number">1</span> \</span><br><span class="line">LUA_INC=../lua-<span class="number">5.3</span>.<span class="number">5</span>/src/ \</span><br><span class="line">LUA_LIB=../lua-<span class="number">5.3</span>.<span class="number">5</span>/src/ \</span><br><span class="line">PREFIX=$DST/haproxy</span><br><span class="line">make install PREFIX=$DST/haproxy</span><br><span class="line"></span><br><span class="line">cat &gt; <span class="regexp">/usr/lib</span><span class="regexp">/systemd/system</span><span class="regexp">/haproxy.service &lt;&lt; "END"</span></span><br><span class="line"><span class="regexp">[Unit]</span></span><br><span class="line"><span class="regexp">Description=HAProxy Load Balancer</span></span><br><span class="line"><span class="regexp">After=syslog.target network.target</span></span><br><span class="line"><span class="regexp">[Service]</span></span><br><span class="line"><span class="regexp">ExecStartPre=/usr</span><span class="regexp">/sbin/haproxy</span> -f /etc/haproxy/haproxy.cfg -c -q</span><br><span class="line">ExecStart=<span class="regexp">/usr/sbin</span><span class="regexp">/haproxy -Ws -f /etc</span><span class="regexp">/haproxy/haproxy</span>.cfg -p /var/<span class="class"><span class="keyword">lib</span>/<span class="title">haproxy</span>/<span class="title">haproxy</span>.<span class="title">pid</span></span></span><br><span class="line">ExecReload=<span class="regexp">/bin/kill</span> -USR2 $MAINPID</span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target\</span><br><span class="line">END</span><br><span class="line">sed -i <span class="string">"s@/usr@$DST/haproxy@"</span> /usr/<span class="class"><span class="keyword">lib</span>/<span class="title">systemd</span>/<span class="title">system</span>/<span class="title">haproxy</span>.<span class="title">service</span></span></span><br><span class="line"></span><br><span class="line">mkdir -p /etc/haproxy</span><br><span class="line">cd ..</span><br><span class="line">cp haproxy.cfg /etc/haproxy/</span><br><span class="line">sed -i <span class="string">"s@chroot /apps/haproxy@chroot $DST/haproxy@"</span> /etc/haproxy/haproxy.cfg</span><br><span class="line">mkdir -p /var/<span class="class"><span class="keyword">lib</span>/<span class="title">haproxy</span></span></span><br><span class="line">chown <span class="number">99.99</span> /var/<span class="class"><span class="keyword">lib</span>/<span class="title">haproxy</span>/ -<span class="title">R</span></span></span><br><span class="line"></span><br><span class="line">cat &gt;&gt; <span class="regexp">/etc/sysctl</span>.conf &lt;&lt; END</span><br><span class="line">net.ipv4.ip_forward = <span class="number">1</span></span><br><span class="line">net.ipv4.ip_nonlocal_bind = <span class="number">1</span></span><br><span class="line">END</span><br><span class="line">sysctl -p <span class="comment">#修改内核参数之后生效，systemctl daemon-reload 是重读启动脚本</span></span><br><span class="line"></span><br><span class="line">systemctl enable --now haproxy</span><br><span class="line">systemctl status haproxy</span><br></pre></td></tr></table></figure>
 <h3 id="Nginx-PHP一键安装脚本"><a href="#Nginx-PHP一键安装脚本" class="headerlink" title="Nginx+PHP一键安装脚本"></a>Nginx+PHP一键安装脚本</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-attr">[root@Web1 web]</span># <span class="selector-tag">tree</span></span><br><span class="line">.</span><br><span class="line">├── <span class="selector-tag">nginx</span></span><br><span class="line">│   ├── <span class="selector-tag">nginx-1</span><span class="selector-class">.16</span><span class="selector-class">.1</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span></span><br><span class="line">│   ├── <span class="selector-tag">nginx</span><span class="selector-class">.conf</span></span><br><span class="line">│   ├── <span class="selector-tag">nginx</span><span class="selector-class">.service</span></span><br><span class="line">│   └── <span class="selector-tag">nginx</span><span class="selector-class">.sh</span></span><br><span class="line">├── <span class="selector-tag">php-fpm</span></span><br><span class="line">│   ├── <span class="selector-tag">php-7</span><span class="selector-class">.3</span><span class="selector-class">.10</span><span class="selector-class">.tar</span><span class="selector-class">.xz</span></span><br><span class="line">│   └── <span class="selector-tag">php-fpm</span><span class="selector-class">.sh</span></span><br><span class="line">└── <span class="selector-tag">web</span><span class="selector-class">.sh</span></span><br><span class="line"></span><br><span class="line">2 <span class="selector-tag">directories</span>, 7 <span class="selector-tag">files</span></span><br><span class="line"><span class="selector-attr">[root@Web1 web]</span># <span class="selector-tag">bash</span> <span class="selector-tag">web</span><span class="selector-class">.sh</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">vim web.sh</span><br><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="built_in">cd</span> nginx</span><br><span class="line">bash nginx.sh</span><br><span class="line"><span class="built_in">cd</span> ../php-fpm</span><br><span class="line">bash php-fpm.sh</span><br></pre></td></tr></table></figure>
-<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">vim nginx/nginx.sh</span><br><span class="line"><span class="comment">#!/bin/bash</span></span><br><span class="line">DST=<span class="string">"/apps"</span></span><br><span class="line">[ -a nginx.conf ] || &#123; echo <span class="string">' the absence of nginx.conf'</span> ;exit <span class="number">1</span>;&#125;</span><br><span class="line">[ -a nginx.service ] || &#123; echo <span class="string">' the absence of nginx.service'</span> ;exit <span class="number">2</span>;&#125;</span><br><span class="line">[ -a /usr/<span class="class"><span class="keyword">lib</span>/<span class="title">systemd</span>/<span class="title">system</span>/<span class="title">nginx</span>.<span class="title">service</span> ] && &#123; <span class="title">echo</span> ' <span class="title">nginx</span> <span class="title">is</span> <span class="title">aready</span> <span class="title">installed</span>' ;</span>exit <span class="number">3</span>;&#125;</span><br><span class="line">id nginx &><span class="regexp">/dev/null</span> && &#123; echo <span class="string">'user nginx is exist'</span> ; exit <span class="number">4</span>;&#125; || useradd -r -s /sbin/nologin -u <span class="number">80</span> nginx</span><br><span class="line">yum install -y gcc gcc-c++ glibc glibc-devel pcre pcre-devel openssl openssl-devel systemd-devel net-tools iotop bc zip unzip zlib-devel bash-completion nfs-utils automake libxml2 libxml2-devel libxslt libxslt-devel perl perl-ExtUtils-Embed   vim lrzsz tree psmisc wget || &#123; echo <span class="string">'Dependencies is not installed'</span>;exit <span class="number">5</span>;&#125;</span><br><span class="line"><span class="comment">#mkdir -p $DST/nginx</span></span><br><span class="line">mkdir -p /data/apps/nginx</span><br><span class="line">ln -s /data/apps/  <span class="regexp">/apps</span></span><br><span class="line"><span class="regexp">[ -a nginx-1.16.1.tar.gz ] || wget https:/</span><span class="regexp">/nginx.org/download</span><span class="regexp">/nginx-1.16.1.tar.gz</span></span><br><span class="line"><span class="regexp">tar xvf nginx-1.16.1.tar.gz</span></span><br><span class="line"><span class="regexp">cd nginx-1.16.1</span></span><br><span class="line"><span class="regexp">./configure</span> --prefix=$DST/nginx --user=nginx --group=nginx --<span class="keyword">with</span>-http_ssl_module --<span class="keyword">with</span>-http_v2_module --<span class="keyword">with</span>-http_realip_module --<span class="keyword">with</span>-http_stub_status_module --<span class="keyword">with</span>-http_gzip_static_module --<span class="keyword">with</span>-pcre --<span class="keyword">with</span>-stream --<span class="keyword">with</span>-stream_ssl_module --<span class="keyword">with</span>-stream_realip_module --<span class="keyword">with</span>-select_module --<span class="keyword">with</span>-file-aio</span><br><span class="line">make -j <span class="number">4</span> && make install</span><br><span class="line">cp ../nginx.conf $DST/nginx/conf/</span><br><span class="line">cp ../nginx.service /usr/<span class="class"><span class="keyword">lib</span>/<span class="title">systemd</span>/<span class="title">system</span>/</span></span><br><span class="line">systemctl enable --now nginx</span><br><span class="line">systemctl status nginx</span><br></pre></td></tr></table></figure>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">vim nginx/nginx.sh</span><br><span class="line"><span class="comment">#!/bin/bash</span></span><br><span class="line">DST=<span class="string">"/apps"</span></span><br><span class="line">[ -a nginx.conf ] || &#123; echo <span class="string">' the absence of nginx.conf'</span> ;exit <span class="number">1</span>;&#125;</span><br><span class="line">[ -a nginx.service ] || &#123; echo <span class="string">' the absence of nginx.service'</span> ;exit <span class="number">2</span>;&#125;</span><br><span class="line">[ -a /usr/<span class="class"><span class="keyword">lib</span>/<span class="title">systemd</span>/<span class="title">system</span>/<span class="title">nginx</span>.<span class="title">service</span> ] &amp;&amp; &#123; <span class="title">echo</span> ' <span class="title">nginx</span> <span class="title">is</span> <span class="title">aready</span> <span class="title">installed</span>' ;</span>exit <span class="number">3</span>;&#125;</span><br><span class="line">id nginx &amp;&gt;<span class="regexp">/dev/null</span> &amp;&amp; &#123; echo <span class="string">'user nginx is exist'</span> ; exit <span class="number">4</span>;&#125; || useradd -r -s /sbin/nologin -u <span class="number">80</span> nginx</span><br><span class="line">yum install -y gcc gcc-c++ glibc glibc-devel pcre pcre-devel openssl openssl-devel systemd-devel net-tools iotop bc zip unzip zlib-devel bash-completion nfs-utils automake libxml2 libxml2-devel libxslt libxslt-devel perl perl-ExtUtils-Embed   vim lrzsz tree psmisc wget || &#123; echo <span class="string">'Dependencies is not installed'</span>;exit <span class="number">5</span>;&#125;</span><br><span class="line"><span class="comment">#mkdir -p $DST/nginx</span></span><br><span class="line">mkdir -p /data/apps/nginx</span><br><span class="line">ln -s /data/apps/  <span class="regexp">/apps</span></span><br><span class="line"><span class="regexp">[ -a nginx-1.16.1.tar.gz ] || wget https:/</span><span class="regexp">/nginx.org/download</span><span class="regexp">/nginx-1.16.1.tar.gz</span></span><br><span class="line"><span class="regexp">tar xvf nginx-1.16.1.tar.gz</span></span><br><span class="line"><span class="regexp">cd nginx-1.16.1</span></span><br><span class="line"><span class="regexp">./configure</span> --prefix=$DST/nginx --user=nginx --group=nginx --<span class="keyword">with</span>-http_ssl_module --<span class="keyword">with</span>-http_v2_module --<span class="keyword">with</span>-http_realip_module --<span class="keyword">with</span>-http_stub_status_module --<span class="keyword">with</span>-http_gzip_static_module --<span class="keyword">with</span>-pcre --<span class="keyword">with</span>-stream --<span class="keyword">with</span>-stream_ssl_module --<span class="keyword">with</span>-stream_realip_module --<span class="keyword">with</span>-select_module --<span class="keyword">with</span>-file-aio</span><br><span class="line">make -j <span class="number">4</span> &amp;&amp; make install</span><br><span class="line">cp ../nginx.conf $DST/nginx/conf/</span><br><span class="line">cp ../nginx.service /usr/<span class="class"><span class="keyword">lib</span>/<span class="title">systemd</span>/<span class="title">system</span>/</span></span><br><span class="line">systemctl enable --now nginx</span><br><span class="line">systemctl status nginx</span><br></pre></td></tr></table></figure>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">vim nginx/nginx.service</span><br><span class="line">[Unit]</span><br><span class="line"><span class="attribute">Description</span>=The nginx HTTP <span class="keyword">and</span> reverse<span class="built_in"> proxy </span>server</span><br><span class="line"><span class="attribute">After</span>=network.target remote-fs.target nss-lookup.target</span><br><span class="line">[Service]</span><br><span class="line"><span class="attribute">Type</span>=forking</span><br><span class="line"><span class="attribute">PIDFile</span>=/apps/nginx/logs/nginx.pid</span><br><span class="line"><span class="comment"># Nginx will fail to start if /run/nginx.pid already exists but has the wrong</span></span><br><span class="line"><span class="comment"># SELinux context. This might happen when running `nginx -t` from the cmdline.</span></span><br><span class="line"><span class="comment"># https://bugzilla.redhat.com/show_bug.cgi?id=1268621</span></span><br><span class="line"><span class="attribute">ExecStartPre</span>=/usr/bin/rm -f /apps/nginx/logs/nginx.pid</span><br><span class="line"><span class="attribute">ExecStartPre</span>=/apps/nginx/sbin/nginx -t</span><br><span class="line"><span class="attribute">ExecStart</span>=/apps/nginx/sbin/nginx</span><br><span class="line"><span class="attribute">ExecReload</span>=/bin/kill -s HUP <span class="variable">$MAINPID</span></span><br><span class="line"><span class="attribute">KillSignal</span>=SIGQUIT</span><br><span class="line"><span class="attribute">TimeoutStopSec</span>=5</span><br><span class="line"><span class="attribute">KillMode</span>=process</span><br><span class="line"><span class="attribute">PrivateTmp</span>=<span class="literal">true</span></span><br><span class="line">[Install]</span><br><span class="line"><span class="attribute">WantedBy</span>=multi-user.target</span><br></pre></td></tr></table></figure>
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">vim</span> nginx/nginx.conf</span><br><span class="line">user  nginx;</span><br><span class="line"><span class="attribute">worker_processes</span>  <span class="number">2</span>;</span><br><span class="line"><span class="attribute">worker_cpu_affinity</span> <span class="number">0001</span> <span class="number">0010</span>;</span><br><span class="line"><span class="attribute">worker_priority</span> -<span class="number">10</span>;</span><br><span class="line"><span class="attribute">error_log</span>  logs/error.log  <span class="literal">info</span>;</span><br><span class="line"><span class="attribute">error_log</span>  /apps/nginx/logs/error.log  <span class="literal">error</span>;</span><br><span class="line"><span class="section">events</span> &#123;</span><br><span class="line">    <span class="attribute">worker_connections</span>  <span class="number">65536</span>;</span><br><span class="line">    <span class="attribute">use</span> <span class="literal">epoll</span>;</span><br><span class="line">    <span class="attribute">accept_mutex</span> <span class="literal">on</span>;</span><br><span class="line">    <span class="attribute">multi_accept</span> <span class="literal">on</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="section">http</span> &#123;</span><br><span class="line">    <span class="attribute">include</span>       mime.types;</span><br><span class="line">    <span class="attribute">default_type</span>  application/octet-stream;</span><br><span class="line">    <span class="attribute">log_format</span> access_json <span class="string">'&#123;"<span class="variable">@timestamp</span>":"<span class="variable">$time_iso8601</span>",'</span></span><br><span class="line">        <span class="string">'"host":"<span class="variable">$server_addr</span>",'</span></span><br><span class="line">        <span class="string">'"clientip":"<span class="variable">$remote_addr</span>",'</span></span><br><span class="line">        <span class="string">'"size":<span class="variable">$body_bytes_sent</span>,'</span></span><br><span class="line">        <span class="string">'"responsetime":<span class="variable">$request_time</span>,'</span></span><br><span class="line">        <span class="string">'"upstreamtime":"<span class="variable">$upstream_response_time</span>",'</span></span><br><span class="line">        <span class="string">'"upstreamhost":"<span class="variable">$upstream_addr</span>",'</span></span><br><span class="line">        <span class="string">'"http_host":"<span class="variable">$host</span>",'</span></span><br><span class="line">        <span class="string">'"uri":"<span class="variable">$uri</span>",'</span></span><br><span class="line">        <span class="string">'"domain":"<span class="variable">$host</span>",'</span></span><br><span class="line">        <span class="string">'"xff":"<span class="variable">$http_x_forwarded_for</span>",'</span></span><br><span class="line">        <span class="string">'"referer":"<span class="variable">$http_referer</span>",'</span></span><br><span class="line">        <span class="string">'"tcp_xff":"<span class="variable">$proxy_protocol_addr</span>",'</span></span><br><span class="line">        <span class="string">'"http_user_agent":"<span class="variable">$http_user_agent</span>",'</span></span><br><span class="line">        <span class="string">'"status":"<span class="variable">$status</span>"&#125;'</span>;</span><br><span class="line">    <span class="attribute">access_log</span>  /apps/nginx/logs/access_json.log  access_json;</span><br><span class="line">    <span class="attribute">sendfile</span>        <span class="literal">on</span>;</span><br><span class="line">    <span class="attribute">keepalive_timeout</span>  <span class="number">65</span> <span class="number">65</span>;</span><br><span class="line">    <span class="attribute">server_tokens</span> <span class="literal">off</span>;</span><br><span class="line">    <span class="attribute">charset</span> utf-<span class="number">8</span>;</span><br><span class="line">    <span class="attribute">gzip</span>  <span class="literal">on</span>;</span><br><span class="line">    <span class="section">server</span> &#123;</span><br><span class="line">        <span class="attribute">listen</span>       <span class="number">80</span>;</span><br><span class="line">        <span class="attribute">server_name</span>  www.example.net;</span><br><span class="line">        <span class="attribute">location</span> = / &#123;</span><br><span class="line">            <span class="attribute">root</span>   html;</span><br><span class="line">            <span class="attribute">index</span>  index.html index.htm;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="attribute">error_page</span>   <span class="number">500</span> <span class="number">502</span> <span class="number">503</span> <span class="number">504</span>  /50x.html;</span><br><span class="line">        <span class="attribute">location</span> = /50x.html &#123;</span><br><span class="line">            <span class="attribute">root</span>   html;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="attribute">location</span> <span class="regexp">~ ^/(status|ping)$</span> &#123;</span><br><span class="line">             <span class="attribute">include</span> fastcgi_params;</span><br><span class="line">             <span class="attribute">fastcgi_pass</span> <span class="number">127.0.0.1:9000</span>;</span><br><span class="line">             <span class="attribute">fastcgi_param</span> PATH_TRANSLATED <span class="variable">$document_root</span><span class="variable">$fastcgi_script_name</span>;</span><br><span class="line">             <span class="attribute">fastcgi_hide_header</span> X-Powered-By;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="attribute">location</span> <span class="regexp">~ \.php$</span> &#123;</span><br><span class="line">            <span class="attribute">root</span>           html;</span><br><span class="line">            <span class="attribute">fastcgi_pass</span>   <span class="number">127.0.0.1:9000</span>;</span><br><span class="line">            <span class="attribute">fastcgi_index</span>  index.php;</span><br><span class="line">            <span class="attribute">fastcgi_param</span>  SCRIPT_FILENAME <span class="variable">$document_root</span><span class="variable">$fastcgi_script_name</span>;</span><br><span class="line">            <span class="attribute">include</span>        fastcgi_params;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">vim php-fpm/php-fpm.sh</span><br><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">DST=<span class="string">"/apps"</span></span><br><span class="line">[ -a php-*.tar.* ] || &#123; <span class="built_in">echo</span> <span class="string">' the absence of php-7.3.10.tar.xz'</span> ;<span class="built_in">exit</span> 1;&#125;</span><br><span class="line">[ -a /usr/lib/systemd/system/php-fpm.service ] && &#123; <span class="built_in">echo</span> <span class="string">' php-fpm is aready installed'</span> ;<span class="built_in">exit</span> 2;&#125;</span><br><span class="line">[ -a <span class="variable">$DST</span>/php* ] && &#123; <span class="built_in">echo</span> <span class="string">' php is aready installed'</span> ;<span class="built_in">exit</span> 2;&#125;</span><br><span class="line">mkdir -p <span class="variable">$DST</span>/php</span><br><span class="line">yum install libxml2-devel bzip2-devel libmcrypt-devel -y || &#123; <span class="built_in">echo</span> <span class="string">'Dependencies is not installed'</span>;<span class="built_in">exit</span> 5;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#wget https://www.php.net/distributions/php-7.3.10.tar.xz</span></span><br><span class="line">tar xvf php-*.tar.*</span><br><span class="line"><span class="built_in">cd</span> php-7.3.10</span><br><span class="line"></span><br><span class="line">./configure \</span><br><span class="line">--prefix=<span class="variable">$DST</span>/php \</span><br><span class="line">--<span class="built_in">enable</span>-mysqlnd \</span><br><span class="line">--with-mysqli=mysqlnd \</span><br><span class="line">--with-pdo-mysql=mysqlnd \</span><br><span class="line">--with-openssl \</span><br><span class="line">--with-freetype-dir \</span><br><span class="line">--with-jpeg-dir \</span><br><span class="line">--with-png-dir \</span><br><span class="line">--with-zlib \</span><br><span class="line">--with-libxml-dir=/usr \</span><br><span class="line">--with-config-file-path=/etc \</span><br><span class="line">--with-config-file-scan-dir=/etc/php.d \</span><br><span class="line">--<span class="built_in">enable</span>-mbstring \</span><br><span class="line">--<span class="built_in">enable</span>-xml \</span><br><span class="line">--<span class="built_in">enable</span>-sockets \</span><br><span class="line">--<span class="built_in">enable</span>-fpm \</span><br><span class="line">--<span class="built_in">enable</span>-maintainer-zts \</span><br><span class="line">--<span class="built_in">disable</span>-fileinfo</span><br><span class="line"></span><br><span class="line"> make -j 4 && make install</span><br><span class="line"></span><br><span class="line">cp php.ini-production  /etc/php.ini</span><br><span class="line">cp sapi/fpm/php-fpm.service /usr/lib/systemd/system/</span><br><span class="line"></span><br><span class="line">cp <span class="variable">$DST</span>/php/etc/php-fpm.conf.default  <span class="variable">$DST</span>/php/etc/php-fpm.conf</span><br><span class="line">cp <span class="variable">$DST</span>/php/etc/php-fpm.d/www.conf.default <span class="variable">$DST</span>/php/etc/php-fpm.d/www.conf</span><br><span class="line"></span><br><span class="line">sed -i <span class="string">'s@nobody@nginx@g'</span> <span class="variable">$DST</span>/php/etc/php-fpm.d/www.conf</span><br><span class="line">sed -i <span class="string">'/#/!s@index  index.html index.htm@index index.php index.html index.htm@'</span> <span class="variable">$DST</span>/nginx/conf/nginx.conf</span><br><span class="line">sed -i <span class="string">'s@/scripts$fastcgi_script_name@$document_root$fastcgi_script_name@g'</span> <span class="variable">$DST</span>/nginx/conf/nginx.conf</span><br><span class="line"><span class="variable">$DST</span>/nginx/sbin/nginx -s reload</span><br><span class="line">systemctl <span class="built_in">enable</span> --now php-fpm</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">vim php-fpm/php-fpm.sh</span><br><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">DST=<span class="string">"/apps"</span></span><br><span class="line">[ -a php-*.tar.* ] || &#123; <span class="built_in">echo</span> <span class="string">' the absence of php-7.3.10.tar.xz'</span> ;<span class="built_in">exit</span> 1;&#125;</span><br><span class="line">[ -a /usr/lib/systemd/system/php-fpm.service ] &amp;&amp; &#123; <span class="built_in">echo</span> <span class="string">' php-fpm is aready installed'</span> ;<span class="built_in">exit</span> 2;&#125;</span><br><span class="line">[ -a <span class="variable">$DST</span>/php* ] &amp;&amp; &#123; <span class="built_in">echo</span> <span class="string">' php is aready installed'</span> ;<span class="built_in">exit</span> 2;&#125;</span><br><span class="line">mkdir -p <span class="variable">$DST</span>/php</span><br><span class="line">yum install libxml2-devel bzip2-devel libmcrypt-devel -y || &#123; <span class="built_in">echo</span> <span class="string">'Dependencies is not installed'</span>;<span class="built_in">exit</span> 5;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#wget https://www.php.net/distributions/php-7.3.10.tar.xz</span></span><br><span class="line">tar xvf php-*.tar.*</span><br><span class="line"><span class="built_in">cd</span> php-7.3.10</span><br><span class="line"></span><br><span class="line">./configure \</span><br><span class="line">--prefix=<span class="variable">$DST</span>/php \</span><br><span class="line">--<span class="built_in">enable</span>-mysqlnd \</span><br><span class="line">--with-mysqli=mysqlnd \</span><br><span class="line">--with-pdo-mysql=mysqlnd \</span><br><span class="line">--with-openssl \</span><br><span class="line">--with-freetype-dir \</span><br><span class="line">--with-jpeg-dir \</span><br><span class="line">--with-png-dir \</span><br><span class="line">--with-zlib \</span><br><span class="line">--with-libxml-dir=/usr \</span><br><span class="line">--with-config-file-path=/etc \</span><br><span class="line">--with-config-file-scan-dir=/etc/php.d \</span><br><span class="line">--<span class="built_in">enable</span>-mbstring \</span><br><span class="line">--<span class="built_in">enable</span>-xml \</span><br><span class="line">--<span class="built_in">enable</span>-sockets \</span><br><span class="line">--<span class="built_in">enable</span>-fpm \</span><br><span class="line">--<span class="built_in">enable</span>-maintainer-zts \</span><br><span class="line">--<span class="built_in">disable</span>-fileinfo</span><br><span class="line"></span><br><span class="line"> make -j 4 &amp;&amp; make install</span><br><span class="line"></span><br><span class="line">cp php.ini-production  /etc/php.ini</span><br><span class="line">cp sapi/fpm/php-fpm.service /usr/lib/systemd/system/</span><br><span class="line"></span><br><span class="line">cp <span class="variable">$DST</span>/php/etc/php-fpm.conf.default  <span class="variable">$DST</span>/php/etc/php-fpm.conf</span><br><span class="line">cp <span class="variable">$DST</span>/php/etc/php-fpm.d/www.conf.default <span class="variable">$DST</span>/php/etc/php-fpm.d/www.conf</span><br><span class="line"></span><br><span class="line">sed -i <span class="string">'s@nobody@nginx@g'</span> <span class="variable">$DST</span>/php/etc/php-fpm.d/www.conf</span><br><span class="line">sed -i <span class="string">'/#/!s@index  index.html index.htm@index index.php index.html index.htm@'</span> <span class="variable">$DST</span>/nginx/conf/nginx.conf</span><br><span class="line">sed -i <span class="string">'s@/scripts$fastcgi_script_name@$document_root$fastcgi_script_name@g'</span> <span class="variable">$DST</span>/nginx/conf/nginx.conf</span><br><span class="line"><span class="variable">$DST</span>/nginx/sbin/nginx -s reload</span><br><span class="line">systemctl <span class="built_in">enable</span> --now php-fpm</span><br></pre></td></tr></table></figure>
+
     </div>
+
+    
+    
+    
+          
+            
+          
           <div class="post-tags">
+            
               <a href="/tags/一键安装/" rel="tag"><i class="fa fa-tag">一键安装</i></a>
+            
               <a href="/tags/负载均衡/" rel="tag"><i class="fa fa-tag">负载均衡</i></a>
+            
               <a href="/tags/虚拟化/" rel="tag"><i class="fa fa-tag">虚拟化</i></a>
+            
               <a href="/tags/KVM/" rel="tag"><i class="fa fa-tag">KVM</i></a>
+            
               <a href="/tags/ubuntu/" rel="tag"><i class="fa fa-tag">ubuntu</i></a>
+            
           </div>
+        
+
     <div style="text-align:center;color: #ccc;font-size:14px;">------------------------------- The End -------------------------------</div>
+
+
+        
   <div class="post-widgets">
     <div class="wp_rating">
       <div id="wpac-rating"></div>
     </div>
+  
   </div>
+
+        
+      
         <div id="reward-container">
   <div>It's very nice of you to support me.</div>
   <button id="reward-button" disable="enable" onclick="var qr = document.getElementById('qr'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
     打赏
   </button>
   <div id="qr" style="display: none;">
+        
+      
       <div style="display: inline-block">
         <img src="/images/wechat-pay.png" alt="Hechao 微信支付">
         <p>微信支付</p>
       </div>
+
   </div>
 </div>
+
+      
+        
+
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
     <strong>本文作者： </strong>Hechao</li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://hewanyue.com/blog/f989902e.html" title="KVM虚拟化">https://hewanyue.com/blog/f989902e.html</a>
+    <a href="https://hewanyue.com/blog/f989902e.html" title="KVM虚拟化">https:&#x2F;&#x2F;hewanyue.com&#x2F;blog&#x2F;f989902e.html</a>
   </li>
   <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank">&lt;i class=&quot;fa fa-fw fa-creative-commons&quot;&gt;&lt;&#x2F;i&gt;BY-NC-SA</a> 许可协议。转载请注明出处！</li>
 </ul>
 </div>
+
+      
+        
+
 <div class="note info" style="background-color: #eff8f0;
     border-left: 3px solid #255188;
     opacity: 0.85;
     padding-left: 11px;
     padding-bottom: 1px;">
+
   <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts" style="margin-top: 10px;
     margin-bottom: 10px;">
     <li class="popular-posts-item">
+      
+      
       <div class="popular-posts-title"><a href="/blog/b365780e.html" rel="bookmark">linux上部署与配置tomcat</a></div>
+      
     </li>
+  
     <li class="popular-posts-item">
+      
+      
       <div class="popular-posts-title"><a href="/blog/f2c1a89e.html" rel="bookmark">一键源码编译安装redis</a></div>
+      
     </li>
+  
     <li class="popular-posts-item">
+      
+      
       <div class="popular-posts-title"><a href="/blog/f5daec50.html" rel="bookmark">企业级应用：负载均衡层——haproxy(二)</a></div>
+      
     </li>
+  
     <li class="popular-posts-item">
+      
+      
       <div class="popular-posts-title"><a href="/blog/5aeb7732.html" rel="bookmark">企业级应用：负载均衡层——haproxy(一)</a></div>
+      
     </li>
+  
     <li class="popular-posts-item">
+      
+      
       <div class="popular-posts-title"><a href="/blog/159ef64c.html" rel="bookmark">企业级应用：负载均衡层——LVS调度器详解</a></div>
+      
     </li>
+  
   </ul>
+
 </div>
+
+      
+
       <footer class="post-footer">
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
+              
                 <a href="/blog/2c6b894f.html" rel="next" title="OpenVPN的搭建">
                   <i class="fa fa-chevron-left"></i> OpenVPN的搭建
                 </a>
+              
             </div>
+
             <span class="post-nav-divider"></span>
+
             <div class="post-nav-prev post-nav-item">
+              
                 <a href="/blog/eaa1ac6e.html" rel="prev" title="Docker（一）——基础概念及部署">
                   Docker（一）——基础概念及部署 <i class="fa fa-chevron-right"></i>
                 </a>
+              
             </div>
           </div>
+        
       </footer>
+    
   </div>
+  
+  
+  
   </article>
+
   </div>
+
+
           </div>
+          
+    
     <div class="comments" id="comments"></div>
+  
+
         </div>
+          
+  
   <div class="sidebar-toggle">
     <div class="sidebar-toggle-line-wrap">
       <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
@@ -451,8 +742,15 @@
       <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
     </div>
   </div>
+
   <aside class="sidebar">
     <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
           文章目录
@@ -461,11 +759,14 @@
           站点概览
         </li>
       </ul>
+
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
           <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#宿主机环境准备："><span class="nav-number">1.</span> <span class="nav-text">宿主机环境准备：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#KVM软件包安装"><span class="nav-number">1.1.</span> <span class="nav-text">KVM软件包安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络环境配置"><span class="nav-number">1.2.</span> <span class="nav-text">网络环境配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#KVM虚拟机创建"><span class="nav-number">2.</span> <span class="nav-text">KVM虚拟机创建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建虚拟磁盘"><span class="nav-number">2.1.</span> <span class="nav-text">创建虚拟磁盘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建虚拟机"><span class="nav-number">2.2.</span> <span class="nav-text">创建虚拟机</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附一键安装脚本"><span class="nav-number">3.</span> <span class="nav-text">附一键安装脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HAProxy一键安装脚本"><span class="nav-number">3.1.</span> <span class="nav-text">HAProxy一键安装脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Nginx-PHP一键安装脚本"><span class="nav-number">3.2.</span> <span class="nav-text">Nginx+PHP一键安装脚本</span></a></li></ol></li></ol></div>
+        
       </div>
       <!--/noindex-->
+
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image"
@@ -477,23 +778,38 @@
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
+        
           <a href="/archives/">
+        
           <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
+    
+      
+      
       <div class="site-state-item site-state-categories">
+        
           <a href="/categories/">
+        
         <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
+    
+      
+      
       <div class="site-state-item site-state-tags">
+        
+          
             <a href="/tags/">
+          
+        
         <span class="site-state-item-count">65</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
+    
   </nav>
 </div>
   <div class="feed-link motion-element">
@@ -503,15 +819,35 @@
   </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/wudihechao" title="GitHub &rarr; https://github.com/wudihechao" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      
+      
+      
+        
+      
+        <a href="https://github.com/wudihechao" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;wudihechao" rel="noopener external nofollow noreferrer" target="_blank">&lt;i class=&quot;fa fa-fw fa-github&quot;&gt;&lt;&#x2F;i&gt;</a>
       </span>
+    
       <span class="links-of-author-item">
-        <a href="mailto:wudihechao@163.com" title="E-Mail &rarr; mailto:wudihechao@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      
+      
+      
+        
+      
+        <a href="mailto:wudihechao@163.com" title="E-Mail &amp;rarr; mailto:wudihechao@163.com" rel="noopener external nofollow noreferrer" target="_blank">&lt;i class=&quot;fa fa-fw fa-envelope&quot;&gt;&lt;&#x2F;i&gt;</a>
       </span>
+    
       <span class="links-of-author-item">
-        <a href="https://weibo.com/u/1050367191" title="Weibo &rarr; https://weibo.com/u/1050367191" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-weibo"></i></a>
+      
+      
+      
+        
+      
+        <a href="https://weibo.com/u/1050367191" title="Weibo &amp;rarr; https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;1050367191" rel="noopener external nofollow noreferrer" target="_blank">&lt;i class=&quot;fa fa-fw fa-weibo&quot;&gt;&lt;&#x2F;i&gt;</a>
       </span>
+    
   </div>
+
+        
     <div class="links-of-blogroll motion-element links-of-blogroll-block">
       <div class="links-of-blogroll-title" style="padding-left: 10px;">
         <!-- modify icon to fire by szw -->
@@ -519,23 +855,31 @@
         近期文章
       </div>
       <ul class="links-of-blogroll-list" style="padding-left: 30px;">
+        
+        
           <li>
             <a href="/blog/eaa1ac6e.html" title="Docker（一）——基础概念及部署" >Docker（一）——基础概念及部署</a>
           </li>
+        
           <li>
             <a href="/blog/f989902e.html" title="KVM虚拟化" >KVM虚拟化</a>
           </li>
+        
           <li>
             <a href="/blog/2c6b894f.html" title="OpenVPN的搭建" >OpenVPN的搭建</a>
           </li>
+        
           <li>
             <a href="/blog/6254cc16.html" title="MSM实现tomcat集群的session共享" >MSM实现tomcat集群的session共享</a>
           </li>
+        
           <li>
             <a href="/blog/b365780e.html" title="linux上部署与配置tomcat" >linux上部署与配置tomcat</a>
           </li>
+        
       </ul>
     </div>
+
 <div id="days"></div>
 <script>
 function show_date_time(){
@@ -562,14 +906,27 @@ return i;
 }
 show_date_time();
 </script>
+
   <div class="cc-license motion-element" itemprop="license">
-    <a href="https://hewanyue.com/" class="cc-opacity"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+    
+  
+
+    <a href="https://hewanyue.com/" class="cc-opacity">&lt;img src=&quot;&#x2F;images&#x2F;cc-by-nc-sa.svg&quot; alt=&quot;Creative Commons&quot;&gt;</a>
   </div>
+
+
+
+
       </div>
+
+
  </aside>
   <div id="sidebar-dimmer"></div>
+
+
       </div>
     </main>
+
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
@@ -583,6 +940,8 @@ show_date_time();
     </span>
     <span title="站点总字数">292k</span>
 </div>
+
+        
 <div class="busuanzi-count">
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
@@ -593,7 +952,9 @@ show_date_time();
         <span id="busuanzi_value_site_uv"></span>
       </span>
     </span>
+  
     <span class="post-meta-divider">|</span>
+  
     <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="fa fa-eye"></i>
@@ -602,10 +963,28 @@ show_date_time();
         <span id="busuanzi_value_site_pv"></span>
       </span>
     </span>
+  
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
       </div>
     </footer>
   </div>
+
+  
+    
+  
   <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
   <script src="/lib/anime.min.js?v=3.1.0"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
@@ -613,6 +992,10 @@ show_date_time();
 <script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
 <script src="/js/schemes/muse.js?v=7.4.0"></script>
 <script src="/js/next-boot.js?v=7.4.0"></script><script src="/js/bookmark.js?v=7.4.0"></script>
+
+
+
+  
   <script>
     (function(){
       var bp = document.createElement('script');
@@ -622,6 +1005,11 @@ show_date_time();
       s.parentNode.insertBefore(bp, s);
     })();
   </script>
+
+
+
+
+
   <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
@@ -642,7 +1030,28 @@ show_date_time();
     })();
   }
   </script>
+
+
+
   <script src="/js/local-search.js?v=7.4.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
 <script>
 NexT.utils.getScript('//hewanyue.com/js/Valine.min.js', () => {
   var GUEST = ['nick', 'mail','link'];
@@ -666,6 +1075,7 @@ NexT.utils.getScript('//hewanyue.com/js/Valine.min.js', () => {
   });
 }, window.Valine);
 </script>
+
 </body>
 </html>
   <!-- 页面点击小红心 -->
