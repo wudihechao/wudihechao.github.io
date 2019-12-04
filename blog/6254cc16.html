@@ -45,7 +45,7 @@
   };
 </script>
   <meta name="description" content="&emsp;&emsp;tomcat作为一个应用服务器，单机性能上都是无法满足生产中需要的，而想要解决高并发场景，光靠提升单机性能，成本与效果肯定都是无法让人接受的，而此时我们一般都采用tomcat集群的方式，用多台tomcat服务器来共同支撑我们的业务。&emsp;&emsp;但这时就出现了一个新的问题，那就是会话保持。因为每台tomcat服务器的session是独立的，当客户端被调度到一个新的">
-<meta name="keywords" content="tomcat,redis,集群,MSM,session">
+<meta name="keywords" content="redis,tomcat,集群,MSM,session">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MSM实现tomcat集群的session共享">
 <meta property="og:url" content="https://hewanyue.com/blog/6254cc16.html">
@@ -201,13 +201,13 @@
     <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i>关于</a>
   </li>
         <li class="menu-item menu-item-tags">
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">63</span></a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">65</span></a>
   </li>
         <li class="menu-item menu-item-categories">
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">8</span></a>
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">7</span></a>
   </li>
         <li class="menu-item menu-item-archives">
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">31</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">32</span></a>
   </li>
         <li class="menu-item menu-item-friends">
     <a href="/friends/" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i>友链</a>
@@ -351,8 +351,8 @@
 <p>&emsp;&emsp;再次尝试访问负载代理服务器，发现同样实现了访问tomcatIP变化，sessionID不变，说明配置成功。<br>&emsp;&emsp;而后端使用redis作为session共享服务器时，仅支持non-stricky模式。建议用另外的服务器安装redis服务，并修改监听IP后启动，tomcat服务器中将<code>jedis.jar</code>jar包拷贝至tomcat安装路径下<code>lib目录</code>，同样在<code>/conf/context.xml</code>文件中的<code>context标签</code>结尾插入下面的代码即可（例如redis服务器IP端口为192.168.32.233:6379，可配置redis集群，可参考我之前博客<a href="https://hewanyue.com/blog/14b8983d.html">redis高可用配置</a>）。<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&ltManager className=<span class="string">"de.javakaffee.web.msm.MemcachedBackupSessionManager"</span></span><br><span class="line">memcachedNodes=<span class="string">"redis://192.168.32.233:6379"</span></span><br><span class="line">sticky=<span class="string">"false"</span></span><br><span class="line">sessionBackupAsync=<span class="string">"false"</span></span><br><span class="line">lockingMode=<span class="string">"uriPattern:/path1|/path2"</span></span><br><span class="line">requestUriIgnorePattern=<span class="string">".*\.(ico|png|gif|jpg|css|js)$"</span></span><br><span class="line">transcoderFactoryClass=<span class="string">"de.javakaffee.web.msm.serializer.kryo.KryoTranscoderFactory"</span></span><br><span class="line">/&gt</span><br></pre></td></tr></table></figure></p>
     </div>
           <div class="post-tags">
-              <a href="/tags/tomcat/" rel="tag"><i class="fa fa-tag">tomcat</i></a>
               <a href="/tags/redis/" rel="tag"><i class="fa fa-tag">redis</i></a>
+              <a href="/tags/tomcat/" rel="tag"><i class="fa fa-tag">tomcat</i></a>
               <a href="/tags/集群/" rel="tag"><i class="fa fa-tag">集群</i></a>
               <a href="/tags/MSM/" rel="tag"><i class="fa fa-tag">MSM</i></a>
               <a href="/tags/session/" rel="tag"><i class="fa fa-tag">session</i></a>
@@ -399,10 +399,10 @@
       <div class="popular-posts-title"><a href="/blog/14b8983d.html" rel="bookmark">redis高可用配置</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/b365780e.html" rel="bookmark">linux上部署与配置tomcat</a></div>
+      <div class="popular-posts-title"><a href="/blog/f2c1a89e.html" rel="bookmark">一键源码编译安装redis</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/f2c1a89e.html" rel="bookmark">一键源码编译安装redis</a></div>
+      <div class="popular-posts-title"><a href="/blog/b365780e.html" rel="bookmark">linux上部署与配置tomcat</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/blog/159ef64c.html" rel="bookmark">企业级应用：负载均衡层——LVS调度器详解</a></div>
@@ -464,19 +464,19 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">32</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">63</span>
+        <span class="site-state-item-count">65</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -506,6 +506,9 @@
       </div>
       <ul class="links-of-blogroll-list" style="padding-left: 30px;">
           <li>
+            <a href="/blog/eaa1ac6e.html" title="Docker（一）——基础概念及部署" >Docker（一）——基础概念及部署</a>
+          </li>
+          <li>
             <a href="/blog/f989902e.html" title="KVM虚拟化" >KVM虚拟化</a>
           </li>
           <li>
@@ -516,9 +519,6 @@
           </li>
           <li>
             <a href="/blog/b365780e.html" title="linux上部署与配置tomcat" >linux上部署与配置tomcat</a>
-          </li>
-          <li>
-            <a href="/blog/14b8983d.html" title="redis高可用配置" >redis高可用配置</a>
           </li>
       </ul>
     </div>
@@ -567,7 +567,7 @@ show_date_time();
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">282k</span>
+    <span title="站点总字数">292k</span>
 </div>
 <div class="busuanzi-count">
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>

@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta name="baidu-site-verification" content="vT6Jf980C0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.ico?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.ico?v=7.4.0">
+  <link rel="alternate" href="/atom.xml" title="BOHC!" type="application/atom+xml">
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":true,"show_result":true,"style":"default"},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":true,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+  <meta name="description" content="&emsp;&emsp;在企业生产应用中，docker容器技术及k8s的编排管理工具的使用率越来越高，这项技术甚至已经改变了很多企业的架构与框架流程，因为容器技术的出现，可以将应用以集装箱的方式打包交付，使应用在不同的团队中共享，通过镜像的方式应用可以部署于任何环境中。这样避免了各团队之间的协作问题的出现，成为企业实现DevOps目标的重要工具，而且以容器方式交付的Docker技术支持不断地开发迭">
+<meta name="keywords" content="Docker,容器,虚拟化,企业级应用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker（一）——基础概念及部署">
+<meta property="og:url" content="https://hewanyue.com/blog/eaa1ac6e.html">
+<meta property="og:site_name" content="BOHC!">
+<meta property="og:description" content="&emsp;&emsp;在企业生产应用中，docker容器技术及k8s的编排管理工具的使用率越来越高，这项技术甚至已经改变了很多企业的架构与框架流程，因为容器技术的出现，可以将应用以集装箱的方式打包交付，使应用在不同的团队中共享，通过镜像的方式应用可以部署于任何环境中。这样避免了各团队之间的协作问题的出现，成为企业实现DevOps目标的重要工具，而且以容器方式交付的Docker技术支持不断地开发迭">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-12-04T02:01:34.243Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Docker（一）——基础概念及部署">
+<meta name="twitter:description" content="&emsp;&emsp;在企业生产应用中，docker容器技术及k8s的编排管理工具的使用率越来越高，这项技术甚至已经改变了很多企业的架构与框架流程，因为容器技术的出现，可以将应用以集装箱的方式打包交付，使应用在不同的团队中共享，通过镜像的方式应用可以部署于任何环境中。这样避免了各团队之间的协作问题的出现，成为企业实现DevOps目标的重要工具，而且以容器方式交付的Docker技术支持不断地开发迭">
+  <link rel="canonical" href="https://hewanyue.com/blog/eaa1ac6e">
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+  <title>Docker（一）——基础概念及部署 | BOHC!</title>
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+<script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "https://hm.baidu.com/hm.js?a0d4e217e26da03ea5ca2acc76d543ae";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();</script>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="/dist/APlayer.min.css" class="aplayer-style-marker">
+<script src="/dist/APlayer.min.js" class="aplayer-script-marker"></script>
+</head>
+<body oncontextmenu=self.event.returnValue=false>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+        <div id="aplayer" class="aplayer aplayer-withlist  aplayer-fixed aplayer-narrow" style="position: fixed; z-index: 5; left: 0px; width: 400px;">
+            <pre class="aplayer-lrc-content"></pre>
+        </div>
+        <script>
+          const ap = new APlayer({
+            container: document.getElementById("aplayer"),
+            narrow: false,
+            autoplay: false,
+            listFolded: true,  //播放列表默认折叠
+            mutex: true,  //互斥，阻止多个播放器同时播放，当前播放器播放时暂停其他播放器
+            showlrc: true,
+            lrcType: 3,
+            audio: [
+            {
+              name: "差你一次旅行",
+              artist: "翁大涵",
+              url: "https://hewanyue.com/mp3/chaniyicilvxing.m4a",
+              cover: "https://hewanyue.com/mp3/cover/chaniyicilvxing.jpg",
+              lrc: "https://hewanyue.com/mp3/lrc/chaniyicilvxing.lrc",
+            },
+            {
+              name: "星月神话",
+              artist: "金莎",
+              url: "https://hewanyue.com/mp3/xingyueshenhua.mp3",
+              cover: "https://hewanyue.com/mp3/cover/xingyueshenhua.jpg",
+              lrc: "https://hewanyue.com/mp3/lrc/xingyueshenhua.lrc",
+            },
+            {
+              name: "体面",
+              artist: "于文文",
+              url: "https://hewanyue.com/mp3/timian.mp3",
+              cover: "https://hewanyue.com/mp3/cover/timian.jpg",
+              lrc: "https://hewanyue.com/mp3/lrc/timian.lrc",
+            },
+            {
+              name: "白羊",
+              artist: "徐秉龙&沈以诚",
+              url: "https://hewanyue.com/mp3/baiyang.mp3",
+              cover: "https://hewanyue.com/mp3/cover/baiyang.jpg",
+              lrc: "https://hewanyue.com/mp3/lrc/baiyang.lrc",
+            },
+            {
+              name: "绿色",
+              artist: "陈雪凝",
+              url: "https://hewanyue.com/mp3/lvse.mp3",
+              cover: "https://hewanyue.com/mp3/cover/lvse.jpg",
+              lrc: "https://hewanyue.com/mp3/lrc/lvse.lrc",
+            },
+            {
+              name: "退",
+              artist: "蒋蒋",
+              url: "https://hewanyue.com/mp3/tui.mp3",
+              cover: "https://hewanyue.com/mp3/cover/tui.jpg",
+              lrc: "https://hewanyue.com/mp3/lrc/tui.lrc",
+            },
+            {
+              name: "恋爱循环",
+              artist: "花泽香菜",
+              url: "https://hewanyue.com/mp3/lianaixunhuan.mp3",
+              cover: "https://hewanyue.com/mp3/cover/lianaixunhuan.jpg",
+              lrc: "https://hewanyue.com/mp3/lrc/lianaixunhuan.lrc",
+            }
+          ]
+          });          window.aplayers || (window.aplayers = []);
+          window.aplayers.push(ap);
+        </script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+<a href="https://github.com/wudihechao/" rel="external nofollow noreferrer" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">BOHC!</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">blog of hechao!</h1>
+  </div>
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i>首页</a>
+  </li>
+        <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i>关于</a>
+  </li>
+        <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">65</span></a>
+  </li>
+        <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">7</span></a>
+  </li>
+        <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">32</span></a>
+  </li>
+        <li class="menu-item menu-item-friends">
+    <a href="/friends/" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i>友链</a>
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" rel="external nofollow noreferrer" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>搜索</a>
+      </li>
+  </ul>
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+</div>
+<div class="search-pop-overlay"></div>
+  </div>
+</div>
+    </header>
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a class="book-mark-link book-mark-link-fixed" href="#"></a>
+  <a href="https://github.com/wudihechao" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener external nofollow noreferrer" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://hewanyue.com/blog/eaa1ac6e.html">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hechao">
+      <meta itemprop="description" content="BOHC is just a blog of hechao.">
+      <meta itemprop="image" content="/images/touxiang.gif">
+    </span>
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BOHC!">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">Docker（一）——基础概念及部署
+        </h2>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <time title="创建时间：2019-12-04 09:58:21" itemprop="dateCreated datePublished" datetime="2019-12-04T09:58:21+08:00">2019-12-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Cloud/" itemprop="url" rel="index"><span itemprop="name">Cloud</span></a></span>
+            </span>
+            <span id="/blog/eaa1ac6e.html" class="post-meta-item leancloud_visitors" data-flag-title="Docker（一）——基础概念及部署" title="阅读次数">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="leancloud-visitors-count"></span>
+              <span>℃</span>
+            </span>
+              <span class="post-meta-divider">•</span>
+  <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+    <a title="valine" href="/blog/eaa1ac6e.html#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/blog/eaa1ac6e.html" itemprop="commentCount"></span></a>
+  </span>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              <span>10k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              <span>26 分钟</span>
+            </span>
+        </div>
+      </header>
+    <div class="post-body" itemprop="articleBody">
+        <p>&emsp;&emsp;在企业生产应用中，docker容器技术及k8s的编排管理工具的使用率越来越高，这项技术甚至已经改变了很多企业的架构与框架流程，因为容器技术的出现，可以将应用以集装箱的方式打包交付，使应用在不同的团队中共享，通过镜像的方式应用可以部署于任何环境中。这样避免了各团队之间的协作问题的出现，成为企业实现DevOps目标的重要工具，而且以容器方式交付的Docker技术支持不断地开发迭代，提升了产品开发和交付速度，极大的方便了业务的横向扩容。<br>&emsp;&emsp;且与KVM虚拟化技术不同的是，Docker直接移植于Linux内核之上，通过运行Linux进程将底层设备虚拟隔离，这样系统性能的损耗也要比虚拟机低的多，几乎可以忽略。同时，Docker应用容器的启停非常高效，可以支持大规模的分布系统的水平扩展，真正给企业开发带来福音。<br><a id="more"></a></p>
+<h2 id="Docker简介"><a href="#Docker简介" class="headerlink" title="Docker简介"></a>Docker简介</h2><h3 id="Docker-是什么"><a href="#Docker-是什么" class="headerlink" title="Docker 是什么"></a>Docker 是什么</h3><p>&emsp;&emsp;首先 Docker 是一个在 2013 年开源的应用程序并且是一个基于 go 语言编写是一个开源的 PAAS 服务(Platform as a Service， 平台即服务的缩写)， go 语言是由google 开发， docker 公司最早叫 dotCloud 后由于 Docker 开源后大受欢迎就将公司改名为 Docker Inc， 总部位于美国加州的旧金山， Docker 是基于 linux 内核实现， Docker 最早采用 LXC 技术(LinuX Container 的简写， LXC 是 Linux 原生支持的容器技术， 可以提供轻量级的虚拟化， 可以说 docker 就是基于 LXC 发展起来的，提供 LXC 的高级封装，发展标准的配置方法)， 而虚拟化技术 KVM(Kernelbased Virtual Machine) 基于模块实现， Docker 后改为自己研发并开源的 runc 技术运行容器。</p>
+<h3 id="Dokcer与虚拟机技术对比"><a href="#Dokcer与虚拟机技术对比" class="headerlink" title="Dokcer与虚拟机技术对比"></a>Dokcer与虚拟机技术对比</h3><p>&emsp;&emsp;Docker 相比虚拟机的交付速度更快， 资源消耗更低， Docker 采用客户端/服务端架构，使用远程 API 来管理和创建 Docker 容器，其可以轻松的创建一个轻量级的、 可移植的、自给自足的容器， docker 的三大理念是 build(构建)、ship(运输)、 run(运行)， Docker 遵从 apache 2.0 协议，并通过（namespace 及cgroup 等）来提供容器的资源隔离与安全保障等，所以 Docke 容器在运行时不需要类似虚拟机（空运行的虚拟机占用物理机 6-8%性能）的额外资源开销，因此可以大幅提高资源利用率,总而言之 Docker 是一种用了新颖方式实现的轻量级虚拟机.类似于 VM 但是在原理和应用上和 VM 的差别还是很大的，并且 docker的专业叫法是应用容器(Application Container)。<br>| 优势 | Docker | 虚拟机 |<br>|–|–|–|<br>| 资源利用率更高 |  一台物理机可以运行数百个容器 | 但是一般只能运行数十个虚拟机 |<br>| 开销更小 |  不需要启动单独的虚拟机占用硬件资源 |  需要启动单独的虚拟机占用硬件资源 |<br>| 启动速度更快 | 可以在数秒内完成启动 | 需要几十秒甚至数分钟 |</p>
+<p>&emsp;&emsp;使用虚拟机是为了更好的实现服务运行环境隔离， 每个虚拟机都有独立的内核，虚拟化可以实现不同操作系统的虚拟机，但是通常一个虚拟机只运行一个服务， 很明显资源利用率比较低且造成不必要的性能损耗， 我们创建虚拟机的目的是为了运行应用程序，比如 Nginx、 PHP、 Tomcat 等 web 程序， 使用虚拟机无疑带来了一些不必要的资源开销，但是容器技术则基于减少中间运行环节带来较大的性能提升。</p>
+<h3 id="Docker-的组成"><a href="#Docker-的组成" class="headerlink" title="Docker 的组成"></a>Docker 的组成</h3><ul>
+<li>Docker 主机(Host)： 一个物理机或虚拟机，用于运行 Docker 服务进程和容器。</li>
+<li>Docker 服务端(Server)： Docker 守护进程， 运行 docker 容器。</li>
+<li>Docker 客户端(Client)： 客户端使用 docker 命令或其他工具调用 docker API。</li>
+<li>Docker 仓库(Registry): 保存镜像的仓库，类似于 git 或 svn 这样的版本控制系统，官方仓库: <a href="https://hub.docker.com/" rel="noopener external nofollow noreferrer" target="_blank">https://hub.docker.com/</a></li>
+<li>Docker 镜像(Images)： 镜像可以理解为创建实例使用的模板。</li>
+<li>Docker 容器(Container): 容器是从镜像生成对外提供服务的一个或一组服务。</li>
+</ul>
+<p>详细介绍参见官方文档<a href="https://docs.docker.com/engine/docker-overview/" rel="noopener external nofollow noreferrer" target="_blank">https://docs.docker.com/engine/docker-overview/</a></p>
+<h2 id="Docker实现需要解决的问题"><a href="#Docker实现需要解决的问题" class="headerlink" title="Docker实现需要解决的问题"></a>Docker实现需要解决的问题</h2><p>&emsp;&emsp;容器技术确实有很多优点，不过当使用多个容器时带来的以下问题怎么解决:<br>&emsp;&emsp;1.怎么样保证每个容器都有不同的文件系统并且能互不影响？<br>&emsp;&emsp;2.一个 docker 主进程内的各个容器都是其子进程，那么实现同一个主进程下不同类型的子进程？ 各个进程间通信能相互访问(内存数据)吗？<br>&emsp;&emsp;3.每个容器怎么解决 IP 及端口分配的问题？<br>&emsp;&emsp;4.多个容器的主机名能一样吗？<br>&emsp;&emsp;5.每个容器都要不要有 root 用户？怎么解决账户重名问题？<br>&emsp;&emsp;这就不得不引入一个Namespace的概念了。</p>
+<h3 id="Namespace"><a href="#Namespace" class="headerlink" title="Namespace"></a>Namespace</h3><p>&emsp;&emsp;namespace 是 Linux 系统的底层概念， 在内核层实现，即有一些不同类型的命名空间被部署在核内， 各个 docker 容器运行在同一个 docker 主进程并且共用同一个宿主机系统内核，各 docker 容器运行在宿主机的用户空间， 每个容器都要有类似于虚拟机一样的相互隔离的运行空间， 但是容器技术是在一个进程内实现运行指定服务的运行环境， 并且还可以保护宿主机内核不受其他进程的干扰和影响， 如文件系统空间、网络空间、进程空间等。<br>| 隔离类型 | 实现功能 | 系统调用参数 | 内核版本 |<br>|–|–|–|–|<br>| MNT Namespace(mount) | 提供磁盘挂载点和文件系统的隔离能力 | CLONE_NEWNS | Linux 2.4.19 |<br>| IPC Namespace(Inter-Process Communication) |  提供进程间通信的隔离能力 | CLONE_NEWIPC | Linux 2.6.19 |<br>| UTS Namespace(UNIX Timesharing System) | 提供主机名隔离能力 | CLONE_NEWUTS | Linux 2.6.19 |<br>| PID Namespace(Process Identification) | 提供进程隔离能力 | CLONE_NEWPID | Linux 2.6.24 |<br>| Net Namespace(network) | 提供网络隔离能力 | CLONE_NEWNET | Linux 2.6.29 |<br>| User Namespace(user) | 提供用户隔离能力 | CLONE_NEWUSER | Linux 3.8 |</p>
+<ul>
+<li>MNT Namespace：每个容器都要有独立的根文件系统有独立的用户空间， 以实现在容器里面启动服务并且使用容器的运行环境，容器里面是不能访问宿主机的资源， 宿主机是使用了 chroot 技术把容器锁定到一个指定的运行目录里面。</li>
+<li>IPC Namespace：一个容器内的进程间通信， 允许一个容器内的不同进程的(内存、 缓存等)数据访问，但是不能跨容器访问其他容器的数据。</li>
+<li>UTS Namespace：UTS namespace（UNIX Timesharing System 包含了运行内核的名称、版本、底层体系结构类型等信息）用于系统标识， 其中包含了 hostname 和域名domainname ， 它使得一个容器拥有属于自己 hostname 标识，这个主机名标识独立于宿主机系统和其上的其他容器。</li>
+<li>PID Namespace：Linux 系统中，有一个 PID 为 1 的进程(init/systemd)是其他所有进程的父进程， 那么在每个容器内也要有一个父进程来管理其下属的子进程，那么多个容器的进程通 PID namespace 进程隔离(比如 PID 编号重复、 器内的主进程生成与回收子进程等)。</li>
+<li>Net Namespace：每一个容器都类似于虚拟机一样有自己的网卡、 监听端口、 TCP/IP 协议栈等，Docker 使用 network namespace 启动一个 vethX 接口，这样你的容器将拥有它自己的桥接 ip 地址，通常是 docker0，而 docker0 实质就是 Linux 的虚拟网桥,网桥是在 OSI 七层模型的数据链路层的网络设备，通过 mac 地址对网络进行划分，并且在不同网络直接传递数据。</li>
+<li>User Namespace：User Namespace 允许在各个宿主机的各个容器空间内创建相同的用户名以及相同的用户 UID 和 GID， 只是会把用户的作用范围限制在每个容器内，即 A 容器和 B 容器可以有相同的用户名称和 ID 的账户，但是此用户的有效范围仅是当前容器内， 不能访问另外一个容器内的文件系统，即相互隔离、互补影响、 永不相见。</li>
+</ul>
+<p>&emsp;&emsp;通过这些内核级功能的实现，docker才可以正常工作，实现不同容器间的各种资源的隔离，形成共享同一组硬件及内核上却互不影响的独立应用级虚拟化系统。不过此时，我们还面临一个问题，就是资源使用率的控制。如果一个容器因为BUG或代码本身等原因导致无限制的使用宿主机上的资源，将会导致宿主机CPU或者内存不足进而极有可能影响到其他容器的正常运行。所以我们需要对每个容器的资源利用做一个限制，我们通过内核中的Linux Cgroups功能来限制每个容器能使用的资源的上限。</p>
+<h3 id="Linux-Cgroups"><a href="#Linux-Cgroups" class="headerlink" title="Linux Cgroups"></a>Linux Cgroups</h3><p>&emsp;&emsp;Linux Cgroups 的全称是 Linux Control Groups， 它最主要的作用，就是限制一个进程组能够使用的资源上限，包括 CPU、内存、磁盘、网络带宽等等。此外，还能够对进程进行优先级设置，以及将进程挂起和恢复等操作。<br>&emsp;&emsp;Cgroups 在内核层默认已经开启，可通过下列命令验证查看Cgroups设置<br>&emsp;&emsp;CentOS7.6:<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[root@localhost ~]</span><span class="comment"># cat /boot/config-3.10.0-957.el7.x86_64 |grep CGROUP</span></span><br><span class="line"><span class="attr">CONFIG_CGROUPS</span>=y</span><br><span class="line"><span class="comment"># CONFIG_CGROUP_DEBUG is not set</span></span><br><span class="line"><span class="attr">CONFIG_CGROUP_FREEZER</span>=y</span><br><span class="line"><span class="attr">CONFIG_CGROUP_PIDS</span>=y</span><br><span class="line"><span class="attr">CONFIG_CGROUP_DEVICE</span>=y</span><br><span class="line"><span class="attr">CONFIG_CGROUP_CPUACCT</span>=y</span><br><span class="line"><span class="attr">CONFIG_CGROUP_HUGETLB</span>=y</span><br><span class="line"><span class="attr">CONFIG_CGROUP_PERF</span>=y</span><br><span class="line"><span class="attr">CONFIG_CGROUP_SCHED</span>=y</span><br><span class="line"><span class="attr">CONFIG_BLK_CGROUP</span>=y</span><br><span class="line"><span class="comment"># CONFIG_DEBUG_BLK_CGROUP is not set</span></span><br><span class="line"><span class="attr">CONFIG_NETFILTER_XT_MATCH_CGROUP</span>=m</span><br><span class="line"><span class="attr">CONFIG_NET_CLS_CGROUP</span>=y</span><br><span class="line"><span class="attr">CONFIG_NETPRIO_CGROUP</span>=y</span><br><span class="line"><span class="section">[root@localhost ~]</span><span class="comment">#</span></span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;ubuntu1804中:<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">root@DockerUbuntu:~# cat /boot/config-4.15.0-70-generic |grep CGROUP</span></span><br><span class="line">CONFIG_CGROUPS=y</span><br><span class="line">CONFIG_BLK_CGROUP=y</span><br><span class="line"><span class="comment"># CONFIG_DEBUG_BLK_CGROUP is not set</span></span><br><span class="line">CONFIG_CGROUP_WRITEBACK=y</span><br><span class="line">CONFIG_CGROUP_SCHED=y</span><br><span class="line">CONFIG_CGROUP_PIDS=y</span><br><span class="line">CONFIG_CGROUP_RDMA=y</span><br><span class="line">CONFIG_CGROUP_FREEZER=y</span><br><span class="line">CONFIG_CGROUP_HUGETLB=y</span><br><span class="line">CONFIG_CGROUP_DEVICE=y</span><br><span class="line">CONFIG_CGROUP_CPUACCT=y</span><br><span class="line">CONFIG_CGROUP_PERF=y</span><br><span class="line">CONFIG_CGROUP_BPF=y</span><br><span class="line"><span class="comment"># CONFIG_CGROUP_DEBUG is not set</span></span><br><span class="line">CONFIG_SOCK_CGROUP_DATA=y</span><br><span class="line">CONFIG_NETFILTER_XT_MATCH_CGROUP=m</span><br><span class="line">CONFIG_NET_CLS_CGROUP=m</span><br><span class="line">CONFIG_CGROUP_NET_PRIO=y</span><br><span class="line">CONFIG_CGROUP_NET_CLASSID=y</span><br><span class="line"><span class="section">root@DockerUbuntu:~#</span></span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;可以看到内核较新的 ubuntu 支持的功能更多。</p>
+<h4 id="cgroups-参数具体解释："><a href="#cgroups-参数具体解释：" class="headerlink" title="cgroups 参数具体解释："></a>cgroups 参数具体解释：</h4><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">blkio：块设备 IO 限制。</span><br><span class="line">cpu：使用调度程序为 cgroup 任务提供 cpu 的访问。</span><br><span class="line">cpuacct：产生 cgroup 任务的 cpu 资源报告。</span><br><span class="line">cpuset：如果是多核心的 cpu，这个子系统会为 cgroup 任务分配单独的 cpu</span><br><span class="line">和内存。</span><br><span class="line">devices：允许或拒绝 cgroup 任务对设备的访问。</span><br><span class="line">freezer：暂停和恢复 cgroup 任务。</span><br><span class="line">memory：设置每个 cgroup 的内存限制以及产生内存资源报告。</span><br><span class="line">net_cls：标记每个网络包以供 cgroup 方便使用。</span><br><span class="line">ns：命名空间子系统。</span><br><span class="line">perf_event：增加了对每<span class="built_in"> group </span>的监测跟踪的能力，可以监测属于某个特定的</span><br><span class="line">group 的所有线程以及运行在特定 CPU 上的线程。</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;可以通过命令<code>ll /sys/fs/cgroup/</code>查看系统Cgroups</p>
+<h2 id="Docker依赖的技术"><a href="#Docker依赖的技术" class="headerlink" title="Docker依赖的技术"></a>Docker依赖的技术</h2><p>&emsp;&emsp;Docker容器技术如果真正想在企业中应用，还必须依赖下面的一些技术，会在之后的文章中详细介绍。</p>
+<h3 id="容器网络："><a href="#容器网络：" class="headerlink" title="容器网络："></a>容器网络：</h3><p>&emsp;&emsp;docker 自带的网络 docker network 仅支持管理单机上的容器网络， 当多主机运行的时候需要使用第三方开源网络，例如 calico、 flannel 等。</p>
+<h3 id="服务发现："><a href="#服务发现：" class="headerlink" title="服务发现："></a>服务发现：</h3><p>&emsp;&emsp;容器的动态扩容特性决定了容器 IP 也会随之变化， 因此需要有一种机制可以自动识别并将用户请求动态转发到新创建的容器上， kubernetes 自带服务发现功能，需要结合 kube-dns 服务解析内部域名。</p>
+<h3 id="容器监控："><a href="#容器监控：" class="headerlink" title="容器监控："></a>容器监控：</h3><p>&emsp;&emsp;可以通过原生命令 docker ps/top/stats 查看容器运行状态，另外也可以使<br>heapster/ Prometheus 等第三方监控工具监控容器的运行状态。</p>
+<h3 id="数据管理："><a href="#数据管理：" class="headerlink" title="数据管理："></a>数据管理：</h3><p>&emsp;&emsp;容器的动态迁移会导致其在不同的 Host 之间迁移，因此如何保证与容器相关的数据也能随之迁移或随时访问，可以使用逻辑卷/存储挂载等方式解决。</p>
+<h3 id="日志收集："><a href="#日志收集：" class="headerlink" title="日志收集："></a>日志收集：</h3><p>&emsp;&emsp;docker 原生的日志查看工具 docker logs， 但是容器内部的日志需要通过 ELK 等专门的日志收集分析和展示工具进行处理。</p>
+<h2 id="Docker部署"><a href="#Docker部署" class="headerlink" title="Docker部署"></a>Docker部署</h2><p>&emsp;&emsp;我们初步知道了Docker的概念和实现原理，也知道了Docker在使用中可能会遇到的问题，说了这么多，现在我们先将Docker部署一下。<br>&emsp;&emsp;Docker常见的安装方式有三种，可以通过rpm包下载，或者二进制安装，也可以通过epel源安装。<br>&emsp;&emsp;官方 rpm 包下载地址:<br>&emsp;&emsp;<a href="https://download.docker.com/linux/centos/7/x86_64/stable/Packages/" rel="noopener external nofollow noreferrer" target="_blank">https://download.docker.com/linux/centos/7/x86_64/stable/Packages/</a><br>&emsp;&emsp;二进制下载地址：<br>&emsp;&emsp;<a href="https://download.docker.com/" rel="noopener external nofollow noreferrer" target="_blank">https://download.docker.com/</a><br><a href="https://mirrors.aliyun.com/docker-ce/linux/static/stable/x86_64/" rel="noopener external nofollow noreferrer" target="_blank">https://mirrors.aliyun.com/docker-ce/linux/static/stable/x86_64/</a><br>&emsp;&emsp;阿里镜像下载地址：<br>&emsp;&emsp;<a href="https://mirrors.aliyun.com/docker-ce/linux/centos/7/x86_64/stable/Packages/" rel="noopener external nofollow noreferrer" target="_blank">https://mirrors.aliyun.com/docker-ce/linux/centos/7/x86_64/stable/Packages/</a><br>&emsp;&emsp;Ubuntu的安装docker-ce阿里云镜像仓库方式如下（使用 apt-get 进行安装）:<br><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># step 1: 安装必要的一些系统工具</span></span><br><span class="line">sudo apt-<span class="keyword">get</span> update</span><br><span class="line">sudo apt-<span class="keyword">get</span> -y install apt-transport-https ca-certificates curl software-properties-common</span><br><span class="line"><span class="meta"># step 2: 安装GPG证书</span></span><br><span class="line">curl -fsSL https:<span class="comment">//mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -</span></span><br><span class="line"><span class="meta"># Step 3: 写入软件源信息</span></span><br><span class="line">sudo add-apt-repository <span class="string">"deb [arch=amd64] https://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"</span></span><br><span class="line"><span class="meta"># Step 4: 更新并安装Docker-CE</span></span><br><span class="line">sudo apt-<span class="keyword">get</span> -y update</span><br><span class="line">sudo apt-<span class="keyword">get</span> -y install docker-ce</span><br><span class="line"></span><br><span class="line"><span class="meta"># 安装指定版本的Docker-CE:</span></span><br><span class="line"><span class="meta"># Step 1: 查找Docker-CE的版本:</span></span><br><span class="line"><span class="meta"># apt-cache madison docker-ce</span></span><br><span class="line"><span class="meta">#   docker-ce | 17.03.1~ce-0~ubuntu-xenial | https://mirrors.aliyun.com/docker-ce/linux/ubuntu xenial/stable amd64 Packages</span></span><br><span class="line"><span class="meta">#   docker-ce | 17.03.0~ce-0~ubuntu-xenial | https://mirrors.aliyun.com/docker-ce/linux/ubuntu xenial/stable amd64 Packages</span></span><br><span class="line"><span class="meta"># Step 2: 安装指定版本的Docker-CE: (VERSION例如上面的17.03.1~ce-0~ubuntu-xenial)</span></span><br><span class="line"><span class="meta"># sudo apt-get -y install docker-ce=[VERSION]</span></span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;<strong>注意</strong>：在与 kubernetes 结合使用的时候，要安装经过 kubernetes 官方测试通过的 docker版本， 避免出现不兼容等未知的及不可预估的问题发生， kubernetes 测试过的docker 版本可以在 github 查询， 具体如下：<br><a href="https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.14.md#external-dependencies" rel="noopener external nofollow noreferrer" target="_blank">https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.14.md#external-dependencies</a><br>&emsp;&emsp;安装完成后就可以用<code>systemctl start docker</code>命令启动Docker了。<br>&emsp;&emsp;然后用<code>docker info</code>命令来验证当前容器信息<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">docker</span> <span class="literal">info</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">Containers:</span> <span class="number">0</span> <span class="comment">#当前主机运行的容器总数</span></span><br><span class="line"><span class="attr">Running:</span> <span class="number">0</span> <span class="comment">#有几个容器是正在运行的</span></span><br><span class="line"><span class="attr">Paused:</span> <span class="number">0</span> <span class="comment">#有几个容器是暂停的</span></span><br><span class="line"><span class="attr">Stopped:</span> <span class="number">0</span> <span class="comment">#有几个容器是停止的</span></span><br><span class="line"><span class="attr">Images:</span> <span class="number">0</span> <span class="comment">#当前服务器的镜像数</span></span><br><span class="line"><span class="string">Server</span> <span class="attr">Version:</span> <span class="number">18.09</span><span class="number">.9</span> <span class="comment">#服务端版本</span></span><br><span class="line"><span class="string">Storage</span> <span class="attr">Driver:</span> <span class="string">overlay2</span> <span class="comment">#正在使用的存储引擎</span></span><br><span class="line"><span class="string">Backing</span> <span class="attr">Filesystem:</span> <span class="string">extfs</span> <span class="comment">#后端文件系统，即服务器的磁盘文件系统</span></span><br><span class="line"><span class="string">Supports</span> <span class="attr">d_type:</span> <span class="literal">true</span> <span class="comment">#是否支持 d_type</span></span><br><span class="line"><span class="string">Native</span> <span class="string">Overlay</span> <span class="attr">Diff:</span> <span class="literal">true</span> <span class="comment">#是否支持差异数据存储</span></span><br><span class="line"><span class="string">Logging</span> <span class="attr">Driver:</span> <span class="string">json-file</span> <span class="comment">#日志类型</span></span><br><span class="line"><span class="string">Cgroup</span> <span class="attr">Driver:</span> <span class="string">cgroupfs</span> <span class="comment">#Cgroups 类型</span></span><br><span class="line"><span class="attr">Plugins:</span> <span class="comment">#插件</span></span><br><span class="line"><span class="attr">Volume:</span> <span class="string">local</span> <span class="comment">#卷</span></span><br><span class="line"><span class="attr">Network:</span> <span class="string">bridge</span> <span class="string">host</span> <span class="string">macvlan</span> <span class="literal">null</span> <span class="string">overlay</span> <span class="comment"># overlay 夸主机通信</span></span><br><span class="line"><span class="attr">Log:</span> <span class="string">awslogs</span> <span class="string">fluentd</span> <span class="string">gcplogs</span> <span class="string">gelf</span> <span class="string">journald</span> <span class="string">json-file</span> <span class="string">local</span> <span class="string">logentries</span> <span class="string">splunk</span> <span class="string">syslog</span> <span class="comment">#日</span></span><br><span class="line"><span class="string">志类型</span></span><br><span class="line"><span class="attr">Swarm:</span> <span class="string">inactive</span> <span class="comment">#是否支持 swarm</span></span><br><span class="line"><span class="attr">Runtimes:</span> <span class="string">runc</span> <span class="comment">#已安装的容器运行时</span></span><br><span class="line"><span class="string">Default</span> <span class="attr">Runtime:</span> <span class="string">runc</span> <span class="comment">#默认使用的容器运行时</span></span><br><span class="line"><span class="string">Init</span> <span class="attr">Binary:</span> <span class="string">docker-init</span> <span class="comment">#初始化容器的守护进程，即 pid 为 1 的进程</span></span><br><span class="line"><span class="string">containerd</span> <span class="attr">version:</span> <span class="number">894</span><span class="string">b81a4b802e4eb2a91d1ce216b8817763c29fb</span> <span class="comment">#版本</span></span><br><span class="line"><span class="string">runc</span> <span class="attr">version:</span> <span class="number">425e105</span><span class="string">d5a03fabd737a126ad93d62a9eeede87f</span> <span class="comment"># runc 版本</span></span><br><span class="line"><span class="string">init</span> <span class="attr">version:</span> <span class="string">fec3683</span> <span class="comment">#init 版本</span></span><br><span class="line"><span class="string">Security</span> <span class="attr">Options:</span> <span class="comment">#安全选项</span></span><br><span class="line"><span class="string">Apparmor</span> <span class="comment">#安全模块， https://docs.docker.com/engine/security/apparmor/</span></span><br><span class="line"><span class="string">seccomp</span> <span class="comment">#审计(操作)， https://docs.docker.com/engine/security/seccomp/</span></span><br><span class="line"><span class="attr">Profile:</span> <span class="string">default</span> <span class="comment">#默认的配置文件</span></span><br><span class="line"><span class="string">Kernel</span> <span class="attr">Version:</span> <span class="number">4.15</span><span class="number">.0</span><span class="bullet">-55</span><span class="bullet">-generic</span> <span class="comment">#宿主机内核版本</span></span><br><span class="line"><span class="string">Operating</span> <span class="attr">System:</span> <span class="string">Ubuntu</span> <span class="number">18.04</span><span class="number">.3</span> <span class="string">LTS</span> <span class="comment">#宿主机操作系统</span></span><br><span class="line"><span class="attr">OSType:</span> <span class="string">linux</span> <span class="comment">#宿主机操作系统类型</span></span><br><span class="line"><span class="attr">Architecture:</span> <span class="string">x86_64</span> <span class="comment">#宿主机架构</span></span><br><span class="line"><span class="attr">CPUs:</span> <span class="number">2</span> <span class="comment">#宿主机 CPU 数量</span></span><br><span class="line"><span class="string">Total</span> <span class="attr">Memory:</span> <span class="number">3.83</span><span class="string">GiB</span> <span class="comment">#宿主机总内存</span></span><br><span class="line"><span class="attr">Name:</span> <span class="string">DockerUbuntu</span> <span class="comment">#宿主机 hostname</span></span><br><span class="line"><span class="attr">ID:</span> <span class="attr">ZFPD:UIA5:SR6E:Y6SS:52QL:5MPT:VDY3:ATVI:QMVG:HAFF:MN74:2HPD</span> <span class="comment">#宿主机</span></span><br><span class="line"><span class="string">ID</span></span><br><span class="line"><span class="string">Docker</span> <span class="string">Root</span> <span class="attr">Dir:</span> <span class="string">/var/lib/docker</span> <span class="comment">#宿主机数据保存目录</span></span><br><span class="line"><span class="string">Debug</span> <span class="string">Mode</span> <span class="string">(client):</span> <span class="literal">false</span> <span class="comment">#client 端是否开启 debug</span></span><br><span class="line"><span class="string">Debug</span> <span class="string">Mode</span> <span class="string">(server):</span> <span class="literal">false</span> <span class="comment">#server 端是否开启 debug</span></span><br><span class="line"><span class="attr">Registry:</span> <span class="attr">https://index.docker.io/v1/</span> <span class="comment">#镜像仓库</span></span><br><span class="line"><span class="attr">Labels:</span> <span class="comment">#其他标签</span></span><br><span class="line"><span class="attr">Experimental:</span> <span class="literal">false</span> <span class="comment">#是否测试版</span></span><br><span class="line"><span class="string">Insecure</span> <span class="attr">Registries:</span> <span class="comment">#非安全的镜像仓库</span></span><br><span class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.0</span><span class="string">/8</span></span><br><span class="line"><span class="string">Live</span> <span class="string">Restore</span> <span class="attr">Enabled:</span> <span class="literal">false</span> <span class="comment">#是否开启活动重启(重启 docker-daemon 不关闭容器)</span></span><br><span class="line"><span class="string">Product</span> <span class="attr">License:</span> <span class="string">Community</span> <span class="string">Engine</span> <span class="comment">#产品许可信息</span></span><br></pre></td></tr></table></figure>
+<p>在结尾可能会有类似<code>warning警报</code>,<br><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">WARNING: </span>No swap limit support</span><br></pre></td></tr></table></figure></p>
+<p>这是提示说我们没有开启 swap 资源限制，这就需要我们通过修改内核参数，来限制swap资源的使用。<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim <span class="regexp">/etc/</span><span class="keyword">default</span><span class="regexp">/grub</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">GRUB_CMDLINE_LINUX="net.ifnames=0</span> <span class="attr">biosdevname=0</span> <span class="attr">cgroup_enable=memory</span> <span class="attr">swapaccount=1"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">update-grub</span></span><br><span class="line"><span class="attribute">reboot</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;重启生效。至此，docker工具部署就完成了~</p>
+    </div>
+          <div class="post-tags">
+              <a href="/tags/Docker/" rel="tag"><i class="fa fa-tag">Docker</i></a>
+              <a href="/tags/容器/" rel="tag"><i class="fa fa-tag">容器</i></a>
+              <a href="/tags/虚拟化/" rel="tag"><i class="fa fa-tag">虚拟化</i></a>
+              <a href="/tags/企业级应用/" rel="tag"><i class="fa fa-tag">企业级应用</i></a>
+          </div>
+    <div style="text-align:center;color: #ccc;font-size:14px;">------------------------------- The End -------------------------------</div>
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+        <div id="reward-container">
+  <div>It's very nice of you to support me.</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById('qr'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      <div style="display: inline-block">
+        <img src="/images/wechat-pay.png" alt="Hechao 微信支付">
+        <p>微信支付</p>
+      </div>
+  </div>
+</div>
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Hechao</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://hewanyue.com/blog/eaa1ac6e.html" title="Docker（一）——基础概念及部署">https://hewanyue.com/blog/eaa1ac6e.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+</div>
+<div class="note info" style="background-color: #eff8f0;
+    border-left: 3px solid #255188;
+    opacity: 0.85;
+    padding-left: 11px;
+    padding-bottom: 1px;">
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts" style="margin-top: 10px;
+    margin-bottom: 10px;">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/f989902e.html" rel="bookmark">KVM虚拟化</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/2c6b894f.html" rel="bookmark">OpenVPN的搭建</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/f2c1a89e.html" rel="bookmark">一键源码编译安装redis</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/b365780e.html" rel="bookmark">linux上部署与配置tomcat</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/f5daec50.html" rel="bookmark">企业级应用：负载均衡层——haproxy(二)</a></div>
+    </li>
+  </ul>
+</div>
+      <footer class="post-footer">
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/blog/f989902e.html" rel="next" title="KVM虚拟化">
+                  <i class="fa fa-chevron-left"></i> KVM虚拟化
+                </a>
+            </div>
+            <span class="post-nav-divider"></span>
+            <div class="post-nav-prev post-nav-item">
+            </div>
+          </div>
+      </footer>
+  </div>
+  </article>
+  </div>
+          </div>
+    <div class="comments" id="comments"></div>
+        </div>
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker简介"><span class="nav-number">1.</span> <span class="nav-text">Docker简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker-是什么"><span class="nav-number">1.1.</span> <span class="nav-text">Docker 是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dokcer与虚拟机技术对比"><span class="nav-number">1.2.</span> <span class="nav-text">Dokcer与虚拟机技术对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker-的组成"><span class="nav-number">1.3.</span> <span class="nav-text">Docker 的组成</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker实现需要解决的问题"><span class="nav-number">2.</span> <span class="nav-text">Docker实现需要解决的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Namespace"><span class="nav-number">2.1.</span> <span class="nav-text">Namespace</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux-Cgroups"><span class="nav-number">2.2.</span> <span class="nav-text">Linux Cgroups</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#cgroups-参数具体解释："><span class="nav-number">2.2.1.</span> <span class="nav-text">cgroups 参数具体解释：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker依赖的技术"><span class="nav-number">3.</span> <span class="nav-text">Docker依赖的技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#容器网络："><span class="nav-number">3.1.</span> <span class="nav-text">容器网络：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务发现："><span class="nav-number">3.2.</span> <span class="nav-text">服务发现：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#容器监控："><span class="nav-number">3.3.</span> <span class="nav-text">容器监控：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据管理："><span class="nav-number">3.4.</span> <span class="nav-text">数据管理：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#日志收集："><span class="nav-number">3.5.</span> <span class="nav-text">日志收集：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker部署"><span class="nav-number">4.</span> <span class="nav-text">Docker部署</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/touxiang.gif"
+      alt="Hechao">
+  <p class="site-author-name" itemprop="name">Hechao</p>
+  <div class="site-description" itemprop="description">BOHC is just a blog of hechao.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">65</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wudihechao" title="GitHub &rarr; https://github.com/wudihechao" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wudihechao@163.com" title="E-Mail &rarr; mailto:wudihechao@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/1050367191" title="Weibo &rarr; https://weibo.com/u/1050367191" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-weibo"></i></a>
+      </span>
+  </div>
+    <div class="links-of-blogroll motion-element links-of-blogroll-block">
+      <div class="links-of-blogroll-title" style="padding-left: 10px;">
+        <!-- modify icon to fire by szw -->
+        <i class="fa fa-history fa-" aria-hidden="true"></i>
+        近期文章
+      </div>
+      <ul class="links-of-blogroll-list" style="padding-left: 30px;">
+          <li>
+            <a href="/blog/eaa1ac6e.html" title="Docker（一）——基础概念及部署" >Docker（一）——基础概念及部署</a>
+          </li>
+          <li>
+            <a href="/blog/f989902e.html" title="KVM虚拟化" >KVM虚拟化</a>
+          </li>
+          <li>
+            <a href="/blog/2c6b894f.html" title="OpenVPN的搭建" >OpenVPN的搭建</a>
+          </li>
+          <li>
+            <a href="/blog/6254cc16.html" title="MSM实现tomcat集群的session共享" >MSM实现tomcat集群的session共享</a>
+          </li>
+          <li>
+            <a href="/blog/b365780e.html" title="linux上部署与配置tomcat" >linux上部署与配置tomcat</a>
+          </li>
+      </ul>
+    </div>
+<div id="days"></div>
+<script>
+function show_date_time(){
+window.setTimeout("show_date_time()", 1000);
+BirthDay=new Date("10/01/2019 00:00:00");
+today=new Date();
+timeold=(today.getTime()-BirthDay.getTime());
+sectimeold=timeold/1000
+secondsold=Math.floor(sectimeold);
+msPerDay=24*60*60*1000
+e_daysold=timeold/msPerDay
+daysold=Math.floor(e_daysold);
+e_hrsold=(e_daysold-daysold)*24;
+hrsold=setzero(Math.floor(e_hrsold));
+e_minsold=(e_hrsold-hrsold)*60;
+minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+seconds=setzero(Math.floor((e_minsold-minsold)*60));
+document.getElementById('days').innerHTML="已运行"+daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒";
+}
+function setzero(i){
+if (i<10)
+{i="0" + i};
+return i;
+}
+show_date_time();
+</script>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://hewanyue.com/" class="cc-opacity"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+      </div>
+ </aside>
+  <div id="sidebar-dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user-circle-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hechao</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">292k</span>
+</div>
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+      </div>
+    </footer>
+  </div>
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/muse.js?v=7.4.0"></script>
+<script src="/js/next-boot.js?v=7.4.0"></script><script src="/js/bookmark.js?v=7.4.0"></script>
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 21895,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+  <script src="/js/local-search.js?v=7.4.0"></script>
+<script>
+NexT.utils.getScript('//hewanyue.com/js/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail','link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    app_id: 'AVtPtVan0Ky5u33XhUzJlFKp-gzGzoHsz',
+    app_key: 'nx3XTnRJmaMQR3aLWYiigkgJ',
+    placeholder: 'Just Say Something~!',
+    avatar: 'mp',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: 'zh-cn' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
+</body>
+</html>
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
