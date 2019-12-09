@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta name="baidu-site-verification" content="vT6Jf980C0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.ico?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.ico?v=7.4.0">
+  <link rel="alternate" href="/atom.xml" title="BOHC!" type="application/atom+xml">
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":true,"show_result":true,"style":"default"},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":true,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+  <meta name="description" content="&emsp;&emsp;比较常见的docker镜像仓库，有docker官方仓库https://hub.docker.com/，和阿里云镜像仓库https://cr.console.aliyun.com/cn-hangzhou/instances/images，可以比较方便的拉取镜像或储存容器镜像。而在企业生产中，绝对部分情况我们都是使用企业内部的镜像仓库，来分发部署我们的代码。本文将详细介绍阿里云">
+<meta name="keywords" content="Docker,容器,企业级应用,镜像仓库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker（五）——Docker镜像仓库">
+<meta property="og:url" content="https://hewanyue.com/blog/6187894.html">
+<meta property="og:site_name" content="BOHC!">
+<meta property="og:description" content="&emsp;&emsp;比较常见的docker镜像仓库，有docker官方仓库https://hub.docker.com/，和阿里云镜像仓库https://cr.console.aliyun.com/cn-hangzhou/instances/images，可以比较方便的拉取镜像或储存容器镜像。而在企业生产中，绝对部分情况我们都是使用企业内部的镜像仓库，来分发部署我们的代码。本文将详细介绍阿里云">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191207213751920.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2019120721442027.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191208220914881.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2019120910105297.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191209101117514.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2019-12-09T02:44:37.483Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Docker（五）——Docker镜像仓库">
+<meta name="twitter:description" content="&emsp;&emsp;比较常见的docker镜像仓库，有docker官方仓库https://hub.docker.com/，和阿里云镜像仓库https://cr.console.aliyun.com/cn-hangzhou/instances/images，可以比较方便的拉取镜像或储存容器镜像。而在企业生产中，绝对部分情况我们都是使用企业内部的镜像仓库，来分发部署我们的代码。本文将详细介绍阿里云">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20191207213751920.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
+  <link rel="canonical" href="https://hewanyue.com/blog/6187894">
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+  <title>Docker（五）——Docker镜像仓库 | BOHC!</title>
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+<script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "https://hm.baidu.com/hm.js?a0d4e217e26da03ea5ca2acc76d543ae";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();</script>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="/dist/APlayer.min.css" class="aplayer-style-marker">
+<script src="/dist/APlayer.min.js" class="aplayer-script-marker"></script>
+</head>
+<body oncontextmenu=self.event.returnValue=false>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+        <div id="aplayer" class="aplayer aplayer-withlist  aplayer-fixed aplayer-narrow" style="position: fixed; z-index: 5; left: 0px; width: 400px;">
+            <pre class="aplayer-lrc-content"></pre>
+        </div>
+        <script>
+          const ap = new APlayer({
+            container: document.getElementById("aplayer"),
+            narrow: false,
+            autoplay: false,
+            listFolded: true,  //播放列表默认折叠
+            mutex: true,  //互斥，阻止多个播放器同时播放，当前播放器播放时暂停其他播放器
+            showlrc: true,
+            lrcType: 3,
+            audio: [
+            {
+              name: "差你一次旅行",
+              artist: "翁大涵",
+              url: "https://hewanyue.com/mp3/chaniyicilvxing.m4a",
+              cover: "https://hewanyue.com/mp3/cover/chaniyicilvxing.jpg",
+              lrc: "https://hewanyue.com/mp3/lrc/chaniyicilvxing.lrc",
+            },
+            {
+              name: "星月神话",
+              artist: "金莎",
+              url: "https://hewanyue.com/mp3/xingyueshenhua.mp3",
+              cover: "https://hewanyue.com/mp3/cover/xingyueshenhua.jpg",
+              lrc: "https://hewanyue.com/mp3/lrc/xingyueshenhua.lrc",
+            },
+            {
+              name: "体面",
+              artist: "于文文",
+              url: "https://hewanyue.com/mp3/timian.mp3",
+              cover: "https://hewanyue.com/mp3/cover/timian.jpg",
+              lrc: "https://hewanyue.com/mp3/lrc/timian.lrc",
+            },
+            {
+              name: "白羊",
+              artist: "徐秉龙&沈以诚",
+              url: "https://hewanyue.com/mp3/baiyang.mp3",
+              cover: "https://hewanyue.com/mp3/cover/baiyang.jpg",
+              lrc: "https://hewanyue.com/mp3/lrc/baiyang.lrc",
+            },
+            {
+              name: "绿色",
+              artist: "陈雪凝",
+              url: "https://hewanyue.com/mp3/lvse.mp3",
+              cover: "https://hewanyue.com/mp3/cover/lvse.jpg",
+              lrc: "https://hewanyue.com/mp3/lrc/lvse.lrc",
+            },
+            {
+              name: "退",
+              artist: "蒋蒋",
+              url: "https://hewanyue.com/mp3/tui.mp3",
+              cover: "https://hewanyue.com/mp3/cover/tui.jpg",
+              lrc: "https://hewanyue.com/mp3/lrc/tui.lrc",
+            },
+            {
+              name: "恋爱循环",
+              artist: "花泽香菜",
+              url: "https://hewanyue.com/mp3/lianaixunhuan.mp3",
+              cover: "https://hewanyue.com/mp3/cover/lianaixunhuan.jpg",
+              lrc: "https://hewanyue.com/mp3/lrc/lianaixunhuan.lrc",
+            }
+          ]
+          });          window.aplayers || (window.aplayers = []);
+          window.aplayers.push(ap);
+        </script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+<a href="https://github.com/wudihechao/" rel="external nofollow noreferrer" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">BOHC!</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">blog of hechao!</h1>
+  </div>
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i>首页</a>
+  </li>
+        <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i>关于</a>
+  </li>
+        <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">69</span></a>
+  </li>
+        <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">8</span></a>
+  </li>
+        <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">36</span></a>
+  </li>
+        <li class="menu-item menu-item-friends">
+    <a href="/friends/" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i>友链</a>
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" rel="external nofollow noreferrer" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>搜索</a>
+      </li>
+  </ul>
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+</div>
+<div class="search-pop-overlay"></div>
+  </div>
+</div>
+    </header>
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a class="book-mark-link book-mark-link-fixed" href="#"></a>
+  <a href="https://github.com/wudihechao" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener external nofollow noreferrer" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://hewanyue.com/blog/6187894.html">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hechao">
+      <meta itemprop="description" content="BOHC is just a blog of hechao.">
+      <meta itemprop="image" content="/images/touxiang.gif">
+    </span>
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BOHC!">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">Docker（五）——Docker镜像仓库
+        </h2>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <time title="创建时间：2019-12-07 22:30:04" itemprop="dateCreated datePublished" datetime="2019-12-07T22:30:04+08:00">2019-12-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Cloud/" itemprop="url" rel="index"><span itemprop="name">Cloud</span></a></span>
+            </span>
+            <span id="/blog/6187894.html" class="post-meta-item leancloud_visitors" data-flag-title="Docker（五）——Docker镜像仓库" title="阅读次数">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="leancloud-visitors-count"></span>
+              <span>℃</span>
+            </span>
+              <span class="post-meta-divider">•</span>
+  <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+    <a title="valine" href="/blog/6187894.html#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/blog/6187894.html" itemprop="commentCount"></span></a>
+  </span>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              <span>8.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              <span>21 分钟</span>
+            </span>
+        </div>
+      </header>
+    <div class="post-body" itemprop="articleBody">
+        <p>&emsp;&emsp;比较常见的docker镜像仓库，有docker官方仓库<a href="https://hub.docker.com/" rel="noopener external nofollow noreferrer" target="_blank">https://hub.docker.com/</a>，和阿里云镜像仓库<code>https://cr.console.aliyun.com/cn-hangzhou/instances/images</code>，可以比较方便的拉取镜像或储存容器镜像。而在企业生产中，绝对部分情况我们都是使用企业内部的镜像仓库，来分发部署我们的代码。本文将详细介绍阿里云仓库还有私有云仓库Registry、Harbor的搭建和使用的详细步骤方法。<br><a id="more"></a></p>
+<h2 id="阿里云仓库"><a href="#阿里云仓库" class="headerlink" title="阿里云仓库"></a>阿里云仓库</h2><p>&emsp;&emsp;docker官方仓库配置比较简单，而且大部分是默认配置，且速度不如阿里云镜像仓库速度快，所以我这里就不介绍了，使用方式和阿里云容器镜像仓库差不多类似。</p>
+<h3 id="注册账号"><a href="#注册账号" class="headerlink" title="注册账号"></a>注册账号</h3><p>&emsp;&emsp;使用阿里云仓库服务首先要注册阿里云账号，支付宝也可以登陆，比较快捷。点击上面的网址登陆即可。<br><img src="https://img-blog.csdnimg.cn/20191207213751920.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h3 id="创建仓库"><a href="#创建仓库" class="headerlink" title="创建仓库"></a>创建仓库</h3><p>&emsp;&emsp;先创建一个命名空间，这相当于每个人独立的url，可以以代码类别或者性质命名创建（也可以凭个人喜好），每个账号只能创建5个命名空间，不过也够用了。<br>&emsp;&emsp;然后创建镜像仓库。<br><img src="https://img-blog.csdnimg.cn/2019120721442027.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;地域选择离自己比较近的地域，这样延迟会稍微低一些，选择已创建的命名空间，仓库名的命名一般是服务名或者软件名。公开或者私有看个人请款选择。</p>
+<h3 id="上传镜像"><a href="#上传镜像" class="headerlink" title="上传镜像"></a>上传镜像</h3><p>&emsp;&emsp;有了仓库之后，我们就可以上传镜像了。</p>
+<h4 id="打标签"><a href="#打标签" class="headerlink" title="打标签"></a>打标签</h4><p>&emsp;&emsp;要上传镜像，第一步，要先重新打标签，将阿里云的仓库源的地址，仓库名，以及版本号重新打标签，生成新镜像。例如对已有的haproxy镜像重新打标签，因为我选择的是北京节点，所以打标命令如下：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker tag haproxy-base:v1 registry<span class="selector-class">.cn-beijing</span><span class="selector-class">.aliyuncs</span><span class="selector-class">.com</span>/【命名空间名称】/【仓库名】:【版本号】</span><br></pre></td></tr></table></figure></p>
+<h4 id="登陆"><a href="#登陆" class="headerlink" title="登陆"></a>登陆</h4><p>&emsp;&emsp;想上传或者下载镜像一般都需要授权才可以，这就要求我们要用有权限的帐号登陆，才可以上传镜像或者下载镜像。<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">root<span class="variable">@DockerUbuntu</span><span class="symbol">:/opt/dockerfile/web/haproxy/</span><span class="number">2.0</span>.<span class="number">5</span><span class="comment"># docker login --username=【账号名】 registry.cn-beijing.aliyuncs.com</span></span><br><span class="line"><span class="symbol">Password:</span> </span><br><span class="line">WARNING! Your password will be stored unencrypted <span class="keyword">in</span> /root/.docker/config.json.</span><br><span class="line">Configure a credential helper to remove this warning. See</span><br><span class="line"><span class="symbol">https:</span>/<span class="regexp">/docs.docker.com/engine</span><span class="regexp">/reference/commandline</span><span class="regexp">/login/</span><span class="comment">#credentials-store</span></span><br><span class="line"></span><br><span class="line">Login Succeeded</span><br><span class="line">root<span class="variable">@DockerUbuntu</span><span class="symbol">:/opt/dockerfile/web/haproxy/</span><span class="number">2.0</span>.<span class="number">5</span><span class="comment">#</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="上传"><a href="#上传" class="headerlink" title="上传"></a>上传</h4><p>&emsp;&emsp;用<code>docker images</code>可以查看所有的镜像，选择已经打了阿里云网址的标签的镜像上传就可以了<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">root<span class="meta">@DockerUbuntu</span>:<span class="regexp">/opt/</span>dockerfile<span class="regexp">/web/</span>haproxy<span class="regexp">/2.0.5# docker push registry.cn-beijing.aliyuncs.com/</span>【命名空间名称】/【仓库名】:【版本号】</span><br><span class="line">The push refers to repository [registry.cn-beijing.aliyuncs.com<span class="regexp">/命名空间名/</span>仓库名]</span><br><span class="line"><span class="number">0</span><span class="string">ec88a00d427:</span> Pushed </span><br><span class="line"><span class="number">6</span><span class="string">a6e6f03a1a5:</span> Pushed </span><br><span class="line"><span class="number">965</span><span class="string">bdb9c5299:</span> Pushed </span><br><span class="line"><span class="string">a1d450e33837:</span> Pushed </span><br><span class="line"><span class="number">837</span><span class="string">dac687863:</span> Pushed </span><br><span class="line"><span class="string">b39d6a9ec3e2:</span> Pushed </span><br><span class="line"><span class="number">1e7</span><span class="string">fbf47b8df:</span> Pushed </span><br><span class="line"><span class="string">dc298319f184:</span> Pushed </span><br><span class="line"><span class="string">e4809dffd3aa:</span> Pushed </span><br><span class="line"><span class="string">b3cdf76b6336:</span> Pushed </span><br><span class="line"><span class="number">2</span><span class="string">fc5c4732662:</span> Pushed </span><br><span class="line"><span class="number">2</span><span class="string">d03b9db6c3f:</span> Pushed </span><br><span class="line"><span class="number">89169</span><span class="string">d87dbe2:</span> Pushed </span><br><span class="line"><span class="string">haproxy:</span> <span class="string">digest:</span> <span class="string">sha256:</span>f0b4157cd18498e4bc373e333e4fb0b85a65d00e03de2d65015b0d0da9099af6 <span class="string">size:</span> <span class="number">3049</span></span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;这时就上传成功了</p>
+<h4 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h4><p>&emsp;&emsp;其他主机登陆成功之后，通过拉取命令就可以从阿里云端下载镜像了。<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@DockerCentOS ~]# docker pull registry.<span class="keyword">cn</span>-beijing.aliyuncs.<span class="keyword">com</span>/【命名空间名称】/【仓库名】:【版本号】</span><br><span class="line">haproxy: Pulling from xxxxxxxxxx/web</span><br><span class="line">ac9208207ad<span class="variable">a:</span> Already <span class="built_in">exists</span> </span><br><span class="line"><span class="number">75</span>c124fe932<span class="variable">b:</span> Pull <span class="built_in">complete</span> </span><br><span class="line"><span class="number">9</span>ef7eb04bb69: Pull <span class="built_in">complete</span> </span><br><span class="line">c5f97c472240: Pull <span class="built_in">complete</span> </span><br><span class="line"><span class="number">9</span>dc49af65399: Pull <span class="built_in">complete</span> </span><br><span class="line">a745615abdb<span class="variable">a:</span> Pull <span class="built_in">complete</span> </span><br><span class="line">ddcf37c0f462: Pull <span class="built_in">complete</span> </span><br><span class="line"><span class="number">0</span>c406d186167: Pull <span class="built_in">complete</span> </span><br><span class="line"><span class="number">246</span>fafa1cb32: Pull <span class="built_in">complete</span> </span><br><span class="line"><span class="number">057</span>e62247ad8: Pull <span class="built_in">complete</span> </span><br><span class="line"><span class="number">770</span>d7edff222: Pull <span class="built_in">complete</span> </span><br><span class="line">b4064e1ed3ec: Pull <span class="built_in">complete</span> </span><br><span class="line">d0a103ae1f19: Pull <span class="built_in">complete</span> </span><br><span class="line">Diges<span class="variable">t:</span> <span class="built_in">sha256</span>:f0b4157cd18498e4bc373e333e4fb0b85a65d00e03de2d65015b0d0da9099af6</span><br><span class="line">Statu<span class="variable">s:</span> Downloaded newer image <span class="keyword">for</span> registry.<span class="keyword">cn</span>-beijing.aliyuncs.<span class="keyword">com</span>/xxxxxxxxxx/we<span class="variable">b:haproxy</span></span><br><span class="line">registry.<span class="keyword">cn</span>-beijing.aliyuncs.<span class="keyword">com</span>/xxxxxxxxxx/we<span class="variable">b:haproxy</span></span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;这时就可以在<code>docker images</code>的镜像列表中看到刚刚拉取的镜像了。</p>
+<h2 id="搭建私有仓库"><a href="#搭建私有仓库" class="headerlink" title="搭建私有仓库"></a>搭建私有仓库</h2><p>&emsp;&emsp;阿里云镜像仓库虽然很方便，但是在生产环境中，每次都从云端拉取或者上传至云端仓库，太消耗企业带宽，有时候数据繁忙的时候，很有可能会堵塞业务，而且速度也较慢。所以企业中都会基于内部局域网搭建企业内部使用的私有仓库。一般搭建私有仓库有两种解决方案，一个是docker自带的Docker Registry，还有就是由vmware公司开源的harbor。</p>
+<h3 id="Docker-Registry"><a href="#Docker-Registry" class="headerlink" title="Docker Registry"></a>Docker Registry</h3><p>&emsp;&emsp;Docker Registry 作为 Docker 的核心组件之一负责镜像内容的存储与分发， 客户端的 docker pull 以及 push 命令都将直接与 registry 进行交互,最初版本的 registry由Python实现,由于设计初期在安全性， 性能以及API的设计上有着诸多的缺陷，该版本在 0.9 之后停止了开发，由新的项目 distribution（新的 docker register 被称为 Distribution）来重新设计并开发下一代 registry，新的项目由 go 语言开发，所有的 API， 底层存储方式， 系统架构都进行了全面的重新设计已解决上一代registry 中存在的问题， 2016 年 4 月份 rgistry 2.0 正式发布， docker 1.6 版本开始支持 registry 2.0，而八月份随着 docker 1.8 发布， docker hub 正式启用 2.1 版本registry 全面替代之前版本 registry，新版 registry 对镜像存储格式进行了重新设计并和旧版不兼容， docker 1.5 和之前的版本无法读取 2.0 的镜像， 另外， Registry2.4 版本之后支持了回收站机制，也就是可以删除镜像了，在 2.4 版本之前是无法支持删除镜像的，所以如果你要使用最好是大于 Registry 2.4 版本的。<br>&emsp;&emsp;Docker Registry的优势就是比较小（25M），但是功能表比较简单。</p>
+<h4 id="下载-docker-registry-镜像"><a href="#下载-docker-registry-镜像" class="headerlink" title="下载 docker registry 镜像"></a>下载 docker registry 镜像</h4><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@DockerCentOS ~]# docker pull registry</span><br><span class="line">Using<span class="built_in"> default </span>tag: latest</span><br><span class="line">latest: Pulling <span class="keyword">from</span> library/registry</span><br><span class="line">c87736221ed0: Pull complete </span><br><span class="line">1cc8e0bb44df: Pull complete </span><br><span class="line">54d33bcb37f5: Pull complete </span><br><span class="line">e8afc091c171: Pull complete </span><br><span class="line">b4541f6d3db6: Pull complete </span><br><span class="line">Digest: sha256:8004747f1e8cd820a148fb7499d71a76d45ff66bac6a29129bfdbfdc0154d146</span><br><span class="line">Status: Downloaded newer image <span class="keyword">for</span> registry:latest</span><br><span class="line">docker.io/library/registry:latest</span><br></pre></td></tr></table></figure>
+<h4 id="搭建单机仓库"><a href="#搭建单机仓库" class="headerlink" title="搭建单机仓库"></a>搭建单机仓库</h4><p>&emsp;&emsp;先创建授权使用目录<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -<span class="selector-tag">p</span> /docker/auth</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;创建一个用户并创建密码文件<br><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> <span class="string">/docker</span></span><br><span class="line">docker run <span class="params">--entrypoint</span> htpasswd registry -Bbn Mice 123456 > auth/htpasswd <span class="comment">#创建一个用户并生成密码</span></span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;验证用户名密码<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@DockerCentOS</span> docker]<span class="meta"># cat auth/htpasswd</span></span><br><span class="line">Mice:$2y$05$XqNS4BH3gkxodR9MQyhnIuL19uT4wfa6MjUgXvJUYuo0T0o0J8Tzy</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;从registry镜像中启动 docker registry,指定容器名称为<code>registry1</code>，挂载本地/docker/auth目录至容器的/auth目录，传递账号密码变量至容器。<br><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 5000:5000 --restart=always \</span><br><span class="line">-<span class="ruby">-name registry1 \</span></span><br><span class="line"><span class="ruby">-v /docker/<span class="symbol">auth:</span>/auth \</span></span><br><span class="line"><span class="ruby">-e <span class="string">"REGISTRY_AUTH=htpasswd"</span> \</span></span><br><span class="line"><span class="ruby">-e <span class="string">"REGISTRY_AUTH_HTPASSWD_REALM=Registry Realm"</span> \</span></span><br><span class="line"><span class="ruby">-e REGISTRY_AUTH_HTPASSWD_PATH=<span class="regexp">/auth/htpasswd</span>\</span></span><br><span class="line"><span class="ruby"> registry</span></span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;此时如果用我们创建的用户名密码尝试登陆了，记得IP或者域名后面要加<strong>5000端口</strong>，否则会报<strong>502</strong>错误。<br><figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@DockerUbuntu19:~# docker login 192.168.32.20</span><br><span class="line">Username: Mice</span><br><span class="line">Password: </span><br><span class="line"><span class="keyword">Error </span>response from daemon: login attempt to http://192.168.32.20/v2/ failed with status: 502 Bad Gateway</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;不过很有可能当你加上5000端口，可能还会有报错。ヾ(≧O≦)〃嗷~<br><figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@DockerUbuntu19:~# docker login 192.168.32.20:5000</span><br><span class="line">Username: Mice</span><br><span class="line">Password: </span><br><span class="line"><span class="keyword">Error </span>response from daemon: Get https://192.168.32.20:5000/v2/: http: server gave HTTP response to HTTPS client</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;这是因为我们每一个docker主机要设置允许<code>insecure-registries</code>，加上我们registry仓库的IP或者域名。<br>&emsp;&emsp;同样，可以修改<code>/lib/systemd/system/docker.service</code>启动脚本文件，或者<code>/etc/docker/daemon.json</code>文件，推荐修改<code>/etc/docker/daemon.json</code>文件。<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"registry-mirrors"</span>: [<span class="string">"https://360k4x9i.mirror.aliyuncs.com"</span>],</span><br><span class="line">  <span class="attr">"insecure-registries"</span>: [<span class="string">"192.168.32.19"</span>,<span class="string">"DockerCentOS20:5000"</span>],</span><br><span class="line">  <span class="attr">"bip"</span>: <span class="string">"10.20.0.1/24"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;然后重启docker服务,此时再尝试登陆，就回提示登陆成功。<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root<span class="variable">@DockerUbuntu19</span><span class="symbol">:~</span><span class="comment"># docker login DockerCentOS20:5000</span></span><br><span class="line"><span class="symbol">Username:</span> Mice</span><br><span class="line"><span class="symbol">Password:</span> </span><br><span class="line">WARNING! Your password will be stored unencrypted <span class="keyword">in</span> /root/.docker/config.json.</span><br><span class="line">Configure a credential helper to remove this warning. See</span><br><span class="line"><span class="symbol">https:</span>/<span class="regexp">/docs.docker.com/engine</span><span class="regexp">/reference/commandline</span><span class="regexp">/login/</span><span class="comment">#credentials-store</span></span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;之后就与阿里云的镜像仓库使用方法相同了，不过速度上会快很多（毕竟内网），可以如果要上传镜像至regist仓库，先打好标签就可以了，下载写明下载仓库源，也就可以正常下载了。ヾ(=ﾟ･ﾟ=)ﾉ喵♪</p>
+<h3 id="Harbor"><a href="#Harbor" class="headerlink" title="Harbor"></a>Harbor</h3><p>&emsp;&emsp;Harbor是一个用于存储和分发Docker镜像的企业级Registry服务器， 由vmware开源，其通过添加一些企业必需的功能特性，例如安全、标识和管理等， 扩展了开源 Docker Distribution。作为一个企业级私有Registry服务器，Harbor 提供了更好的性能和安全。提升用户使用Registry构建和运行环境传输镜像的效率。Harbor支持安装在多个Registry节点的镜像资源复制， 镜像全部保存在私有Registry中，确保数据和知识产权在公司内部网络中管控， 另外，Harbor也提供了高级的安全特性，诸如用户管理，访问控制和活动审计等 ，所以企业生产中，我们更多会选择Harbor。</p>
+<h4 id="下载harbor安装包"><a href="#下载harbor安装包" class="headerlink" title="下载harbor安装包"></a>下载harbor安装包</h4><p>&emsp;&emsp;下载地址： <a href="https://github.com/vmware/harbor/releases" rel="noopener external nofollow noreferrer" target="_blank">https://github.com/vmware/harbor/releases</a><br>&emsp;&emsp;安装文档：<a href="https://github.com/vmware/harbor/blob/master/docs/installation_guide.md" rel="noopener external nofollow noreferrer" target="_blank">https://github.com/vmware/harbor/blob/master/docs/installation_guide.md</a><br>&emsp;&emsp;本次以harbor的1.75版本为例，演示harbor的安装过程。<br>&emsp;&emsp;下载离线包，并解压。<br><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/src</span><br><span class="line">wget https://storage.googleapis.com/harbor-releases/release-<span class="number">1.7</span><span class="meta">.0</span>/harbor-offline-installer-v1<span class="meta">.7</span><span class="meta">.5</span>.tgz</span><br><span class="line">tar xvf harbor-offline-installer-v1<span class="meta">.7</span><span class="meta">.5</span>.tgz</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;也可以下载在线安装包，但里面没有镜像，之后还要去拉取镜像，不适合生产环境。</p>
+<h4 id="安装docker-compose"><a href="#安装docker-compose" class="headerlink" title="安装docker-compose"></a>安装docker-compose</h4><p>&emsp;&emsp;Harbor是需要使用docker编排工具docker-compose安装，docker-compose我们之后会专门介绍。而且对docker-compose版本是有要求的，可以查看上面的官方文档链接查看确切版本。<br><img src="https://img-blog.csdnimg.cn/20191208220914881.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="Harbor要求"><br>&emsp;&emsp;而如果使用包管理工具yum或者apt直接安装的docker-compose可能版本会比较低，我们这里采用python包管理工具<code>python-pip</code>来安装<code>docker-compose</code>。<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt <span class="keyword">install</span> python-pip -y</span><br><span class="line">pip <span class="keyword">install</span> docker-compose</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;然后可以通过命令<code>docker compose -v</code>看到docker-compose版本已经是最新稳定版1.25版本了。<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root<span class="variable">@DockerUbuntu19</span><span class="symbol">:/usr/local/src</span><span class="comment"># docker-compose -v</span></span><br><span class="line">docker-compose version <span class="number">1.25</span>.<span class="number">0</span>, build b42d419</span><br></pre></td></tr></table></figure></p>
+<h4 id="安装Harbor"><a href="#安装Harbor" class="headerlink" title="安装Harbor"></a>安装Harbor</h4><p>&emsp;&emsp;我们习惯于将源码包放在<code>/usr/local/src</code>下，而将主程序放在<code>/usr/local/</code>目录中，所以我们可以将harbor目录的的路径改为<code>/usr/local/harbor</code>，可以通过<code>mv</code>命令，也可以通过软链接方式实现<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -sv <span class="regexp">/usr/</span>local<span class="regexp">/src/</span>harbor <span class="regexp">/usr/</span>local<span class="regexp">/</span></span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;然后修改配置文件<code>harbor.cfg</code><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/harbor</span><br><span class="line">vim harbor.cfg</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;修改其中主机名(改为IP或者域名)，管理员登录密码，及邮箱即可。<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">hostname</span> = <span class="number">192.168</span>.<span class="number">32.19</span></span><br><span class="line"><span class="attr">email_identity</span> = harbor</span><br><span class="line"><span class="attr">email_server</span> = smtp.<span class="number">163</span>.com</span><br><span class="line"><span class="attr">email_server_port</span> = <span class="number">25</span></span><br><span class="line"><span class="attr">email_username</span> = XXXXXXXXX@<span class="number">163</span>.com</span><br><span class="line"><span class="attr">email_password</span> = XXXXXXXXXX</span><br><span class="line"><span class="attr">email_from</span> = admin <XXXXXXXX@<span class="number">163</span>.com></span><br><span class="line"><span class="attr">harbor_admin_password</span> = XXXXXXXXXXXXX</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;然后更新配置文件中的环境变量到安装文件中,忘记更新环境变量会提示找不到环境变量文件<code>ERROR: Couldn&#39;t find env file: /usr/local/src/harbor/common/config/core/env</code>。<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./<span class="built_in">prepare</span></span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;此时就可以执行命令,来创建并安装Harbor了。<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">docker-compose up -d</span></span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;或者执行官方脚本（两个都可以）<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./<span class="keyword">install</span>.sh</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;这时候就可以通过浏览器访问我们刚刚搭建的harbor仓库了，至此企业私有仓库就算是搭建好了。<br><img src="https://img-blog.csdnimg.cn/2019120910105297.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;管理员用户名为admin，密码为我们之前在配置文件中修改的<code>harbor_admin_password</code>。<br>&emsp;&emsp;后期如果需要修改配置文件信息，需要先停止harbor，然后修改信息后，更新配置文件信息至harbor服务，之后再试用<code>docker-compose up -d</code>启动harbor服务即可,流程如下。<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> /usr/local/harbor</span><br><span class="line">docker-compose <span class="keyword">stop</span></span><br><span class="line"><span class="keyword">vim</span> harbor.cfg</span><br><span class="line">./prepare</span><br><span class="line">docker-compose <span class="keyword">up</span> -d</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://img-blog.csdnimg.cn/20191209101117514.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">&emsp;&emsp;推送流程与使用其他云镜像仓库相同，先打标签,开头加上ip/仓库名，然后直接推送即可。</p>
+    </div>
+          <div class="post-tags">
+              <a href="/tags/Docker/" rel="tag"><i class="fa fa-tag">Docker</i></a>
+              <a href="/tags/容器/" rel="tag"><i class="fa fa-tag">容器</i></a>
+              <a href="/tags/企业级应用/" rel="tag"><i class="fa fa-tag">企业级应用</i></a>
+              <a href="/tags/镜像仓库/" rel="tag"><i class="fa fa-tag">镜像仓库</i></a>
+          </div>
+    <div style="text-align:center;color: #ccc;font-size:14px;">------------------------------- The End -------------------------------</div>
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+        <div id="reward-container">
+  <div>It's very nice of you to support me.</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById('qr'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      <div style="display: inline-block">
+        <img src="/images/wechat-pay.png" alt="Hechao 微信支付">
+        <p>微信支付</p>
+      </div>
+  </div>
+</div>
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Hechao</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://hewanyue.com/blog/6187894.html" title="Docker（五）——Docker镜像仓库">https://hewanyue.com/blog/6187894.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+</div>
+<div class="note info" style="background-color: #eff8f0;
+    border-left: 3px solid #255188;
+    opacity: 0.85;
+    padding-left: 11px;
+    padding-bottom: 1px;">
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts" style="margin-top: 10px;
+    margin-bottom: 10px;">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/5c39f4ef.html" rel="bookmark">Docker（二）——基础命令详解</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/ddd838e7.html" rel="bookmark">Docker（三）——镜像制作</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/eaa1ac6e.html" rel="bookmark">Docker（一）——基础概念及部署</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/7e3785f.html" rel="bookmark">Docker（四）——容器跨主机网络配置</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/2c6b894f.html" rel="bookmark">OpenVPN的搭建</a></div>
+    </li>
+  </ul>
+</div>
+      <footer class="post-footer">
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/blog/7e3785f.html" rel="next" title="Docker（四）——容器跨主机网络配置">
+                  <i class="fa fa-chevron-left"></i> Docker（四）——容器跨主机网络配置
+                </a>
+            </div>
+            <span class="post-nav-divider"></span>
+            <div class="post-nav-prev post-nav-item">
+            </div>
+          </div>
+      </footer>
+  </div>
+  </article>
+  </div>
+          </div>
+    <div class="comments" id="comments"></div>
+        </div>
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#阿里云仓库"><span class="nav-number">1.</span> <span class="nav-text">阿里云仓库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#注册账号"><span class="nav-number">1.1.</span> <span class="nav-text">注册账号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建仓库"><span class="nav-number">1.2.</span> <span class="nav-text">创建仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#上传镜像"><span class="nav-number">1.3.</span> <span class="nav-text">上传镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#打标签"><span class="nav-number">1.3.1.</span> <span class="nav-text">打标签</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#登陆"><span class="nav-number">1.3.2.</span> <span class="nav-text">登陆</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#上传"><span class="nav-number">1.3.3.</span> <span class="nav-text">上传</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#拉取镜像"><span class="nav-number">1.3.4.</span> <span class="nav-text">拉取镜像</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建私有仓库"><span class="nav-number">2.</span> <span class="nav-text">搭建私有仓库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker-Registry"><span class="nav-number">2.1.</span> <span class="nav-text">Docker Registry</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#下载-docker-registry-镜像"><span class="nav-number">2.1.1.</span> <span class="nav-text">下载 docker registry 镜像</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#搭建单机仓库"><span class="nav-number">2.1.2.</span> <span class="nav-text">搭建单机仓库</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Harbor"><span class="nav-number">2.2.</span> <span class="nav-text">Harbor</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#下载harbor安装包"><span class="nav-number">2.2.1.</span> <span class="nav-text">下载harbor安装包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装docker-compose"><span class="nav-number">2.2.2.</span> <span class="nav-text">安装docker-compose</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装Harbor"><span class="nav-number">2.2.3.</span> <span class="nav-text">安装Harbor</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/touxiang.gif"
+      alt="Hechao">
+  <p class="site-author-name" itemprop="name">Hechao</p>
+  <div class="site-description" itemprop="description">BOHC is just a blog of hechao.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wudihechao" title="GitHub &rarr; https://github.com/wudihechao" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wudihechao@163.com" title="E-Mail &rarr; mailto:wudihechao@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/1050367191" title="Weibo &rarr; https://weibo.com/u/1050367191" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-weibo"></i></a>
+      </span>
+  </div>
+    <div class="links-of-blogroll motion-element links-of-blogroll-block">
+      <div class="links-of-blogroll-title" style="padding-left: 10px;">
+        <!-- modify icon to fire by szw -->
+        <i class="fa fa-history fa-" aria-hidden="true"></i>
+        近期文章
+      </div>
+      <ul class="links-of-blogroll-list" style="padding-left: 30px;">
+          <li>
+            <a href="/blog/6187894.html" title="Docker（五）——Docker镜像仓库" >Docker（五）——Docker镜像仓库</a>
+          </li>
+          <li>
+            <a href="/blog/7e3785f.html" title="Docker（四）——容器跨主机网络配置" >Docker（四）——容器跨主机网络配置</a>
+          </li>
+          <li>
+            <a href="/blog/ddd838e7.html" title="Docker（三）——镜像制作" >Docker（三）——镜像制作</a>
+          </li>
+          <li>
+            <a href="/blog/5c39f4ef.html" title="Docker（二）——基础命令详解" >Docker（二）——基础命令详解</a>
+          </li>
+          <li>
+            <a href="/blog/eaa1ac6e.html" title="Docker（一）——基础概念及部署" >Docker（一）——基础概念及部署</a>
+          </li>
+      </ul>
+    </div>
+<div id="days"></div>
+<script>
+function show_date_time(){
+window.setTimeout("show_date_time()", 1000);
+BirthDay=new Date("10/01/2019 00:00:00");
+today=new Date();
+timeold=(today.getTime()-BirthDay.getTime());
+sectimeold=timeold/1000
+secondsold=Math.floor(sectimeold);
+msPerDay=24*60*60*1000
+e_daysold=timeold/msPerDay
+daysold=Math.floor(e_daysold);
+e_hrsold=(e_daysold-daysold)*24;
+hrsold=setzero(Math.floor(e_hrsold));
+e_minsold=(e_hrsold-hrsold)*60;
+minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+seconds=setzero(Math.floor((e_minsold-minsold)*60));
+document.getElementById('days').innerHTML="已运行"+daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒";
+}
+function setzero(i){
+if (i<10)
+{i="0" + i};
+return i;
+}
+show_date_time();
+</script>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://hewanyue.com/" class="cc-opacity"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+      </div>
+ </aside>
+  <div id="sidebar-dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user-circle-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hechao</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">325k</span>
+</div>
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+      </div>
+    </footer>
+  </div>
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/muse.js?v=7.4.0"></script>
+<script src="/js/next-boot.js?v=7.4.0"></script><script src="/js/bookmark.js?v=7.4.0"></script>
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 21895,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+  <script src="/js/local-search.js?v=7.4.0"></script>
+<script>
+NexT.utils.getScript('//hewanyue.com/js/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail','link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    app_id: 'AVtPtVan0Ky5u33XhUzJlFKp-gzGzoHsz',
+    app_key: 'nx3XTnRJmaMQR3aLWYiigkgJ',
+    placeholder: 'Just Say Something~!',
+    avatar: 'mp',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: 'zh-cn' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
+</body>
+</html>
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>

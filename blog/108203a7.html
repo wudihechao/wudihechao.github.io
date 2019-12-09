@@ -45,7 +45,7 @@
   };
 </script>
   <meta name="description" content="&emsp;&emsp; MHA(master high   availability)目前是MySQL高可用方面是一个相对成熟的解决方案。在切换过程中，mha能做到0-30s内自动完成数据库的切换，并且在切换过程中最大的保持数据的一致性，以达到真正意义上的高可用 &emsp;&emsp; MHA的组成： &emsp;&emsp; MHA Manager(管理节点)和MHA Node(数据节点)。">
-<meta name="keywords" content="多实例,mysql,MHA,高可用,mariadb">
+<meta name="keywords" content="MHA,高可用,mysql,mariadb,多实例">
 <meta property="og:type" content="article">
 <meta property="og:title" content="myql数据库MHA实现高可用（多实例间实现）">
 <meta property="og:url" content="https://hewanyue.com/blog/108203a7.html">
@@ -199,13 +199,13 @@
     <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i>关于</a>
   </li>
         <li class="menu-item menu-item-tags">
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">65</span></a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">69</span></a>
   </li>
         <li class="menu-item menu-item-categories">
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">10</span></a>
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">8</span></a>
   </li>
         <li class="menu-item menu-item-archives">
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">32</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">36</span></a>
   </li>
         <li class="menu-item menu-item-friends">
     <a href="/friends/" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i>友链</a>
@@ -320,11 +320,11 @@
 <p>&emsp;&emsp; 在主数据库上将mysql进程杀掉后，MHA进程自动结束。<br><img src="https://img-blog.csdnimg.cn/20190927123356815.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp; 在3307端口数据库上查询，已经没有从节点信息了。<img src="https://img-blog.csdnimg.cn/20190927124323317.png" alt="在这里插入图片描述"><br>&emsp;&emsp; 在3308端口数据库以及3309端口数据上显示，主数据库已变为更为3307端口数据库，说明转换主从结构成功！<br><img src="https://img-blog.csdnimg.cn/20190927124330490.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp; PS：因为几个数据库都是源码编译安装，数据库路径和二进制文件储存位置都做出了调整，与默认位置不同，而yum安装的MHAmaster中如果配置文件中不写明master_binlog_dir的位置，则会默认去<code>/usr/bin/msyql/</code>目录下找主机二进制文件（当然，mysql数据库也是yum安装的可忽略这些配置，一切默认就好，而配置文件中添加server主机时，如果端口号不是默认3306，一定要记得写明port端口号，如本文中多实例用的不同端口，标记清楚即可。）</p>
     </div>
           <div class="post-tags">
-              <a href="/tags/多实例/" rel="tag"><i class="fa fa-tag">多实例</i></a>
-              <a href="/tags/mysql/" rel="tag"><i class="fa fa-tag">mysql</i></a>
               <a href="/tags/MHA/" rel="tag"><i class="fa fa-tag">MHA</i></a>
               <a href="/tags/高可用/" rel="tag"><i class="fa fa-tag">高可用</i></a>
+              <a href="/tags/mysql/" rel="tag"><i class="fa fa-tag">mysql</i></a>
               <a href="/tags/mariadb/" rel="tag"><i class="fa fa-tag">mariadb</i></a>
+              <a href="/tags/多实例/" rel="tag"><i class="fa fa-tag">多实例</i></a>
           </div>
     <div style="text-align:center;color: #ccc;font-size:14px;">------------------------------- The End -------------------------------</div>
   <div class="post-widgets">
@@ -368,16 +368,16 @@
       <div class="popular-posts-title"><a href="/blog/d006fe9f.html" rel="bookmark">mysql多实例实现主从级联复制及读写分离</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/4f0efae7.html" rel="bookmark">关于mariadb10.4.8二进制安装及源码编译后设置密码无效的一些发现</a></div>
-    </li>
-    <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/blog/b124800c.html" rel="bookmark">二进制安装及源码编译安装mariadb数据库</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/14b8983d.html" rel="bookmark">redis高可用配置</a></div>
+      <div class="popular-posts-title"><a href="/blog/4f0efae7.html" rel="bookmark">关于mariadb10.4.8二进制安装及源码编译后设置密码无效的一些发现</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/blog/f5daec50.html" rel="bookmark">企业级应用：负载均衡层——haproxy(二)</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/14b8983d.html" rel="bookmark">redis高可用配置</a></div>
     </li>
   </ul>
 </div>
@@ -435,19 +435,19 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">65</span>
+        <span class="site-state-item-count">69</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -477,19 +477,19 @@
       </div>
       <ul class="links-of-blogroll-list" style="padding-left: 30px;">
           <li>
+            <a href="/blog/6187894.html" title="Docker（五）——Docker镜像仓库" >Docker（五）——Docker镜像仓库</a>
+          </li>
+          <li>
+            <a href="/blog/7e3785f.html" title="Docker（四）——容器跨主机网络配置" >Docker（四）——容器跨主机网络配置</a>
+          </li>
+          <li>
+            <a href="/blog/ddd838e7.html" title="Docker（三）——镜像制作" >Docker（三）——镜像制作</a>
+          </li>
+          <li>
+            <a href="/blog/5c39f4ef.html" title="Docker（二）——基础命令详解" >Docker（二）——基础命令详解</a>
+          </li>
+          <li>
             <a href="/blog/eaa1ac6e.html" title="Docker（一）——基础概念及部署" >Docker（一）——基础概念及部署</a>
-          </li>
-          <li>
-            <a href="/blog/f989902e.html" title="KVM虚拟化" >KVM虚拟化</a>
-          </li>
-          <li>
-            <a href="/blog/2c6b894f.html" title="OpenVPN的搭建" >OpenVPN的搭建</a>
-          </li>
-          <li>
-            <a href="/blog/6254cc16.html" title="MSM实现tomcat集群的session共享" >MSM实现tomcat集群的session共享</a>
-          </li>
-          <li>
-            <a href="/blog/b365780e.html" title="linux上部署与配置tomcat" >linux上部署与配置tomcat</a>
           </li>
       </ul>
     </div>
@@ -538,7 +538,7 @@ show_date_time();
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">293k</span>
+    <span title="站点总字数">325k</span>
 </div>
 <div class="busuanzi-count">
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>

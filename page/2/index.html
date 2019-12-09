@@ -193,13 +193,13 @@
     <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i>关于</a>
   </li>
         <li class="menu-item menu-item-tags">
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">65</span></a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">69</span></a>
   </li>
         <li class="menu-item menu-item-categories">
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">10</span></a>
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">8</span></a>
   </li>
         <li class="menu-item menu-item-archives">
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">32</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">36</span></a>
   </li>
         <li class="menu-item menu-item-friends">
     <a href="/friends/" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i>友链</a>
@@ -245,6 +245,306 @@
   <div id="posts" class="posts-expand">
         <article itemscope itemtype="http://schema.org/Article">
   <div class="post-block home">
+    <link itemprop="mainEntityOfPage" href="https://hewanyue.com/blog/f2c1a89e.html">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hechao">
+      <meta itemprop="description" content="BOHC is just a blog of hechao.">
+      <meta itemprop="image" content="/images/touxiang.gif">
+    </span>
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BOHC!">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+            <a href="/blog/f2c1a89e.html" class="post-title-link" itemprop="url">一键源码编译安装redis</a>
+        </h2>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <time title="创建时间：2019-11-13 11:06:46" itemprop="dateCreated datePublished" datetime="2019-11-13T11:06:46+08:00">2019-11-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/NotOnlySQL/" itemprop="url" rel="index"><span itemprop="name">NotOnlySQL</span></a></span>
+            </span>
+            <span id="/blog/f2c1a89e.html" class="post-meta-item leancloud_visitors" data-flag-title="一键源码编译安装redis" title="阅读次数">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="leancloud-visitors-count"></span>
+              <span>℃</span>
+            </span>
+              <span class="post-meta-divider">•</span>
+  <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+    <a title="valine" href="/blog/f2c1a89e.html#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/blog/f2c1a89e.html" itemprop="commentCount"></span></a>
+  </span>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              <span>7.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              <span>18 分钟</span>
+            </span>
+        </div>
+      </header>
+    <div class="post-body" itemprop="articleBody">
+          <p>&emsp;&emsp;Redis 和 Memcached 是非关系型数据库也称为 NoSQL 数据库， MySQL、 Mariadb、 SQLServer、 PostgreSQL、 Oracle 数据库属于关系型数据(RDBMS, Relational Database Management System)。<br>&emsp;&emsp;Redis(Remote Dictionary Server)在 2009 年发布， 开发者 Salvatore Sanfilippo 是意大利开发者， 他本想为自己的公司开发一个用于替换 MySQL 的产品 Redis， 但是没有想到他把 Redis 开源后大受欢迎，短短几年， Redis 就有了很大的用户群体，目前国内外使用的公司有知乎>网、新浪微博、 GitHub 等。<br>&emsp;&emsp;redis 是一个开源的、 遵循 BSD 协议的、 基于内存的而且目前比较流行的键值数据库(key-value database)，是一个非关系型数据库，redis 提供将内存通过网络远程共享的一种服务，提供类似功能的还有 memcache，但相比 memcache， redis 还提供了易扩展、高性能、 具备数据持久性等功能。<br>&emsp;&emsp;Redis 在高并发、低延迟环境要求比较高的环境使用量非常广泛， 目前 redis 在 DBEngine 月排行榜 <a href="https://db-engines.com/en/ranking" rel="noopener external nofollow noreferrer" target="_blank">https://db-engines.com/en/ranking</a> 中一直比较靠前，而且一直是键值型存储类的首位。<br>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/f2c1a89e.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+    </div>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+      </footer>
+  </div>
+  </article>
+        <article itemscope itemtype="http://schema.org/Article">
+  <div class="post-block home">
+    <link itemprop="mainEntityOfPage" href="https://hewanyue.com/blog/219b1607.html">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hechao">
+      <meta itemprop="description" content="BOHC is just a blog of hechao.">
+      <meta itemprop="image" content="/images/touxiang.gif">
+    </span>
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BOHC!">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+            <a href="/blog/219b1607.html" class="post-title-link" itemprop="url">故障:/etc/fstab中NFS自动挂载失败</a>
+        </h2>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <time title="创建时间：2019-11-11 19:17:33" itemprop="dateCreated datePublished" datetime="2019-11-11T19:17:33+08:00">2019-11-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/故障记录/" itemprop="url" rel="index"><span itemprop="name">故障记录</span></a></span>
+            </span>
+            <span id="/blog/219b1607.html" class="post-meta-item leancloud_visitors" data-flag-title="故障:/etc/fstab中NFS自动挂载失败" title="阅读次数">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="leancloud-visitors-count"></span>
+              <span>℃</span>
+            </span>
+              <span class="post-meta-divider">•</span>
+  <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+    <a title="valine" href="/blog/219b1607.html#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/blog/219b1607.html" itemprop="commentCount"></span></a>
+  </span>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              <span>4.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              <span>12 分钟</span>
+            </span>
+        </div>
+      </header>
+    <div class="post-body" itemprop="articleBody">
+          <p>&emsp;&emsp;之前配置了一个web集群(其实就3个服务器)，想实现数据共享和动静分离，感觉配置分布式存储比较复杂，也没必要，就打算在搭建一个NFS服务器，共享几个目录，挂载在几个web服务器上。<br>&emsp;&emsp;搭建NFS服务过程很顺利，手动挂载也没问题，然后打算将挂载信息写进<code>/etc/fstab</code>配置文件，实现开机自动挂载。<br>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/219b1607.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+    </div>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+      </footer>
+  </div>
+  </article>
+        <article itemscope itemtype="http://schema.org/Article">
+  <div class="post-block home">
+    <link itemprop="mainEntityOfPage" href="https://hewanyue.com/blog/f5daec50.html">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hechao">
+      <meta itemprop="description" content="BOHC is just a blog of hechao.">
+      <meta itemprop="image" content="/images/touxiang.gif">
+    </span>
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BOHC!">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+            <a href="/blog/f5daec50.html" class="post-title-link" itemprop="url">企业级应用：负载均衡层——haproxy(二)</a>
+        </h2>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <time title="创建时间：2019-11-08 15:09:10" itemprop="dateCreated datePublished" datetime="2019-11-08T15:09:10+08:00">2019-11-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/linux进阶/" itemprop="url" rel="index"><span itemprop="name">linux进阶</span></a></span>
+            </span>
+            <span id="/blog/f5daec50.html" class="post-meta-item leancloud_visitors" data-flag-title="企业级应用：负载均衡层——haproxy(二)" title="阅读次数">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="leancloud-visitors-count"></span>
+              <span>℃</span>
+            </span>
+              <span class="post-meta-divider">•</span>
+  <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+    <a title="valine" href="/blog/f5daec50.html#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/blog/f5daec50.html" itemprop="commentCount"></span></a>
+  </span>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              <span>11k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              <span>26 分钟</span>
+            </span>
+        </div>
+      </header>
+    <div class="post-body" itemprop="articleBody">
+          <p>&emsp;&emsp;继续讲解HAProxy的一些进阶配置及用法，包括报文修改，日志配置，压缩功能，后端服务器状态监测及ACL等功能应用。配置环境及配置文件均延续上一篇<a href="https://hewanyue.com/blog/5aeb7732.html">《企业级应用：负载均衡层——haproxy(一)》</a>,有任何疑问可以先看上一篇博客。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/f5daec50.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+    </div>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+      </footer>
+  </div>
+  </article>
+        <article itemscope itemtype="http://schema.org/Article">
+  <div class="post-block home">
+    <link itemprop="mainEntityOfPage" href="https://hewanyue.com/blog/5aeb7732.html">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hechao">
+      <meta itemprop="description" content="BOHC is just a blog of hechao.">
+      <meta itemprop="image" content="/images/touxiang.gif">
+    </span>
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BOHC!">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+            <a href="/blog/5aeb7732.html" class="post-title-link" itemprop="url">企业级应用：负载均衡层——haproxy(一)</a>
+        </h2>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <time title="创建时间：2019-11-04 17:22:26" itemprop="dateCreated datePublished" datetime="2019-11-04T17:22:26+08:00">2019-11-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/linux进阶/" itemprop="url" rel="index"><span itemprop="name">linux进阶</span></a></span>
+            </span>
+            <span id="/blog/5aeb7732.html" class="post-meta-item leancloud_visitors" data-flag-title="企业级应用：负载均衡层——haproxy(一)" title="阅读次数">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="leancloud-visitors-count"></span>
+              <span>℃</span>
+            </span>
+              <span class="post-meta-divider">•</span>
+  <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+    <a title="valine" href="/blog/5aeb7732.html#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/blog/5aeb7732.html" itemprop="commentCount"></span></a>
+  </span>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              <span>25k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              <span>1:01</span>
+            </span>
+        </div>
+      </header>
+    <div class="post-body" itemprop="articleBody">
+          <p>&emsp;&emsp;HAProxy是法国开发者 威利塔罗(Willy Tarreau) 在2000年使用C语言开发的一个开源软件，是一款具备高并发(一万以上)、高性能的TCP>和HTTP负载均衡器，支持基于cookie的持久性，自动故障切换，支持正则表达式及web状态统计。<br>&emsp;&emsp;HAProxy特别适用于那些负载特大的web站点，这些站点通常又需要会话保持或七层处理。HAProxy运行在当前的硬件上，完全可以支持数以万计的并发连接。并且它的运行模式使得它可以很简单安全的整合进您当前的架构中， 同时可以保护你的web服务器不被暴露到网络上。<br>&emsp;&emsp;包括 GitHub、Bitbucket、Stack Overflow、Reddit、Tumblr、Twitter和 Tuenti[7]在内的知名网站，及亚马逊网络服务系统都使用了HAProxy。<br>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/5aeb7732.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+    </div>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+      </footer>
+  </div>
+  </article>
+        <article itemscope itemtype="http://schema.org/Article">
+  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="https://hewanyue.com/blog/5da16ceb.html">
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hechao">
@@ -271,8 +571,6 @@
                 <i class="fa fa-folder-o"></i>
               </span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/故障记录/" itemprop="url" rel="index"><span itemprop="name">故障记录</span></a></span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/故障记录/linux基础/" itemprop="url" rel="index"><span itemprop="name">linux基础</span></a></span>
             </span>
             <span id="/blog/5da16ceb.html" class="post-meta-item leancloud_visitors" data-flag-title="报错：Header V3 RSA_SHA256 Signature, key ID 2f86d6a1_ NOKEY" title="阅读次数">
               <span class="post-meta-divider">•</span>
@@ -695,311 +993,6 @@
       </footer>
   </div>
   </article>
-        <article itemscope itemtype="http://schema.org/Article">
-  <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="https://hewanyue.com/blog/8a189dcf.html">
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Hechao">
-      <meta itemprop="description" content="BOHC is just a blog of hechao.">
-      <meta itemprop="image" content="/images/touxiang.gif">
-    </span>
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="BOHC!">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-            <a href="/blog/8a189dcf.html" class="post-title-link" itemprop="url">自动化运维之Ansible</a>
-        </h2>
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <time title="创建时间：2019-10-07 21:53:40" itemprop="dateCreated datePublished" datetime="2019-10-07T21:53:40+08:00">2019-10-07</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-divider">•</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a></span>
-            </span>
-            <span id="/blog/8a189dcf.html" class="post-meta-item leancloud_visitors" data-flag-title="自动化运维之Ansible" title="阅读次数">
-              <span class="post-meta-divider">•</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="leancloud-visitors-count"></span>
-              <span>℃</span>
-            </span>
-              <span class="post-meta-divider">•</span>
-  <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-    <a title="valine" href="/blog/8a189dcf.html#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/blog/8a189dcf.html" itemprop="commentCount"></span></a>
-  </span>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-divider">•</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-              <span>25k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-divider">•</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-              <span>1:03</span>
-            </span>
-        </div>
-      </header>
-    <div class="post-body" itemprop="articleBody">
-          <p>&emsp;&emsp;ansible是新出现的自动化运维工具，基于Python开发，集合了众多运维工具（puppet、cfengine、chef、func、fabric）的优点，实现了批量系统配置、批量程序部署、批量运行命令等功能。<br>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/8a189dcf.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-    </div>
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-      </footer>
-  </div>
-  </article>
-        <article itemscope itemtype="http://schema.org/Article">
-  <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="https://hewanyue.com/blog/108203a7.html">
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Hechao">
-      <meta itemprop="description" content="BOHC is just a blog of hechao.">
-      <meta itemprop="image" content="/images/touxiang.gif">
-    </span>
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="BOHC!">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-            <a href="/blog/108203a7.html" class="post-title-link" itemprop="url">myql数据库MHA实现高可用（多实例间实现）</a>
-        </h2>
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <time title="创建时间：2019-10-05 09:15:31" itemprop="dateCreated datePublished" datetime="2019-10-05T09:15:31+08:00">2019-10-05</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-divider">•</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/NotOnlySQL/" itemprop="url" rel="index"><span itemprop="name">NotOnlySQL</span></a></span>
-            </span>
-            <span id="/blog/108203a7.html" class="post-meta-item leancloud_visitors" data-flag-title="myql数据库MHA实现高可用（多实例间实现）" title="阅读次数">
-              <span class="post-meta-divider">•</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="leancloud-visitors-count"></span>
-              <span>℃</span>
-            </span>
-              <span class="post-meta-divider">•</span>
-  <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-    <a title="valine" href="/blog/108203a7.html#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/blog/108203a7.html" itemprop="commentCount"></span></a>
-  </span>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-divider">•</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-              <span>11k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-divider">•</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-              <span>28 分钟</span>
-            </span>
-        </div>
-      </header>
-    <div class="post-body" itemprop="articleBody">
-          <p>&emsp;&emsp; MHA(master high   availability)目前是MySQL高可用方面是一个相对成熟的解决方案。在切换过程中，mha能做到0-30s内自动完成数据库的切换，并且在切换过程中最大的保持数据的一致性，以达到真正意义上的高可用</p>
-<p>&emsp;&emsp; MHA的组成：</p>
-<p>&emsp;&emsp; MHA Manager(管理节点)和MHA Node(数据节点)。MHA Manager可以独立部署在一台独立的机器上，管理多个集群，也可以部署在从从库上。</p>
-<p>&emsp;&emsp; 当Master出现故障的时候，它可以自动将最新的数据的Slave提升为新的Master，然后将所有的Slave重新指向新的Master，整个故障转移过程是完全透明的。<br>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/108203a7.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-    </div>
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-      </footer>
-  </div>
-  </article>
-        <article itemscope itemtype="http://schema.org/Article">
-  <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="https://hewanyue.com/blog/d006fe9f.html">
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Hechao">
-      <meta itemprop="description" content="BOHC is just a blog of hechao.">
-      <meta itemprop="image" content="/images/touxiang.gif">
-    </span>
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="BOHC!">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-            <a href="/blog/d006fe9f.html" class="post-title-link" itemprop="url">mysql多实例实现主从级联复制及读写分离</a>
-        </h2>
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <time title="创建时间：2019-09-25 11:21:43" itemprop="dateCreated datePublished" datetime="2019-09-25T11:21:43+08:00">2019-09-25</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-divider">•</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/NotOnlySQL/" itemprop="url" rel="index"><span itemprop="name">NotOnlySQL</span></a></span>
-            </span>
-            <span id="/blog/d006fe9f.html" class="post-meta-item leancloud_visitors" data-flag-title="mysql多实例实现主从级联复制及读写分离" title="阅读次数">
-              <span class="post-meta-divider">•</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="leancloud-visitors-count"></span>
-              <span>℃</span>
-            </span>
-              <span class="post-meta-divider">•</span>
-  <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-    <a title="valine" href="/blog/d006fe9f.html#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/blog/d006fe9f.html" itemprop="commentCount"></span></a>
-  </span>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-divider">•</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-              <span>10k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-divider">•</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-              <span>25 分钟</span>
-            </span>
-        </div>
-      </header>
-    <div class="post-body" itemprop="articleBody">
-          <p>&emsp;&emsp; MySQL多实例就是在一台机器上开启多个不同的服务端口（如：3306,3307），运行多个MySQL服务进程，通过不同的socket监听不同的服>务端口来提供各自的服务,本文基于此，来展示如何实现级联复制和读写分离。<br>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/d006fe9f.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-    </div>
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-      </footer>
-  </div>
-  </article>
-        <article itemscope itemtype="http://schema.org/Article">
-  <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="https://hewanyue.com/blog/4f0efae7.html">
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Hechao">
-      <meta itemprop="description" content="BOHC is just a blog of hechao.">
-      <meta itemprop="image" content="/images/touxiang.gif">
-    </span>
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="BOHC!">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-            <a href="/blog/4f0efae7.html" class="post-title-link" itemprop="url">关于mariadb10.4.8二进制安装及源码编译后设置密码无效的一些发现</a>
-        </h2>
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <time title="创建时间：2019-09-18 19:35:12" itemprop="dateCreated datePublished" datetime="2019-09-18T19:35:12+08:00">2019-09-18</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-divider">•</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/NotOnlySQL/" itemprop="url" rel="index"><span itemprop="name">NotOnlySQL</span></a></span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/NotOnlySQL/故障记录/" itemprop="url" rel="index"><span itemprop="name">故障记录</span></a></span>
-            </span>
-            <span id="/blog/4f0efae7.html" class="post-meta-item leancloud_visitors" data-flag-title="关于mariadb10.4.8二进制安装及源码编译后设置密码无效的一些发现" title="阅读次数">
-              <span class="post-meta-divider">•</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="leancloud-visitors-count"></span>
-              <span>℃</span>
-            </span>
-              <span class="post-meta-divider">•</span>
-  <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-    <a title="valine" href="/blog/4f0efae7.html#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/blog/4f0efae7.html" itemprop="commentCount"></span></a>
-  </span>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-divider">•</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-              <span>6k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-divider">•</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-              <span>15 分钟</span>
-            </span>
-        </div>
-      </header>
-    <div class="post-body" itemprop="articleBody">
-          <p>&emsp;&emsp;之前安装了最新版的mariadb10.4.8后，无论是二进制编译安装还是源码编译安装，设定完密码之后启动mysqld服务，结果都不需要密码就可以登陆进去，无论怎么执行<strong>mysql_secure_installation</strong>数据库初始化脚本或者<strong>mysql_secure_installation</strong>安全加固脚本，进入mysql都无需密码，用命令直接设置密码也无效，都是直接一敲mysql就可以进入数据库了。my.cnf配置文件查看了无数遍，也没发现任何蛛丝马迹。今天终于在无意中查看mysql数据库权限时意外有所收获，写出来与大家分享，让大家少走弯路。<br>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/4f0efae7.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-    </div>
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-      </footer>
-  </div>
-  </article>
   </div>
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
@@ -1039,19 +1032,19 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">65</span>
+        <span class="site-state-item-count">69</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -1081,19 +1074,19 @@
       </div>
       <ul class="links-of-blogroll-list" style="padding-left: 30px;">
           <li>
+            <a href="/blog/6187894.html" title="Docker（五）——Docker镜像仓库" >Docker（五）——Docker镜像仓库</a>
+          </li>
+          <li>
+            <a href="/blog/7e3785f.html" title="Docker（四）——容器跨主机网络配置" >Docker（四）——容器跨主机网络配置</a>
+          </li>
+          <li>
+            <a href="/blog/ddd838e7.html" title="Docker（三）——镜像制作" >Docker（三）——镜像制作</a>
+          </li>
+          <li>
+            <a href="/blog/5c39f4ef.html" title="Docker（二）——基础命令详解" >Docker（二）——基础命令详解</a>
+          </li>
+          <li>
             <a href="/blog/eaa1ac6e.html" title="Docker（一）——基础概念及部署" >Docker（一）——基础概念及部署</a>
-          </li>
-          <li>
-            <a href="/blog/f989902e.html" title="KVM虚拟化" >KVM虚拟化</a>
-          </li>
-          <li>
-            <a href="/blog/2c6b894f.html" title="OpenVPN的搭建" >OpenVPN的搭建</a>
-          </li>
-          <li>
-            <a href="/blog/6254cc16.html" title="MSM实现tomcat集群的session共享" >MSM实现tomcat集群的session共享</a>
-          </li>
-          <li>
-            <a href="/blog/b365780e.html" title="linux上部署与配置tomcat" >linux上部署与配置tomcat</a>
           </li>
       </ul>
     </div>
@@ -1142,7 +1135,7 @@ show_date_time();
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">293k</span>
+    <span title="站点总字数">325k</span>
 </div>
 <div class="busuanzi-count">
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
