@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta name="baidu-site-verification" content="vT6Jf980C0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.ico?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.ico?v=7.4.0">
+  <link rel="alternate" href="/atom.xml" title="BOHC!" type="application/atom+xml">
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":true,"show_result":true,"style":"default"},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":true,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+  <meta name="description" content="&emsp;&emsp;本文使用kubeasz项目基于二进制方式部署和利用ansible-playbook实现自动化部署K8s。">
+<meta name="keywords" content="kubernetes,kubeasz,dashboard">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用kubeasz自动化部署K8s">
+<meta property="og:url" content="https://hewanyue.com/blog/8f374cb8.html">
+<meta property="og:site_name" content="BOHC!">
+<meta property="og:description" content="&emsp;&emsp;本文使用kubeasz项目基于二进制方式部署和利用ansible-playbook实现自动化部署K8s。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191214135719739.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2019-12-18T07:31:50.268Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用kubeasz自动化部署K8s">
+<meta name="twitter:description" content="&emsp;&emsp;本文使用kubeasz项目基于二进制方式部署和利用ansible-playbook实现自动化部署K8s。">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20191214135719739.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
+  <link rel="canonical" href="https://hewanyue.com/blog/8f374cb8">
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+  <title>使用kubeasz自动化部署K8s | BOHC!</title>
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+<script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "https://hm.baidu.com/hm.js?a0d4e217e26da03ea5ca2acc76d543ae";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();</script>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="/dist/APlayer.min.css" class="aplayer-style-marker">
+<script src="/dist/APlayer.min.js" class="aplayer-script-marker"></script>
+</head>
+<body oncontextmenu=self.event.returnValue=false>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+        <div id="aplayer" class="aplayer aplayer-withlist  aplayer-fixed aplayer-narrow" style="position: fixed; z-index: 5; left: 0px; width: 400px;">
+            <pre class="aplayer-lrc-content"></pre>
+        </div>
+        <script>
+          const ap = new APlayer({
+            container: document.getElementById("aplayer"),
+            narrow: false,
+            autoplay: false,
+            listFolded: true,  //播放列表默认折叠
+            mutex: true,  //互斥，阻止多个播放器同时播放，当前播放器播放时暂停其他播放器
+            showlrc: true,
+            lrcType: 3,
+            audio: [
+            {
+              name: "差你一次旅行",
+              artist: "翁大涵",
+              url: "https://hewanyue.com/mp3/chaniyicilvxing.m4a",
+              cover: "https://hewanyue.com/mp3/cover/chaniyicilvxing.jpg",
+              lrc: "https://hewanyue.com/mp3/lrc/chaniyicilvxing.lrc",
+            },
+            {
+              name: "星月神话",
+              artist: "金莎",
+              url: "https://hewanyue.com/mp3/xingyueshenhua.mp3",
+              cover: "https://hewanyue.com/mp3/cover/xingyueshenhua.jpg",
+              lrc: "https://hewanyue.com/mp3/lrc/xingyueshenhua.lrc",
+            },
+            {
+              name: "体面",
+              artist: "于文文",
+              url: "https://hewanyue.com/mp3/timian.mp3",
+              cover: "https://hewanyue.com/mp3/cover/timian.jpg",
+              lrc: "https://hewanyue.com/mp3/lrc/timian.lrc",
+            },
+            {
+              name: "白羊",
+              artist: "徐秉龙&沈以诚",
+              url: "https://hewanyue.com/mp3/baiyang.mp3",
+              cover: "https://hewanyue.com/mp3/cover/baiyang.jpg",
+              lrc: "https://hewanyue.com/mp3/lrc/baiyang.lrc",
+            },
+            {
+              name: "绿色",
+              artist: "陈雪凝",
+              url: "https://hewanyue.com/mp3/lvse.mp3",
+              cover: "https://hewanyue.com/mp3/cover/lvse.jpg",
+              lrc: "https://hewanyue.com/mp3/lrc/lvse.lrc",
+            },
+            {
+              name: "退",
+              artist: "蒋蒋",
+              url: "https://hewanyue.com/mp3/tui.mp3",
+              cover: "https://hewanyue.com/mp3/cover/tui.jpg",
+              lrc: "https://hewanyue.com/mp3/lrc/tui.lrc",
+            },
+            {
+              name: "恋爱循环",
+              artist: "花泽香菜",
+              url: "https://hewanyue.com/mp3/lianaixunhuan.mp3",
+              cover: "https://hewanyue.com/mp3/cover/lianaixunhuan.jpg",
+              lrc: "https://hewanyue.com/mp3/lrc/lianaixunhuan.lrc",
+            }
+          ]
+          });          window.aplayers || (window.aplayers = []);
+          window.aplayers.push(ap);
+        </script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+<a href="https://github.com/wudihechao/" rel="external nofollow noreferrer" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">BOHC!</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">blog of hechao!</h1>
+  </div>
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i>首页</a>
+  </li>
+        <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i>关于</a>
+  </li>
+        <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">74</span></a>
+  </li>
+        <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">7</span></a>
+  </li>
+        <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">38</span></a>
+  </li>
+        <li class="menu-item menu-item-friends">
+    <a href="/friends/" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i>友链</a>
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" rel="external nofollow noreferrer" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>搜索</a>
+      </li>
+  </ul>
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+</div>
+<div class="search-pop-overlay"></div>
+  </div>
+</div>
+    </header>
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a class="book-mark-link book-mark-link-fixed" href="#"></a>
+  <a href="https://github.com/wudihechao" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener external nofollow noreferrer" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://hewanyue.com/blog/8f374cb8.html">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hechao">
+      <meta itemprop="description" content="BOHC is just a blog of hechao.">
+      <meta itemprop="image" content="/images/touxiang.gif">
+    </span>
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BOHC!">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">使用kubeasz自动化部署K8s
+        </h2>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <time title="创建时间：2019-12-18 15:21:12" itemprop="dateCreated datePublished" datetime="2019-12-18T15:21:12+08:00">2019-12-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Cloud/" itemprop="url" rel="index"><span itemprop="name">Cloud</span></a></span>
+            </span>
+            <span id="/blog/8f374cb8.html" class="post-meta-item leancloud_visitors" data-flag-title="使用kubeasz自动化部署K8s" title="阅读次数">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="leancloud-visitors-count"></span>
+              <span>℃</span>
+            </span>
+              <span class="post-meta-divider">•</span>
+  <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+    <a title="valine" href="/blog/8f374cb8.html#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/blog/8f374cb8.html" itemprop="commentCount"></span></a>
+  </span>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              <span>12k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              <span>31 分钟</span>
+            </span>
+        </div>
+      </header>
+    <div class="post-body" itemprop="articleBody">
+        <p>&emsp;&emsp;本文使用kubeasz项目基于二进制方式部署和利用ansible-playbook实现自动化部署K8s。<br><a id="more"></a><br>&emsp;&emsp;架构图如下所示<br><img src="https://img-blog.csdnimg.cn/20191214135719739.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">kubeasz官方文档中高可用集群所需节点配置如下<br>| 角色 | 数量 | 描述 |<br>|–|–|–|<br>| 管理节点 | 1 | 运行ansible/easzctl脚本，可以复用master，建议使用独立节点（1c1g） |<br>| etcd节点 | 3 | 注意etcd集群需要1,3,5,7…奇数个节点，一般复用master节点 |<br>| master节点 | 2 | 高可用集群至少2个master节点 |<br>| node节点 | 3 | 运行应用负载的节点，可根据需要提升机器配置/增加节点数 |</p>
+<h2 id="配置集群环境"><a href="#配置集群环境" class="headerlink" title="配置集群环境"></a>配置集群环境</h2><p>&emsp;&emsp;此次部署节点设置如下：<br>ansible安装节点&master1：172.18.32.18<br>master2：172.18.32.19<br>harbor：172.19.32.20<br>node1：172.18.32.21<br>node2：172.18.32.22<br>etcd1：172.18.32.23<br>etcd2：172.18.32.24<br>etcd3：172.18.32.25<br>haproxy1+keepalived：172.18.32.183<br>haproxy2+keepalived：172.18.32.184  VIP：172.18.32.250</p>
+<h3 id="配置免密登录"><a href="#配置免密登录" class="headerlink" title="配置免密登录"></a>配置免密登录</h3><p>&emsp;&emsp;先将ansible安装节点也就是master1主机（可以不复用主机）的秘钥分发至各个主机。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">vim fenfamiyao.sh</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash">目标主机列表</span></span><br><span class="line">PASSWORD="password"</span><br><span class="line">PORT="22"</span><br><span class="line"></span><br><span class="line">IP="</span><br><span class="line">172.18.32.18</span><br><span class="line">172.18.32.19</span><br><span class="line">172.18.32.20</span><br><span class="line">172.18.32.21</span><br><span class="line">172.18.32.22</span><br><span class="line">172.18.32.23</span><br><span class="line">172.18.32.24</span><br><span class="line">172.18.32.25</span><br><span class="line">"</span><br><span class="line"></span><br><span class="line">[ -a /root/.ssh/id_rsa ] || ssh-keygen -t rsa </span><br><span class="line">which sshpass &> /dev/null || yum install sshpass -y #适用于CentOS</span><br><span class="line"></span><br><span class="line">for node in $&#123;IP&#125;;do</span><br><span class="line">        sshpass -p $PASSWORD ssh-copy-id -p$PORT -o StrictHostKeyChecking=no $&#123;node&#125;</span><br><span class="line"><span class="meta">#</span><span class="bash">        <span class="keyword">if</span> [ $? -eq 0 ];<span class="keyword">then</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">                <span class="built_in">echo</span> <span class="string">"<span class="variable">$&#123;node&#125;</span> 秘钥 copy 完成,准备环境初始化....."</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">                ssh -p<span class="variable">$PORT</span> <span class="variable">$&#123;node&#125;</span> <span class="string">"mkdir /etc/docker/certs.d/harbor.hechao.com -p"</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">                <span class="built_in">echo</span> <span class="string">"Harbor 证书目录创建成功!"</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">                scp -P<span class="variable">$PORT</span> /usr/<span class="built_in">local</span>/src/harbor/certs/harbor-ca.crt <span class="variable">$&#123;node&#125;</span>:/etc/docker/certs.d/harbor.hechao.com/harbor-ca.crt</span></span><br><span class="line"><span class="meta">#</span><span class="bash">                <span class="built_in">echo</span> <span class="string">"Harbor 证书拷贝成功!"</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">                scp -P<span class="variable">$PORT</span> /etc/hosts <span class="variable">$&#123;node&#125;</span>:/etc/hosts</span></span><br><span class="line"><span class="meta">#</span><span class="bash">                <span class="built_in">echo</span> <span class="string">"host 文件拷贝完成"</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">                scp -r -P<span class="variable">$PORT</span> /root/.docker <span class="variable">$&#123;node&#125;</span>:/root/</span></span><br><span class="line"><span class="meta">#</span><span class="bash">                <span class="built_in">echo</span> <span class="string">"Harbor 认证文件拷贝完成!"</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">                scp -r -P<span class="variable">$PORT</span> /etc/resolv.conf <span class="variable">$&#123;node&#125;</span>:/etc/</span></span><br><span class="line">                 echo "镜像加速链接同步!"</span><br><span class="line">                 ssh $&#123;node&#125; "mkdir -p /etc/docker"</span><br><span class="line">                 scp -r -p$PORT /etc/docker/daemon.json $&#123;node&#125;:/etc/docker/daemon.json</span><br><span class="line"><span class="meta">#</span><span class="bash">        <span class="keyword">else</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">                <span class="built_in">echo</span> <span class="string">"<span class="variable">$&#123;node&#125;</span> 秘钥 copy 失败"</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">        <span class="keyword">fi</span></span></span><br><span class="line">done</span><br></pre></td></tr></table></figure></p>
+<h3 id="安装ansible环境"><a href="#安装ansible环境" class="headerlink" title="安装ansible环境"></a>安装ansible环境</h3><p>&emsp;&emsp;因为要使用ansible批量自动化部署K8s集群，每个主机都要先安装ansible环境。<br>&emsp;&emsp;ubuntu默认的python版本是3.6，而ansible需要python2.7。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">apt <span class="keyword">update</span></span><br><span class="line">apt <span class="keyword">install</span> python2<span class="number">.7</span></span><br><span class="line"><span class="keyword">ln</span> -s /usr/<span class="keyword">bin</span>/python2<span class="number">.7</span> /usr/<span class="keyword">bin</span>/python</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;master1上安装ansible<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt <span class="keyword">install</span> ansible</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;centos一般是自带python2.X环境，所以一般不需要在进行额外操作。<br>&emsp;&emsp;在master1上检查各节点连通性<br><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible <span class="keyword">all</span> -m ping</span><br></pre></td></tr></table></figure></p>
+<h2 id="配置kubeasz"><a href="#配置kubeasz" class="headerlink" title="配置kubeasz"></a>配置kubeasz</h2><h3 id="下载kubeasz"><a href="#下载kubeasz" class="headerlink" title="下载kubeasz"></a>下载kubeasz</h3><p>&emsp;&emsp;官方文档地址为<a href="https://github.com/easzlab/kubeasz" rel="noopener external nofollow noreferrer" target="_blank">https://github.com/easzlab/kubeasz</a>，根据适配的K8s版本选择合适的kubeasz版本。根据官方文档，目前支持以下版本</p>
+<blockquote>
+<p>集群版本 kubernetes v1.13, v1.14, v1.15, v1.16<br>操作系统 CentOS/RedHat 7, Debian 9/10, Ubuntu 1604/1804<br>运行时 docker 18.06.x-ce, 18.09.x, containerd 1.2.6<br>网络 calico, cilium, flannel, kube-ovn, kube-router</p>
+</blockquote>
+<p>&emsp;&emsp;我们下载2.0.3版本的kubeasz,并给予执行权限<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -C- -fLO --retry <span class="number">3</span> https:<span class="regexp">//gi</span>thub.com<span class="regexp">/easzlab/</span>kubeasz<span class="regexp">/releases/</span>download<span class="regexp">/2.0.3/</span>easzup</span><br><span class="line">chmod +x easzup</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;可以用<code>file easzup</code>命令看到这是一个ASCII文本文件，其实就是一个shell脚本。<br><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@DockerUbuntu18:~<span class="comment"># file easzup</span></span><br><span class="line"><span class="symbol">easzup:</span> <span class="keyword">Bourne-Again </span><span class="keyword">shell </span><span class="keyword">script, </span>ASCII text executable</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;用vim编辑修改此文件。<br>&emsp;&emsp;大部分地方无需修改，不过可以设置docker版本为18.09.9和K8s的版本为v1.15.5，其他地方不用动。<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">export</span> <span class="attribute">DOCKER_VER</span>=18.09.9</span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">K8S_BIN_VER</span>=v1.15.5</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;执行<code>-- help</code>查看脚本使用方法。<br><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">root@DockerUbuntu18:~# ./easzup <span class="comment">--help</span></span><br><span class="line">./easzup: illegal <span class="keyword">option</span> <span class="comment">-- -</span></span><br><span class="line"><span class="keyword">Usage</span>: easzup [<span class="keyword">options</span>] [args]</span><br><span class="line">  <span class="keyword">option</span>: -&#123;DdekSz&#125;</span><br><span class="line">    -C         stop&clean <span class="keyword">all</span> <span class="keyword">local</span> containers</span><br><span class="line">    -D         download <span class="keyword">all</span> <span class="keyword">into</span> /etc/ansible</span><br><span class="line">    -S         <span class="keyword">start</span> kubeasz <span class="keyword">in</span> a container</span><br><span class="line">    -d <ver>   <span class="keyword">set</span> docker-ce <span class="keyword">version</span>, <span class="keyword">default</span> "18.09.9"</span><br><span class="line">    -e <ver>   <span class="keyword">set</span> kubeasz-ext-bin <span class="keyword">version</span>, <span class="keyword">default</span> "0.3.0"</span><br><span class="line">    -k <ver>   <span class="keyword">set</span> kubeasz-k8s-bin <span class="keyword">version</span>, <span class="keyword">default</span> "v1.15.5"</span><br><span class="line">    -m <str>   <span class="keyword">set</span> docker registry mirrors, <span class="keyword">default</span> "CN"(used <span class="keyword">in</span> Mainland,China)</span><br><span class="line">    -p <ver>   <span class="keyword">set</span> kubeasz-sys-pkg <span class="keyword">version</span>, <span class="keyword">default</span> "0.3.2"</span><br><span class="line">    -z <ver>   <span class="keyword">set</span> kubeasz <span class="keyword">version</span>, <span class="keyword">default</span> "2.0.3"</span><br><span class="line">  </span><br><span class="line">see more at https://github.com/kubeasz/dockerfiles</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;先将<code>/etc/ansible</code>目录下所有自带的配置文件以及hosts文件删掉<br><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">\rm</span> -rf <span class="regexp">/etc/ansible/</span>*</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;执行脚本下载所有需要的镜像和二进制文件<br><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">./easzup</span> -D</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;稍等片刻之后，下载好需要的镜像和二进制文件，此时就可以开始ansible自动部署安装K8s集群了。</p>
+<h3 id="ansible部署K8s"><a href="#ansible部署K8s" class="headerlink" title="ansible部署K8s"></a>ansible部署K8s</h3><p>&emsp;&emsp;kubeasz工具都已经写好了playbook，只需要设定好hosts文件即可一键安装了。先进入<code>/etc/ansible</code>目录,然后复制提供好的host模版文件并编辑。<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /etc/ansible/</span><br><span class="line">cp example/hosts.multi-<span class="keyword">node</span> <span class="title">hosts</span></span><br><span class="line">vim hosts</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">root@DockerUbuntu18:/etc/ansible# grep -v ^# hosts|grep -v ^$</span></span><br><span class="line">[etcd]</span><br><span class="line">172.18.32.23 NODE_NAME=etcd1</span><br><span class="line">172.18.32.24 NODE_NAME=etcd2</span><br><span class="line">172.18.32.25 NODE_NAME=etcd3</span><br><span class="line">[kube-master]</span><br><span class="line">172.18.32.18</span><br><span class="line">172.18.32.19</span><br><span class="line">[kube-node]</span><br><span class="line">172.18.32.21</span><br><span class="line">172.18.32.22</span><br><span class="line">[harbor]</span><br><span class="line">[ex-lb]</span><br><span class="line">[chrony]</span><br><span class="line"><span class="section">[all:vars]</span></span><br><span class="line">CONTAINER_RUNTIME=<span class="string">"docker"</span></span><br><span class="line">CLUSTER_NETWORK=<span class="string">"calico"</span></span><br><span class="line">SERVICE_CIDR=<span class="string">"10.68.0.0/16"</span></span><br><span class="line">CLUSTER_CIDR=<span class="string">"172.20.0.0/16"</span></span><br><span class="line">NODE_PORT_RANGE=<span class="string">"30000-65000"</span></span><br><span class="line">CLUSTER_DNS_DOMAIN=<span class="string">"cluster.local."</span></span><br><span class="line">bin_dir=<span class="string">"/usr/kube/bin"</span></span><br><span class="line">ca_dir=<span class="string">"/etc/kubernetes/ssl"</span></span><br><span class="line">base_dir=<span class="string">"/etc/ansible"</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;以为我本地已经搭好harbor服务器了，所以就不要设置harbor服务让他来安装了。除了各节点IP以外，需要修改的就是<code>bin_dir</code>目录，这样就省去了创建软链接的步骤，也省去配置PATH变量了。我选择的网卡是<code>calico</code>，也可以使用默认的<code>flannel</code>，之后具体区别会再详细介绍。<br>&emsp;&emsp;直接执行 <code>playbook</code>剧本90.setup.yml可以直接一键安装完成，不过如果出现问题我们不好排错，推荐一个剧本一个剧本的来跑。</p>
+<ul>
+<li>01.prepare.yml</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible-playbook <span class="number">01</span><span class="selector-class">.prepare</span><span class="selector-class">.yml</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;这个剧本总共三个环节，一般来说都不会报错（如果提示软链接创建失败，则可忽略）。<br>&emsp;&emsp;1.如果设置了chrony服务器，则master、node、etcd主机都会向chrony服务器同步时间。<br>&emsp;&emsp;2.控制节点上创建CA、创建集群参数及客户端认证参数<br>&emsp;&emsp;3分发证书工具CFSSL及kubeconfig配置文件</p>
+<ul>
+<li>02.etcd.yml</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible-playbook <span class="number">02</span><span class="selector-class">.etcd</span><span class="selector-class">.yml</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;这个剧本是在配置etcd服务器。在3个etcd节点上，创建etcd目录并分发证书，导入之前下载在控制端的二进制程序<code>etcd</code>及<code>etcdctl</code>及导入etcd的systemctl unit文件，设置开机自动启动etcd服务。这步也很简单，一般也不会出现什么问题。</p>
+<ul>
+<li>03.docker.yml</li>
+</ul>
+<p>&emsp;&emsp;因为我们在hosts文件中设置了运行时为<code>docker</code>,所以我们第三个剧本选择<code>03.docker.yml</code>，选择执行<code>03.containerd,yml</code>剧本也不会执行，里面做了条件判断<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">root<span class="variable">@DockerUbuntu18</span><span class="symbol">:/etc/ansible</span><span class="comment"># cat 03.containerd.yml </span></span><br><span class="line"><span class="comment"># to install containerd service</span></span><br><span class="line">- <span class="symbol">hosts:</span></span><br><span class="line">  - kube-master</span><br><span class="line">  - kube-node</span><br><span class="line">  <span class="symbol">roles:</span></span><br><span class="line">  - &#123; <span class="symbol">role:</span> containerd, <span class="symbol">when:</span> <span class="string">"CONTAINER_RUNTIME == 'containerd'"</span> &#125;</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;这个阶段的剧本比较复杂，要在每一个节点上安装docker，在执行这一步之前，先检查一下模版二进制文件的docker版本是否和我们之前预设的一样。<br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/etc/ansible/bin/docker -v</span><br><span class="line">Docker version <span class="number">18.09</span><span class="number">.6</span>, build <span class="number">481</span>bc77</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;如果不一样，可以去<code>/opt/kube/bin/</code>目录下找一下之前下好的二进制文件，确认下版本。<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/<span class="meta">opt</span>/kube/<span class="keyword">bin/docker </span>-v</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;这个目录下的版本一般是不会错的，将此目录下的二进制文件复制至模版目录<code>/etc/ansible/bin/</code>。<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp <span class="regexp">/opt/</span>kube<span class="regexp">/bin/</span>* <span class="regexp">/etc/</span>ansible<span class="regexp">/bin/</span></span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;执行ansible剧本<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible-playbook <span class="number">03</span><span class="selector-class">.docker</span><span class="selector-class">.yml</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>04.kube-master.yml</li>
+</ul>
+<p>&emsp;&emsp;这个剧本是对两个master节点操作，执行了以下操作<br>&emsp;&emsp;1.创建kubernetes签名请求以及证书和私钥<br>&emsp;&emsp;2.导入配置文件，启动kube-apiserver、kube-controller-manager及kube-scheduler服务<br>&emsp;&emsp;3.设置主节点的kube-apiserver.service文件，并设置apiserver的IP地址并创建配置用户rbac权限。<br>&emsp;&emsp;此时使用命令<code>kubectl get node</code>可以看到两个主节点都是出于ready状态了。<br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">root@</span>DockerUbuntu18:~# kubectl <span class="keyword">get</span> node</span><br><span class="line">NAME           STATUS                     ROLES    AGE    VERSION</span><br><span class="line"><span class="number">172.18</span><span class="number">.32</span><span class="number">.18</span>   Ready,SchedulingDisabled   master   <span class="number">1</span>m    v1<span class="number">.15</span><span class="number">.5</span></span><br><span class="line"><span class="number">172.18</span><span class="number">.32</span><span class="number">.19</span>   Ready,SchedulingDisabled   master   <span class="number">1</span>m    v1<span class="number">.15</span><span class="number">.5</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>05..kube-node.yml</li>
+</ul>
+<p>&emsp;&emsp;这个剧本主要是将几个node节点加到集群中来。流程比较复杂，大致有以下步骤：<br>&emsp;&emsp;1,创建kube-node目录:/var/lib/kubelet、/var/lib/kube-proxy和/etc/cni/net.d目录<br>&emsp;&emsp;2.导入之前准备好的二进制可执行文件kubectl、kubelet、kube-proxy、bridge、host-local和loopback<br>&emsp;&emsp;3.配置haproxy，监听本地的127.0.0.1：6443端口，代理至两个主节点的6443端口<br>&emsp;&emsp;4.生成node节点的kubelet的配置文件，并分发至各个node节点。kubelet连接主节点的apiserver。<br>&emsp;&emsp;5.node节点连接后，对node节点标记为kubernetes.io/role=node</p>
+<p>&emsp;&emsp;这步很容易出现kubelet服务无法启动，或者一直处于loaded状态，返回值为255。这是因为node节点的kubelet的认证失败。可以去node节点主机上查看服务kubelet服务状态。<br><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">systemctl</span> <span class="string">status kubectl</span></span><br><span class="line"><span class="attr">journalctl</span> <span class="string">-u kubelet -e</span></span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;我遇到几次node节点kubelet无法正常启动的情况，但是换了个全新的node节点就可以加进去了，说明问题不是在主节点上，一般将node节点还原至干净系统都可以解决问题。<br>&emsp;&emsp;还有一次返回值255但报错提示是，找不到<code>/run/systemd/resolve/resolv.conf</code>文件，于是创建一个<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir <span class="regexp">/run/</span>systemd<span class="regexp">/resolve/</span>;echo <span class="string">"nameserver 233.5.5.5"</span> > <span class="regexp">/run/</span>systemd<span class="regexp">/resolve/</span>resolv.conf</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;自己创建一个解析之后问题解决。<br>&emsp;&emsp;顺利的话，使用<code>kubectl get node</code>可以看到主节点和node节点都处于ready状态。<br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">root@</span>DockerUbuntu18:/etc/ansible# kubectl <span class="keyword">get</span> node</span><br><span class="line">NAME           STATUS                     ROLES    AGE   VERSION</span><br><span class="line"><span class="number">172.18</span><span class="number">.32</span><span class="number">.18</span>   Ready,SchedulingDisabled   master   <span class="number">2</span>h   v1<span class="number">.15</span><span class="number">.5</span></span><br><span class="line"><span class="number">172.18</span><span class="number">.32</span><span class="number">.19</span>   Ready,SchedulingDisabled   master   <span class="number">2</span>h   v1<span class="number">.15</span><span class="number">.5</span></span><br><span class="line"><span class="number">172.18</span><span class="number">.32</span><span class="number">.21</span>   Ready                      node     <span class="number">2</span>h   v1<span class="number">.15</span><span class="number">.5</span></span><br><span class="line"><span class="number">172.18</span><span class="number">.32</span><span class="number">.22</span>   Ready                      node     <span class="number">2</span>h   v1<span class="number">.15</span><span class="number">.5</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>06.network.yml</li>
+</ul>
+<p>&emsp;&emsp;在这个剧本中，主要是配置各个pod之间的网络访问。需要在每个物理节点上都生成一个<code>calico-node</code>服务的pod，再启动一个<code>calico-kube-controllers</code>服务的pod来管理他们，（因为默认主节点设置了不可调度，所以这个calico-kube-contronllers一般是在node节点上生成）。因为使用的是pod方式启动，所以这个剧本中，除了配置calicao证书及私钥外，主要是生成了一个<code>calico DaemonSet yaml</code>文件，路径为<code>/opt/kube/kube-system/calico.yaml</code>，所以之后如果修改网络配置，可以直接在此路径下修改这个yaml文件，例如修改镜像地址为私有harbor地址。<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl <span class="keyword">delete</span> -<span class="keyword">f</span> /<span class="keyword">opt</span>/kube/kube-<span class="built_in">system</span>/calico.yaml</span><br><span class="line"><span class="keyword">vim</span> /<span class="keyword">opt</span>/kube/kube-<span class="built_in">system</span>/calico.yaml</span><br><span class="line">kubectl apply -<span class="keyword">f</span> /<span class="keyword">opt</span>/kube/kube-<span class="built_in">system</span>/calico.yaml</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;需要注意的是，如果将yaml文件中拉取镜像的地址改为了私有harbor，则需要在yaml文件中加入Secret资源，使用<code>imagePullSecrets</code>拉取。</p>
+<ul>
+<li>07.cluster-addon.yml</li>
+</ul>
+<p>&emsp;&emsp;第七步是安装一些功能插件，如在node节点生成dns解析(默认使用的是coredns，可以在<code>roles/cluster-addon/defaults/main.yml</code>文件中设置），安装dashboard（可视化web界面）。我们也可以选择自己安装这些功能插件。<br>&emsp;&emsp;可参考官方文档<a href="https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/#deploying-the-dashboard-ui" rel="noopener external nofollow noreferrer" target="_blank">https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/#deploying-the-dashboard-ui</a><br>&emsp;&emsp;dashboard默认是1.6.3版本的，比较老。我们这里手动安装dashboard1.10.1版本，过程如下<br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd /etc/ansible/manifests/dashboard</span><br><span class="line">mkdir <span class="number">1.10</span><span class="number">.1</span></span><br><span class="line">cp <span class="number">1.6</span><span class="number">.3</span>/ui* <span class="number">1.10</span><span class="number">.1</span>/</span><br><span class="line">cd <span class="number">1.10</span><span class="number">.1</span></span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;先下载yaml文档<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https:<span class="regexp">//</span>raw.githubusercontent.com<span class="regexp">/kubernetes/</span>dashboard<span class="regexp">/v1.10.1/</span>src<span class="regexp">/deploy/</span>recommended<span class="regexp">/kubernetes-dashboard.yaml</span></span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;再创建admin token<code>vim admin-user-sa-rbac.yaml</code><br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ServiceAccount</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">admin-user</span></span><br><span class="line"><span class="attr">  namespace:</span> <span class="string">kube-system</span></span><br><span class="line"></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">rbac.authorization.k8s.io/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ClusterRoleBinding</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">admin-user</span></span><br><span class="line"><span class="attr">roleRef:</span></span><br><span class="line"><span class="attr">  apiGroup:</span> <span class="string">rbac.authorization.k8s.io</span></span><br><span class="line"><span class="attr">  kind:</span> <span class="string">ClusterRole</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">cluster-admin</span></span><br><span class="line"><span class="attr">subjects:</span></span><br><span class="line"><span class="attr">- kind:</span> <span class="string">ServiceAccount</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">admin-user</span></span><br><span class="line"><span class="attr">  namespace:</span> <span class="string">kube-system</span></span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;创建集群角色<code>vim read-user-sa-rbac.yaml</code><br><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby">--</span></span><br><span class="line"><span class="ruby"><span class="symbol">apiVersion:</span> rbac.authorization.k8s.io/v1</span></span><br><span class="line"><span class="ruby"><span class="symbol">kind:</span> ClusterRole</span></span><br><span class="line"><span class="ruby"><span class="symbol">metadata:</span></span></span><br><span class="line"><span class="ruby">  <span class="symbol">name:</span> dashboard-read-clusterrole</span></span><br><span class="line"><span class="ruby"><span class="symbol">rules:</span></span></span><br><span class="line"><span class="ruby">- <span class="symbol">apiGroups:</span></span></span><br><span class="line"><span class="ruby">  - <span class="string">""</span></span></span><br><span class="line"><span class="ruby">  <span class="symbol">resources:</span></span></span><br><span class="line"><span class="ruby">  - configmaps</span></span><br><span class="line"><span class="ruby">  - endpoints</span></span><br><span class="line"><span class="ruby">  - persistentvolumeclaims</span></span><br><span class="line"><span class="ruby">  - pods</span></span><br><span class="line"><span class="ruby">  - replicationcontrollers</span></span><br><span class="line"><span class="ruby">  - replicationcontrollers/scale</span></span><br><span class="line"><span class="ruby">  - serviceaccounts</span></span><br><span class="line"><span class="ruby">  - services</span></span><br><span class="line"><span class="ruby">  - nodes</span></span><br><span class="line"><span class="ruby">  - persistentvolumeclaims</span></span><br><span class="line"><span class="ruby">  - persistentvolumes</span></span><br><span class="line"><span class="ruby">  <span class="symbol">verbs:</span></span></span><br><span class="line"><span class="ruby">  - get</span></span><br><span class="line"><span class="ruby">  - list</span></span><br><span class="line"><span class="ruby">  - watch</span></span><br><span class="line"><span class="ruby">- <span class="symbol">apiGroups:</span></span></span><br><span class="line"><span class="ruby">  - <span class="string">""</span></span></span><br><span class="line"><span class="ruby">  <span class="symbol">resources:</span></span></span><br><span class="line"><span class="ruby">  - bindings</span></span><br><span class="line"><span class="ruby">  - events</span></span><br><span class="line"><span class="ruby">  - limitranges</span></span><br><span class="line"><span class="ruby">  - namespaces/status</span></span><br><span class="line"><span class="ruby">  - pods/log</span></span><br><span class="line"><span class="ruby">  - pods/status</span></span><br><span class="line"><span class="ruby">  - replicationcontrollers/status</span></span><br><span class="line"><span class="ruby">  - resourcequotas</span></span><br><span class="line"><span class="ruby">  - resourcequotas/status</span></span><br><span class="line"><span class="ruby">  <span class="symbol">verbs:</span></span></span><br><span class="line"><span class="ruby">  - get</span></span><br><span class="line"><span class="ruby">  - list</span></span><br><span class="line"><span class="ruby">  - watch</span></span><br><span class="line"><span class="ruby">- <span class="symbol">apiGroups:</span></span></span><br><span class="line"><span class="ruby">  - <span class="string">""</span></span></span><br><span class="line"><span class="ruby">  <span class="symbol">resources:</span></span></span><br><span class="line"><span class="ruby">  - namespaces</span></span><br><span class="line"><span class="ruby">  <span class="symbol">verbs:</span></span></span><br><span class="line"><span class="ruby">  - get</span></span><br><span class="line"><span class="ruby">  - list</span></span><br><span class="line"><span class="ruby">  - watch</span></span><br><span class="line"><span class="ruby">- <span class="symbol">apiGroups:</span></span></span><br><span class="line"><span class="ruby">  - apps</span></span><br><span class="line"><span class="ruby">  <span class="symbol">resources:</span></span></span><br><span class="line"><span class="ruby">  - daemonsets</span></span><br><span class="line"><span class="ruby">  - deployments</span></span><br><span class="line"><span class="ruby">  - deployments/scale</span></span><br><span class="line"><span class="ruby">  - replicasets</span></span><br><span class="line"><span class="ruby">  - replicasets/scale</span></span><br><span class="line"><span class="ruby">  - statefulsets</span></span><br><span class="line"><span class="ruby">  <span class="symbol">verbs:</span></span></span><br><span class="line"><span class="ruby">  - get</span></span><br><span class="line"><span class="ruby">  - list</span></span><br><span class="line"><span class="ruby">  - watch</span></span><br><span class="line"><span class="ruby">- <span class="symbol">apiGroups:</span></span></span><br><span class="line"><span class="ruby">  - autoscaling</span></span><br><span class="line"><span class="ruby">  <span class="symbol">resources:</span></span></span><br><span class="line"><span class="ruby">  - horizontalpodautoscalers</span></span><br><span class="line"><span class="ruby">  <span class="symbol">verbs:</span></span></span><br><span class="line"><span class="ruby">  - get</span></span><br><span class="line"><span class="ruby">  - list</span></span><br><span class="line"><span class="ruby">  - watch</span></span><br><span class="line"><span class="ruby">- <span class="symbol">apiGroups:</span></span></span><br><span class="line"><span class="ruby">  - batch</span></span><br><span class="line"><span class="ruby">  <span class="symbol">resources:</span></span></span><br><span class="line"><span class="ruby">  - cronjobs</span></span><br><span class="line"><span class="ruby">  - jobs</span></span><br><span class="line"><span class="ruby">  <span class="symbol">verbs:</span></span></span><br><span class="line"><span class="ruby">  - get</span></span><br><span class="line"><span class="ruby">  - list</span></span><br><span class="line"><span class="ruby">  - watch</span></span><br><span class="line"><span class="ruby">- <span class="symbol">apiGroups:</span></span></span><br><span class="line"><span class="ruby">  - extensions</span></span><br><span class="line"><span class="ruby">  <span class="symbol">resources:</span></span></span><br><span class="line"><span class="ruby">  - daemonsets</span></span><br><span class="line"><span class="ruby">  - deployments</span></span><br><span class="line"><span class="ruby">  - deployments/scale</span></span><br><span class="line"><span class="ruby">  - ingresses</span></span><br><span class="line"><span class="ruby">  - networkpolicies</span></span><br><span class="line"><span class="ruby">  - replicasets</span></span><br><span class="line"><span class="ruby">  - replicasets/scale</span></span><br><span class="line"><span class="ruby">  - replicationcontrollers/scale</span></span><br><span class="line"><span class="ruby">  <span class="symbol">verbs:</span></span></span><br><span class="line"><span class="ruby">  - get</span></span><br><span class="line"><span class="ruby">  - list</span></span><br><span class="line"><span class="ruby">  - watch</span></span><br><span class="line"><span class="ruby">- <span class="symbol">apiGroups:</span></span></span><br><span class="line"><span class="ruby">  - policy</span></span><br><span class="line"><span class="ruby">  <span class="symbol">resources:</span></span></span><br><span class="line"><span class="ruby">  - poddisruptionbudgets</span></span><br><span class="line"><span class="ruby">  <span class="symbol">verbs:</span></span></span><br><span class="line"><span class="ruby">  - get</span></span><br><span class="line"><span class="ruby">  - list</span></span><br><span class="line"><span class="ruby">  - watch</span></span><br><span class="line"><span class="ruby">- <span class="symbol">apiGroups:</span></span></span><br><span class="line"><span class="ruby">  - networking.k8s.io</span></span><br><span class="line"><span class="ruby">  <span class="symbol">resources:</span></span></span><br><span class="line"><span class="ruby">  - networkpolicies</span></span><br><span class="line"><span class="ruby">  <span class="symbol">verbs:</span></span></span><br><span class="line"><span class="ruby">  - get</span></span><br><span class="line"><span class="ruby">  - list</span></span><br><span class="line"><span class="ruby">  - watch</span></span><br><span class="line"><span class="ruby">- <span class="symbol">apiGroups:</span></span></span><br><span class="line"><span class="ruby">  - storage.k8s.io</span></span><br><span class="line"><span class="ruby">  <span class="symbol">resources:</span></span></span><br><span class="line"><span class="ruby">  - storageclasses</span></span><br><span class="line"><span class="ruby">  - volumeattachments</span></span><br><span class="line"><span class="ruby">  <span class="symbol">verbs:</span></span></span><br><span class="line"><span class="ruby">  - get</span></span><br><span class="line"><span class="ruby">  - list</span></span><br><span class="line"><span class="ruby">  - watch</span></span><br><span class="line"><span class="ruby">- <span class="symbol">apiGroups:</span></span></span><br><span class="line"><span class="ruby">  - rbac.authorization.k8s.io</span></span><br><span class="line"><span class="ruby">  <span class="symbol">resources:</span></span></span><br><span class="line"><span class="ruby">  - clusterrolebindings</span></span><br><span class="line"><span class="ruby">  - clusterroles</span></span><br><span class="line"><span class="ruby">  - roles</span></span><br><span class="line"><span class="ruby">  - rolebindings</span></span><br><span class="line"><span class="ruby">  <span class="symbol">verbs:</span></span></span><br><span class="line"><span class="ruby">  - get</span></span><br><span class="line"><span class="ruby">  - list</span></span><br><span class="line"><span class="ruby">  - watch</span></span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;此时目录结构如下<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">root<span class="variable">@DockerUbuntu18</span><span class="symbol">:/etc/ansible/manifests/dashboard/</span><span class="number">1.10</span>.<span class="number">1</span><span class="comment"># tree</span></span><br><span class="line">.</span><br><span class="line">├── admin-user-sa-rbac.yaml</span><br><span class="line">├── kubernetes-dashboard.yaml</span><br><span class="line">├── read-user-sa-rbac.yaml</span><br><span class="line">├── ui-admin-rbac.yaml</span><br><span class="line">└── ui-read-rbac.yaml</span><br><span class="line"></span><br><span class="line"><span class="number">0</span> directories, <span class="number">5</span> files</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;然后通过yaml文件启动dashboard的pod<br><figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl <span class="built_in">apply</span> -f .</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;可以通过命令查看pod 是否启动成功。<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl <span class="built_in">get</span> pods --<span class="keyword">all</span>-namespaces | <span class="keyword">grep</span> dashboard</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;看到状态running之后，输入命令开启认证生成登陆用户名密码<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">easzctl</span> <span class="keyword">basic-auth </span>-s</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">INFO</span>]<span class="keyword">basic-auth </span>for apiserver is enabled!</span><br><span class="line"><span class="keyword">BASIC_AUTH_USER: </span><span class="string">'admin'</span></span><br><span class="line"><span class="keyword">BASIC_AUTH_PASS: </span><span class="string">'4fe554e56c32f27b'</span></span><br><span class="line">[<span class="meta">INFO</span>] Action successed : <span class="keyword">basic-auth </span><span class="keyword">basic-auth </span>-s`</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;通过命令<code>kubectl cluster-info</code>查看集群信息来查看登陆url<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">kubectl</span> cluster-<span class="literal">info</span></span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;使用命令来获取token<br><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl -n kube-system describe secret <span class="constructor">$(<span class="params">kubectl</span> -<span class="params">n</span> <span class="params">kube</span>-<span class="params">system</span> <span class="params">get</span> <span class="params">secret</span> | <span class="params">grep</span> <span class="params">admin</span>-<span class="params">user</span> | <span class="params">awk</span> '&#123;<span class="params">print</span> $1&#125;')</span></span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;这时就可以登陆web界面查看K8s集群信息了。</p>
+    </div>
+          <div class="post-tags">
+              <a href="/tags/kubernetes/" rel="tag"><i class="fa fa-tag">kubernetes</i></a>
+              <a href="/tags/kubeasz/" rel="tag"><i class="fa fa-tag">kubeasz</i></a>
+              <a href="/tags/dashboard/" rel="tag"><i class="fa fa-tag">dashboard</i></a>
+          </div>
+    <div style="text-align:center;color: #ccc;font-size:14px;">------------------------------- The End -------------------------------</div>
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+        <div id="reward-container">
+  <div>It's very nice of you to support me.</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById('qr'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      <div style="display: inline-block">
+        <img src="/images/wechat-pay.png" alt="Hechao 微信支付">
+        <p>微信支付</p>
+      </div>
+  </div>
+</div>
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Hechao</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://hewanyue.com/blog/8f374cb8.html" title="使用kubeasz自动化部署K8s">https://hewanyue.com/blog/8f374cb8.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+</div>
+<div class="note info" style="background-color: #eff8f0;
+    border-left: 3px solid #255188;
+    opacity: 0.85;
+    padding-left: 11px;
+    padding-bottom: 1px;">
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts" style="margin-top: 10px;
+    margin-bottom: 10px;">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/107b7ce7.html" rel="bookmark">使用kubeadm部署安装K8s</a></div>
+    </li>
+  </ul>
+</div>
+      <footer class="post-footer">
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/blog/107b7ce7.html" rel="next" title="使用kubeadm部署安装K8s">
+                  <i class="fa fa-chevron-left"></i> 使用kubeadm部署安装K8s
+                </a>
+            </div>
+            <span class="post-nav-divider"></span>
+            <div class="post-nav-prev post-nav-item">
+            </div>
+          </div>
+      </footer>
+  </div>
+  </article>
+  </div>
+          </div>
+    <div class="comments" id="comments"></div>
+        </div>
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置集群环境"><span class="nav-number">1.</span> <span class="nav-text">配置集群环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置免密登录"><span class="nav-number">1.1.</span> <span class="nav-text">配置免密登录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装ansible环境"><span class="nav-number">1.2.</span> <span class="nav-text">安装ansible环境</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置kubeasz"><span class="nav-number">2.</span> <span class="nav-text">配置kubeasz</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载kubeasz"><span class="nav-number">2.1.</span> <span class="nav-text">下载kubeasz</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ansible部署K8s"><span class="nav-number">2.2.</span> <span class="nav-text">ansible部署K8s</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/touxiang.gif"
+      alt="Hechao">
+  <p class="site-author-name" itemprop="name">Hechao</p>
+  <div class="site-description" itemprop="description">BOHC is just a blog of hechao.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">74</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wudihechao" title="GitHub &rarr; https://github.com/wudihechao" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wudihechao@163.com" title="E-Mail &rarr; mailto:wudihechao@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/1050367191" title="Weibo &rarr; https://weibo.com/u/1050367191" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-weibo"></i></a>
+      </span>
+  </div>
+    <div class="links-of-blogroll motion-element links-of-blogroll-block">
+      <div class="links-of-blogroll-title" style="padding-left: 10px;">
+        <!-- modify icon to fire by szw -->
+        <i class="fa fa-history fa-" aria-hidden="true"></i>
+        近期文章
+      </div>
+      <ul class="links-of-blogroll-list" style="padding-left: 30px;">
+          <li>
+            <a href="/blog/8f374cb8.html" title="使用kubeasz自动化部署K8s" >使用kubeasz自动化部署K8s</a>
+          </li>
+          <li>
+            <a href="/blog/107b7ce7.html" title="使用kubeadm部署安装K8s" >使用kubeadm部署安装K8s</a>
+          </li>
+          <li>
+            <a href="/blog/6187894.html" title="Docker（五）——Docker镜像仓库" >Docker（五）——Docker镜像仓库</a>
+          </li>
+          <li>
+            <a href="/blog/7e3785f.html" title="Docker（四）——容器跨主机网络配置" >Docker（四）——容器跨主机网络配置</a>
+          </li>
+          <li>
+            <a href="/blog/5c39f4ef.html" title="Docker（二）——基础命令详解" >Docker（二）——基础命令详解</a>
+          </li>
+      </ul>
+    </div>
+<div id="days"></div>
+<script>
+function show_date_time(){
+window.setTimeout("show_date_time()", 1000);
+BirthDay=new Date("10/01/2019 00:00:00");
+today=new Date();
+timeold=(today.getTime()-BirthDay.getTime());
+sectimeold=timeold/1000
+secondsold=Math.floor(sectimeold);
+msPerDay=24*60*60*1000
+e_daysold=timeold/msPerDay
+daysold=Math.floor(e_daysold);
+e_hrsold=(e_daysold-daysold)*24;
+hrsold=setzero(Math.floor(e_hrsold));
+e_minsold=(e_hrsold-hrsold)*60;
+minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+seconds=setzero(Math.floor((e_minsold-minsold)*60));
+document.getElementById('days').innerHTML="已运行"+daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒";
+}
+function setzero(i){
+if (i<10)
+{i="0" + i};
+return i;
+}
+show_date_time();
+</script>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://hewanyue.com/" class="cc-opacity"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+      </div>
+ </aside>
+  <div id="sidebar-dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user-circle-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hechao</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">346k</span>
+</div>
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+      </div>
+    </footer>
+  </div>
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/muse.js?v=7.4.0"></script>
+<script src="/js/next-boot.js?v=7.4.0"></script><script src="/js/bookmark.js?v=7.4.0"></script>
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 21895,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+  <script src="/js/local-search.js?v=7.4.0"></script>
+<script>
+NexT.utils.getScript('//hewanyue.com/js/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail','link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    app_id: 'AVtPtVan0Ky5u33XhUzJlFKp-gzGzoHsz',
+    app_key: 'nx3XTnRJmaMQR3aLWYiigkgJ',
+    placeholder: 'Just Say Something~!',
+    avatar: 'mp',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: 'zh-cn' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
+</body>
+</html>
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
