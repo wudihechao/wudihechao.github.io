@@ -45,14 +45,14 @@
   };
 </script>
   <meta name="description" content="&emsp;&emsp;企业中，必不可少的应用就是VPN了，它可以帮助员工在外网中访问公司内网，常见开源实现方案有OpenVPN和jumpserver。&emsp;&emsp;OpenVPN是采用了端口转发的原理实现，是基于IP+端口的4层代理机制，一般是用于出差员工访问公司内部ERP系统等使用，而jumpserver是7层代理，所以功能更加强大却也更加复杂，一般适合运维人员管理维护企业内部服务器">
-<meta name="keywords" content="企业级应用,经验分享,OpenVPN,SSH,科学上网">
+<meta name="keywords" content="企业级应用,OpenVPN,SSH,科学上网,经验分享">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OpenVPN的搭建">
 <meta property="og:url" content="https://hewanyue.com/blog/2c6b894f.html">
 <meta property="og:site_name" content="BOHC!">
 <meta property="og:description" content="&emsp;&emsp;企业中，必不可少的应用就是VPN了，它可以帮助员工在外网中访问公司内网，常见开源实现方案有OpenVPN和jumpserver。&emsp;&emsp;OpenVPN是采用了端口转发的原理实现，是基于IP+端口的4层代理机制，一般是用于出差员工访问公司内部ERP系统等使用，而jumpserver是7层代理，所以功能更加强大却也更加复杂，一般适合运维人员管理维护企业内部服务器">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-27T06:16:28.082Z">
+<meta property="og:updated_time" content="2019-12-21T12:05:28.050Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OpenVPN的搭建">
 <meta name="twitter:description" content="&emsp;&emsp;企业中，必不可少的应用就是VPN了，它可以帮助员工在外网中访问公司内网，常见开源实现方案有OpenVPN和jumpserver。&emsp;&emsp;OpenVPN是采用了端口转发的原理实现，是基于IP+端口的4层代理机制，一般是用于出差员工访问公司内部ERP系统等使用，而jumpserver是7层代理，所以功能更加强大却也更加复杂，一般适合运维人员管理维护企业内部服务器">
@@ -194,13 +194,13 @@
     <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i>关于</a>
   </li>
         <li class="menu-item menu-item-tags">
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">74</span></a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">76</span></a>
   </li>
         <li class="menu-item menu-item-categories">
     <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">7</span></a>
   </li>
         <li class="menu-item menu-item-archives">
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">38</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">39</span></a>
   </li>
         <li class="menu-item menu-item-friends">
     <a href="/friends/" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i>友链</a>
@@ -292,14 +292,14 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-file-word-o"></i>
               </span>
-              <span>8.4k</span>
+              <span>9.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
-              <span>21 分钟</span>
+              <span>24 分钟</span>
             </span>
         </div>
       </header>
@@ -314,7 +314,7 @@
 <p>&emsp;&emsp;先进入证书管理工具目录（若github上下载的则是<code>cd /etc/openvpn/easyrsa-server/</code>，之后则都没有3的子目录，或者也创建一个3的子目录保持一致性）<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd <span class="regexp">/etc/</span>openvpn<span class="regexp">/easyrsa-server/</span><span class="number">3</span></span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;若easyrsa为github下载的话，目录结果如下<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@aws-host easyrsa-server]#tree</span><br><span class="line">.</span><br><span class="line">├── easyrsa</span><br><span class="line">├── openssl-easyrsa.cnf</span><br><span class="line">├── vars.example</span><br><span class="line">└── x509-types</span><br><span class="line">    ├── ca</span><br><span class="line">    ├── client</span><br><span class="line">    ├── code-signing</span><br><span class="line">    ├── COMMON</span><br><span class="line">    ├── email</span><br><span class="line">    ├── server</span><br><span class="line">    └── serverClient</span><br><span class="line"></span><br><span class="line">1 directory, 10 files</span><br><span class="line">[root@aws-host easyrsa-server]#</span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;OpenVPN的server端配置文件如下：<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/openvpn/server.conf</span><br><span class="line">local <span class="number">172.18</span><span class="number">.200</span><span class="number">.101</span> #本机监听IP,写公网IP</span><br><span class="line">port <span class="number">1194</span> #端口</span><br><span class="line"># TCP or UDP server?</span><br><span class="line">proto tcp #协议，指定OpenVPN创建的通信隧道类型</span><br><span class="line">#proto udp</span><br><span class="line">#dev tap：创建一个以太网隧道，以太网使用tap</span><br><span class="line">dev tun：创建一个路由IP隧道，互联网使用tun一个TUN设备大多时候，被用于基于IP协议的通讯。一个TAP设备允许完整的以太网帧通过Openvpn隧道，因此提供非ip协议的支持，比如IPX协议和AppleTalk协议</span><br><span class="line">#dev-node MyTap #TAP-Win32适配器。非windows不需要</span><br><span class="line">#topology subnet #网络拓扑，不需要配置</span><br><span class="line">server <span class="number">10.8</span><span class="number">.0</span><span class="number">.0</span> <span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span> #客户端连接后分配IP的地址池，服务器默认会占用第一个IP <span class="number">10.8</span><span class="number">.0</span><span class="number">.1</span></span><br><span class="line">#ifconfig-pool-persist ipp.txt #为客户端分配固定IP，不需要配置</span><br><span class="line">#server-bridge <span class="number">10.8</span><span class="number">.0</span><span class="number">.4</span> <span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span> <span class="number">10.8</span><span class="number">.0</span><span class="number">.50</span> <span class="number">10.8</span><span class="number">.0</span><span class="number">.100</span> #配置网桥模式，不需要</span><br><span class="line">push <span class="string">"route 10.20.0.0 255.255.0.0"</span> #给客户端生成的静态路由表，下一跳为openvpn服务器的<span class="number">10.8</span><span class="number">.0</span><span class="number">.1</span>,地址段为openvpn服务器后的公司内部网络，可以是多个网段</span><br><span class="line">push <span class="string">"route 172.31.0.0 255.255.248.0"</span></span><br><span class="line">;client-config-dir ccd #为指定的客户端添加路由，改路由通常是客户端后面的内网网段而不是服务端的，也不需要设置</span><br><span class="line">;route <span class="number">192.168</span><span class="number">.40</span><span class="number">.128</span> <span class="number">255.255</span><span class="number">.255</span><span class="number">.248</span></span><br><span class="line">;client-config-dir ccd</span><br><span class="line">;route <span class="number">10.9</span><span class="number">.0</span><span class="number">.0</span> <span class="number">255.255</span><span class="number">.255</span><span class="number">.252</span></span><br><span class="line">;learn-address ./script #运行外部脚本，创建不同组的iptables 规则，不配置</span><br><span class="line">;push <span class="string">"redirect-gateway def1 bypass-dhcp"</span> #启用后，客户端所有流量都将通过VPN服务器，因此不需要配置</span><br><span class="line">#;push <span class="string">"dhcp-option DNS 208.67.222.222"</span> #推送DNS服务器，不需要配置</span><br><span class="line">#;push <span class="string">"dhcp-option DNS 208.67.220.220"</span></span><br><span class="line">#client-to-client #允许不同的client通过openvpn server直接通信，不开启</span><br><span class="line">#;duplicate-cn #多个用户共用一个账户，一般用于测试环境，生产环境都是一个用户一个证书</span><br><span class="line">keepalive <span class="number">10</span> <span class="number">120</span> #设置服务端检测的间隔和超时时间，默认为每 <span class="number">10</span> 秒 ping一次，如果 <span class="number">120</span> 秒没有回应则认为对方已经 down</span><br></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;所以最终配置如下<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">local 172.18.32.71    #写公网IP，测试环境无所谓</span><br><span class="line">port 1194</span><br><span class="line">proto tcp</span><br><span class="line">dev tun</span><br><span class="line">ca /etc/openvpn/certs/ca.crt</span><br><span class="line">cert /etc/openvpn/certs/server.crt</span><br><span class="line">key /etc/openvpn/certs/server.key  # This file should be kept secret</span><br><span class="line">dh /etc/openvpn/certs/dh.pem</span><br><span class="line">server 10.8.0.0 255.255.255.0   #默认设置，不需要修改</span><br><span class="line">push <span class="string">"route 10.0.0.0 255.255.255.0"</span>    #内网网段，需要修改，科学上网，则推送路由 <span class="string">"route 0.0.0.0"</span></span><br><span class="line">client-to-client</span><br><span class="line">keepalive 10 120</span><br><span class="line">cipher AES-256-CBC</span><br><span class="line">max-clients 100</span><br><span class="line">user nobody</span><br><span class="line">group nobody</span><br><span class="line">persist-tun</span><br><span class="line">status openvpn-status.log</span><br><span class="line">log-append  /var/log/openvpn/openvpn.log</span><br><span class="line">verb 9</span><br><span class="line">mute 20</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;所以最终配置如下<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">local 172.18.32.71    #写公网IP，测试环境无所谓</span><br><span class="line">port 1194</span><br><span class="line">proto tcp</span><br><span class="line">dev tun</span><br><span class="line">ca /etc/openvpn/certs/ca.crt</span><br><span class="line">cert /etc/openvpn/certs/server.crt</span><br><span class="line">key /etc/openvpn/certs/server.key  # This file should be kept secret</span><br><span class="line">dh /etc/openvpn/certs/dh.pem</span><br><span class="line">server 10.8.0.0 255.255.255.0   #默认设置，不需要修改</span><br><span class="line">push <span class="string">"route 10.0.0.0 255.255.255.0"</span>    #内网网段，不需要修改，科学上网则为 push <span class="string">"redirect-gateway def1 bypass-dhcp"</span></span><br><span class="line">client-to-client</span><br><span class="line">keepalive 10 120</span><br><span class="line">cipher AES-256-CBC</span><br><span class="line">max-clients 100</span><br><span class="line">user nobody</span><br><span class="line">group nobody</span><br><span class="line">persist-tun</span><br><span class="line">status openvpn-status.log</span><br><span class="line">log-append  /var/log/openvpn/openvpn.log</span><br><span class="line">verb 9</span><br><span class="line">mute 20</span><br></pre></td></tr></table></figure></p>
 <h3 id="搭建CA并签发证书"><a href="#搭建CA并签发证书" class="headerlink" title="搭建CA并签发证书"></a>搭建CA并签发证书</h3><p>&emsp;&emsp;初始化pki环境<br><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">./easyrsa</span> init-pki <span class="comment">#生成pki目录用于保存证书</span></span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;创建CA签发机构，然后<code>直接回车</code><br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./easyrsa <span class="keyword">build-ca </span><span class="keyword">nopass </span>#创建ca并不使用密码</span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;创建服务端证书(私钥)，<code>直接回车</code><br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./easyrsa gen-req<span class="built_in"> server </span>nopass #生成server证书且不使用密码</span><br></pre></td></tr></table></figure></p>
@@ -342,13 +342,17 @@
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Unit]</span></span><br><span class="line"><span class="attr">Description</span>=OpenVPN Robust And Highly Flexible Tunneling Application <span class="literal">On</span> %I</span><br><span class="line"><span class="attr">After</span>=network.target</span><br><span class="line"></span><br><span class="line"><span class="section">[Service]</span></span><br><span class="line"><span class="attr">Type</span>=notify</span><br><span class="line"><span class="attr">PrivateTmp</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">ExecStart</span>=/usr/sbin/openvpn --cd /etc/openvpn/ --config %i.conf</span><br><span class="line"></span><br><span class="line"><span class="section">[Install]</span></span><br><span class="line"><span class="attr">WantedBy</span>=multi-user.target</span><br></pre></td></tr></table></figure>
 <p>&emsp;&emsp;验证日志：<br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">tail /var/log/openvpn/openvpn.log</span><br><span class="line">Tue Nov <span class="number">19</span> <span class="number">13</span>:<span class="number">27</span>:<span class="number">27</span> <span class="number">2019</span> Socket Buffers: R=[<span class="number">87380</span>-><span class="number">87380</span>] S=[<span class="number">16384</span>-><span class="number">16384</span>]</span><br><span class="line">Tue Nov <span class="number">19</span> <span class="number">13</span>:<span class="number">27</span>:<span class="number">27</span> <span class="number">2019</span> Listening <span class="keyword">for</span> incoming TCP connection on</span><br><span class="line">[AF_INET]<span class="number">172.18</span><span class="number">.32</span><span class="number">.71</span>:<span class="number">1194</span></span><br><span class="line">Tue Nov <span class="number">19</span> <span class="number">13</span>:<span class="number">27</span>:<span class="number">27</span> <span class="number">2019</span> TCPv4_SERVER link local (bound):</span><br><span class="line">[AF_INET]<span class="number">172.18</span><span class="number">.32</span><span class="number">.71</span>:<span class="number">1194</span></span><br><span class="line">Tue Nov <span class="number">19</span> <span class="number">13</span>:<span class="number">27</span>:<span class="number">27</span> <span class="number">2019</span> TCPv4_SERVER link remote: [AF_UNSPEC]</span><br><span class="line">Tue Nov <span class="number">19</span> <span class="number">13</span>:<span class="number">27</span>:<span class="number">27</span> <span class="number">2019</span> GID <span class="keyword">set</span> to root</span><br><span class="line">Tue Nov <span class="number">19</span> <span class="number">13</span>:<span class="number">27</span>:<span class="number">27</span> <span class="number">2019</span> UID <span class="keyword">set</span> to root</span><br><span class="line">Tue Nov <span class="number">19</span> <span class="number">13</span>:<span class="number">27</span>:<span class="number">27</span> <span class="number">2019</span> MULTI: multi_init called, r=<span class="number">256</span> v=<span class="number">256</span></span><br><span class="line">Tue Nov <span class="number">19</span> <span class="number">13</span>:<span class="number">27</span>:<span class="number">27</span> <span class="number">2019</span> IFCONFIG POOL: base=<span class="number">10.8</span><span class="number">.0</span><span class="number">.4</span> size=<span class="number">62</span>, ipv6=<span class="number">0</span></span><br><span class="line">Tue Nov <span class="number">19</span> <span class="number">13</span>:<span class="number">27</span>:<span class="number">27</span> <span class="number">2019</span> MULTI: TCP INIT maxclients=<span class="number">4096</span> maxevents=<span class="number">4100</span></span><br><span class="line">Tue Nov <span class="number">19</span> <span class="number">13</span>:<span class="number">27</span>:<span class="number">27</span> <span class="number">2019</span> Initialization Sequence Completed</span><br></pre></td></tr></table></figure></p>
 <h2 id="OpenVPN客户端"><a href="#OpenVPN客户端" class="headerlink" title="OpenVPN客户端"></a>OpenVPN客户端</h2><p>&emsp;&emsp;官方客户端下载地址： <a href="https://openvpn.net/community-downloads/" rel="noopener external nofollow noreferrer" target="_blank">https://openvpn.net/community-downloads/</a><br>&emsp;&emsp;非官方地址：<a href="https://sourceforge.net/projects/securepoint/files/" rel="noopener external nofollow noreferrer" target="_blank">https://sourceforge.net/projects/securepoint/files/</a><br>&emsp;&emsp;如果是默认安装路径的话，保存证书到openvpn 客户端安装目录：C:\Program Files\OpenVPN\config<br>&emsp;&emsp;之后就可以直接启动OpenVPN。此时就可以用浏览器直接访问内网IP或者直接ssh登陆内部服务器了。</p>
+<hr>
+<h1 id="关于科学上网"><a href="#关于科学上网" class="headerlink" title="关于科学上网"></a>关于科学上网</h1><p>&emsp;&emsp;经过本人尝试多次，使用OpenVPN做代理转发来实现科学上网，还是有点难度。理论上简单可行的东西，搞了好几次都没成功。<br>&emsp;&emsp;本人有亚马逊的海外云主机，在上面搭建了OpenVPN之后怎么也没法成功，甚至云主机都登陆不上了。开始以为是GW将数据包拦截了，导致云主机被封掉。后来使用其他海外主机直接连接均无法连接失联的云主机，使用端口检查工具发现，那个云主机的所有端口都被关闭了。猜测应该是被亚马逊给封掉了，无奈之下只能释放实例，重新搭建服务器。弄了数次发现，结局均以实例被封告终。猜测亚马逊应该是检查到异常流量，直接把实例的数据连接都断掉了（据说OpenVPN的收费版本不会被封掉），绝望之下，尝试了下UDP协议来代替TCP协议，将客户端设置和服务端设置都改为UPD，竟然发现可以访问外网了，而且服务器至今也平安无事~有需求的小伙伴可以尝试UDP协议。另外附上我云主机的server端配置,希望对大家有所帮助。<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">grep ^[a-Z] /etc/openvpn/server.conf</span><br><span class="line">local 0.0.0.0</span><br><span class="line">port 11094</span><br><span class="line">proto udp</span><br><span class="line">dev tun</span><br><span class="line">ca  /etc/openvpn/certs/ca.crt</span><br><span class="line">cert /etc/openvpn/certs/server.crt</span><br><span class="line">key /etc/openvpn/certs/server.key</span><br><span class="line">dh /etc/openvpn/certs/dh.pem</span><br><span class="line">server 10.8.0.0 255.255.255.0</span><br><span class="line">push <span class="string">"redirect-gateway def1 bypass-dhcp"</span></span><br><span class="line">push <span class="string">"dhcp-option DNS 8.8.8.8"</span></span><br><span class="line">keepalive 10 120</span><br><span class="line">cipher AES-256-CBC</span><br><span class="line">max-clients 10</span><br><span class="line">user openvpn</span><br><span class="line">group openvpn</span><br><span class="line">persist-key</span><br><span class="line">persist-tun</span><br><span class="line">status openvpn-status.log</span><br><span class="line">log-append  /var/log/openvpn/openvpn.log</span><br><span class="line">verb 3</span><br><span class="line">mute 20</span><br><span class="line">explicit-exit-notify 1</span><br></pre></td></tr></table></figure></p>
+<hr>
+<p>&emsp;&emsp;本文写得很简略，发现有小伙伴对相关问题很有兴趣，欢迎留言讨论。</p>
     </div>
           <div class="post-tags">
               <a href="/tags/企业级应用/" rel="tag"><i class="fa fa-tag">企业级应用</i></a>
-              <a href="/tags/经验分享/" rel="tag"><i class="fa fa-tag">经验分享</i></a>
               <a href="/tags/OpenVPN/" rel="tag"><i class="fa fa-tag">OpenVPN</i></a>
               <a href="/tags/SSH/" rel="tag"><i class="fa fa-tag">SSH</i></a>
               <a href="/tags/科学上网/" rel="tag"><i class="fa fa-tag">科学上网</i></a>
+              <a href="/tags/经验分享/" rel="tag"><i class="fa fa-tag">经验分享</i></a>
           </div>
     <div style="text-align:center;color: #ccc;font-size:14px;">------------------------------- The End -------------------------------</div>
   <div class="post-widgets">
@@ -392,16 +396,16 @@
       <div class="popular-posts-title"><a href="/blog/14b8983d.html" rel="bookmark">redis高可用配置</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/6187894.html" rel="bookmark">Docker（五）——Docker镜像仓库</a></div>
+      <div class="popular-posts-title"><a href="/blog/366b680c.html" rel="bookmark">企业级应用——监控(一)：zabbix的部署</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/7e3785f.html" rel="bookmark">Docker（四）——容器跨主机网络配置</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/blog/ddd838e7.html" rel="bookmark">Docker（三）——镜像制作</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/blog/5c39f4ef.html" rel="bookmark">Docker（二）——基础命令详解</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/eaa1ac6e.html" rel="bookmark">Docker（一）——基础概念及部署</a></div>
     </li>
   </ul>
 </div>
@@ -445,7 +449,7 @@
       </ul>
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#部署OpenVPN"><span class="nav-number">1.</span> <span class="nav-text">部署OpenVPN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#部署OpenVPN服务器"><span class="nav-number">1.1.</span> <span class="nav-text">部署OpenVPN服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载安装OpenVPN"><span class="nav-number">1.1.1.</span> <span class="nav-text">下载安装OpenVPN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OpenVPN配置"><span class="nav-number">1.1.2.</span> <span class="nav-text">OpenVPN配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#搭建CA并签发证书"><span class="nav-number">1.1.3.</span> <span class="nav-text">搭建CA并签发证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建非对称秘钥对"><span class="nav-number">1.1.4.</span> <span class="nav-text">创建非对称秘钥对</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建客户端证书及配置文件"><span class="nav-number">1.1.5.</span> <span class="nav-text">创建客户端证书及配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置防火墙转发规则"><span class="nav-number">1.1.6.</span> <span class="nav-text">配置防火墙转发规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动OpenVPN服务"><span class="nav-number">1.1.7.</span> <span class="nav-text">启动OpenVPN服务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenVPN客户端"><span class="nav-number">1.2.</span> <span class="nav-text">OpenVPN客户端</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#部署OpenVPN"><span class="nav-number">1.</span> <span class="nav-text">部署OpenVPN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#部署OpenVPN服务器"><span class="nav-number">1.1.</span> <span class="nav-text">部署OpenVPN服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载安装OpenVPN"><span class="nav-number">1.1.1.</span> <span class="nav-text">下载安装OpenVPN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OpenVPN配置"><span class="nav-number">1.1.2.</span> <span class="nav-text">OpenVPN配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#搭建CA并签发证书"><span class="nav-number">1.1.3.</span> <span class="nav-text">搭建CA并签发证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建非对称秘钥对"><span class="nav-number">1.1.4.</span> <span class="nav-text">创建非对称秘钥对</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建客户端证书及配置文件"><span class="nav-number">1.1.5.</span> <span class="nav-text">创建客户端证书及配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置防火墙转发规则"><span class="nav-number">1.1.6.</span> <span class="nav-text">配置防火墙转发规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动OpenVPN服务"><span class="nav-number">1.1.7.</span> <span class="nav-text">启动OpenVPN服务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenVPN客户端"><span class="nav-number">1.2.</span> <span class="nav-text">OpenVPN客户端</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于科学上网"><span class="nav-number">2.</span> <span class="nav-text">关于科学上网</span></a></li></ol></div>
       </div>
       <!--/noindex-->
       <div class="site-overview-wrap sidebar-panel">
@@ -460,7 +464,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
-          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-count">39</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -472,7 +476,7 @@
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">74</span>
+        <span class="site-state-item-count">76</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -502,6 +506,9 @@
       </div>
       <ul class="links-of-blogroll-list" style="padding-left: 30px;">
           <li>
+            <a href="/blog/366b680c.html" title="企业级应用——监控(一)：zabbix的部署" >企业级应用——监控(一)：zabbix的部署</a>
+          </li>
+          <li>
             <a href="/blog/8f374cb8.html" title="使用kubeasz自动化部署K8s" >使用kubeasz自动化部署K8s</a>
           </li>
           <li>
@@ -512,9 +519,6 @@
           </li>
           <li>
             <a href="/blog/7e3785f.html" title="Docker（四）——容器跨主机网络配置" >Docker（四）——容器跨主机网络配置</a>
-          </li>
-          <li>
-            <a href="/blog/5c39f4ef.html" title="Docker（二）——基础命令详解" >Docker（二）——基础命令详解</a>
           </li>
       </ul>
     </div>
@@ -563,7 +567,7 @@ show_date_time();
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">346k</span>
+    <span title="站点总字数">359k</span>
 </div>
 <div class="busuanzi-count">
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
