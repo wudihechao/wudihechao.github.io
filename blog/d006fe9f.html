@@ -45,7 +45,7 @@
   };
 </script>
   <meta name="description" content="&emsp;&emsp; MySQL多实例就是在一台机器上开启多个不同的服务端口（如：3306,3307），运行多个MySQL服务进程，通过不同的socket监听不同的服>务端口来提供各自的服务,本文基于此，来展示如何实现级联复制和读写分离。">
-<meta name="keywords" content="mysql,多实例,级联复制,读写分离">
+<meta name="keywords" content="多实例,mysql,级联复制,读写分离">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql多实例实现主从级联复制及读写分离">
 <meta property="og:url" content="https://hewanyue.com/blog/d006fe9f.html">
@@ -377,8 +377,8 @@
 <p>&emsp;&emsp;在代理机上用命令测试相应读写的是哪个数据库：<br>&emsp;&emsp;mysql -uroot -pPASSWORD -P3306 -h127.0.0.1 -e ‘start transaction;select @@server_id;commit;select @@server_id’<br>+———————+<br>| @@server_id&emsp;  |<br>+———————+<br>|      &emsp; &emsp;   3306&emsp; &emsp;  |<br>+———————+<br>+———————+<br>| @@server_id&emsp;  |<br>+———————+<br>|      &emsp; &emsp;   3307 &emsp; &emsp; |<br>+———————+<br>&emsp;&emsp;说明读写分离，在两个终端上成功实现~</p>
     </div>
           <div class="post-tags">
-              <a href="/tags/mysql/" rel="tag"><i class="fa fa-tag">mysql</i></a>
               <a href="/tags/多实例/" rel="tag"><i class="fa fa-tag">多实例</i></a>
+              <a href="/tags/mysql/" rel="tag"><i class="fa fa-tag">mysql</i></a>
               <a href="/tags/级联复制/" rel="tag"><i class="fa fa-tag">级联复制</i></a>
               <a href="/tags/读写分离/" rel="tag"><i class="fa fa-tag">读写分离</i></a>
           </div>
@@ -424,10 +424,10 @@
       <div class="popular-posts-title"><a href="/blog/108203a7.html" rel="bookmark">mysql数据库MHA实现高可用（多实例间实现）</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/4f0efae7.html" rel="bookmark">关于mariadb10.4.8二进制安装及源码编译后设置密码无效的一些发现</a></div>
+      <div class="popular-posts-title"><a href="/blog/b124800c.html" rel="bookmark">二进制安装及源码编译安装mariadb数据库</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/b124800c.html" rel="bookmark">二进制安装及源码编译安装mariadb数据库</a></div>
+      <div class="popular-posts-title"><a href="/blog/4f0efae7.html" rel="bookmark">关于mariadb10.4.8二进制安装及源码编译后设置密码无效的一些发现</a></div>
     </li>
   </ul>
 </div>
