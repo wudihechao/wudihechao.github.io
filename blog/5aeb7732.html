@@ -45,9 +45,9 @@
   };
 </script>
   <meta name="description" content="&emsp;&emsp;HAProxy是法国开发者 威利塔罗(Willy Tarreau) 在2000年使用C语言开发的一个开源软件，是一款具备高并发(一万以上)、高性能的TCP>和HTTP负载均衡器，支持基于cookie的持久性，自动故障切换，支持正则表达式及web状态统计。&emsp;&emsp;HAProxy特别适用于那些负载特大的web站点，这些站点通常又需要会话保持或七层处理。HA">
-<meta name="keywords" content="企业级应用,负载均衡,高可用,HAProxy,调度算法">
+<meta name="keywords" content="企业级应用,高可用,HAProxy,负载均衡,调度算法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="企业级应用：负载均衡层——haproxy(一)">
+<meta property="og:title" content="企业级应用——负载均衡层haproxy（一）">
 <meta property="og:url" content="https://hewanyue.com/blog/5aeb7732.html">
 <meta property="og:site_name" content="BOHC!">
 <meta property="og:description" content="&emsp;&emsp;HAProxy是法国开发者 威利塔罗(Willy Tarreau) 在2000年使用C语言开发的一个开源软件，是一款具备高并发(一万以上)、高性能的TCP>和HTTP负载均衡器，支持基于cookie的持久性，自动故障切换，支持正则表达式及web状态统计。&emsp;&emsp;HAProxy特别适用于那些负载特大的web站点，这些站点通常又需要会话保持或七层处理。HA">
@@ -59,9 +59,9 @@
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191104221921281.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191106151518987.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191106151645858.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
-<meta property="og:updated_time" content="2019-12-09T03:07:00.649Z">
+<meta property="og:updated_time" content="2019-12-25T13:50:17.154Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="企业级应用：负载均衡层——haproxy(一)">
+<meta name="twitter:title" content="企业级应用——负载均衡层haproxy（一）">
 <meta name="twitter:description" content="&emsp;&emsp;HAProxy是法国开发者 威利塔罗(Willy Tarreau) 在2000年使用C语言开发的一个开源软件，是一款具备高并发(一万以上)、高性能的TCP>和HTTP负载均衡器，支持基于cookie的持久性，自动故障切换，支持正则表达式及web状态统计。&emsp;&emsp;HAProxy特别适用于那些负载特大的web站点，这些站点通常又需要会话保持或七层处理。HA">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20191104184953377.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
   <link rel="canonical" href="https://hewanyue.com/blog/5aeb7732">
@@ -75,7 +75,7 @@
     isArchive: false
   };
 </script>
-  <title>企业级应用：负载均衡层——haproxy(一) | BOHC!</title>
+  <title>企业级应用——负载均衡层haproxy（一） | BOHC!</title>
   <noscript>
   <style>
   .use-motion .brand,
@@ -264,7 +264,7 @@
       <meta itemprop="name" content="BOHC!">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">企业级应用：负载均衡层——haproxy(一)
+        <h2 class="post-title" itemprop="name headline">企业级应用——负载均衡层haproxy（一）
         </h2>
         <div class="post-meta">
             <span class="post-meta-item">
@@ -280,7 +280,7 @@
               </span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/linux进阶/" itemprop="url" rel="index"><span itemprop="name">linux进阶</span></a></span>
             </span>
-            <span id="/blog/5aeb7732.html" class="post-meta-item leancloud_visitors" data-flag-title="企业级应用：负载均衡层——haproxy(一)" title="阅读次数">
+            <span id="/blog/5aeb7732.html" class="post-meta-item leancloud_visitors" data-flag-title="企业级应用——负载均衡层haproxy（一）" title="阅读次数">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
@@ -428,9 +428,9 @@
     </div>
           <div class="post-tags">
               <a href="/tags/企业级应用/" rel="tag"><i class="fa fa-tag">企业级应用</i></a>
-              <a href="/tags/负载均衡/" rel="tag"><i class="fa fa-tag">负载均衡</i></a>
               <a href="/tags/高可用/" rel="tag"><i class="fa fa-tag">高可用</i></a>
               <a href="/tags/HAProxy/" rel="tag"><i class="fa fa-tag">HAProxy</i></a>
+              <a href="/tags/负载均衡/" rel="tag"><i class="fa fa-tag">负载均衡</i></a>
               <a href="/tags/调度算法/" rel="tag"><i class="fa fa-tag">调度算法</i></a>
           </div>
     <div style="text-align:center;color: #ccc;font-size:14px;">------------------------------- The End -------------------------------</div>
@@ -457,7 +457,7 @@
     <strong>本文作者： </strong>Hechao</li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://hewanyue.com/blog/5aeb7732.html" title="企业级应用：负载均衡层——haproxy(一)">https://hewanyue.com/blog/5aeb7732.html</a>
+    <a href="https://hewanyue.com/blog/5aeb7732.html" title="企业级应用——负载均衡层haproxy（一）">https://hewanyue.com/blog/5aeb7732.html</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
@@ -472,10 +472,10 @@
   <ul class="popular-posts" style="margin-top: 10px;
     margin-bottom: 10px;">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/f5daec50.html" rel="bookmark">企业级应用：负载均衡层——haproxy(二)</a></div>
+      <div class="popular-posts-title"><a href="/blog/f5daec50.html" rel="bookmark">企业级应用——负载均衡层haproxy（二）</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/159ef64c.html" rel="bookmark">企业级应用：负载均衡层——LVS调度器详解</a></div>
+      <div class="popular-posts-title"><a href="/blog/159ef64c.html" rel="bookmark">企业级应用——负载均衡层LVS调度器详解</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/blog/14b8983d.html" rel="bookmark">redis高可用配置</a></div>
@@ -497,8 +497,8 @@
             </div>
             <span class="post-nav-divider"></span>
             <div class="post-nav-prev post-nav-item">
-                <a href="/blog/f5daec50.html" rel="prev" title="企业级应用：负载均衡层——haproxy(二)">
-                  企业级应用：负载均衡层——haproxy(二) <i class="fa fa-chevron-right"></i>
+                <a href="/blog/f5daec50.html" rel="prev" title="企业级应用——负载均衡层haproxy（二）">
+                  企业级应用——负载均衡层haproxy（二） <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -585,7 +585,7 @@
       </div>
       <ul class="links-of-blogroll-list" style="padding-left: 30px;">
           <li>
-            <a href="/blog/366b680c.html" title="企业级应用——监控(一)：zabbix的部署" >企业级应用——监控(一)：zabbix的部署</a>
+            <a href="/blog/366b680c.html" title="企业级应用——监控（一）zabbix的部署" >企业级应用——监控（一）zabbix的部署</a>
           </li>
           <li>
             <a href="/blog/8f374cb8.html" title="使用kubeasz自动化部署K8s" >使用kubeasz自动化部署K8s</a>

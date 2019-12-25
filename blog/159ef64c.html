@@ -47,14 +47,14 @@
   <meta name="description" content="&emsp;&emsp;所谓LVS，是Linux Virtual Server的缩写，直译就是linux虚拟服务器。LVS说是虚拟服务器，并不是说这个服务器本身不存在，而是指一般用户访问企业web网站时，访问的都是LVS，而LVS本身上面没有任何web界面资源，真实的界面以及服务都在后端web服务器上，LVS服务器起到的是一个指引分流的作用，所以相对来说，后端的web服务器是real server">
 <meta name="keywords" content="企业级应用,负载均衡,调度算法,集群,LVS">
 <meta property="og:type" content="article">
-<meta property="og:title" content="企业级应用：负载均衡层——LVS调度器详解">
+<meta property="og:title" content="企业级应用——负载均衡层LVS调度器详解">
 <meta property="og:url" content="https://hewanyue.com/blog/159ef64c.html">
 <meta property="og:site_name" content="BOHC!">
 <meta property="og:description" content="&emsp;&emsp;所谓LVS，是Linux Virtual Server的缩写，直译就是linux虚拟服务器。LVS说是虚拟服务器，并不是说这个服务器本身不存在，而是指一般用户访问企业web网站时，访问的都是LVS，而LVS本身上面没有任何web界面资源，真实的界面以及服务都在后端web服务器上，LVS服务器起到的是一个指引分流的作用，所以相对来说，后端的web服务器是real server">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-04T03:45:19.496Z">
+<meta property="og:updated_time" content="2019-12-25T13:52:17.736Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="企业级应用：负载均衡层——LVS调度器详解">
+<meta name="twitter:title" content="企业级应用——负载均衡层LVS调度器详解">
 <meta name="twitter:description" content="&emsp;&emsp;所谓LVS，是Linux Virtual Server的缩写，直译就是linux虚拟服务器。LVS说是虚拟服务器，并不是说这个服务器本身不存在，而是指一般用户访问企业web网站时，访问的都是LVS，而LVS本身上面没有任何web界面资源，真实的界面以及服务都在后端web服务器上，LVS服务器起到的是一个指引分流的作用，所以相对来说，后端的web服务器是real server">
   <link rel="canonical" href="https://hewanyue.com/blog/159ef64c">
 <script id="page-configurations">
@@ -67,7 +67,7 @@
     isArchive: false
   };
 </script>
-  <title>企业级应用：负载均衡层——LVS调度器详解 | BOHC!</title>
+  <title>企业级应用——负载均衡层LVS调度器详解 | BOHC!</title>
   <noscript>
   <style>
   .use-motion .brand,
@@ -256,7 +256,7 @@
       <meta itemprop="name" content="BOHC!">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">企业级应用：负载均衡层——LVS调度器详解
+        <h2 class="post-title" itemprop="name headline">企业级应用——负载均衡层LVS调度器详解
         </h2>
         <div class="post-meta">
             <span class="post-meta-item">
@@ -272,7 +272,7 @@
               </span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/linux进阶/" itemprop="url" rel="index"><span itemprop="name">linux进阶</span></a></span>
             </span>
-            <span id="/blog/159ef64c.html" class="post-meta-item leancloud_visitors" data-flag-title="企业级应用：负载均衡层——LVS调度器详解" title="阅读次数">
+            <span id="/blog/159ef64c.html" class="post-meta-item leancloud_visitors" data-flag-title="企业级应用——负载均衡层LVS调度器详解" title="阅读次数">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
@@ -424,7 +424,7 @@ server-address</code><br>&emsp;&emsp;rip[:port] 如省略port，不作端口映�
     <strong>本文作者： </strong>Hechao</li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://hewanyue.com/blog/159ef64c.html" title="企业级应用：负载均衡层——LVS调度器详解">https://hewanyue.com/blog/159ef64c.html</a>
+    <a href="https://hewanyue.com/blog/159ef64c.html" title="企业级应用——负载均衡层LVS调度器详解">https://hewanyue.com/blog/159ef64c.html</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
@@ -439,10 +439,10 @@ server-address</code><br>&emsp;&emsp;rip[:port] 如省略port，不作端口映�
   <ul class="popular-posts" style="margin-top: 10px;
     margin-bottom: 10px;">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/f5daec50.html" rel="bookmark">企业级应用：负载均衡层——haproxy(二)</a></div>
+      <div class="popular-posts-title"><a href="/blog/f5daec50.html" rel="bookmark">企业级应用——负载均衡层haproxy（二）</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/5aeb7732.html" rel="bookmark">企业级应用：负载均衡层——haproxy(一)</a></div>
+      <div class="popular-posts-title"><a href="/blog/5aeb7732.html" rel="bookmark">企业级应用——负载均衡层haproxy（一）</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/blog/14b8983d.html" rel="bookmark">redis高可用配置</a></div>
@@ -552,7 +552,7 @@ server-address</code><br>&emsp;&emsp;rip[:port] 如省略port，不作端口映�
       </div>
       <ul class="links-of-blogroll-list" style="padding-left: 30px;">
           <li>
-            <a href="/blog/366b680c.html" title="企业级应用——监控(一)：zabbix的部署" >企业级应用——监控(一)：zabbix的部署</a>
+            <a href="/blog/366b680c.html" title="企业级应用——监控（一）zabbix的部署" >企业级应用——监控（一）zabbix的部署</a>
           </li>
           <li>
             <a href="/blog/8f374cb8.html" title="使用kubeasz自动化部署K8s" >使用kubeasz自动化部署K8s</a>

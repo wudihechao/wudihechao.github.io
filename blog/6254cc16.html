@@ -47,7 +47,7 @@
   <meta name="description" content="&emsp;&emsp;tomcat作为一个应用服务器，单机性能上都是无法满足生产中需要的，而想要解决高并发场景，光靠提升单机性能，成本与效果肯定都是无法让人接受的，而此时我们一般都采用tomcat集群的方式，用多台tomcat服务器来共同支撑我们的业务。&emsp;&emsp;但这时就出现了一个新的问题，那就是会话保持。因为每台tomcat服务器的session是独立的，当客户端被调度到一个新的">
 <meta name="keywords" content="tomcat,redis,集群,MSM,session">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MSM实现tomcat集群的session共享">
+<meta property="og:title" content="tomcat集群的session共享">
 <meta property="og:url" content="https://hewanyue.com/blog/6254cc16.html">
 <meta property="og:site_name" content="BOHC!">
 <meta property="og:description" content="&emsp;&emsp;tomcat作为一个应用服务器，单机性能上都是无法满足生产中需要的，而想要解决高并发场景，光靠提升单机性能，成本与效果肯定都是无法让人接受的，而此时我们一般都采用tomcat集群的方式，用多台tomcat服务器来共同支撑我们的业务。&emsp;&emsp;但这时就出现了一个新的问题，那就是会话保持。因为每台tomcat服务器的session是独立的，当客户端被调度到一个新的">
@@ -58,9 +58,9 @@
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191122212611125.png">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191122212642803.png">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191123194433405.gif">
-<meta property="og:updated_time" content="2019-11-25T02:02:43.967Z">
+<meta property="og:updated_time" content="2019-12-25T12:25:45.326Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MSM实现tomcat集群的session共享">
+<meta name="twitter:title" content="tomcat集群的session共享">
 <meta name="twitter:description" content="&emsp;&emsp;tomcat作为一个应用服务器，单机性能上都是无法满足生产中需要的，而想要解决高并发场景，光靠提升单机性能，成本与效果肯定都是无法让人接受的，而此时我们一般都采用tomcat集群的方式，用多台tomcat服务器来共同支撑我们的业务。&emsp;&emsp;但这时就出现了一个新的问题，那就是会话保持。因为每台tomcat服务器的session是独立的，当客户端被调度到一个新的">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20191122152145219.gif">
   <link rel="canonical" href="https://hewanyue.com/blog/6254cc16">
@@ -74,7 +74,7 @@
     isArchive: false
   };
 </script>
-  <title>MSM实现tomcat集群的session共享 | BOHC!</title>
+  <title>tomcat集群的session共享 | BOHC!</title>
   <noscript>
   <style>
   .use-motion .brand,
@@ -263,7 +263,7 @@
       <meta itemprop="name" content="BOHC!">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">MSM实现tomcat集群的session共享
+        <h2 class="post-title" itemprop="name headline">tomcat集群的session共享
         </h2>
         <div class="post-meta">
             <span class="post-meta-item">
@@ -279,7 +279,7 @@
               </span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/tomcat/" itemprop="url" rel="index"><span itemprop="name">tomcat</span></a></span>
             </span>
-            <span id="/blog/6254cc16.html" class="post-meta-item leancloud_visitors" data-flag-title="MSM实现tomcat集群的session共享" title="阅读次数">
+            <span id="/blog/6254cc16.html" class="post-meta-item leancloud_visitors" data-flag-title="tomcat集群的session共享" title="阅读次数">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
@@ -381,7 +381,7 @@
     <strong>本文作者： </strong>Hechao</li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://hewanyue.com/blog/6254cc16.html" title="MSM实现tomcat集群的session共享">https://hewanyue.com/blog/6254cc16.html</a>
+    <a href="https://hewanyue.com/blog/6254cc16.html" title="tomcat集群的session共享">https://hewanyue.com/blog/6254cc16.html</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
@@ -405,7 +405,7 @@
       <div class="popular-posts-title"><a href="/blog/f2c1a89e.html" rel="bookmark">一键源码编译安装redis</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/159ef64c.html" rel="bookmark">企业级应用：负载均衡层——LVS调度器详解</a></div>
+      <div class="popular-posts-title"><a href="/blog/159ef64c.html" rel="bookmark">企业级应用——负载均衡层LVS调度器详解</a></div>
     </li>
   </ul>
 </div>
@@ -506,7 +506,7 @@
       </div>
       <ul class="links-of-blogroll-list" style="padding-left: 30px;">
           <li>
-            <a href="/blog/366b680c.html" title="企业级应用——监控(一)：zabbix的部署" >企业级应用——监控(一)：zabbix的部署</a>
+            <a href="/blog/366b680c.html" title="企业级应用——监控（一）zabbix的部署" >企业级应用——监控（一）zabbix的部署</a>
           </li>
           <li>
             <a href="/blog/8f374cb8.html" title="使用kubeasz自动化部署K8s" >使用kubeasz自动化部署K8s</a>

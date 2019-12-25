@@ -45,7 +45,7 @@
   };
 </script>
   <meta name="description" content="&emsp;&emsp;KVM 是Kernel-based Virtual Machine的简称，是一个开源的系统虚拟化模块，自Linux 2.6.20之后集成在Linux的各个主要发行版本中，KVM目前已成为学术界的主流 VMM (virtual machine monitor，虚拟机监视器，也称为hypervisor)之一。">
-<meta name="keywords" content="虚拟化,KVM,一键安装,ubuntu,负载均衡">
+<meta name="keywords" content="一键安装,负载均衡,虚拟化,KVM,ubuntu">
 <meta property="og:type" content="article">
 <meta property="og:title" content="KVM虚拟化">
 <meta property="og:url" content="https://hewanyue.com/blog/f989902e.html">
@@ -362,11 +362,11 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">vim php-fpm/php-fpm.sh</span><br><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">DST=<span class="string">"/apps"</span></span><br><span class="line">[ -a php-*.tar.* ] || &#123; <span class="built_in">echo</span> <span class="string">' the absence of php-7.3.10.tar.xz'</span> ;<span class="built_in">exit</span> 1;&#125;</span><br><span class="line">[ -a /usr/lib/systemd/system/php-fpm.service ] && &#123; <span class="built_in">echo</span> <span class="string">' php-fpm is aready installed'</span> ;<span class="built_in">exit</span> 2;&#125;</span><br><span class="line">[ -a <span class="variable">$DST</span>/php* ] && &#123; <span class="built_in">echo</span> <span class="string">' php is aready installed'</span> ;<span class="built_in">exit</span> 2;&#125;</span><br><span class="line">mkdir -p <span class="variable">$DST</span>/php</span><br><span class="line">yum install libxml2-devel bzip2-devel libmcrypt-devel -y || &#123; <span class="built_in">echo</span> <span class="string">'Dependencies is not installed'</span>;<span class="built_in">exit</span> 5;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#wget https://www.php.net/distributions/php-7.3.10.tar.xz</span></span><br><span class="line">tar xvf php-*.tar.*</span><br><span class="line"><span class="built_in">cd</span> php-7.3.10</span><br><span class="line"></span><br><span class="line">./configure \</span><br><span class="line">--prefix=<span class="variable">$DST</span>/php \</span><br><span class="line">--<span class="built_in">enable</span>-mysqlnd \</span><br><span class="line">--with-mysqli=mysqlnd \</span><br><span class="line">--with-pdo-mysql=mysqlnd \</span><br><span class="line">--with-openssl \</span><br><span class="line">--with-freetype-dir \</span><br><span class="line">--with-jpeg-dir \</span><br><span class="line">--with-png-dir \</span><br><span class="line">--with-zlib \</span><br><span class="line">--with-libxml-dir=/usr \</span><br><span class="line">--with-config-file-path=/etc \</span><br><span class="line">--with-config-file-scan-dir=/etc/php.d \</span><br><span class="line">--<span class="built_in">enable</span>-mbstring \</span><br><span class="line">--<span class="built_in">enable</span>-xml \</span><br><span class="line">--<span class="built_in">enable</span>-sockets \</span><br><span class="line">--<span class="built_in">enable</span>-fpm \</span><br><span class="line">--<span class="built_in">enable</span>-maintainer-zts \</span><br><span class="line">--<span class="built_in">disable</span>-fileinfo</span><br><span class="line"></span><br><span class="line"> make -j 4 && make install</span><br><span class="line"></span><br><span class="line">cp php.ini-production  /etc/php.ini</span><br><span class="line">cp sapi/fpm/php-fpm.service /usr/lib/systemd/system/</span><br><span class="line"></span><br><span class="line">cp <span class="variable">$DST</span>/php/etc/php-fpm.conf.default  <span class="variable">$DST</span>/php/etc/php-fpm.conf</span><br><span class="line">cp <span class="variable">$DST</span>/php/etc/php-fpm.d/www.conf.default <span class="variable">$DST</span>/php/etc/php-fpm.d/www.conf</span><br><span class="line"></span><br><span class="line">sed -i <span class="string">'s@nobody@nginx@g'</span> <span class="variable">$DST</span>/php/etc/php-fpm.d/www.conf</span><br><span class="line">sed -i <span class="string">'/#/!s@index  index.html index.htm@index index.php index.html index.htm@'</span> <span class="variable">$DST</span>/nginx/conf/nginx.conf</span><br><span class="line">sed -i <span class="string">'s@/scripts$fastcgi_script_name@$document_root$fastcgi_script_name@g'</span> <span class="variable">$DST</span>/nginx/conf/nginx.conf</span><br><span class="line"><span class="variable">$DST</span>/nginx/sbin/nginx -s reload</span><br><span class="line">systemctl <span class="built_in">enable</span> --now php-fpm</span><br></pre></td></tr></table></figure>
     </div>
           <div class="post-tags">
+              <a href="/tags/一键安装/" rel="tag"><i class="fa fa-tag">一键安装</i></a>
+              <a href="/tags/负载均衡/" rel="tag"><i class="fa fa-tag">负载均衡</i></a>
               <a href="/tags/虚拟化/" rel="tag"><i class="fa fa-tag">虚拟化</i></a>
               <a href="/tags/KVM/" rel="tag"><i class="fa fa-tag">KVM</i></a>
-              <a href="/tags/一键安装/" rel="tag"><i class="fa fa-tag">一键安装</i></a>
               <a href="/tags/ubuntu/" rel="tag"><i class="fa fa-tag">ubuntu</i></a>
-              <a href="/tags/负载均衡/" rel="tag"><i class="fa fa-tag">负载均衡</i></a>
           </div>
     <div style="text-align:center;color: #ccc;font-size:14px;">------------------------------- The End -------------------------------</div>
   <div class="post-widgets">
@@ -407,19 +407,19 @@
   <ul class="popular-posts" style="margin-top: 10px;
     margin-bottom: 10px;">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/eaa1ac6e.html" rel="bookmark">Docker（一）——基础概念及部署</a></div>
-    </li>
-    <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/blog/b365780e.html" rel="bookmark">linux上部署与配置tomcat</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/blog/f2c1a89e.html" rel="bookmark">一键源码编译安装redis</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/f5daec50.html" rel="bookmark">企业级应用：负载均衡层——haproxy(二)</a></div>
+      <div class="popular-posts-title"><a href="/blog/f5daec50.html" rel="bookmark">企业级应用——负载均衡层haproxy（二）</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/5aeb7732.html" rel="bookmark">企业级应用：负载均衡层——haproxy(一)</a></div>
+      <div class="popular-posts-title"><a href="/blog/5aeb7732.html" rel="bookmark">企业级应用——负载均衡层haproxy（一）</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/159ef64c.html" rel="bookmark">企业级应用——负载均衡层LVS调度器详解</a></div>
     </li>
   </ul>
 </div>
@@ -520,7 +520,7 @@
       </div>
       <ul class="links-of-blogroll-list" style="padding-left: 30px;">
           <li>
-            <a href="/blog/366b680c.html" title="企业级应用——监控(一)：zabbix的部署" >企业级应用——监控(一)：zabbix的部署</a>
+            <a href="/blog/366b680c.html" title="企业级应用——监控（一）zabbix的部署" >企业级应用——监控（一）zabbix的部署</a>
           </li>
           <li>
             <a href="/blog/8f374cb8.html" title="使用kubeasz自动化部署K8s" >使用kubeasz自动化部署K8s</a>
