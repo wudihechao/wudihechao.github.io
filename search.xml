@@ -297,8 +297,8 @@
       </categories>
       <tags>
         <tag>Docker</tag>
-        <tag>企业级应用</tag>
         <tag>容器</tag>
+        <tag>企业级应用</tag>
         <tag>镜像仓库</tag>
       </tags>
   </entry>
@@ -335,8 +335,8 @@
       </categories>
       <tags>
         <tag>Docker</tag>
-        <tag>企业级应用</tag>
         <tag>容器</tag>
+        <tag>企业级应用</tag>
         <tag>跨主机通信</tag>
         <tag>容器网络</tag>
       </tags>
@@ -405,9 +405,9 @@
       </categories>
       <tags>
         <tag>Docker</tag>
-        <tag>Dockerfile</tag>
-        <tag>企业级应用</tag>
         <tag>容器</tag>
+        <tag>企业级应用</tag>
+        <tag>Dockerfile</tag>
       </tags>
   </entry>
   <entry>
@@ -454,8 +454,8 @@
       </categories>
       <tags>
         <tag>Docker</tag>
-        <tag>企业级应用</tag>
         <tag>容器</tag>
+        <tag>企业级应用</tag>
       </tags>
   </entry>
   <entry>
@@ -510,8 +510,8 @@
       </categories>
       <tags>
         <tag>Docker</tag>
-        <tag>企业级应用</tag>
         <tag>容器</tag>
+        <tag>企业级应用</tag>
         <tag>虚拟化</tag>
       </tags>
   </entry>
@@ -632,10 +632,10 @@
       </categories>
       <tags>
         <tag>企业级应用</tag>
-        <tag>经验分享</tag>
         <tag>OpenVPN</tag>
         <tag>SSH</tag>
         <tag>科学上网</tag>
+        <tag>经验分享</tag>
       </tags>
   </entry>
   <entry>
@@ -1453,12 +1453,12 @@ server-address</code><br>&emsp;&emsp;rip[:port] 如省略port，不作端口映�
 <li>Chef：ruby，国内应用少</li>
 <li>Cfengine</li>
 <li>func<h3 id="Ansible简介"><a href="#Ansible简介" class="headerlink" title="Ansible简介"></a>Ansible简介</h3>
-        <div id="aplayer-WJEJJUlq" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
+        <div id="aplayer-ZqzYbZas" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
             <pre class="aplayer-lrc-content"></pre>
         </div>
         <script>
           var ap = new APlayer({
-            element: document.getElementById("aplayer-WJEJJUlq"),
+            element: document.getElementById("aplayer-ZqzYbZas"),
             narrow: false,
             autoplay: true,
             showlrc: false,
@@ -2040,12 +2040,12 @@ home=/app/user1 group=root&#39;</code><br><code>ansible srv -m user -a &#39;name
     <title>由闷骚书生与假正经小姐的古典爱情故事说起</title>
     <url>//blog/1b0b2a49.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>&emsp;&emsp;城南外湖畔边，天气下着小雨，刮起微风，吹起茶铺门前的风铃叮铃作响让人昏昏欲睡，但铺子里舒缓轻柔的抚琴声却给人自然清醒的感觉，立锥之地，瞥一眼便一览无遗，简单的陈设透露出古朴淡雅，一长发清秀女子品一壶热茶望着这淅淅沥沥的小雨。<br><a id="more"></a><br><img src="https://img-blog.csdnimg.cn/20190801143110232.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;“姑娘有心事？”一身穿白袍英俊书生抿嘴品茶问到。少女：“公子与城北唐公子可是熟识？”<br>&emsp;&emsp;“书生：“我与他乃世交，有何事？”少女：“那下次你与他一同前来我这品茶可好？”书生：“他不喜品茶。”少女：“无妨，那公子可知他喜欢什么，我可以慢慢学。”书生：“我其实也不喜品茶。”少女：“公子莫说谎，不喜为何天天早晨都跑我这茶铺。”<br>
-        <div id="aplayer-CeUJtmKF" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
+        <div id="aplayer-kYTziEPZ" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
             <pre class="aplayer-lrc-content"></pre>
         </div>
         <script>
           var ap = new APlayer({
-            element: document.getElementById("aplayer-CeUJtmKF"),
+            element: document.getElementById("aplayer-kYTziEPZ"),
             narrow: false,
             autoplay: true,
             showlrc: false,
@@ -2287,15 +2287,15 @@ home=/app/user1 group=root&#39;</code><br><code>ansible srv -m user -a &#39;name
 ]]></content>
   </entry>
   <entry>
-    <title>categories</title>
-    <url>/categories/index.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-  </entry>
-  <entry>
     <title>about</title>
     <url>/about/index.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>title:  BOHC!<br>subtitle: blog of hechao!<br>description: BOHC is just a blog of hechao.<br>keywords: Linux DEVOPS</p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>categories</title>
+    <url>/categories/index.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
   </entry>
   <entry>
     <title>友链</title>
