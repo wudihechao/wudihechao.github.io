@@ -48,7 +48,7 @@
 <meta name="keywords" content="tomcat,redis,集群,MSM,session">
 <meta property="og:type" content="article">
 <meta property="og:title" content="tomcat集群的session共享">
-<meta property="og:url" content="https://hewanyue.com/blog/6254cc16.html">
+<meta property="og:url" content="https://wudihechao.github.io/blog/6254cc16.html">
 <meta property="og:site_name" content="BOHC!">
 <meta property="og:description" content="&emsp;&emsp;tomcat作为一个应用服务器，单机性能上都是无法满足生产中需要的，而想要解决高并发场景，光靠提升单机性能，成本与效果肯定都是无法让人接受的，而此时我们一般都采用tomcat集群的方式，用多台tomcat服务器来共同支撑我们的业务。&emsp;&emsp;但这时就出现了一个新的问题，那就是会话保持。因为每台tomcat服务器的session是独立的，当客户端被调度到一个新的">
 <meta property="og:locale" content="zh-CN">
@@ -63,7 +63,7 @@
 <meta name="twitter:title" content="tomcat集群的session共享">
 <meta name="twitter:description" content="&emsp;&emsp;tomcat作为一个应用服务器，单机性能上都是无法满足生产中需要的，而想要解决高并发场景，光靠提升单机性能，成本与效果肯定都是无法让人接受的，而此时我们一般都采用tomcat集群的方式，用多台tomcat服务器来共同支撑我们的业务。&emsp;&emsp;但这时就出现了一个新的问题，那就是会话保持。因为每台tomcat服务器的session是独立的，当客户端被调度到一个新的">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20191122152145219.gif">
-  <link rel="canonical" href="https://hewanyue.com/blog/6254cc16">
+  <link rel="canonical" href="https://wudihechao.github.io/blog/6254cc16">
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
@@ -253,7 +253,7 @@
   <div id="posts" class="posts-expand">
       <article itemscope itemtype="http://schema.org/Article">
   <div class="post-block post">
-    <link itemprop="mainEntityOfPage" href="https://hewanyue.com/blog/6254cc16.html">
+    <link itemprop="mainEntityOfPage" href="https://wudihechao.github.io/blog/6254cc16.html">
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hechao">
       <meta itemprop="description" content="BOHC is just a blog of hechao.">
@@ -316,7 +316,7 @@
 <ul>
 <li>nginx、httpd或者haproxy的调度实现session绑定,一般是源地址哈希方式实现<br>优点:简单易配置<br>缺点：<br>①如果目标服务器故障后,没有做持久化的话就会丢失session;<br>②即便做了持久化,当服务器故障后,nginx或者haproxy会不得不重新分配一个tomcat服务器,而这时因为新的tomcat服务器上没有原来的sessionID,所以无法找到相应会话信息,会重新分配一个sessionID给客户端,就算原来的tomcat服务器重新上线,又被分配到原来的tomcat服务器中,可此时客户端已经有了新的sessionID,也不会去读取最开始的session信息,那些会话信息就相当于永远丢失了。</li>
 <li>session复制集群,官方给出的tomcat会话共享解决方案<br>&emsp;&emsp;tomcat自己提供的多播集群，通过多播将任何一台的session同步到其他节点。<br>缺点：<br>①tomcat的同步节点不宜过多，互相即时通信session需要太多带宽；<br>②每一台tomcat服务器都拥有全部session信息，内存占用太多。</li>
-<li>session server<br>&emsp;&emsp;session 共享服务器，一般使用memcached、redis做共享的session服务器。<br>目前最理想的解决方案，不过会需要额外的机器来配置共享服务器。<h3 id="反向代理的session绑定"><a href="#反向代理的session绑定" class="headerlink" title="反向代理的session绑定"></a>反向代理的session绑定</h3>&emsp;&emsp;这种实现session保持的方案，一般是使用的不多，一般用于公司内部中的会话保持场景。只需在haproxy或者nginx中的调度算法中，加入基于源地址hash即可（调度算法参考<a href="https://hewanyue.com/blog/5aeb7732.html#haproxy调度算法">之前博客</a>）。于是，用户每次访问都会被调度到同一台tomcat服务器上，上面已有他的session信息，便实现了会话保持。<h4 id="配置实现"><a href="#配置实现" class="headerlink" title="配置实现"></a>配置实现</h4>&emsp;&emsp;我们用一台nginx服务器做反向代理，两台tomcat服务器来演示实现过程。</li>
+<li>session server<br>&emsp;&emsp;session 共享服务器，一般使用memcached、redis做共享的session服务器。<br>目前最理想的解决方案，不过会需要额外的机器来配置共享服务器。<h3 id="反向代理的session绑定"><a href="#反向代理的session绑定" class="headerlink" title="反向代理的session绑定"></a>反向代理的session绑定</h3>&emsp;&emsp;这种实现session保持的方案，一般是使用的不多，一般用于公司内部中的会话保持场景。只需在haproxy或者nginx中的调度算法中，加入基于源地址hash即可（调度算法参考<a href="https://hewanyue.com/blog/5aeb7732.html#haproxy调度算法" rel="noopener external nofollow noreferrer" target="_blank">之前博客</a>）。于是，用户每次访问都会被调度到同一台tomcat服务器上，上面已有他的session信息，便实现了会话保持。<h4 id="配置实现"><a href="#配置实现" class="headerlink" title="配置实现"></a>配置实现</h4>&emsp;&emsp;我们用一台nginx服务器做反向代理，两台tomcat服务器来演示实现过程。</li>
 </ul>
 <p>&gt nginx主机ip：192.168.32.207<br>&gt tomcat主机1ip：192.168.32.231<br>&gt tomcat主机2ip：192.168.32.232</p>
 <p>&emsp;&emsp;将3台机子中的nginx或tomcat服务启动之后，分别检查80端口和8080端口是否都已监听，确保服务启动。<br><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">iptables</span> <span class="string">-F</span></span><br><span class="line"><span class="attr">getenforce</span> <span class="string">0</span></span><br></pre></td></tr></table></figure></p>
@@ -348,7 +348,7 @@
 <h4 id="non-sticky模式"><a href="#non-sticky模式" class="headerlink" title="non-sticky模式"></a>non-sticky模式</h4><p>&emsp;&emsp;从msm 1.4.0之后开始支持non-sticky模式。<br>Tomcat session为中转Session，如果n1为主session，n2为备session，则产生的新的Session会发送给主、备memcached，并清除本地Session，也就是说tomcat本身不储存session信息，只负责产生session。<br>&emsp;&emsp;需要注意的是，如果n1下线，n2转换为主节点。n1再次上线，n2依然是主Session存储节点。<br>&emsp;&emsp;配置方法与sticky大致相同，不过在<code>/conf/context.xml</code>文件中的<code>context标签</code>结尾插入代码略有不同，具体代码如下<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&ltManager className=<span class="string">"de.javakaffee.web.msm.MemcachedBackupSessionManager"</span></span><br><span class="line">memcachedNodes=<span class="string">"n1:192.168.32.231:11211,n2:192.168.32.232:11211"</span></span><br><span class="line">sticky=<span class="string">"false"</span></span><br><span class="line">sessionBackupAsync=<span class="string">"false"</span></span><br><span class="line">lockingMode=<span class="string">"uriPattern:/path1|/path2"</span></span><br><span class="line">requestUriIgnorePattern=<span class="string">".*\.(ico|png|gif|jpg|css|js)$"</span></span><br><span class="line">transcoderFactoryClass=<span class="string">"de.javakaffee.web.msm.serializer.kryo.KryoTranscoderFactory"</span></span><br><span class="line">/&gt</span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;重启tomcat服务后生效。此时在/apps/tomcat/log/catalina.out文件中看到如下信息。<br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail -n <span class="number">20</span> /apps/tomcat/logs/catalina.<span class="keyword">out</span></span><br></pre></td></tr></table></figure></p>
 <figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">23-Nov-2019 13:43:05.863 INFO [myapp-startStop-1] de.javakaffee.web.msm.MemcachedSessionService.startInternal --------</span><br><span class="line"><span class="bullet">-  </span>finished initialization:</span><br><span class="line"><span class="bullet">- </span>sticky: false</span><br><span class="line"><span class="bullet">- </span>operation timeout: 1000</span><br><span class="line"><span class="bullet">- </span>node ids: [n1, n2]</span><br><span class="line"><span class="bullet">- </span>failover node ids: []</span><br><span class="line"><span class="bullet">- </span>storage key prefix: null</span><br><span class="line"><span class="bullet">- </span>locking mode: uriPattern:/path1|/path2 (expiration: 5s)</span><br><span class="line">--------</span><br></pre></td></tr></table></figure>
-<p>&emsp;&emsp;再次尝试访问负载代理服务器，发现同样实现了访问tomcatIP变化，sessionID不变，说明配置成功。<br>&emsp;&emsp;而后端使用redis作为session共享服务器时，仅支持non-stricky模式。建议用另外的服务器安装redis服务，并修改监听IP后启动，tomcat服务器中将<code>jedis.jar</code>jar包拷贝至tomcat安装路径下<code>lib目录</code>，同样在<code>/conf/context.xml</code>文件中的<code>context标签</code>结尾插入下面的代码即可（例如redis服务器IP端口为192.168.32.233:6379，可配置redis集群，可参考我之前博客<a href="https://hewanyue.com/blog/14b8983d.html">redis高可用配置</a>）。<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&ltManager className=<span class="string">"de.javakaffee.web.msm.MemcachedBackupSessionManager"</span></span><br><span class="line">memcachedNodes=<span class="string">"redis://192.168.32.233:6379"</span></span><br><span class="line">sticky=<span class="string">"false"</span></span><br><span class="line">sessionBackupAsync=<span class="string">"false"</span></span><br><span class="line">lockingMode=<span class="string">"uriPattern:/path1|/path2"</span></span><br><span class="line">requestUriIgnorePattern=<span class="string">".*\.(ico|png|gif|jpg|css|js)$"</span></span><br><span class="line">transcoderFactoryClass=<span class="string">"de.javakaffee.web.msm.serializer.kryo.KryoTranscoderFactory"</span></span><br><span class="line">/&gt</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;再次尝试访问负载代理服务器，发现同样实现了访问tomcatIP变化，sessionID不变，说明配置成功。<br>&emsp;&emsp;而后端使用redis作为session共享服务器时，仅支持non-stricky模式。建议用另外的服务器安装redis服务，并修改监听IP后启动，tomcat服务器中将<code>jedis.jar</code>jar包拷贝至tomcat安装路径下<code>lib目录</code>，同样在<code>/conf/context.xml</code>文件中的<code>context标签</code>结尾插入下面的代码即可（例如redis服务器IP端口为192.168.32.233:6379，可配置redis集群，可参考我之前博客<a href="https://hewanyue.com/blog/14b8983d.html" rel="noopener external nofollow noreferrer" target="_blank">redis高可用配置</a>）。<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&ltManager className=<span class="string">"de.javakaffee.web.msm.MemcachedBackupSessionManager"</span></span><br><span class="line">memcachedNodes=<span class="string">"redis://192.168.32.233:6379"</span></span><br><span class="line">sticky=<span class="string">"false"</span></span><br><span class="line">sessionBackupAsync=<span class="string">"false"</span></span><br><span class="line">lockingMode=<span class="string">"uriPattern:/path1|/path2"</span></span><br><span class="line">requestUriIgnorePattern=<span class="string">".*\.(ico|png|gif|jpg|css|js)$"</span></span><br><span class="line">transcoderFactoryClass=<span class="string">"de.javakaffee.web.msm.serializer.kryo.KryoTranscoderFactory"</span></span><br><span class="line">/&gt</span><br></pre></td></tr></table></figure></p>
     </div>
           <div class="post-tags">
               <a href="/tags/tomcat/" rel="tag"><i class="fa fa-tag">tomcat</i></a>
@@ -381,7 +381,7 @@
     <strong>本文作者： </strong>Hechao</li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://hewanyue.com/blog/6254cc16.html" title="tomcat集群的session共享">https://hewanyue.com/blog/6254cc16.html</a>
+    <a href="https://wudihechao.github.io/blog/6254cc16.html" title="tomcat集群的session共享">https://wudihechao.github.io/blog/6254cc16.html</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
@@ -549,7 +549,7 @@ return i;
 show_date_time();
 </script>
   <div class="cc-license motion-element" itemprop="license">
-    <a href="https://hewanyue.com/" class="cc-opacity"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+    <a href="https://hewanyue.com/" class="cc-opacity" rel="noopener external nofollow noreferrer" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
   </div>
       </div>
  </aside>
