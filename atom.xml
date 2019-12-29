@@ -142,9 +142,9 @@
     
       <category term="Docker" scheme="https://wudihechao.github.io/tags/Docker/"/>
     
-      <category term="容器" scheme="https://wudihechao.github.io/tags/%E5%AE%B9%E5%99%A8/"/>
-    
       <category term="企业级应用" scheme="https://wudihechao.github.io/tags/%E4%BC%81%E4%B8%9A%E7%BA%A7%E5%BA%94%E7%94%A8/"/>
+    
+      <category term="容器" scheme="https://wudihechao.github.io/tags/%E5%AE%B9%E5%99%A8/"/>
     
       <category term="镜像仓库" scheme="https://wudihechao.github.io/tags/%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93/"/>
     
@@ -170,9 +170,9 @@
     
       <category term="Docker" scheme="https://wudihechao.github.io/tags/Docker/"/>
     
-      <category term="容器" scheme="https://wudihechao.github.io/tags/%E5%AE%B9%E5%99%A8/"/>
-    
       <category term="企业级应用" scheme="https://wudihechao.github.io/tags/%E4%BC%81%E4%B8%9A%E7%BA%A7%E5%BA%94%E7%94%A8/"/>
+    
+      <category term="容器" scheme="https://wudihechao.github.io/tags/%E5%AE%B9%E5%99%A8/"/>
     
       <category term="跨主机通信" scheme="https://wudihechao.github.io/tags/%E8%B7%A8%E4%B8%BB%E6%9C%BA%E9%80%9A%E4%BF%A1/"/>
     
@@ -200,11 +200,11 @@
     
       <category term="Docker" scheme="https://wudihechao.github.io/tags/Docker/"/>
     
-      <category term="容器" scheme="https://wudihechao.github.io/tags/%E5%AE%B9%E5%99%A8/"/>
+      <category term="Dockerfile" scheme="https://wudihechao.github.io/tags/Dockerfile/"/>
     
       <category term="企业级应用" scheme="https://wudihechao.github.io/tags/%E4%BC%81%E4%B8%9A%E7%BA%A7%E5%BA%94%E7%94%A8/"/>
     
-      <category term="Dockerfile" scheme="https://wudihechao.github.io/tags/Dockerfile/"/>
+      <category term="容器" scheme="https://wudihechao.github.io/tags/%E5%AE%B9%E5%99%A8/"/>
     
   </entry>
   
@@ -228,9 +228,9 @@
     
       <category term="Docker" scheme="https://wudihechao.github.io/tags/Docker/"/>
     
-      <category term="容器" scheme="https://wudihechao.github.io/tags/%E5%AE%B9%E5%99%A8/"/>
-    
       <category term="企业级应用" scheme="https://wudihechao.github.io/tags/%E4%BC%81%E4%B8%9A%E7%BA%A7%E5%BA%94%E7%94%A8/"/>
+    
+      <category term="容器" scheme="https://wudihechao.github.io/tags/%E5%AE%B9%E5%99%A8/"/>
     
   </entry>
   
@@ -254,9 +254,9 @@
     
       <category term="Docker" scheme="https://wudihechao.github.io/tags/Docker/"/>
     
-      <category term="容器" scheme="https://wudihechao.github.io/tags/%E5%AE%B9%E5%99%A8/"/>
-    
       <category term="企业级应用" scheme="https://wudihechao.github.io/tags/%E4%BC%81%E4%B8%9A%E7%BA%A7%E5%BA%94%E7%94%A8/"/>
+    
+      <category term="容器" scheme="https://wudihechao.github.io/tags/%E5%AE%B9%E5%99%A8/"/>
     
       <category term="虚拟化" scheme="https://wudihechao.github.io/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/"/>
     
@@ -462,9 +462,9 @@
     
       <category term="故障" scheme="https://wudihechao.github.io/tags/%E6%95%85%E9%9A%9C/"/>
     
-      <category term="排错" scheme="https://wudihechao.github.io/tags/%E6%8E%92%E9%94%99/"/>
-    
       <category term="记录" scheme="https://wudihechao.github.io/tags/%E8%AE%B0%E5%BD%95/"/>
+    
+      <category term="排错" scheme="https://wudihechao.github.io/tags/%E6%8E%92%E9%94%99/"/>
     
       <category term="NFS" scheme="https://wudihechao.github.io/tags/NFS/"/>
     
@@ -554,9 +554,9 @@
     
       <category term="故障" scheme="https://wudihechao.github.io/tags/%E6%95%85%E9%9A%9C/"/>
     
-      <category term="排错" scheme="https://wudihechao.github.io/tags/%E6%8E%92%E9%94%99/"/>
-    
       <category term="记录" scheme="https://wudihechao.github.io/tags/%E8%AE%B0%E5%BD%95/"/>
+    
+      <category term="排错" scheme="https://wudihechao.github.io/tags/%E6%8E%92%E9%94%99/"/>
     
       <category term="epel" scheme="https://wudihechao.github.io/tags/epel/"/>
     

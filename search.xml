@@ -298,8 +298,8 @@ dpkg -i gitlab-ce_11.11.8-ce.0_amd64.deb
       </categories>
       <tags>
         <tag>Docker</tag>
-        <tag>容器</tag>
         <tag>企业级应用</tag>
+        <tag>容器</tag>
         <tag>镜像仓库</tag>
       </tags>
   </entry>
@@ -336,8 +336,8 @@ dpkg -i gitlab-ce_11.11.8-ce.0_amd64.deb
       </categories>
       <tags>
         <tag>Docker</tag>
-        <tag>容器</tag>
         <tag>企业级应用</tag>
+        <tag>容器</tag>
         <tag>跨主机通信</tag>
         <tag>容器网络</tag>
       </tags>
@@ -406,9 +406,9 @@ dpkg -i gitlab-ce_11.11.8-ce.0_amd64.deb
       </categories>
       <tags>
         <tag>Docker</tag>
-        <tag>容器</tag>
-        <tag>企业级应用</tag>
         <tag>Dockerfile</tag>
+        <tag>企业级应用</tag>
+        <tag>容器</tag>
       </tags>
   </entry>
   <entry>
@@ -455,8 +455,8 @@ dpkg -i gitlab-ce_11.11.8-ce.0_amd64.deb
       </categories>
       <tags>
         <tag>Docker</tag>
-        <tag>容器</tag>
         <tag>企业级应用</tag>
+        <tag>容器</tag>
       </tags>
   </entry>
   <entry>
@@ -511,8 +511,8 @@ dpkg -i gitlab-ce_11.11.8-ce.0_amd64.deb
       </categories>
       <tags>
         <tag>Docker</tag>
-        <tag>容器</tag>
         <tag>企业级应用</tag>
+        <tag>容器</tag>
         <tag>虚拟化</tag>
       </tags>
   </entry>
@@ -836,8 +836,8 @@ dpkg -i gitlab-ce_11.11.8-ce.0_amd64.deb
       </categories>
       <tags>
         <tag>故障</tag>
-        <tag>排错</tag>
         <tag>记录</tag>
+        <tag>排错</tag>
         <tag>NFS</tag>
         <tag>挂载</tag>
         <tag>软链接</tag>
@@ -1166,8 +1166,8 @@ dpkg -i gitlab-ce_11.11.8-ce.0_amd64.deb
       </categories>
       <tags>
         <tag>故障</tag>
-        <tag>排错</tag>
         <tag>记录</tag>
+        <tag>排错</tag>
         <tag>epel</tag>
         <tag>阿里云</tag>
       </tags>
@@ -1454,12 +1454,12 @@ server-address</code><br>&emsp;&emsp;rip[:port] 如省略port，不作端口映�
 <li>Chef：ruby，国内应用少</li>
 <li>Cfengine</li>
 <li>func<h3 id="Ansible简介"><a href="#Ansible简介" class="headerlink" title="Ansible简介"></a>Ansible简介</h3>
-        <div id="aplayer-JObwCLgj" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
+        <div id="aplayer-tqjFJHKK" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
             <pre class="aplayer-lrc-content"></pre>
         </div>
         <script>
           var ap = new APlayer({
-            element: document.getElementById("aplayer-JObwCLgj"),
+            element: document.getElementById("aplayer-tqjFJHKK"),
             narrow: false,
             autoplay: true,
             showlrc: false,
@@ -1726,11 +1726,11 @@ home=/app/user1 group=root&#39;</code><br><code>ansible srv -m user -a &#39;name
         <category>NotOnlySQL</category>
       </categories>
       <tags>
+        <tag>多实例</tag>
+        <tag>mysql</tag>
         <tag>MHA</tag>
         <tag>高可用</tag>
-        <tag>mysql</tag>
         <tag>mariadb</tag>
-        <tag>多实例</tag>
       </tags>
   </entry>
   <entry>
@@ -1808,8 +1808,8 @@ home=/app/user1 group=root&#39;</code><br><code>ansible srv -m user -a &#39;name
         <category>NotOnlySQL</category>
       </categories>
       <tags>
-        <tag>mysql</tag>
         <tag>多实例</tag>
+        <tag>mysql</tag>
         <tag>级联复制</tag>
         <tag>读写分离</tag>
       </tags>
@@ -2041,12 +2041,12 @@ home=/app/user1 group=root&#39;</code><br><code>ansible srv -m user -a &#39;name
     <title>由闷骚书生与假正经小姐的古典爱情故事说起</title>
     <url>//blog/1b0b2a49.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>&emsp;&emsp;城南外湖畔边，天气下着小雨，刮起微风，吹起茶铺门前的风铃叮铃作响让人昏昏欲睡，但铺子里舒缓轻柔的抚琴声却给人自然清醒的感觉，立锥之地，瞥一眼便一览无遗，简单的陈设透露出古朴淡雅，一长发清秀女子品一壶热茶望着这淅淅沥沥的小雨。<br><a id="more"></a><br><img src="https://img-blog.csdnimg.cn/20190801143110232.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;“姑娘有心事？”一身穿白袍英俊书生抿嘴品茶问到。少女：“公子与城北唐公子可是熟识？”<br>&emsp;&emsp;“书生：“我与他乃世交，有何事？”少女：“那下次你与他一同前来我这品茶可好？”书生：“他不喜品茶。”少女：“无妨，那公子可知他喜欢什么，我可以慢慢学。”书生：“我其实也不喜品茶。”少女：“公子莫说谎，不喜为何天天早晨都跑我这茶铺。”<br>
-        <div id="aplayer-EMcHhBnw" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
+        <div id="aplayer-icQFcFxD" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
             <pre class="aplayer-lrc-content"></pre>
         </div>
         <script>
           var ap = new APlayer({
-            element: document.getElementById("aplayer-EMcHhBnw"),
+            element: document.getElementById("aplayer-icQFcFxD"),
             narrow: false,
             autoplay: true,
             showlrc: false,
