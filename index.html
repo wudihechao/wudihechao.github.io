@@ -193,13 +193,13 @@
     <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i>关于</a>
   </li>
         <li class="menu-item menu-item-tags">
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">79</span></a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">84</span></a>
   </li>
         <li class="menu-item menu-item-categories">
     <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">7</span></a>
   </li>
         <li class="menu-item menu-item-archives">
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">40</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">43</span></a>
   </li>
         <li class="menu-item menu-item-friends">
     <a href="/friends/" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i>友链</a>
@@ -243,6 +243,231 @@
         <div class="content-wrap">
           <div id="content" class="content">
   <div id="posts" class="posts-expand">
+        <article itemscope itemtype="http://schema.org/Article">
+  <div class="post-block home">
+    <link itemprop="mainEntityOfPage" href="https://wudihechao.github.io/blog/bd240ad7.html">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hechao">
+      <meta itemprop="description" content="BOHC is just a blog of hechao.">
+      <meta itemprop="image" content="/images/touxiang.gif">
+    </span>
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BOHC!">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+            <a href="/blog/bd240ad7.html" class="post-title-link" itemprop="url">企业级应用——ELK（三）：filebeat</a>
+        </h2>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <time title="创建时间：2020-01-06 17:47:24" itemprop="dateCreated datePublished" datetime="2020-01-06T17:47:24+08:00">2020-01-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/linux进阶/" itemprop="url" rel="index"><span itemprop="name">linux进阶</span></a></span>
+            </span>
+            <span id="/blog/bd240ad7.html" class="post-meta-item leancloud_visitors" data-flag-title="企业级应用——ELK（三）：filebeat" title="阅读次数">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="leancloud-visitors-count"></span>
+              <span>℃</span>
+            </span>
+              <span class="post-meta-divider">•</span>
+  <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+    <a title="valine" href="/blog/bd240ad7.html#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/blog/bd240ad7.html" itemprop="commentCount"></span></a>
+  </span>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              <span>6.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              <span>17 分钟</span>
+            </span>
+        </div>
+      </header>
+    <div class="post-body" itemprop="articleBody">
+          <p>&emsp;&emsp;提到ELK，就不得不提到EFK，通常意义上说，EFK是指用filebeat代替logstash形成的新组合。（哈，也有是指Fluentd的，这个我们之后再说）<br>&emsp;&emsp;Filebeat 是基于原先 logstash-forwarder 的源码改造出来的，无需依赖 Java 环境就能运行，安装包10M不到。<br>&emsp;&emsp;而且如果日志的量很大，Logstash 会遇到资源占用高的问题，为解决这个问题，我们引入了Filebeat。Filebeat 是基于 logstash-forwarder 的源码改造而成，用 Golang 编写，无需依赖 Java 环境，效率高，占用内存和 CPU 比较少，非常适合作为 Agent 跑在服务器上，来实现日志转发的功能。<br>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/bd240ad7.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+    </div>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+      </footer>
+  </div>
+  </article>
+        <article itemscope itemtype="http://schema.org/Article">
+  <div class="post-block home">
+    <link itemprop="mainEntityOfPage" href="https://wudihechao.github.io/blog/ee80297c.html">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hechao">
+      <meta itemprop="description" content="BOHC is just a blog of hechao.">
+      <meta itemprop="image" content="/images/touxiang.gif">
+    </span>
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BOHC!">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+            <a href="/blog/ee80297c.html" class="post-title-link" itemprop="url">企业级应用——ELK（二）：ELK进阶</a>
+        </h2>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <time title="创建时间：2020-01-03 22:30:18" itemprop="dateCreated datePublished" datetime="2020-01-03T22:30:18+08:00">2020-01-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/linux进阶/" itemprop="url" rel="index"><span itemprop="name">linux进阶</span></a></span>
+            </span>
+            <span id="/blog/ee80297c.html" class="post-meta-item leancloud_visitors" data-flag-title="企业级应用——ELK（二）：ELK进阶" title="阅读次数">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="leancloud-visitors-count"></span>
+              <span>℃</span>
+            </span>
+              <span class="post-meta-divider">•</span>
+  <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+    <a title="valine" href="/blog/ee80297c.html#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/blog/ee80297c.html" itemprop="commentCount"></span></a>
+  </span>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              <span>7.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              <span>19 分钟</span>
+            </span>
+        </div>
+      </header>
+    <div class="post-body" itemprop="articleBody">
+          <p>&emsp;&emsp;之前我们部署好了ELK的基本架构，也实现了从系统日志以及nginx中收集日志，不过等待我们的问题依然很多：怎么讲收集好的日志放至临时缓存？或者怎么从缓存中提取日志？对于java应用等日志非单行的服务日志该如何收集等等。本文将继续讲解ELK的各种进阶用法。<br>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/ee80297c.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+    </div>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+      </footer>
+  </div>
+  </article>
+        <article itemscope itemtype="http://schema.org/Article">
+  <div class="post-block home">
+    <link itemprop="mainEntityOfPage" href="https://wudihechao.github.io/blog/a1b53f63.html">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hechao">
+      <meta itemprop="description" content="BOHC is just a blog of hechao.">
+      <meta itemprop="image" content="/images/touxiang.gif">
+    </span>
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BOHC!">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+            <a href="/blog/a1b53f63.html" class="post-title-link" itemprop="url">企业级应用——ELK（一）：ELK的部署</a>
+        </h2>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <time title="创建时间：2020-01-03 18:00:54" itemprop="dateCreated datePublished" datetime="2020-01-03T18:00:54+08:00">2020-01-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/linux进阶/" itemprop="url" rel="index"><span itemprop="name">linux进阶</span></a></span>
+            </span>
+            <span id="/blog/a1b53f63.html" class="post-meta-item leancloud_visitors" data-flag-title="企业级应用——ELK（一）：ELK的部署" title="阅读次数">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="leancloud-visitors-count"></span>
+              <span>℃</span>
+            </span>
+              <span class="post-meta-divider">•</span>
+  <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+    <a title="valine" href="/blog/a1b53f63.html#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/blog/a1b53f63.html" itemprop="commentCount"></span></a>
+  </span>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              <span>11k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              <span>27 分钟</span>
+            </span>
+        </div>
+      </header>
+    <div class="post-body" itemprop="articleBody">
+          <p>&emsp;&emsp;ELK是Elasticsearch、Logstash、Kibana的简称，这三者是核心套件，但并非全部。<br>&emsp;&emsp;Elasticsearch是实时全文搜索和分析引擎，提供搜集、分析、存储数据三大功能；是一套开放REST和JAVA API等结构提供高效搜索功能，可扩展的分布式系统。它构建于Apache Lucene搜索引擎库之上。<br>&emsp;&emsp;Logstash是一个用来搜集、分析、过滤日志的工具。它支持几乎任何类型的日志，包括系统日志、错误日志和自定义应用程序日志。它可以从许多来源接收日志，这些来源包括 syslog、消息传递（例如 RabbitMQ）和JMX，它能够以多种方式输出数据，包括电子邮件、websockets和Elasticsearch。<br>&emsp;&emsp;Kibana是一个基于Web的图形界面，用于搜索、分析和可视化存储在 Elasticsearch指标中的日志数据。它利用Elasticsearch的REST接口来检索数据，不仅允许用户创建他们自己的数据的定制仪表板视图，还允许他们以特殊的方式查询和过滤数据。<br>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/a1b53f63.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+    </div>
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+      </footer>
+  </div>
+  </article>
         <article itemscope itemtype="http://schema.org/Article">
   <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="https://wudihechao.github.io/blog/73a033d9.html">
@@ -768,234 +993,9 @@
       </footer>
   </div>
   </article>
-        <article itemscope itemtype="http://schema.org/Article">
-  <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="https://wudihechao.github.io/blog/5c39f4ef.html">
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Hechao">
-      <meta itemprop="description" content="BOHC is just a blog of hechao.">
-      <meta itemprop="image" content="/images/touxiang.gif">
-    </span>
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="BOHC!">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-            <a href="/blog/5c39f4ef.html" class="post-title-link" itemprop="url">Docker（二）——基础命令详解</a>
-        </h2>
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <time title="创建时间：2019-12-06 15:02:09" itemprop="dateCreated datePublished" datetime="2019-12-06T15:02:09+08:00">2019-12-06</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-divider">•</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Cloud/" itemprop="url" rel="index"><span itemprop="name">Cloud</span></a></span>
-            </span>
-            <span id="/blog/5c39f4ef.html" class="post-meta-item leancloud_visitors" data-flag-title="Docker（二）——基础命令详解" title="阅读次数">
-              <span class="post-meta-divider">•</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="leancloud-visitors-count"></span>
-              <span>℃</span>
-            </span>
-              <span class="post-meta-divider">•</span>
-  <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-    <a title="valine" href="/blog/5c39f4ef.html#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/blog/5c39f4ef.html" itemprop="commentCount"></span></a>
-  </span>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-divider">•</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-              <span>8.5k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-divider">•</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-              <span>21 分钟</span>
-            </span>
-        </div>
-      </header>
-    <div class="post-body" itemprop="articleBody">
-          <p>&emsp;&emsp;安装完Docker的服务，我们就可以开始使用Docker了。<br>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/5c39f4ef.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-    </div>
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-      </footer>
-  </div>
-  </article>
-        <article itemscope itemtype="http://schema.org/Article">
-  <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="https://wudihechao.github.io/blog/eaa1ac6e.html">
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Hechao">
-      <meta itemprop="description" content="BOHC is just a blog of hechao.">
-      <meta itemprop="image" content="/images/touxiang.gif">
-    </span>
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="BOHC!">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-            <a href="/blog/eaa1ac6e.html" class="post-title-link" itemprop="url">Docker（一）——基础概念及部署</a>
-        </h2>
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <time title="创建时间：2019-12-04 09:58:21" itemprop="dateCreated datePublished" datetime="2019-12-04T09:58:21+08:00">2019-12-04</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-divider">•</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Cloud/" itemprop="url" rel="index"><span itemprop="name">Cloud</span></a></span>
-            </span>
-            <span id="/blog/eaa1ac6e.html" class="post-meta-item leancloud_visitors" data-flag-title="Docker（一）——基础概念及部署" title="阅读次数">
-              <span class="post-meta-divider">•</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="leancloud-visitors-count"></span>
-              <span>℃</span>
-            </span>
-              <span class="post-meta-divider">•</span>
-  <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-    <a title="valine" href="/blog/eaa1ac6e.html#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/blog/eaa1ac6e.html" itemprop="commentCount"></span></a>
-  </span>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-divider">•</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-              <span>10k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-divider">•</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-              <span>26 分钟</span>
-            </span>
-        </div>
-      </header>
-    <div class="post-body" itemprop="articleBody">
-          <p>&emsp;&emsp;在企业生产应用中，docker容器技术及k8s的编排管理工具的使用率越来越高，这项技术甚至已经改变了很多企业的架构与框架流程，因为容器技术的出现，可以将应用以集装箱的方式打包交付，使应用在不同的团队中共享，通过镜像的方式应用可以部署于任何环境中。这样避免了各团队之间的协作问题的出现，成为企业实现DevOps目标的重要工具，而且以容器方式交付的Docker技术支持不断地开发迭代，提升了产品开发和交付速度，极大的方便了业务的横向扩容。<br>&emsp;&emsp;且与KVM虚拟化技术不同的是，Docker直接移植于Linux内核之上，通过运行Linux进程将底层设备虚拟隔离，这样系统性能的损耗也要比虚拟机低的多，几乎可以忽略。同时，Docker应用容器的启停非常高效，可以支持大规模的分布系统的水平扩展，真正给企业开发带来福音。<br>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/eaa1ac6e.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-    </div>
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-      </footer>
-  </div>
-  </article>
-        <article itemscope itemtype="http://schema.org/Article">
-  <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="https://wudihechao.github.io/blog/f989902e.html">
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Hechao">
-      <meta itemprop="description" content="BOHC is just a blog of hechao.">
-      <meta itemprop="image" content="/images/touxiang.gif">
-    </span>
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="BOHC!">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-            <a href="/blog/f989902e.html" class="post-title-link" itemprop="url">KVM虚拟化</a>
-        </h2>
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <time title="创建时间：2019-11-29 22:28:35" itemprop="dateCreated datePublished" datetime="2019-11-29T22:28:35+08:00">2019-11-29</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-divider">•</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Cloud/" itemprop="url" rel="index"><span itemprop="name">Cloud</span></a></span>
-            </span>
-            <span id="/blog/f989902e.html" class="post-meta-item leancloud_visitors" data-flag-title="KVM虚拟化" title="阅读次数">
-              <span class="post-meta-divider">•</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="leancloud-visitors-count"></span>
-              <span>℃</span>
-            </span>
-              <span class="post-meta-divider">•</span>
-  <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-    <a title="valine" href="/blog/f989902e.html#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/blog/f989902e.html" itemprop="commentCount"></span></a>
-  </span>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-divider">•</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-              <span>18k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-divider">•</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-              <span>46 分钟</span>
-            </span>
-        </div>
-      </header>
-    <div class="post-body" itemprop="articleBody">
-          <p>&emsp;&emsp;KVM 是Kernel-based Virtual Machine的简称，是一个开源的系统虚拟化模块，自Linux 2.6.20之后集成在Linux的各个主要发行版本中，KVM目前已成为学术界的主流 VMM (virtual machine monitor，虚拟机监视器，也称为hypervisor)之一。<br>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/f989902e.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-    </div>
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-      </footer>
-  </div>
-  </article>
   </div>
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
           </div>
         </div>
@@ -1032,7 +1032,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
-          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-count">43</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1044,7 +1044,7 @@
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">79</span>
+        <span class="site-state-item-count">84</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -1074,19 +1074,19 @@
       </div>
       <ul class="links-of-blogroll-list" style="padding-left: 30px;">
           <li>
+            <a href="/blog/bd240ad7.html" title="企业级应用——ELK（三）：filebeat" >企业级应用——ELK（三）：filebeat</a>
+          </li>
+          <li>
+            <a href="/blog/ee80297c.html" title="企业级应用——ELK（二）：ELK进阶" >企业级应用——ELK（二）：ELK进阶</a>
+          </li>
+          <li>
+            <a href="/blog/a1b53f63.html" title="企业级应用——ELK（一）：ELK的部署" >企业级应用——ELK（一）：ELK的部署</a>
+          </li>
+          <li>
             <a href="/blog/73a033d9.html" title="企业级应用——DevOps（一）gitlab的部署与配置" >企业级应用——DevOps（一）gitlab的部署与配置</a>
           </li>
           <li>
             <a href="/blog/366b680c.html" title="企业级应用——监控（一）zabbix的部署" >企业级应用——监控（一）zabbix的部署</a>
-          </li>
-          <li>
-            <a href="/blog/8f374cb8.html" title="使用kubeasz自动化部署K8s" >使用kubeasz自动化部署K8s</a>
-          </li>
-          <li>
-            <a href="/blog/107b7ce7.html" title="使用kubeadm部署安装K8s" >使用kubeadm部署安装K8s</a>
-          </li>
-          <li>
-            <a href="/blog/6187894.html" title="Docker（五）——Docker镜像仓库" >Docker（五）——Docker镜像仓库</a>
           </li>
       </ul>
     </div>
@@ -1126,7 +1126,7 @@ show_date_time();
     </main>
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user-circle-o"></i>
   </span>
@@ -1135,7 +1135,7 @@ show_date_time();
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">365k</span>
+    <span title="站点总字数">390k</span>
 </div>
 <div class="busuanzi-count">
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>

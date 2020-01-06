@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta name="baidu-site-verification" content="vT6Jf980C0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.ico?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.ico?v=7.4.0">
+  <link rel="alternate" href="/atom.xml" title="BOHC!" type="application/atom+xml">
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    copycode: {"enable":true,"show_result":true,"style":"default"},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":true,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+  <meta name="description" content="&emsp;&emsp;之前我们部署好了ELK的基本架构，也实现了从系统日志以及nginx中收集日志，不过等待我们的问题依然很多：怎么讲收集好的日志放至临时缓存？或者怎么从缓存中提取日志？对于java应用等日志非单行的服务日志该如何收集等等。本文将继续讲解ELK的各种进阶用法。">
+<meta name="keywords" content="企业级应用,ELK,Elasticsearch,Logstash,Kibana">
+<meta property="og:type" content="article">
+<meta property="og:title" content="企业级应用——ELK（二）：ELK进阶">
+<meta property="og:url" content="https://wudihechao.github.io/blog/ee80297c.html">
+<meta property="og:site_name" content="BOHC!">
+<meta property="og:description" content="&emsp;&emsp;之前我们部署好了ELK的基本架构，也实现了从系统日志以及nginx中收集日志，不过等待我们的问题依然很多：怎么讲收集好的日志放至临时缓存？或者怎么从缓存中提取日志？对于java应用等日志非单行的服务日志该如何收集等等。本文将继续讲解ELK的各种进阶用法。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200103214555106.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2020-01-06T12:09:15.202Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="企业级应用——ELK（二）：ELK进阶">
+<meta name="twitter:description" content="&emsp;&emsp;之前我们部署好了ELK的基本架构，也实现了从系统日志以及nginx中收集日志，不过等待我们的问题依然很多：怎么讲收集好的日志放至临时缓存？或者怎么从缓存中提取日志？对于java应用等日志非单行的服务日志该如何收集等等。本文将继续讲解ELK的各种进阶用法。">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200103214555106.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
+  <link rel="canonical" href="https://wudihechao.github.io/blog/ee80297c">
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+  <title>企业级应用——ELK（二）：ELK进阶 | BOHC!</title>
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+<script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "https://hm.baidu.com/hm.js?a0d4e217e26da03ea5ca2acc76d543ae";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();</script>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="/dist/APlayer.min.css" class="aplayer-style-marker">
+<script src="/dist/APlayer.min.js" class="aplayer-script-marker"></script>
+</head>
+<body oncontextmenu=self.event.returnValue=false>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+        <div id="aplayer" class="aplayer aplayer-withlist  aplayer-fixed aplayer-narrow" style="position: fixed; z-index: 5; left: 0px; width: 400px;">
+            <pre class="aplayer-lrc-content"></pre>
+        </div>
+        <script>
+          const ap = new APlayer({
+            container: document.getElementById("aplayer"),
+            narrow: false,
+            autoplay: false,
+            listFolded: true,  //播放列表默认折叠
+            mutex: true,  //互斥，阻止多个播放器同时播放，当前播放器播放时暂停其他播放器
+            showlrc: true,
+            lrcType: 3,
+            audio: [
+            {
+              name: "差你一次旅行",
+              artist: "翁大涵",
+              url: "https://wudihechao.github.io/mp3/chaniyicilvxing.m4a",
+              cover: "https://wudihechao.github.io/mp3/cover/chaniyicilvxing.jpg",
+              lrc: "https://wudihechao.github.io/mp3/lrc/chaniyicilvxing.lrc",
+            },
+            {
+              name: "星月神话",
+              artist: "金莎",
+              url: "https://wudihechao.github.io/mp3/xingyueshenhua.mp3",
+              cover: "https://wudihechao.github.io/mp3/cover/xingyueshenhua.jpg",
+              lrc: "https://wudihechao.github.io/mp3/lrc/xingyueshenhua.lrc",
+            },
+            {
+              name: "体面",
+              artist: "于文文",
+              url: "https://wudihechao.github.io/mp3/timian.mp3",
+              cover: "https://wudihechao.github.io/mp3/cover/timian.jpg",
+              lrc: "https://wudihechao.github.io/mp3/lrc/timian.lrc",
+            },
+            {
+              name: "白羊",
+              artist: "徐秉龙&沈以诚",
+              url: "https://wudihechao.github.io/mp3/baiyang.mp3",
+              cover: "https://wudihechao.github.io/mp3/cover/baiyang.jpg",
+              lrc: "https://wudihechao.github.io/mp3/lrc/baiyang.lrc",
+            },
+            {
+              name: "绿色",
+              artist: "陈雪凝",
+              url: "https://wudihechao.github.io/mp3/lvse.mp3",
+              cover: "https://wudihechao.github.io/mp3/cover/lvse.jpg",
+              lrc: "https://wudihechao.github.io/mp3/lrc/lvse.lrc",
+            },
+            {
+              name: "退",
+              artist: "蒋蒋",
+              url: "https://wudihechao.github.io/mp3/tui.mp3",
+              cover: "https://wudihechao.github.io/mp3/cover/tui.jpg",
+              lrc: "https://wudihechao.github.io/mp3/lrc/tui.lrc",
+            },
+            {
+              name: "恋爱循环",
+              artist: "花泽香菜",
+              url: "https://wudihechao.github.io/mp3/lianaixunhuan.mp3",
+              cover: "https://wudihechao.github.io/mp3/cover/lianaixunhuan.jpg",
+              lrc: "https://wudihechao.github.io/mp3/lrc/lianaixunhuan.lrc",
+            }
+          ]
+          });          window.aplayers || (window.aplayers = []);
+          window.aplayers.push(ap);
+        </script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+<a href="https://github.com/wudihechao/" rel="external nofollow noreferrer" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">BOHC!</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">blog of hechao!</h1>
+  </div>
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i>首页</a>
+  </li>
+        <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i>关于</a>
+  </li>
+        <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">84</span></a>
+  </li>
+        <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">7</span></a>
+  </li>
+        <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">43</span></a>
+  </li>
+        <li class="menu-item menu-item-friends">
+    <a href="/friends/" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i>友链</a>
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" rel="external nofollow noreferrer" class="popup-trigger">
+          <i class="menu-item-icon fa fa-search fa-fw"></i>搜索</a>
+      </li>
+  </ul>
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+</div>
+<div class="search-pop-overlay"></div>
+  </div>
+</div>
+    </header>
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a class="book-mark-link book-mark-link-fixed" href="#"></a>
+  <a href="https://github.com/wudihechao" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener external nofollow noreferrer" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://wudihechao.github.io/blog/ee80297c.html">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hechao">
+      <meta itemprop="description" content="BOHC is just a blog of hechao.">
+      <meta itemprop="image" content="/images/touxiang.gif">
+    </span>
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BOHC!">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">企业级应用——ELK（二）：ELK进阶
+        </h2>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <time title="创建时间：2020-01-03 22:30:18" itemprop="dateCreated datePublished" datetime="2020-01-03T22:30:18+08:00">2020-01-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/linux进阶/" itemprop="url" rel="index"><span itemprop="name">linux进阶</span></a></span>
+            </span>
+            <span id="/blog/ee80297c.html" class="post-meta-item leancloud_visitors" data-flag-title="企业级应用——ELK（二）：ELK进阶" title="阅读次数">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="leancloud-visitors-count"></span>
+              <span>℃</span>
+            </span>
+              <span class="post-meta-divider">•</span>
+  <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+    <a title="valine" href="/blog/ee80297c.html#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/blog/ee80297c.html" itemprop="commentCount"></span></a>
+  </span>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              <span>7.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-divider">•</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              <span>19 分钟</span>
+            </span>
+        </div>
+      </header>
+    <div class="post-body" itemprop="articleBody">
+        <p>&emsp;&emsp;之前我们部署好了ELK的基本架构，也实现了从系统日志以及nginx中收集日志，不过等待我们的问题依然很多：怎么讲收集好的日志放至临时缓存？或者怎么从缓存中提取日志？对于java应用等日志非单行的服务日志该如何收集等等。本文将继续讲解ELK的各种进阶用法。<br><a id="more"></a></p>
+<h2 id="收集tomcat日志"><a href="#收集tomcat日志" class="headerlink" title="收集tomcat日志"></a>收集tomcat日志</h2><p>&emsp;&emsp;收集tomcat中的日志比较简单，跟nginx一样，将日志序列化为json格式即可。<br>&emsp;&emsp;修改tomcat配置文件,将日志格式修改为如下格式。<br><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /usr/<span class="keyword">local</span>/tomcat/conf/<span class="keyword">server</span>.xml</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="params"><Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"</span></span><br><span class="line"><span class="params">       prefix="localhost_access_log" suffix=".txt"</span></span><br><span class="line"><span class="params">       pattern="&#123;<span class="variable">&quot</span>;clientip<span class="variable">&quot</span>;:<span class="variable">&quot</span>;%h<span class="variable">&quot</span>;,<span class="variable">&quot</span>;ClientUser<span class="variable">&quot</span>;:<span class="variable">&quot</span>;%l<span class="variable">&quot</span>;,<span class="variable">&quot</span>;authenticated<span class="variable">&quot</span>;:<span class="variable">&quot</span>;%u<span class="variable">&quot</span>;,<span class="variable">&quot</span>;AccessTime<span class="variable">&quot</span>;:<span class="variable">&quot</span>;%t<span class="variable">&quot</span>;,<span class="variable">&quot</span>;method<span class="variable">&quot</span>;:<span class="variable">&quot</span>;%r<span class="variable">&quot</span>;,<span class="variable">&quot</span>;status<span class="variable">&quot</span>;:<span class="variable">&quot</span>;%s<span class="variable">&quot</span>;,<span class="variable">&quot</span>;SendBytes<span class="variable">&quot</span>;:<span class="variable">&quot</span>;%b<span class="variable">&quot</span>;,<span class="variable">&quot</span>;Query?string<span class="variable">&quot</span>;:<span class="variable">&quot</span>;%q<span class="variable">&quot</span>;,<span class="variable">&quot</span>;partner<span class="variable">&quot</span>;:<span class="variable">&quot</span>;%&#123;Referer&#125;i<span class="variable">&quot</span>;,<span class="variable">&quot</span>;AgentVersion<span class="variable">&quot</span>;:<span class="variable">&quot</span>;%&#123;User-Agent&#125;i<span class="variable">&quot</span>;&#125;" /></span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;此时查看新生成的访问日志，即可看到新生成的日志已经成json格式了。<br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail -f /usr/local/tomcat/logs/localhost_access_log<span class="number">.2020</span><span class="number">-01</span><span class="number">-03.</span>txt</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">"clientip"</span>:<span class="string">"192.168.32.1"</span>,<span class="attr">"ClientUser"</span>:<span class="string">"-"</span>,<span class="attr">"authenticated"</span>:<span class="string">"-"</span>,<span class="attr">"AccessTime"</span>:<span class="string">"[03/Jan/2020:19:34:29 +0800]"</span>,<span class="attr">"method"</span>:<span class="string">"GET /bg-button.png HTTP/1.1"</span>,<span class="attr">"status"</span>:<span class="string">"304"</span>,<span class="attr">"SendBytes"</span>:<span class="string">"-"</span>,<span class="attr">"Query?string"</span>:<span class="string">""</span>,<span class="attr">"partner"</span>:<span class="string">"http://192.168.32.51:8080/tomcat.css"</span>,<span class="attr">"AgentVersion"</span>:<span class="string">"Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:69.0) Gecko/20100101 Firefox/69.0"</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;不过为了以防万一，可以去网上使用在线json格式校验工具，检查一下格式是否正确。<br><img src="https://img-blog.csdnimg.cn/20200103214555106.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="JSON格式校验"><br>&emsp;&emsp;此时就可以使用logstash工具来收集我们的tomcat日志了。<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">vim</span> /etc/logstash/<span class="keyword">conf</span>.d/tomcat-<span class="keyword">el</span>.<span class="keyword">conf</span></span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;不过，想必你们一定也发现了，tomcat访问日志中是带有日期格式的，每天的访问日志文件名是不同的，这要怎么写到path中呢？<br>&emsp;&emsp;哈，别慌，logstash的input-file插件也支持通配符的写法，我们可以写<code>path => "/usr/local/tomcat/logs/localhost_access_log.*.txt"</code>，如下所示。<br><figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">input</span> &#123;</span><br><span class="line">  file &#123;</span><br><span class="line">    <span class="attr">path</span> => <span class="string">"/usr/local/tomcat/logs/localhost_access_log.*.txt"</span></span><br><span class="line">    <span class="attr">stat_interval</span> => <span class="number">3</span></span><br><span class="line">    <span class="attr">start_position</span> => <span class="string">"beginning"</span></span><br><span class="line">    <span class="attr">codec</span> => <span class="string">"json"</span></span><br><span class="line">    <span class="attr">type</span> => <span class="string">"tomcat_accesslog"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">output</span> &#123;</span><br><span class="line"><span class="comment">#  stdout &#123;</span></span><br><span class="line"><span class="comment">#    codec => rubydebug</span></span><br><span class="line"><span class="comment">#  &#125;</span></span><br><span class="line">  <span class="keyword">if</span> [<span class="built_in">type</span>] == <span class="string">"tomcat_accesslog"</span> &#123;</span><br><span class="line">  elasticsearch &#123;</span><br><span class="line">    <span class="attr">hosts</span> => [<span class="string">"192.168.32.41:9200"</span>]</span><br><span class="line">    <span class="attr">index</span> => <span class="string">"tomcat_accesslog-%&#123;+YYYY.MM.dd&#125;"</span></span><br><span class="line">  &#125;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;PS：可以分开至不同的配置文件，也可以合并至一个文件中，不过我们习惯不同服务用单独的配置文件来抓取，方便修改。<br>&emsp;&emsp;重启logstash服务，然后去kibana中创建tomcat_accesslog-*的索引，就可以看到tomcat的访问日志了。</p>
+<h2 id="收集JAVA服务的日志"><a href="#收集JAVA服务的日志" class="headerlink" title="收集JAVA服务的日志"></a>收集JAVA服务的日志</h2><p>&emsp;&emsp;JAVA服务中的日志如果不报错还好，还可以是一行一条，但是一旦出现报错信息，一般都是小半屏幕N多行的报错信息，而我们收集日志的很重要的目的就是为了查看这些报错信息，而如果不对这些日志进行处理，还按照一行一条来收集的话，当我们查看这个日志的时候就会很崩溃了——这乱的几乎完全没法看。所以我们要想办法将JAVA服务的日志处理成一行。<br>&emsp;&emsp;刚好强大的logstash也支持换行匹配，我们刚好就以logstash服务本身日志为例<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">vim</span> /etc/logstash/<span class="keyword">conf</span>.d/java-<span class="keyword">el</span>.<span class="keyword">conf</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">input</span> &#123;</span><br><span class="line">  file &#123;</span><br><span class="line">    <span class="attr">path</span> => <span class="string">"/logstash/logs/logstash-plain.log"</span></span><br><span class="line">    <span class="attr">stat_interval</span> => <span class="number">3</span></span><br><span class="line">    <span class="attr">start_position</span> => <span class="string">"beginning"</span></span><br><span class="line">    <span class="attr">type</span> => <span class="string">"java_accesslog"</span>    </span><br><span class="line">    <span class="attr">codec</span> => multiline &#123;</span><br><span class="line">    <span class="attr">pattern</span> => <span class="string">"^\["</span> <span class="comment">#当遇到[开头的行时候将多行进行合并</span></span><br><span class="line">    <span class="attr">negate</span> => <span class="keyword">true</span> <span class="comment">#true 为匹配成功进行操作， false 为不成功进行操作</span></span><br><span class="line">    <span class="attr">what</span> => <span class="string">"previous"</span> <span class="comment">#与以前的行合并，如果是下面的行合并就是 next</span></span><br><span class="line">  &#125;&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">filter</span> &#123; <span class="comment">#日志过滤，如果所有的日志都过滤就写这里，如果只针对某一个过滤就写在 input 里面的日志输入里面</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">output</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> [<span class="built_in">type</span>] == <span class="string">"java_accesslog"</span> &#123;</span><br><span class="line">  elasticsearch &#123;</span><br><span class="line">    <span class="attr">hosts</span> => [<span class="string">"192.168.32.41:9200"</span>]</span><br><span class="line">    <span class="attr">index</span> => <span class="string">"java_accesslog-%&#123;+YYYY.MM.dd&#125;"</span></span><br><span class="line">  &#125;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;重启logstash服务，然后去kibana中创建java_accesslog-*的索引，就可以看到java的访问日志了。</p>
+<h2 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h2><p>&emsp;&emsp;从redis读取日志和将收集到的日志储存至redis缓存中，其实使用了input的redis插件和output的redis插件来实现。官方文档地址为： <a href="https://www.elastic.co/guide/en/logstash/current/plugins-outputsredis.html" rel="noopener external nofollow noreferrer" target="_blank">https://www.elastic.co/guide/en/logstash/current/plugins-outputsredis.html</a></p>
+<h3 id="写入redis"><a href="#写入redis" class="headerlink" title="写入redis"></a>写入redis</h3><p>&emsp;&emsp;我们还以tomcat日志及java日志logstash日志本身为例，写入redis缓存中。<br>&emsp;&emsp;先配置好redis服务器如下：<br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">IP：<span class="number">192.168</span><span class="number">.32</span><span class="number">.31</span></span><br><span class="line">PORT：<span class="number">6379</span></span><br><span class="line">auth：<span class="number">123456</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">input</span> &#123;</span><br><span class="line">  file &#123;</span><br><span class="line">    <span class="attr">path</span> => <span class="string">"/usr/local/tomcat/logs/localhost_access_log.*.txt"</span></span><br><span class="line">    <span class="attr">stat_interval</span> => <span class="number">3</span></span><br><span class="line">    <span class="attr">start_position</span> => <span class="string">"beginning"</span></span><br><span class="line">    <span class="attr">codec</span> => <span class="string">"json"</span></span><br><span class="line">    <span class="attr">type</span> => <span class="string">"tomcat_redis_accesslog"</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">file</span> &#123;</span><br><span class="line">    <span class="attr">path</span> => <span class="string">"/logstash/logs/logstash-plain.log"</span></span><br><span class="line">    <span class="attr">stat_interval</span> => <span class="number">3</span></span><br><span class="line">    <span class="attr">start_position</span> => <span class="string">"beginning"</span></span><br><span class="line">    <span class="attr">type</span> => <span class="string">"java_redis_accesslog"</span>    </span><br><span class="line">    <span class="attr">codec</span> => multiline &#123;</span><br><span class="line">    <span class="attr">pattern</span> => <span class="string">"^\["</span> <span class="comment">#当遇到[开头的行时候将多行进行合并</span></span><br><span class="line">    <span class="attr">negate</span> => <span class="keyword">true</span> <span class="comment">#true 为匹配成功进行操作， false 为不成功进行操作</span></span><br><span class="line">    <span class="attr">what</span> => <span class="string">"previous"</span> <span class="comment">#与以前的行合并，如果是下面的行合并就是 next</span></span><br><span class="line">  &#125;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">output</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> [<span class="built_in">type</span>] == <span class="string">"tomcat_redis_accesslog"</span> &#123;</span><br><span class="line">    redis &#123;</span><br><span class="line">      <span class="attr">data_type</span> => <span class="string">"list"</span></span><br><span class="line">      <span class="attr">key</span> => <span class="string">"tomcat_redis_accesslog"</span></span><br><span class="line">      <span class="attr">host</span> => <span class="string">"192.168.32.31"</span></span><br><span class="line">      <span class="attr">port</span> => <span class="string">"6379"</span></span><br><span class="line">      <span class="attr">db</span> => <span class="string">"0"</span></span><br><span class="line">      <span class="attr">password</span> => <span class="string">"123456"</span></span><br><span class="line">    &#125;&#125;</span><br><span class="line">    if [type] == <span class="string">"java_redis_accesslog"</span> &#123;</span><br><span class="line">    <span class="keyword">redis</span> &#123;</span><br><span class="line">      <span class="attr">data_type</span> => <span class="string">"list"</span></span><br><span class="line">      <span class="attr">key</span> => <span class="string">"java_redis_accesslog"</span></span><br><span class="line">      <span class="attr">host</span> => <span class="string">"192.168.32.31"</span></span><br><span class="line">      <span class="attr">port</span> => <span class="string">"6379"</span></span><br><span class="line">      <span class="attr">db</span> => <span class="string">"1"</span></span><br><span class="line">      <span class="attr">password</span> => <span class="string">"123456"</span></span><br><span class="line">    &#125;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;将日志数据以列表的形式储存在redis中，多个不同的日志，储存在不同数据库中。</p>
+<h3 id="读取redis"><a href="#读取redis" class="headerlink" title="读取redis"></a>读取redis</h3><p>&emsp;&emsp;与写入用法大致相同，可以说是怎么写进去的就怎么读出来。形式如下<br><figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">input</span> &#123;</span><br><span class="line">  redis &#123;</span><br><span class="line">    <span class="attr">data_type</span> => <span class="string">"list"</span></span><br><span class="line">    <span class="attr">key</span> => <span class="string">"tomcat_redis_accesslog"</span></span><br><span class="line">    <span class="attr">host</span> => <span class="string">"192.168.32.31"</span></span><br><span class="line">    <span class="attr">port</span> => <span class="string">"6379"</span></span><br><span class="line">    <span class="attr">db</span> => <span class="string">"0"</span></span><br><span class="line">    <span class="attr">password</span> => <span class="string">"123456"</span></span><br><span class="line">    <span class="attr">codec</span> => <span class="string">"json"</span></span><br><span class="line">  &#125;&#125;</span><br><span class="line">  <span class="keyword">redis</span> &#123;</span><br><span class="line">    <span class="attr">data_type</span> => <span class="string">"list"</span></span><br><span class="line">    <span class="attr">key</span> => <span class="string">"java_redis_accesslog"</span></span><br><span class="line">    <span class="attr">host</span> => <span class="string">"192.168.32.31"</span></span><br><span class="line">    <span class="attr">port</span> => <span class="string">"6379"</span></span><br><span class="line">    <span class="attr">db</span> => <span class="string">"1"</span></span><br><span class="line">    <span class="attr">password</span> => <span class="string">"123456"</span></span><br><span class="line">    <span class="attr">codec</span> => <span class="string">"json"</span></span><br><span class="line">  &#125;&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">output</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> [<span class="built_in">type</span>] == <span class="string">"tomat_redis_accesslog"</span> &#123;</span><br><span class="line">  elasticsearch &#123;</span><br><span class="line">    <span class="attr">hosts</span> => [<span class="string">"192.168.32.41:9200"</span>]</span><br><span class="line">    <span class="attr">index</span> => <span class="string">"tomcat_redis_accesslog-%&#123;+YYYY.MM.dd&#125;"</span></span><br><span class="line">  &#125;&#125;</span><br><span class="line">  if [type] == <span class="string">"java_redis_accesslog"</span> &#123;</span><br><span class="line">  <span class="keyword">elasticsearch</span> &#123;</span><br><span class="line">    <span class="attr">hosts</span> => [<span class="string">"192.168.32.41:9200"</span>]</span><br><span class="line">    <span class="attr">index</span> => <span class="string">"java_redis_accesslog-%&#123;+YYYY.MM.dd&#125;"</span></span><br><span class="line">  &#125;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;不过需要注意的是input中记得加<code>codec => "json"</code>，否则无法解析正确各项属性，不方便我们查看和统计日志。而且不知道大家有没有发现，当我们从redis中取出数据的时候，我们的input选项中没有像往常那样写上<code>type => "tomcat_redis_accesslog"</code>，而是直接在output中做了type的判断。这是因为，redis中的数据是在写入的时候，已经附加了type属性，它在redis中储存时还是会保留type属性的，所以取出来的时候，还是按照之前写入时的type类型取出即可。</p>
+<h2 id="kafka"><a href="#kafka" class="headerlink" title="kafka"></a>kafka</h2><p>&emsp;&emsp;在很多大型互联网公司，都喜欢使用kafka来作为缓存层，因为redis虽然效率很高，但数据不如kafka可靠，kafka更适合大数据量场景使用。这就要视业务实际情况而定了。不过使用kafa来作为中间缓冲区的企业还是大有人在的。<br>&emsp;&emsp;我们可以新开启一个kafka主机，IP为192.168.32.36，使用默认端口9092。kafak的使用方法与redis大致相同。配置文件示例如下<br><figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">input</span> &#123;</span><br><span class="line">  file &#123;</span><br><span class="line">    <span class="attr">path</span> => <span class="string">"/apps/nginx/logs/access_json.log"</span></span><br><span class="line">    <span class="attr">stat_interval</span> => <span class="number">3</span></span><br><span class="line">    <span class="attr">start_position</span> => <span class="string">"beginning"</span></span><br><span class="line">    <span class="attr">codec</span> => <span class="string">"json"</span></span><br><span class="line">    <span class="attr">type</span> => <span class="string">"nginx_kafka_accesslog"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">output</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> [<span class="built_in">type</span>] == <span class="string">"nginx_kafka_accesslog"</span> &#123;</span><br><span class="line">  kafka &#123;</span><br><span class="line">    <span class="attr">bootstrap_servers</span> => <span class="string">"192.168.32.36:9092"</span> <span class="comment">#kafka 服务器地址</span></span><br><span class="line">    <span class="attr">topic_id</span> => <span class="string">"nginx_kafka_accesslog"</span></span><br><span class="line">    <span class="attr">codec</span> => <span class="string">"json"</span></span><br><span class="line">  &#125; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;与写入redis有些区别的就是，kafka中不是<code>key</code>了，而是<code>topic_id</code>。所以读取时也有一些区别，填写的关键字为<code>topics</code>，而且同样做判断时，<code>type</code>是当初写进去的那个属性。<br><figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">input</span> &#123;</span><br><span class="line">  kafka &#123;</span><br><span class="line">    <span class="attr">bootstrap_servers</span> => <span class="string">"192.168.32.36:9092"</span></span><br><span class="line">    <span class="attr">topics</span> => <span class="string">"nginx_kafka_accesslog"</span></span><br><span class="line">    <span class="attr">codec</span> => <span class="string">"json"</span></span><br><span class="line">    <span class="attr">consumer_threads</span> => <span class="number">1</span>  <span class="comment">#线程数，默认值为1，一般设置与分区数量相同</span></span><br><span class="line">    <span class="comment">#decorate_events => true #不写默认是关闭的，开启此属性可以将当前topic、offset、group、partition等信息也带到message中</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">output</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> [<span class="built_in">type</span>] == <span class="string">"nginx_kafka_accesslog"</span> &#123;</span><br><span class="line">  elasticsearch &#123;</span><br><span class="line">    <span class="attr">hosts</span> => [<span class="string">"192.168.32.41:9200"</span>]</span><br><span class="line">    <span class="attr">index</span> => <span class="string">"nginx_kafka_accesslog-%&#123;+YYYY.MM.dd&#125;"</span></span><br><span class="line">  &#125;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;kafka也支持多文件同时写入，设置不同的<code>topic_id</code>就可以了。</p>
+    </div>
+          <div class="post-tags">
+              <a href="/tags/企业级应用/" rel="tag"><i class="fa fa-tag">企业级应用</i></a>
+              <a href="/tags/ELK/" rel="tag"><i class="fa fa-tag">ELK</i></a>
+              <a href="/tags/Elasticsearch/" rel="tag"><i class="fa fa-tag">Elasticsearch</i></a>
+              <a href="/tags/Logstash/" rel="tag"><i class="fa fa-tag">Logstash</i></a>
+              <a href="/tags/Kibana/" rel="tag"><i class="fa fa-tag">Kibana</i></a>
+          </div>
+    <div style="text-align:center;color: #ccc;font-size:14px;">------------------------------- The End -------------------------------</div>
+  <div class="post-widgets">
+    <div class="wp_rating">
+      <div id="wpac-rating"></div>
+    </div>
+  </div>
+        <div id="reward-container">
+  <div>It's very nice of you to support me.</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById('qr'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      <div style="display: inline-block">
+        <img src="/images/wechat-pay.png" alt="Hechao 微信支付">
+        <p>微信支付</p>
+      </div>
+  </div>
+</div>
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Hechao</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://wudihechao.github.io/blog/ee80297c.html" title="企业级应用——ELK（二）：ELK进阶">https://wudihechao.github.io/blog/ee80297c.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+</div>
+<div class="note info" style="background-color: #eff8f0;
+    border-left: 3px solid #255188;
+    opacity: 0.85;
+    padding-left: 11px;
+    padding-bottom: 1px;">
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts" style="margin-top: 10px;
+    margin-bottom: 10px;">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/a1b53f63.html" rel="bookmark">企业级应用——ELK（一）：ELK的部署</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/bd240ad7.html" rel="bookmark">企业级应用——ELK（三）：filebeat</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/73a033d9.html" rel="bookmark">企业级应用——DevOps（一）gitlab的部署与配置</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/366b680c.html" rel="bookmark">企业级应用——监控（一）zabbix的部署</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/blog/6187894.html" rel="bookmark">Docker（五）——Docker镜像仓库</a></div>
+    </li>
+  </ul>
+</div>
+      <footer class="post-footer">
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/blog/a1b53f63.html" rel="next" title="企业级应用——ELK（一）：ELK的部署">
+                  <i class="fa fa-chevron-left"></i> 企业级应用——ELK（一）：ELK的部署
+                </a>
+            </div>
+            <span class="post-nav-divider"></span>
+            <div class="post-nav-prev post-nav-item">
+                <a href="/blog/bd240ad7.html" rel="prev" title="企业级应用——ELK（三）：filebeat">
+                  企业级应用——ELK（三）：filebeat <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+  </div>
+  </article>
+  </div>
+          </div>
+    <div class="comments" id="comments"></div>
+        </div>
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#收集tomcat日志"><span class="nav-number">1.</span> <span class="nav-text">收集tomcat日志</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#收集JAVA服务的日志"><span class="nav-number">2.</span> <span class="nav-text">收集JAVA服务的日志</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis"><span class="nav-number">3.</span> <span class="nav-text">redis</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#写入redis"><span class="nav-number">3.1.</span> <span class="nav-text">写入redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#读取redis"><span class="nav-number">3.2.</span> <span class="nav-text">读取redis</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kafka"><span class="nav-number">4.</span> <span class="nav-text">kafka</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/touxiang.gif"
+      alt="Hechao">
+  <p class="site-author-name" itemprop="name">Hechao</p>
+  <div class="site-description" itemprop="description">BOHC is just a blog of hechao.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">84</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wudihechao" title="GitHub &rarr; https://github.com/wudihechao" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wudihechao@163.com" title="E-Mail &rarr; mailto:wudihechao@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/1050367191" title="Weibo &rarr; https://weibo.com/u/1050367191" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-weibo"></i></a>
+      </span>
+  </div>
+    <div class="links-of-blogroll motion-element links-of-blogroll-block">
+      <div class="links-of-blogroll-title" style="padding-left: 10px;">
+        <!-- modify icon to fire by szw -->
+        <i class="fa fa-history fa-" aria-hidden="true"></i>
+        近期文章
+      </div>
+      <ul class="links-of-blogroll-list" style="padding-left: 30px;">
+          <li>
+            <a href="/blog/bd240ad7.html" title="企业级应用——ELK（三）：filebeat" >企业级应用——ELK（三）：filebeat</a>
+          </li>
+          <li>
+            <a href="/blog/ee80297c.html" title="企业级应用——ELK（二）：ELK进阶" >企业级应用——ELK（二）：ELK进阶</a>
+          </li>
+          <li>
+            <a href="/blog/a1b53f63.html" title="企业级应用——ELK（一）：ELK的部署" >企业级应用——ELK（一）：ELK的部署</a>
+          </li>
+          <li>
+            <a href="/blog/73a033d9.html" title="企业级应用——DevOps（一）gitlab的部署与配置" >企业级应用——DevOps（一）gitlab的部署与配置</a>
+          </li>
+          <li>
+            <a href="/blog/366b680c.html" title="企业级应用——监控（一）zabbix的部署" >企业级应用——监控（一）zabbix的部署</a>
+          </li>
+      </ul>
+    </div>
+<div id="days"></div>
+<script>
+function show_date_time(){
+window.setTimeout("show_date_time()", 1000);
+BirthDay=new Date("10/01/2019 00:00:00");
+today=new Date();
+timeold=(today.getTime()-BirthDay.getTime());
+sectimeold=timeold/1000
+secondsold=Math.floor(sectimeold);
+msPerDay=24*60*60*1000
+e_daysold=timeold/msPerDay
+daysold=Math.floor(e_daysold);
+e_hrsold=(e_daysold-daysold)*24;
+hrsold=setzero(Math.floor(e_hrsold));
+e_minsold=(e_hrsold-hrsold)*60;
+minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+seconds=setzero(Math.floor((e_minsold-minsold)*60));
+document.getElementById('days').innerHTML="已运行"+daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒";
+}
+function setzero(i){
+if (i<10)
+{i="0" + i};
+return i;
+}
+show_date_time();
+</script>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://hewanyue.com/" class="cc-opacity" rel="noopener external nofollow noreferrer" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+      </div>
+ </aside>
+  <div id="sidebar-dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user-circle-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hechao</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">390k</span>
+</div>
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+      </div>
+    </footer>
+  </div>
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/muse.js?v=7.4.0"></script>
+<script src="/js/next-boot.js?v=7.4.0"></script><script src="/js/bookmark.js?v=7.4.0"></script>
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+  <script>
+  if (CONFIG.page.isPost) {
+    wpac_init = window.wpac_init || [];
+    wpac_init.push({
+      widget: 'Rating',
+      id: 21895,
+      el: 'wpac-rating',
+      color: 'fc6423'
+    });
+    (function() {
+      if ('WIDGETPACK_LOADED' in window) return;
+      WIDGETPACK_LOADED = true;
+      var mc = document.createElement('script');
+      mc.type = 'text/javascript';
+      mc.async = true;
+      mc.src = '//embed.widgetpack.com/widget.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(mc, s.nextSibling);
+    })();
+  }
+  </script>
+  <script src="/js/local-search.js?v=7.4.0"></script>
+<script>
+NexT.utils.getScript('//wudihechao.github.io/js/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail','link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    app_id: 'AVtPtVan0Ky5u33XhUzJlFKp-gzGzoHsz',
+    app_key: 'nx3XTnRJmaMQR3aLWYiigkgJ',
+    placeholder: 'Just Say Something~!',
+    avatar: 'mp',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: 'zh-cn' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
+</body>
+</html>
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
