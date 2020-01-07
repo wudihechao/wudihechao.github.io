@@ -45,7 +45,7 @@
   };
 </script>
   <meta name="description" content="&emsp;&emsp; MHA(master high   availability)目前是MySQL高可用方面是一个相对成熟的解决方案。在切换过程中，mha能做到0-30s内自动完成数据库的切换，并且在切换过程中最大的保持数据的一致性，以达到真正意义上的高可用 &emsp;&emsp; MHA的组成： &emsp;&emsp; MHA Manager(管理节点)和MHA Node(数据节点)。">
-<meta name="keywords" content="多实例,mysql,MHA,高可用,mariadb">
+<meta name="keywords" content="MHA,高可用,mysql,mariadb,多实例">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql数据库MHA实现高可用（多实例间实现）">
 <meta property="og:url" content="https://wudihechao.github.io/blog/108203a7.html">
@@ -117,51 +117,51 @@
             {
               name: "差你一次旅行",
               artist: "翁大涵",
-              url: "https://wudihechao.github.io/mp3/chaniyicilvxing.m4a",
-              cover: "https://wudihechao.github.io/mp3/cover/chaniyicilvxing.jpg",
-              lrc: "https://wudihechao.github.io/mp3/lrc/chaniyicilvxing.lrc",
+              url: "https://blog.hewanyue.com/mp3/chaniyicilvxing.m4a",
+              cover: "https://blog.hewanyue.com/mp3/cover/chaniyicilvxing.jpg",
+              lrc: "https://blog.hewanyue.com/mp3/lrc/chaniyicilvxing.lrc",
             },
             {
               name: "星月神话",
               artist: "金莎",
-              url: "https://wudihechao.github.io/mp3/xingyueshenhua.mp3",
-              cover: "https://wudihechao.github.io/mp3/cover/xingyueshenhua.jpg",
-              lrc: "https://wudihechao.github.io/mp3/lrc/xingyueshenhua.lrc",
+              url: "https://blog.hewanyue.com/mp3/xingyueshenhua.mp3",
+              cover: "https://blog.hewanyue.com/mp3/cover/xingyueshenhua.jpg",
+              lrc: "https://blog.hewanyue.com/mp3/lrc/xingyueshenhua.lrc",
             },
             {
               name: "体面",
               artist: "于文文",
-              url: "https://wudihechao.github.io/mp3/timian.mp3",
-              cover: "https://wudihechao.github.io/mp3/cover/timian.jpg",
-              lrc: "https://wudihechao.github.io/mp3/lrc/timian.lrc",
+              url: "https://blog.hewanyue.com/mp3/timian.mp3",
+              cover: "https://blog.hewanyue.com/mp3/cover/timian.jpg",
+              lrc: "https://blog.hewanyue.com/mp3/lrc/timian.lrc",
             },
             {
               name: "白羊",
               artist: "徐秉龙&沈以诚",
-              url: "https://wudihechao.github.io/mp3/baiyang.mp3",
-              cover: "https://wudihechao.github.io/mp3/cover/baiyang.jpg",
-              lrc: "https://wudihechao.github.io/mp3/lrc/baiyang.lrc",
+              url: "https://blog.hewanyue.com/mp3/baiyang.mp3",
+              cover: "https://blog.hewanyue.com/mp3/cover/baiyang.jpg",
+              lrc: "https://blog.hewanyue.com/mp3/lrc/baiyang.lrc",
             },
             {
               name: "绿色",
               artist: "陈雪凝",
-              url: "https://wudihechao.github.io/mp3/lvse.mp3",
-              cover: "https://wudihechao.github.io/mp3/cover/lvse.jpg",
-              lrc: "https://wudihechao.github.io/mp3/lrc/lvse.lrc",
+              url: "https://blog.hewanyue.com/mp3/lvse.mp3",
+              cover: "https://blog.hewanyue.com/mp3/cover/lvse.jpg",
+              lrc: "https://blog.hewanyue.com/mp3/lrc/lvse.lrc",
             },
             {
               name: "退",
               artist: "蒋蒋",
-              url: "https://wudihechao.github.io/mp3/tui.mp3",
-              cover: "https://wudihechao.github.io/mp3/cover/tui.jpg",
-              lrc: "https://wudihechao.github.io/mp3/lrc/tui.lrc",
+              url: "https://blog.hewanyue.com/mp3/tui.mp3",
+              cover: "https://blog.hewanyue.com/mp3/cover/tui.jpg",
+              lrc: "https://blog.hewanyue.com/mp3/lrc/tui.lrc",
             },
             {
               name: "恋爱循环",
               artist: "花泽香菜",
-              url: "https://wudihechao.github.io/mp3/lianaixunhuan.mp3",
-              cover: "https://wudihechao.github.io/mp3/cover/lianaixunhuan.jpg",
-              lrc: "https://wudihechao.github.io/mp3/lrc/lianaixunhuan.lrc",
+              url: "https://blog.hewanyue.com/mp3/lianaixunhuan.mp3",
+              cover: "https://blog.hewanyue.com/mp3/cover/lianaixunhuan.jpg",
+              lrc: "https://blog.hewanyue.com/mp3/lrc/lianaixunhuan.lrc",
             }
           ]
           });          window.aplayers || (window.aplayers = []);
@@ -320,11 +320,11 @@
 <p>&emsp;&emsp; 在主数据库上将mysql进程杀掉后，MHA进程自动结束。<br><img src="https://img-blog.csdnimg.cn/20190927123356815.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp; 在3307端口数据库上查询，已经没有从节点信息了。<img src="https://img-blog.csdnimg.cn/20190927124323317.png" alt="在这里插入图片描述"><br>&emsp;&emsp; 在3308端口数据库以及3309端口数据上显示，主数据库已变为更为3307端口数据库，说明转换主从结构成功！<br><img src="https://img-blog.csdnimg.cn/20190927124330490.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp; PS：因为几个数据库都是源码编译安装，数据库路径和二进制文件储存位置都做出了调整，与默认位置不同，而yum安装的MHAmaster中如果配置文件中不写明master_binlog_dir的位置，则会默认去<code>/usr/bin/msyql/</code>目录下找主机二进制文件（当然，mysql数据库也是yum安装的可忽略这些配置，一切默认就好，而配置文件中添加server主机时，如果端口号不是默认3306，一定要记得写明port端口号，如本文中多实例用的不同端口，标记清楚即可。）</p>
     </div>
           <div class="post-tags">
-              <a href="/tags/多实例/" rel="tag"><i class="fa fa-tag">多实例</i></a>
-              <a href="/tags/mysql/" rel="tag"><i class="fa fa-tag">mysql</i></a>
               <a href="/tags/MHA/" rel="tag"><i class="fa fa-tag">MHA</i></a>
               <a href="/tags/高可用/" rel="tag"><i class="fa fa-tag">高可用</i></a>
+              <a href="/tags/mysql/" rel="tag"><i class="fa fa-tag">mysql</i></a>
               <a href="/tags/mariadb/" rel="tag"><i class="fa fa-tag">mariadb</i></a>
+              <a href="/tags/多实例/" rel="tag"><i class="fa fa-tag">多实例</i></a>
           </div>
     <div style="text-align:center;color: #ccc;font-size:14px;">------------------------------- The End -------------------------------</div>
   <div class="post-widgets">
@@ -601,7 +601,7 @@ show_date_time();
   </script>
   <script src="/js/local-search.js?v=7.4.0"></script>
 <script>
-NexT.utils.getScript('//wudihechao.github.io/js/Valine.min.js', () => {
+NexT.utils.getScript('//blog.hewanyue.com/js/Valine.min.js', () => {
   var GUEST = ['nick', 'mail','link'];
   var guest = 'nick,mail,link';
   guest = guest.split(',').filter(item => {

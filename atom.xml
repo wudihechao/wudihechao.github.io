@@ -372,13 +372,13 @@
     
       <category term="一键安装" scheme="https://wudihechao.github.io/tags/%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85/"/>
     
-      <category term="负载均衡" scheme="https://wudihechao.github.io/tags/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/"/>
-    
       <category term="虚拟化" scheme="https://wudihechao.github.io/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/"/>
     
       <category term="KVM" scheme="https://wudihechao.github.io/tags/KVM/"/>
     
       <category term="ubuntu" scheme="https://wudihechao.github.io/tags/ubuntu/"/>
+    
+      <category term="负载均衡" scheme="https://wudihechao.github.io/tags/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/"/>
     
   </entry>
   
@@ -584,11 +584,11 @@
     
       <category term="企业级应用" scheme="https://wudihechao.github.io/tags/%E4%BC%81%E4%B8%9A%E7%BA%A7%E5%BA%94%E7%94%A8/"/>
     
+      <category term="负载均衡" scheme="https://wudihechao.github.io/tags/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/"/>
+    
       <category term="高可用" scheme="https://wudihechao.github.io/tags/%E9%AB%98%E5%8F%AF%E7%94%A8/"/>
     
       <category term="HAProxy" scheme="https://wudihechao.github.io/tags/HAProxy/"/>
-    
-      <category term="负载均衡" scheme="https://wudihechao.github.io/tags/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/"/>
     
       <category term="调度算法" scheme="https://wudihechao.github.io/tags/%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/"/>
     
