@@ -53,7 +53,7 @@
 <meta property="og:description" content="&emsp;&emsp;本文使用kubeasz项目基于二进制方式部署和利用ansible-playbook实现自动化部署K8s。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191214135719739.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
-<meta property="og:updated_time" content="2020-01-08T11:41:29.297Z">
+<meta property="og:updated_time" content="2020-01-08T12:08:34.251Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用kubeasz自动化部署K8s">
 <meta name="twitter:description" content="&emsp;&emsp;本文使用kubeasz项目基于二进制方式部署和利用ansible-playbook实现自动化部署K8s。">
@@ -312,29 +312,29 @@
 <tr>
 <th style="text-align:center">角色</th>
 <th style="text-align:center">数量</th>
-<th>描述</th>
+<th style="text-align:center">描述</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:center">管理节点</td>
 <td style="text-align:center">1</td>
-<td>运行ansible/easzctl脚本，可以复用master，建议使用独立节点（1c1g）</td>
+<td style="text-align:center">运行ansible/easzctl脚本，可以复用master，建议使用独立节点（1c1g）</td>
 </tr>
 <tr>
 <td style="text-align:center">etcd节点</td>
 <td style="text-align:center">3</td>
-<td>注意etcd集群需要1,3,5,7…奇数个节点，一般复用master节点</td>
+<td style="text-align:center">注意etcd集群需要1,3,5,7…奇数个节点，一般复用master节点</td>
 </tr>
 <tr>
 <td style="text-align:center">master节点</td>
 <td style="text-align:center">2</td>
-<td>高可用集群至少2个master节点</td>
+<td style="text-align:center">高可用集群至少2个master节点</td>
 </tr>
 <tr>
 <td style="text-align:center">node节点</td>
 <td style="text-align:center">3</td>
-<td>运行应用负载的节点，可根据需要提升机器配置/增加节点数</td>
+<td style="text-align:center">运行应用负载的节点，可根据需要提升机器配置/增加节点数</td>
 </tr>
 </tbody>
 </table>
