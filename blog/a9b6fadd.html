@@ -53,7 +53,7 @@
 <meta property="og:description" content="&emsp;&emsp;K8s集群搭建完成后，真正完成我们业务的是那些跑在k8s上的pod们。将业务跑在k8s集群只上，我们可以实现根据负载或者资源利用率动态扩容或者缩容我们的后端服务器，更加灵活高效的利用我们的物理设备，且能够实现服务的高可用及故障自治愈，本文将详细介绍以上的具体实现。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/2020011414135532.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
-<meta property="og:updated_time" content="2020-01-19T15:49:57.918Z">
+<meta property="og:updated_time" content="2020-01-19T16:20:20.082Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="K8s进阶——java集群服务搭建">
 <meta name="twitter:description" content="&emsp;&emsp;K8s集群搭建完成后，真正完成我们业务的是那些跑在k8s上的pod们。将业务跑在k8s集群只上，我们可以实现根据负载或者资源利用率动态扩容或者缩容我们的后端服务器，更加灵活高效的利用我们的物理设备，且能够实现服务的高可用及故障自治愈，本文将详细介绍以上的具体实现。">
@@ -307,7 +307,38 @@
       </header>
     <div class="post-body" itemprop="articleBody">
         <p>&emsp;&emsp;K8s集群搭建完成后，真正完成我们业务的是那些跑在k8s上的pod们。将业务跑在k8s集群只上，我们可以实现根据负载或者资源利用率动态扩容或者缩容我们的后端服务器，更加灵活高效的利用我们的物理设备，且能够实现服务的高可用及故障自治愈，本文将详细介绍以上的具体实现。<br><a id="more"></a></p>
-<h2 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h2><p>&emsp;&emsp;本次演示使用主机系统均为ubuntu1804。<br>| 节点 | IP |<br>|–|–|<br>| master节点 | 192.168.32.18、192.168.32.19 |<br>| node节点 | 192.168.32.21、192.168.32.22 |<br>| etcd | 192.168.32.23、192.168.32.24、192.168.32.25 |<br>| harbor | 192.168.32.20 |<br>| NFS服务器 | 192.168.32.20（复用） |<br>&emsp;&emsp;如果机器不够，可以选择复用，例如将etcd的三台主机与master主机和harbor主机复用，可以省下来3台主机。推荐node节点的性能高一些，因为一般之后的pod都将运行在node节点上，如果node节点的资源不足，则很有可能无法创建pod，导致服务启动或者扩容失败。<br>&emsp;&emsp;具体K8s集群的搭建，可以参考我之前文章<a href="https://blog.csdn.net/MicePro/article/details/103538771" rel="noopener external nofollow noreferrer" target="_blank">使用kubeasz自动化部署K8s</a>。harbor服务器的搭建和部署配置，也可以参考我之前文章<a href="https://blog.csdn.net/MicePro/article/details/103438838" rel="noopener external nofollow noreferrer" target="_blank">Docker（五）——Docker镜像仓库</a>。<br>&emsp;&emsp;因为是均为内网环境，建议将网络组件calico的IPIP模式（ip-in-ip叠加模式）关掉，使用calico的BGP模式，以节约大量主机内部访问时封装的性能损耗。具体操作可以参考之前博客<a href="https://blog.csdn.net/MicePro/article/details/103538771" rel="noopener external nofollow noreferrer" target="_blank">使用kubeasz自动化部署K8s</a>。</p>
+<h2 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h2><p>&emsp;&emsp;本次演示使用主机系统均为ubuntu1804。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">节点</th>
+<th style="text-align:center">IP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">master节点</td>
+<td style="text-align:center">192.168.32.18、192.168.32.19</td>
+</tr>
+<tr>
+<td style="text-align:center">node节点</td>
+<td style="text-align:center">192.168.32.21、192.168.32.22</td>
+</tr>
+<tr>
+<td style="text-align:center">etcd</td>
+<td style="text-align:center">192.168.32.23、192.168.32.24、192.168.32.25</td>
+</tr>
+<tr>
+<td style="text-align:center">harbor</td>
+<td style="text-align:center">192.168.32.20</td>
+</tr>
+<tr>
+<td style="text-align:center">NFS服务器</td>
+<td style="text-align:center">192.168.32.20（复用）</td>
+</tr>
+</tbody>
+</table>
+<p>&emsp;&emsp;如果机器不够，可以选择复用，例如将etcd的三台主机与master主机和harbor主机复用，可以省下来3台主机。推荐node节点的性能高一些，因为一般之后的pod都将运行在node节点上，如果node节点的资源不足，则很有可能无法创建pod，导致服务启动或者扩容失败。<br>&emsp;&emsp;具体K8s集群的搭建，可以参考我之前文章<a href="https://blog.csdn.net/MicePro/article/details/103538771" rel="noopener external nofollow noreferrer" target="_blank">使用kubeasz自动化部署K8s</a>。harbor服务器的搭建和部署配置，也可以参考我之前文章<a href="https://blog.csdn.net/MicePro/article/details/103438838" rel="noopener external nofollow noreferrer" target="_blank">Docker（五）——Docker镜像仓库</a>。<br>&emsp;&emsp;因为是均为内网环境，建议将网络组件calico的IPIP模式（ip-in-ip叠加模式）关掉，使用calico的BGP模式，以节约大量主机内部访问时封装的性能损耗。具体操作可以参考之前博客<a href="https://blog.csdn.net/MicePro/article/details/103538771" rel="noopener external nofollow noreferrer" target="_blank">使用kubeasz自动化部署K8s</a>。</p>
 <h2 id="设计架构"><a href="#设计架构" class="headerlink" title="设计架构"></a>设计架构</h2><p>&emsp;&emsp;我们设计一个简单架构为例，如下图所示。<br><img src="https://img-blog.csdnimg.cn/2020011414135532.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="k8s架构-java服务集群"><br>&emsp;&emsp;一般负载层是使用物理机上的haproxy服务来实现4层负载，而不是在K8s集群内部pod 实现。我们这里也就将他省略不再细说。<br>所以我们需要创建一个nginx集群，以及一个tomcat集群。将动态资源，转发给后端的tomcat服务，前端的静态页面由nginx来处理。为了方便我们对后端服务的修改以及部署，我们还需要一个NFS服务器，来共享静态资源以及动态资源，以实现后端服务数据的实时同步。</p>
 <h2 id="搭建业务镜像架构"><a href="#搭建业务镜像架构" class="headerlink" title="搭建业务镜像架构"></a>搭建业务镜像架构</h2><p>&emsp;&emsp;镜像一般是按层次一级一级实现的，可实现多个业务复用。所以，例如我们将要实现的业务为app1，则我们需要的的镜像，就有对应的app1-nginx及app1-tomcat的业务镜像，以及nginx及tomcat的基础镜像，以及基础系统镜像，我们要一层层的来制作镜像。详细可以参考之前文章<a href="https://blog.csdn.net/MicePro/article/details/103423566" rel="noopener external nofollow noreferrer" target="_blank">Docker（三）——镜像制作</a>。<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> /<span class="keyword">opt</span></span><br><span class="line"><span class="built_in">mkdir</span> -<span class="keyword">p</span> k8s/&#123;app1,dockerfile,yaml&#125;</span><br><span class="line"><span class="keyword">cd</span> k8s/dockerfile</span><br><span class="line"><span class="built_in">mkdir</span> &#123;app1,pub-image,<span class="built_in">system</span>&#125;</span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;最终结构如下图所示。<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">root@DockerUbuntu18:/opt/k8s/dockerfile# tree -d</span><br><span class="line">.</span><br><span class="line">├── app1</span><br><span class="line">│   ├── app1-nginx</span><br><span class="line">│   └── app1-tomcat</span><br><span class="line">├── pub-images</span><br><span class="line">│   ├── jdk</span><br><span class="line">│   │   └── 8</span><br><span class="line">│   ├── nginx-base</span><br><span class="line">│   └── tomcat-base</span><br><span class="line">└── system</span><br><span class="line">    └── centos</span><br></pre></td></tr></table></figure></p>
