@@ -45,7 +45,7 @@
   };
 </script>
   <meta name="description" content="&emsp;&emsp;在docker使用过程中，其实大部分时间都是花在了打镜像上，因为容器本身底层不可写，顶层可读写缺无法持久化性质，我们如果对容器进行了修改，想要进行横向扩容，快速部署时，一般需要重新制作镜像，在分发到其他主机或终端。（虽然也可以将数据储存在NFS和宿主机本地，而不是容器内部来方便的修改配置文件及保存数据等。）&emsp;&emsp;docker中镜像的制作方式一般手工修改后导">
-<meta name="keywords" content="Docker,容器,企业级应用,Dockerfile">
+<meta name="keywords" content="Docker,Dockerfile,企业级应用,容器">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker（三）——镜像制作">
 <meta property="og:url" content="https://wudihechao.github.io/blog/ddd838e7.html">
@@ -194,13 +194,13 @@
     <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i>关于</a>
   </li>
         <li class="menu-item menu-item-tags">
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">84</span></a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">86</span></a>
   </li>
         <li class="menu-item menu-item-categories">
     <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">7</span></a>
   </li>
         <li class="menu-item menu-item-archives">
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">43</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">44</span></a>
   </li>
         <li class="menu-item menu-item-friends">
     <a href="/friends/" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i>友链</a>
@@ -362,9 +362,9 @@
     </div>
           <div class="post-tags">
               <a href="/tags/Docker/" rel="tag"><i class="fa fa-tag">Docker</i></a>
-              <a href="/tags/容器/" rel="tag"><i class="fa fa-tag">容器</i></a>
-              <a href="/tags/企业级应用/" rel="tag"><i class="fa fa-tag">企业级应用</i></a>
               <a href="/tags/Dockerfile/" rel="tag"><i class="fa fa-tag">Dockerfile</i></a>
+              <a href="/tags/企业级应用/" rel="tag"><i class="fa fa-tag">企业级应用</i></a>
+              <a href="/tags/容器/" rel="tag"><i class="fa fa-tag">容器</i></a>
           </div>
     <div style="text-align:center;color: #ccc;font-size:14px;">------------------------------- The End -------------------------------</div>
   <div class="post-widgets">
@@ -417,7 +417,7 @@
       <div class="popular-posts-title"><a href="/blog/7e3785f.html" rel="bookmark">Docker（四）——容器跨主机网络配置</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/blog/bd240ad7.html" rel="bookmark">企业级应用——ELK（三）：filebeat</a></div>
+      <div class="popular-posts-title"><a href="/blog/a9b6fadd.html" rel="bookmark">K8s进阶——java集群服务搭建</a></div>
     </li>
   </ul>
 </div>
@@ -476,7 +476,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -488,7 +488,7 @@
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">84</span>
+        <span class="site-state-item-count">86</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -518,6 +518,9 @@
       </div>
       <ul class="links-of-blogroll-list" style="padding-left: 30px;">
           <li>
+            <a href="/blog/a9b6fadd.html" title="K8s进阶——java集群服务搭建" >K8s进阶——java集群服务搭建</a>
+          </li>
+          <li>
             <a href="/blog/bd240ad7.html" title="企业级应用——ELK（三）：filebeat" >企业级应用——ELK（三）：filebeat</a>
           </li>
           <li>
@@ -528,9 +531,6 @@
           </li>
           <li>
             <a href="/blog/73a033d9.html" title="企业级应用——DevOps（一）gitlab的部署与配置" >企业级应用——DevOps（一）gitlab的部署与配置</a>
-          </li>
-          <li>
-            <a href="/blog/366b680c.html" title="企业级应用——监控（一）zabbix的部署" >企业级应用——监控（一）zabbix的部署</a>
           </li>
       </ul>
     </div>
@@ -579,7 +579,7 @@ show_date_time();
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">392k</span>
+    <span title="站点总字数">405k</span>
 </div>
 <div class="busuanzi-count">
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
