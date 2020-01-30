@@ -879,8 +879,8 @@
       <tags>
         <tag>一键安装</tag>
         <tag>负载均衡</tag>
-        <tag>虚拟化</tag>
         <tag>KVM</tag>
+        <tag>虚拟化</tag>
         <tag>ubuntu</tag>
       </tags>
   </entry>
@@ -1756,12 +1756,12 @@ server-address</code><br>&emsp;&emsp;rip[:port] 如省略port，不作端口映�
 <li>Chef：ruby，国内应用少</li>
 <li>Cfengine</li>
 <li>func<h3 id="Ansible简介"><a href="#Ansible简介" class="headerlink" title="Ansible简介"></a>Ansible简介</h3>
-        <div id="aplayer-eaCTAAPg" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
+        <div id="aplayer-NOuLfNKq" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
             <pre class="aplayer-lrc-content"></pre>
         </div>
         <script>
           var ap = new APlayer({
-            element: document.getElementById("aplayer-eaCTAAPg"),
+            element: document.getElementById("aplayer-NOuLfNKq"),
             narrow: false,
             autoplay: true,
             showlrc: false,
@@ -2028,11 +2028,11 @@ home=/app/user1 group=root&#39;</code><br><code>ansible srv -m user -a &#39;name
         <category>NotOnlySQL</category>
       </categories>
       <tags>
-        <tag>多实例</tag>
-        <tag>mysql</tag>
         <tag>MHA</tag>
         <tag>高可用</tag>
+        <tag>mysql</tag>
         <tag>mariadb</tag>
+        <tag>多实例</tag>
       </tags>
   </entry>
   <entry>
@@ -2110,8 +2110,8 @@ home=/app/user1 group=root&#39;</code><br><code>ansible srv -m user -a &#39;name
         <category>NotOnlySQL</category>
       </categories>
       <tags>
-        <tag>多实例</tag>
         <tag>mysql</tag>
+        <tag>多实例</tag>
         <tag>级联复制</tag>
         <tag>读写分离</tag>
       </tags>
@@ -2343,12 +2343,12 @@ home=/app/user1 group=root&#39;</code><br><code>ansible srv -m user -a &#39;name
     <title>由闷骚书生与假正经小姐的古典爱情故事说起</title>
     <url>//blog/1b0b2a49.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>&emsp;&emsp;城南外湖畔边，天气下着小雨，刮起微风，吹起茶铺门前的风铃叮铃作响让人昏昏欲睡，但铺子里舒缓轻柔的抚琴声却给人自然清醒的感觉，立锥之地，瞥一眼便一览无遗，简单的陈设透露出古朴淡雅，一长发清秀女子品一壶热茶望着这淅淅沥沥的小雨。<br><a id="more"></a><br><img src="https://img-blog.csdnimg.cn/20190801143110232.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;“姑娘有心事？”一身穿白袍英俊书生抿嘴品茶问到。少女：“公子与城北唐公子可是熟识？”<br>&emsp;&emsp;“书生：“我与他乃世交，有何事？”少女：“那下次你与他一同前来我这品茶可好？”书生：“他不喜品茶。”少女：“无妨，那公子可知他喜欢什么，我可以慢慢学。”书生：“我其实也不喜品茶。”少女：“公子莫说谎，不喜为何天天早晨都跑我这茶铺。”<br>
-        <div id="aplayer-YfWxxzfe" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
+        <div id="aplayer-ncKWOPBl" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
             <pre class="aplayer-lrc-content"></pre>
         </div>
         <script>
           var ap = new APlayer({
-            element: document.getElementById("aplayer-YfWxxzfe"),
+            element: document.getElementById("aplayer-ncKWOPBl"),
             narrow: false,
             autoplay: true,
             showlrc: false,
@@ -2468,31 +2468,6 @@ home=/app/user1 group=root&#39;</code><br><code>ansible srv -m user -a &#39;name
       </tags>
   </entry>
   <entry>
-    <title>不忘初心，方得始终</title>
-    <url>//blog/b84a93e4.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>&emsp;&emsp;致奋斗的自己，与所有奋斗的人共勉~<br><a id="more"></a><br><img src="https://img-blog.csdnimg.cn/20190716192014164.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="不忘初心，方得始终"></p>
-<ul>
-<li><h2 id="奔跑吧年轻人"><a href="#奔跑吧年轻人" class="headerlink" title="奔跑吧年轻人"></a>奔跑吧年轻人</h2></li>
-</ul>
-<ul>
-<li>&emsp;&emsp;<strong>你走了几年弯路了，也迷茫了好久了，已经落后很远了，甚至也已不再年轻了，不能再选择安逸了！</strong></li>
-<li>&emsp;&emsp;<strong>你已经不是一个人了，妻子要靠你，孩子也要长大了，父母也要老了，生活上你已经是唯一的支撑了！</strong></li>
-<li>&emsp;&emsp;<strong>生活已经如此了，唯有努力奔跑，才不会被压倒；选择已经如此了，唯有努力学习，才能不虚此行！</strong></li>
-<li>&emsp;&emsp;<strong>现状就是这样了，后悔没用，你得变得更好！</strong><br><img src="https://img-blog.csdnimg.cn/20190716193039155.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="后悔没用，你得变好"></li>
-</ul>
-<ul>
-<li><h2 id="拼搏吧挑战者"><a href="#拼搏吧挑战者" class="headerlink" title="拼搏吧挑战者"></a>拼搏吧挑战者</h2><img src="https://img-blog.csdnimg.cn/20190716192809671.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_1,color_FFFFFF,t_70" alt="挑战者"><br>&emsp;&emsp;<strong>你敢于跳出自己的舒适区，来北京从零开始，这已经是一个巨大的成功，同时这也是一个巨大的挑战，爱挑战的你，绝对不会轻易认输，难道不是吗？你会永远相信，你是最棒的，你可以做到你想做好的任何事。</strong><br>&emsp;&emsp;<strong>趁自己还年轻。趁此时还不晚，去拼一下，为了那一切的一切，将来的你，一定会感激现在拼命的自己！</strong><br><img src="https://img-blog.csdnimg.cn/20190716200906787.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="将来的你，一定会感激现在拼命的自己！"></li>
-<li><h2 id="坚持吧追梦人"><a href="#坚持吧追梦人" class="headerlink" title="坚持吧追梦人"></a>坚持吧追梦人</h2>&emsp;&emsp;<strong>从来没有人可以轻易成功，不经历挫折，怎么能成长，不经历磨砺，怎么能成器，不经历风雨，怎能见彩虹！</strong><br><img src="https://img-blog.csdnimg.cn/20190716200716204.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="哪怕未来遇到再多困难也不轻言放弃"><br>&emsp;&emsp;<strong>遇到挫折与痛苦，不要放弃，想一想自己，当初为什么要来这里？</strong><br><img src="https://img-blog.csdnimg.cn/20190716195321538.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><h1 id="emsp-emsp-既然选择了远方，便只顾风雨兼程！"><a href="#emsp-emsp-既然选择了远方，便只顾风雨兼程！" class="headerlink" title="&emsp;&emsp;既然选择了远方，便只顾风雨兼程！"></a><strong>&emsp;&emsp;既然选择了远方，便只顾风雨兼程！</strong></h1><img src="https://img-blog.csdnimg.cn/20190716200024681.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="不忘初心,继续前行"></li>
-</ul>
-]]></content>
-      <categories>
-        <category>情感</category>
-      </categories>
-      <tags>
-        <tag>初心不负</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Linux下find命令的一般用法。</title>
     <url>//blog/bc40fcc0.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><ol>
@@ -2536,9 +2511,10 @@ home=/app/user1 group=root&#39;</code><br><code>ansible srv -m user -a &#39;name
 ]]></content>
   </entry>
   <entry>
-    <title>categories</title>
-    <url>/categories/index.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+    <title>about</title>
+    <url>/about/index.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>title:  BOHC!<br>subtitle: blog of hechao!<br>description: BOHC is just a blog of hechao.<br>keywords: Linux DEVOPS</p>
+]]></content>
   </entry>
   <entry>
     <title>友链</title>
@@ -2559,9 +2535,8 @@ home=/app/user1 group=root&#39;</code><br><code>ansible srv -m user -a &#39;name
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
   </entry>
   <entry>
-    <title>about</title>
-    <url>/about/index.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>title:  BOHC!<br>subtitle: blog of hechao!<br>description: BOHC is just a blog of hechao.<br>keywords: Linux DEVOPS</p>
-]]></content>
+    <title>categories</title>
+    <url>/categories/index.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
   </entry>
 </search>
