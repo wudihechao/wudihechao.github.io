@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+
+
+
+
+
 <html lang="zh-CN">
 <head>
   <meta name="baidu-site-verification" content="vT6Jf980C0" />
@@ -9,8 +14,13 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.ico?v=7.4.0">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.ico?v=7.4.0">
   <link rel="alternate" href="/atom.xml" title="BOHC!" type="application/atom+xml">
+
 <link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
 <script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
@@ -44,13 +54,16 @@
     sidebarPadding: 40
   };
 </script>
-  <meta name="description" content="&emsp;&emsp;在CentOS系统的主机中加入一块全新的硬盘，是无法直接被我们使用的，因为这块硬盘上没有分区及文件系统，此时是无法被系统识别使用的。">
+
+
+
+  <meta name="description" content="&amp;emsp;&amp;emsp;在CentOS系统的主机中加入一块全新的硬盘，是无法直接被我们使用的，因为这块硬盘上没有分区及文件系统，此时是无法被系统识别使用的。">
 <meta name="keywords" content="linux,filesystem">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CentOS7磁盘分区及文件系统">
 <meta property="og:url" content="https://wudihechao.github.io/blog/2bae1e5c.html">
 <meta property="og:site_name" content="BOHC!">
-<meta property="og:description" content="&emsp;&emsp;在CentOS系统的主机中加入一块全新的硬盘，是无法直接被我们使用的，因为这块硬盘上没有分区及文件系统，此时是无法被系统识别使用的。">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;在CentOS系统的主机中加入一块全新的硬盘，是无法直接被我们使用的，因为这块硬盘上没有分区及文件系统，此时是无法被系统识别使用的。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190815093309132.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190815095231719.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
@@ -58,9 +71,11 @@
 <meta property="og:updated_time" content="2019-12-04T06:00:24.309Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CentOS7磁盘分区及文件系统">
-<meta name="twitter:description" content="&emsp;&emsp;在CentOS系统的主机中加入一块全新的硬盘，是无法直接被我们使用的，因为这块硬盘上没有分区及文件系统，此时是无法被系统识别使用的。">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;在CentOS系统的主机中加入一块全新的硬盘，是无法直接被我们使用的，因为这块硬盘上没有分区及文件系统，此时是无法被系统识别使用的。">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190815093309132.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
   <link rel="canonical" href="https://wudihechao.github.io/blog/2bae1e5c">
+
+
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
@@ -71,7 +86,17 @@
     isArchive: false
   };
 </script>
+
   <title>CentOS7磁盘分区及文件系统 | BOHC!</title>
+  
+
+
+
+
+
+
+
+
   <noscript>
   <style>
   .use-motion .brand,
@@ -83,23 +108,31 @@
   .use-motion .post-header,
   .use-motion .post-body,
   .use-motion .collection-header { opacity: initial; }
+
   .use-motion .logo,
   .use-motion .site-title,
   .use-motion .site-subtitle {
     opacity: initial;
     top: initial;
   }
+
   .use-motion .logo-line-before i { left: initial; }
   .use-motion .logo-line-after i { right: initial; }
   </style>
 </noscript>
+
 <script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "https://hm.baidu.com/hm.js?a0d4e217e26da03ea5ca2acc76d543ae";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();</script>
+
+
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="/dist/APlayer.min.css" class="aplayer-style-marker">
 <script src="/dist/APlayer.min.js" class="aplayer-script-marker"></script>
 </head>
+
 <body oncontextmenu=self.event.returnValue=false>
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+
         <div id="aplayer" class="aplayer aplayer-withlist  aplayer-fixed aplayer-narrow" style="position: fixed; z-index: 5; left: 0px; width: 400px;">
             <pre class="aplayer-lrc-content"></pre>
         </div>
@@ -172,6 +205,7 @@
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-meta">
+
     <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
@@ -180,7 +214,9 @@
       </a>
     </div>
         <h1 class="site-subtitle" itemprop="description">blog of hechao!</h1>
+      
   </div>
+
   <div class="site-nav-toggle">
     <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
@@ -189,31 +225,147 @@
     </button>
   </div>
 </div>
+
+
 <nav class="site-nav">
+  
   <ul id="menu" class="menu">
+      
+      
+      
+        
         <li class="menu-item menu-item-home">
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i>首页</a>
+      
+    
+      
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-home&quot;&gt;&lt;&#x2F;i&gt;首页</a>
+
   </li>
+      
+      
+      
+        
         <li class="menu-item menu-item-about">
-    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i>关于</a>
+      
+    
+      
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/about/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-user&quot;&gt;&lt;&#x2F;i&gt;关于</a>
+
   </li>
+      
+      
+      
+        
         <li class="menu-item menu-item-tags">
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">90</span></a>
+      
+    
+      
+      
+        
+      
+        
+      
+        
+          
+        
+      
+    
+
+    <a href="/tags/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-tags&quot;&gt;&lt;&#x2F;i&gt;标签&lt;span class=&quot;badge&quot;&gt;90&lt;&#x2F;span&gt;</a>
+
   </li>
+      
+      
+      
+        
         <li class="menu-item menu-item-categories">
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">7</span></a>
+      
+    
+      
+      
+        
+      
+        
+          
+        
+      
+        
+      
+    
+
+    <a href="/categories/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-th&quot;&gt;&lt;&#x2F;i&gt;分类&lt;span class=&quot;badge&quot;&gt;7&lt;&#x2F;span&gt;</a>
+
   </li>
+      
+      
+      
+        
         <li class="menu-item menu-item-archives">
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">45</span></a>
+      
+    
+      
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/archives/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-archive&quot;&gt;&lt;&#x2F;i&gt;归档&lt;span class=&quot;badge&quot;&gt;45&lt;&#x2F;span&gt;</a>
+
   </li>
+      
+      
+      
+        
         <li class="menu-item menu-item-friends">
-    <a href="/friends/" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i>友链</a>
+      
+    
+      
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/friends/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-link&quot;&gt;&lt;&#x2F;i&gt;友链</a>
+
   </li>
       <li class="menu-item menu-item-search">
         <a href="javascript:;" rel="external nofollow noreferrer" class="popup-trigger">
+        
           <i class="menu-item-icon fa fa-search fa-fw"></i>搜索</a>
       </li>
+    
   </ul>
+
+    
+
 </nav>
   <div class="site-search">
     <div class="popup search-popup">
@@ -231,83 +383,143 @@
   </span>
 </div>
 <div id="search-result"></div>
+
 </div>
 <div class="search-pop-overlay"></div>
+
   </div>
 </div>
     </header>
+
+    
   <div class="back-to-top">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
   <div class="reading-progress-bar"></div>
   <a class="book-mark-link book-mark-link-fixed" href="#"></a>
-  <a href="https://github.com/wudihechao" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener external nofollow noreferrer" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+  <a href="https://github.com/wudihechao" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener external nofollow noreferrer" target="_blank">&lt;svg width=&quot;80&quot; height=&quot;80&quot; viewBox=&quot;0 0 250 250&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z&quot;&gt;&lt;&#x2F;path&gt;&lt;path d=&quot;M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2&quot; fill=&quot;currentColor&quot; style=&quot;transform-origin: 130px 106px;&quot; class=&quot;octo-arm&quot;&gt;&lt;&#x2F;path&gt;&lt;path d=&quot;M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z&quot; fill=&quot;currentColor&quot; class=&quot;octo-body&quot;&gt;&lt;&#x2F;path&gt;&lt;&#x2F;svg&gt;</a>
+
+
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
           <div id="content" class="content">
+            
+
   <div id="posts" class="posts-expand">
       <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
   <div class="post-block post">
     <link itemprop="mainEntityOfPage" href="https://wudihechao.github.io/blog/2bae1e5c.html">
+
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hechao">
       <meta itemprop="description" content="BOHC is just a blog of hechao.">
       <meta itemprop="image" content="/images/touxiang.gif">
     </span>
+
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="BOHC!">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">CentOS7磁盘分区及文件系统
+
+          
         </h2>
+
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
+
+
+              
+                
+              
+
               <time title="创建时间：2019-08-14 22:27:33" itemprop="dateCreated datePublished" datetime="2019-08-14T22:27:33+08:00">2019-08-14</time>
             </span>
+          
             <span class="post-meta-item">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
+
+              
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/linux基础/" itemprop="url" rel="index"><span itemprop="name">linux基础</span></a></span>
+
+                
+                
+              
             </span>
+          
+
+          
             <span id="/blog/2bae1e5c.html" class="post-meta-item leancloud_visitors" data-flag-title="CentOS7磁盘分区及文件系统" title="阅读次数">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
+
               <span class="leancloud-visitors-count"></span>
               <span>℃</span>
             </span>
+          
+
               <span class="post-meta-divider">•</span>
+  
   <span class="post-meta-item">
+    
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
     <a title="valine" href="/blog/2bae1e5c.html#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/blog/2bae1e5c.html" itemprop="commentCount"></span></a>
   </span>
+  
+  
+          
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-file-word-o"></i>
               </span>
+              
+
+              
               <span>7.5k</span>
             </span>
+          
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
+              
+
+              
               <span>19 分钟</span>
             </span>
+          
+
         </div>
       </header>
+
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
+
+      
         <p>&emsp;&emsp;在CentOS系统的主机中加入一块全新的硬盘，是无法直接被我们使用的，因为这块硬盘上没有分区及文件系统，此时是无法被系统识别使用的。<br><a id="more"></a><br>&emsp;&emsp;<strong>一般来说，硬盘上的空间，想要被我们利用，都要经过几个步骤：</strong></p>
 <ul>
 <li>1设备识别</li>
@@ -317,7 +529,7 @@
 <li>5在/etc/fstab文件中创建新条目<br>&emsp;</li>
 </ul>
 <p>&emsp;&emsp;<strong>只有当设备被挂载到文件系统中，才可以被我们访问且使用。</strong><br>&emsp;</p>
-<h2 id="1-设备识别"><a href="#1-设备识别" class="headerlink" title="1 设备识别"></a>1 设备识别</h2><p> 新插入硬盘设备，没法被系统立马识别到，需要手动扫描，才可以发现并识别新设备<br><code>echo "- - -" > /sys/class/scsi_host/host0/scan</code><br>/sys/class/scsi_host/        目录下面有几个host 就扫描几次。<br>&emsp;<br>&emsp;</p>
+<h2 id="1-设备识别"><a href="#1-设备识别" class="headerlink" title="1 设备识别"></a>1 设备识别</h2><p> 新插入硬盘设备，没法被系统立马识别到，需要手动扫描，才可以发现并识别新设备<br><code>echo &quot;- - -&quot; &gt; /sys/class/scsi_host/host0/scan</code><br>/sys/class/scsi_host/        目录下面有几个host 就扫描几次。<br>&emsp;<br>&emsp;</p>
 <h2 id="2-磁盘分区"><a href="#2-磁盘分区" class="headerlink" title="2 磁盘分区"></a>2 磁盘分区</h2><h3 id="2-1为什么要分区"><a href="#2-1为什么要分区" class="headerlink" title="2.1为什么要分区"></a>2.1为什么要分区</h3><ul>
 <li>优化I/O性能</li>
 <li>实现磁盘空间配额限制</li>
@@ -348,7 +560,7 @@
 </ul>
 <h4 id="3-12文件系统分类"><a href="#3-12文件系统分类" class="headerlink" title="3.12文件系统分类"></a>3.12文件系统分类</h4><p>根据其是否支持”journal”功能：<br>&emsp;&emsp;日志型文件系统: ext3, ext4, xfs, …<br>&emsp;&emsp;非日志型文件系统: ext2, vfat<br>文件系统的组成部分：<br>&emsp;&emsp;内核中的模块：ext4, xfs, vfat<br>&emsp;&emsp;用户空间的管理工具：mkfs.ext4, mkfs.xfs,mkfs.vfat<br>Linux的虚拟文件系统：VFS<br><strong>查前支持的文件系统：<code>cat /proc/filesystems</code></strong><br><strong>查前目前的文件系统：<code>lsblk -f</code></strong></p>
 <h3 id="3-2创建文件系统"><a href="#3-2创建文件系统" class="headerlink" title="3.2创建文件系统"></a>3.2创建文件系统</h3><p>mkfs命令：<br>(1) mkfs.FS_TYPE /dev/DEVICE<br>&emsp;&emsp;&emsp;&emsp;ext4<br>&emsp;&emsp;&emsp;&emsp;xfs<br>&emsp;&emsp;&emsp;&emsp;btrfs<br>&emsp;&emsp;&emsp;&emsp;vfat<br>(2) mkfs -t FS_TYPE /dev/DEVICE<br>&emsp;&emsp;&emsp;&emsp;-L ‘LABEL’ 设定卷标<br>&emsp;mke2fs命令：ext系列文件系统专用管理工具<br>&emsp;&emsp;&emsp;-t {ext2|ext3|ext4} 指定文件系统类型<br>&emsp;&emsp;&emsp;-b {1024|2048|4096} 指定块大小<br>&emsp;&emsp;&emsp;-L ‘LABEL’ 设置卷标<br>&emsp;&emsp;&emsp;-j 相当于 -t ext3 <strong>(mkfs.ext3 = mkfs -t ext3 = mke2fs -j = mke2fs -t ext3)`</strong><br>&emsp;&emsp;&emsp;-i # 为数据空间中每多少个字节创建一个inode；不应该小于block大小<br>&emsp;&emsp;&emsp;-N # 指定分区中创建多少个inode<br>&emsp;&emsp;&emsp;-I 一个inode记录占用的磁盘空间大小，128—4096<br>&emsp;&emsp;&emsp;-m # 默认5%,为管理人员预留空间占总空间的百分比<br>&emsp;&emsp;&emsp;-O FEATURE[,…] 启用指定特性<br>&emsp;&emsp;&emsp;-O ^FEATURE 关闭指定特性</p>
-<h3 id="3-3文件系统标签"><a href="#3-3文件系统标签" class="headerlink" title="3.3文件系统标签"></a>3.3文件系统标签</h3><p>文件系统标签是指向设备的另一种方法。与设备无关<br><strong>blkid</strong>：块设备属性信息查看<br>blkid [OPTION]… [DEVICE]<br>&emsp;&emsp;&emsp;-U UUID 根据指定的UUID来查找对应的设备<br>&emsp;&emsp;&emsp;-L LABEL 根据指定的LABEL来查找对应的设备<br><strong>e2label</strong>：管理ext系列文件系统的LABEL<br>e2label DEVICE [LABEL]<br><strong>findfs</strong> ：查找分区<br>findfs [options] LABEL= < label ><br>findfs [options] UUID= < uuid ></p>
+<h3 id="3-3文件系统标签"><a href="#3-3文件系统标签" class="headerlink" title="3.3文件系统标签"></a>3.3文件系统标签</h3><p>文件系统标签是指向设备的另一种方法。与设备无关<br><strong>blkid</strong>：块设备属性信息查看<br>blkid [OPTION]… [DEVICE]<br>&emsp;&emsp;&emsp;-U UUID 根据指定的UUID来查找对应的设备<br>&emsp;&emsp;&emsp;-L LABEL 根据指定的LABEL来查找对应的设备<br><strong>e2label</strong>：管理ext系列文件系统的LABEL<br>e2label DEVICE [LABEL]<br><strong>findfs</strong> ：查找分区<br>findfs [options] LABEL= &lt; label &gt;<br>findfs [options] UUID= &lt; uuid &gt;</p>
 <h3 id="3-4文件系统检测和修复"><a href="#3-4文件系统检测和修复" class="headerlink" title="3.4文件系统检测和修复"></a>3.4文件系统检测和修复</h3><p>文件系统夹故障常发生于死机或者非正常关机之后，挂载为文件系统标记为“no clean”<br> 注意：一定不要在挂载状态下执行下面命令修复<br> <strong>fsck: File System Check</strong><br>&emsp;&emsp;fsck.FS_TYPE<br>&emsp;&emsp;fsck -t FS_TYPE<br>注意：FS_TYPE 一定要与分区上已经文件类型相同<br>-a 自动修复<br>-r 交互式修复错误<br> <strong>e2fsck：ext系列文件专用的检测修复工具</strong><br>-y 自动回答为yes<br>-f 强制修复<br>-p 自动进行安全的修复文件系统问题<br><strong>xfs_repair：xfs文件系统专用检测修复工具</strong><br>-f 修复文件，而设备<br>-n 只检查<br>-d 允许修复只读的挂载设备，在单用户下修复 / 时使用，然后立即reboot</p>
 <h2 id="4-挂载新的文件系统"><a href="#4-挂载新的文件系统" class="headerlink" title="4 挂载新的文件系统"></a>4 挂载新的文件系统</h2><p><strong>挂载：</strong> 将额外文件系统与根文件系统某现存的目录建立起关联关系，进而使得此目录做为其它文件访问入口的行为<br><strong>卸载：</strong> 为解除此关联关系的过程<br>把设备关联挂载点：mount Point<br>&emsp;&emsp;mount  设备名   挂载点<br>卸载时：可使用设备，也可以使用挂载点<br>&emsp;&emsp;umount 设备名|挂载点<br>PS：挂载点下原有文件在挂载完成后会被临时隐藏<br>&emsp;&emsp; 挂载点目录一般为空</p>
 <h3 id="4-1用mount命令挂载文件系统"><a href="#4-1用mount命令挂载文件系统" class="headerlink" title="4.1用mount命令挂载文件系统"></a>4.1用mount命令挂载文件系统</h3><p><strong>挂载方法</strong>：mount DEVICE MOUNT_POINT<br>&emsp;&emsp;mount：通过查看/etc/mtab文件显示当前已挂载的所有设备<br>&emsp;&emsp;mount [-fnrsvw] [-t vfstype] [-o options] device dir<br>device：指明要挂载的设备；<br>&emsp;&emsp;(1) 设备文件：例如/dev/sda5<br>&emsp;&emsp;(2) 卷标：-L ‘LABEL’, 例如 -L ‘MYDATA’<br>&emsp;&emsp;(3) UUID, -U ‘UUID’：例如 -U ‘0c50523c-43f1-45e7-85c0-a126711d406e’<br>&emsp;&emsp;(4) 伪文件系统名称：proc, sysfs, devtmpfs, configfs<br>dir：挂载点需事先存在，建议使用空目录；进程正在使用中的设备无法被卸载。<br><strong>mount常用命令选项</strong><br>&emsp;&emsp;-t vsftype 指定要挂载的设备上的文件系统类型<br>&emsp;&emsp;-r readonly，只读挂载<br>&emsp;&emsp;-w read and write, 读写挂载<br>&emsp;&emsp;-n 不更新/etc/mtab，mount不可见<br>&emsp;&emsp;-a 自动挂载所有支持自动挂载的设备(定义在了/etc/fstab文件中，且挂载选项中有auto功能)<br>&emsp;&emsp;-L ‘LABEL’ 以卷标指定挂载设备<br>&emsp;&emsp;-U ‘UUID’ 以UUID指定要挂载的设备<br>&emsp;&emsp;-B, –bind 绑定目录到另一个目录上<br>&emsp;&emsp;查看内核追踪到的已挂载的所有设备：cat /proc/mounts</p>
@@ -356,87 +568,163 @@
 <h3 id="4-2卸载命令"><a href="#4-2卸载命令" class="headerlink" title="4.2卸载命令"></a>4.2卸载命令</h3><p>查看挂载情况<br>&emsp;&emsp;findmnt MOUNT_POINT|device<br>查看正在访问指定文件系统的进程<br>&emsp;&emsp;lsof MOUNT_POINT<br>&emsp;&emsp;fuser -v MOUNT_POINT<br>终止所有在正访问指定的文件系统的进程<br>&emsp;&emsp;fuser -km MOUNT_POINT<br>卸载<br>&emsp;&emsp;umount DEVICE<br>&emsp;&emsp;umount MOUNT_POINT</p>
 <h2 id="5-修改-etc-fstab配置文件"><a href="#5-修改-etc-fstab配置文件" class="headerlink" title="5 修改/etc/fstab配置文件"></a>5 修改/etc/fstab配置文件</h2><p>&emsp;&emsp;使用mount命令挂载设备都是临时挂载，每次开机后需要手动重新挂载，比较费时费力，如果需要实现自动挂载，就要修改文件系统挂载配置文件/etc/fstab文件。<br>/etc/fstab文件 下面的每行定义一个要挂载的文件系统<br>&emsp;&emsp;总共六列，分别对应设备、挂载点、文件系统类型、挂载选项、转储频率及是否自检。<br> 1、要挂载的设备或伪文件系统<br>设备文件<br>LABEL：LABEL=””<br>UUID：UUID=””<br>伪文件系统名称：proc, sysfs<br> 2、挂载点  一般为某文件或目录<br> 3、文件系统类型：ext4，xfs，iso9660，nfs，none<br> 4、挂载选项：defaults（包括rw suidi dev exac auto nouser async） ，acl，bind<br> 5、转储频率：0：不做备份 1：每天转储 2：每隔一天转储<br> 6、fsck检查的文件系统的顺序：允许的数字是0 1 2<br>&emsp;&emsp;0：不自检<br>&emsp;&emsp;1：首先自检；一般只有rootfs才用<br>&emsp;&emsp;2：非rootfs使用<br>&emsp;&emsp;可以使用cat 、echo 等命令 将这6个信息 追加至/etc/fstab文件中，也可以用sed 命令 。</p>
 <p>&emsp;&emsp;<strong>使用<code>mount -a</code> 命令可以立即挂载/etc/fstab中的所有文件系统</strong></p>
+
     </div>
+
+    
+    
+    
+          
+            
+          
           <div class="post-tags">
+            
               <a href="/tags/linux/" rel="tag"><i class="fa fa-tag">linux</i></a>
+            
               <a href="/tags/filesystem/" rel="tag"><i class="fa fa-tag">filesystem</i></a>
+            
           </div>
+        
+
     <div style="text-align:center;color: #ccc;font-size:14px;">------------------------------- The End -------------------------------</div>
+
+
+        
   <div class="post-widgets">
     <div class="wp_rating">
       <div id="wpac-rating"></div>
     </div>
+  
   </div>
+
+        
+      
         <div id="reward-container">
   <div>It's very nice of you to support me.</div>
   <button id="reward-button" disable="enable" onclick="var qr = document.getElementById('qr'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
     打赏
   </button>
   <div id="qr" style="display: none;">
+        
+      
       <div style="display: inline-block">
         <img src="/images/wechat-pay.png" alt="Hechao 微信支付">
         <p>微信支付</p>
       </div>
+
   </div>
 </div>
+
+      
+        
+
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
     <strong>本文作者： </strong>Hechao</li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://wudihechao.github.io/blog/2bae1e5c.html" title="CentOS7磁盘分区及文件系统">https://wudihechao.github.io/blog/2bae1e5c.html</a>
+    <a href="https://wudihechao.github.io/blog/2bae1e5c.html" title="CentOS7磁盘分区及文件系统">https:&#x2F;&#x2F;wudihechao.github.io&#x2F;blog&#x2F;2bae1e5c.html</a>
   </li>
   <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank">&lt;i class=&quot;fa fa-fw fa-creative-commons&quot;&gt;&lt;&#x2F;i&gt;BY-NC-SA</a> 许可协议。转载请注明出处！</li>
 </ul>
 </div>
+
+      
+        
+
 <div class="note info" style="background-color: #eff8f0;
     border-left: 3px solid #255188;
     opacity: 0.85;
     padding-left: 11px;
     padding-bottom: 1px;">
+
   <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts" style="margin-top: 10px;
     margin-bottom: 10px;">
     <li class="popular-posts-item">
+      
+      
       <div class="popular-posts-title"><a href="/blog/c1add9f7.html" rel="bookmark">linux使用vmware虚拟机玩LOL</a></div>
+      
     </li>
+  
     <li class="popular-posts-item">
+      
+      
       <div class="popular-posts-title"><a href="/blog/b365780e.html" rel="bookmark">linux上部署与配置tomcat</a></div>
+      
     </li>
+  
     <li class="popular-posts-item">
+      
+      
       <div class="popular-posts-title"><a href="/blog/57d66c4.html" rel="bookmark">LAMP架构实现PowerDNS</a></div>
+      
     </li>
+  
     <li class="popular-posts-item">
+      
+      
       <div class="popular-posts-title"><a href="/blog/8a189dcf.html" rel="bookmark">自动化运维之Ansible</a></div>
+      
     </li>
+  
     <li class="popular-posts-item">
+      
+      
       <div class="popular-posts-title"><a href="/blog/b124800c.html" rel="bookmark">二进制安装及源码编译安装mariadb数据库</a></div>
+      
     </li>
+  
   </ul>
+
 </div>
+
+      
+
       <footer class="post-footer">
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
+              
                 <a href="/blog/92724e23.html" rel="next" title="我的一键个性化系统脚本">
                   <i class="fa fa-chevron-left"></i> 我的一键个性化系统脚本
                 </a>
+              
             </div>
+
             <span class="post-nav-divider"></span>
+
             <div class="post-nav-prev post-nav-item">
+              
                 <a href="/blog/a96e917a.html" rel="prev" title="for循环实现的小脚本">
                   for循环实现的小脚本 <i class="fa fa-chevron-right"></i>
                 </a>
+              
             </div>
           </div>
+        
       </footer>
+    
   </div>
+  
+  
+  
   </article>
+
   </div>
+
+
           </div>
+          
+    
     <div class="comments" id="comments"></div>
+  
+
         </div>
+          
+  
   <div class="sidebar-toggle">
     <div class="sidebar-toggle-line-wrap">
       <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
@@ -444,8 +732,15 @@
       <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
     </div>
   </div>
+
   <aside class="sidebar">
     <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
           文章目录
@@ -454,11 +749,14 @@
           站点概览
         </li>
       </ul>
+
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
           <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-设备识别"><span class="nav-number">1.</span> <span class="nav-text">1 设备识别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-磁盘分区"><span class="nav-number">2.</span> <span class="nav-text">2 磁盘分区</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1为什么要分区"><span class="nav-number">2.1.</span> <span class="nav-text">2.1为什么要分区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2分区方式"><span class="nav-number">2.2.</span> <span class="nav-text">2.2分区方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MBR分区结构"><span class="nav-number">2.2.1.</span> <span class="nav-text">MBR分区结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MBR分区表"><span class="nav-number">2.2.2.</span> <span class="nav-text">MBR分区表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GPT分区结构"><span class="nav-number">2.2.3.</span> <span class="nav-text">GPT分区结构</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3管理分区"><span class="nav-number">2.3.</span> <span class="nav-text">2.3管理分区</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-31列出块设备"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.31列出块设备</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-32创建新分区"><span class="nav-number">2.3.2.</span> <span class="nav-text">2.32创建新分区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-33同步内核与硬盘的分区表"><span class="nav-number">2.3.3.</span> <span class="nav-text">2.33同步内核与硬盘的分区表</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-创建文件系统"><span class="nav-number">3.</span> <span class="nav-text">3 创建文件系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1文件系统"><span class="nav-number">3.1.</span> <span class="nav-text">3.1文件系统</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-11文件系统类型"><span class="nav-number">3.1.1.</span> <span class="nav-text">3.11文件系统类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-12文件系统分类"><span class="nav-number">3.1.2.</span> <span class="nav-text">3.12文件系统分类</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2创建文件系统"><span class="nav-number">3.2.</span> <span class="nav-text">3.2创建文件系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3文件系统标签"><span class="nav-number">3.3.</span> <span class="nav-text">3.3文件系统标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4文件系统检测和修复"><span class="nav-number">3.4.</span> <span class="nav-text">3.4文件系统检测和修复</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-挂载新的文件系统"><span class="nav-number">4.</span> <span class="nav-text">4 挂载新的文件系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1用mount命令挂载文件系统"><span class="nav-number">4.1.</span> <span class="nav-text">4.1用mount命令挂载文件系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2卸载命令"><span class="nav-number">4.2.</span> <span class="nav-text">4.2卸载命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-修改-etc-fstab配置文件"><span class="nav-number">5.</span> <span class="nav-text">5 修改/etc/fstab配置文件</span></a></li></ol></div>
+        
       </div>
       <!--/noindex-->
+
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image"
@@ -470,23 +768,38 @@
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
+        
           <a href="/archives/">
+        
           <span class="site-state-item-count">45</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
+    
+      
+      
       <div class="site-state-item site-state-categories">
+        
           <a href="/categories/">
+        
         <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
+    
+      
+      
       <div class="site-state-item site-state-tags">
+        
+          
             <a href="/tags/">
+          
+        
         <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
+    
   </nav>
 </div>
   <div class="feed-link motion-element">
@@ -496,15 +809,35 @@
   </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/wudihechao" title="GitHub &rarr; https://github.com/wudihechao" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      
+      
+      
+        
+      
+        <a href="https://github.com/wudihechao" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;wudihechao" rel="noopener external nofollow noreferrer" target="_blank">&lt;i class=&quot;fa fa-fw fa-github&quot;&gt;&lt;&#x2F;i&gt;</a>
       </span>
+    
       <span class="links-of-author-item">
-        <a href="mailto:wudihechao@163.com" title="E-Mail &rarr; mailto:wudihechao@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      
+      
+      
+        
+      
+        <a href="mailto:wudihechao@163.com" title="E-Mail &amp;rarr; mailto:wudihechao@163.com" rel="noopener external nofollow noreferrer" target="_blank">&lt;i class=&quot;fa fa-fw fa-envelope&quot;&gt;&lt;&#x2F;i&gt;</a>
       </span>
+    
       <span class="links-of-author-item">
-        <a href="https://weibo.com/u/1050367191" title="Weibo &rarr; https://weibo.com/u/1050367191" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-weibo"></i></a>
+      
+      
+      
+        
+      
+        <a href="https://weibo.com/u/1050367191" title="Weibo &amp;rarr; https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;1050367191" rel="noopener external nofollow noreferrer" target="_blank">&lt;i class=&quot;fa fa-fw fa-weibo&quot;&gt;&lt;&#x2F;i&gt;</a>
       </span>
+    
   </div>
+
+        
     <div class="links-of-blogroll motion-element links-of-blogroll-block">
       <div class="links-of-blogroll-title" style="padding-left: 10px;">
         <!-- modify icon to fire by szw -->
@@ -512,23 +845,31 @@
         近期文章
       </div>
       <ul class="links-of-blogroll-list" style="padding-left: 30px;">
+        
+        
           <li>
             <a href="/blog/ea0d2f46.html" title="关于游戏服务端的搭建" >关于游戏服务端的搭建</a>
           </li>
+        
           <li>
             <a href="/blog/c1add9f7.html" title="linux使用vmware虚拟机玩LOL" >linux使用vmware虚拟机玩LOL</a>
           </li>
+        
           <li>
             <a href="/blog/a9b6fadd.html" title="K8s进阶——java集群服务搭建" >K8s进阶——java集群服务搭建</a>
           </li>
+        
           <li>
             <a href="/blog/bd240ad7.html" title="企业级应用——ELK（三）：filebeat" >企业级应用——ELK（三）：filebeat</a>
           </li>
+        
           <li>
             <a href="/blog/ee80297c.html" title="企业级应用——ELK（二）：ELK进阶" >企业级应用——ELK（二）：ELK进阶</a>
           </li>
+        
       </ul>
     </div>
+
 <div id="days"></div>
 <script>
 function show_date_time(){
@@ -555,14 +896,27 @@ return i;
 }
 show_date_time();
 </script>
+
   <div class="cc-license motion-element" itemprop="license">
-    <a href="https://hewanyue.com/" class="cc-opacity" rel="noopener external nofollow noreferrer" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+    
+  
+
+    <a href="https://hewanyue.com/" class="cc-opacity" rel="noopener external nofollow noreferrer" target="_blank">&lt;img src=&quot;&#x2F;images&#x2F;cc-by-nc-sa.svg&quot; alt=&quot;Creative Commons&quot;&gt;</a>
   </div>
+
+
+
+
       </div>
+
+
  </aside>
   <div id="sidebar-dimmer"></div>
+
+
       </div>
     </main>
+
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
@@ -576,6 +930,8 @@ show_date_time();
     </span>
     <span title="站点总字数">411k</span>
 </div>
+
+        
 <div class="busuanzi-count">
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
@@ -586,7 +942,9 @@ show_date_time();
         <span id="busuanzi_value_site_uv"></span>
       </span>
     </span>
+  
     <span class="post-meta-divider">|</span>
+  
     <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="fa fa-eye"></i>
@@ -595,10 +953,28 @@ show_date_time();
         <span id="busuanzi_value_site_pv"></span>
       </span>
     </span>
+  
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
       </div>
     </footer>
   </div>
+
+  
+    
+  
   <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
   <script src="/lib/anime.min.js?v=3.1.0"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
@@ -606,6 +982,10 @@ show_date_time();
 <script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
 <script src="/js/schemes/muse.js?v=7.4.0"></script>
 <script src="/js/next-boot.js?v=7.4.0"></script><script src="/js/bookmark.js?v=7.4.0"></script>
+
+
+
+  
   <script>
     (function(){
       var bp = document.createElement('script');
@@ -615,6 +995,11 @@ show_date_time();
       s.parentNode.insertBefore(bp, s);
     })();
   </script>
+
+
+
+
+
   <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
@@ -635,7 +1020,28 @@ show_date_time();
     })();
   }
   </script>
+
+
+
   <script src="/js/local-search.js?v=7.4.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
 <script>
 NexT.utils.getScript('//blog.hewanyue.com/js/Valine.min.js', () => {
   var GUEST = ['nick', 'mail','link'];
@@ -659,6 +1065,7 @@ NexT.utils.getScript('//blog.hewanyue.com/js/Valine.min.js', () => {
   });
 }, window.Valine);
 </script>
+
 </body>
 </html>
   <!-- 页面点击小红心 -->

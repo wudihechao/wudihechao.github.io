@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+
+
+
+
+
 <html lang="zh-CN">
 <head>
   <meta name="baidu-site-verification" content="vT6Jf980C0" />
@@ -9,8 +14,13 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.ico?v=7.4.0">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.ico?v=7.4.0">
   <link rel="alternate" href="/atom.xml" title="BOHC!" type="application/atom+xml">
+
 <link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
 <script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
@@ -44,13 +54,16 @@
     sidebarPadding: 40
   };
 </script>
-  <meta name="description" content="&emsp;&emsp;ELK是Elasticsearch、Logstash、Kibana的简称，这三者是核心套件，但并非全部。&emsp;&emsp;Elasticsearch是实时全文搜索和分析引擎，提供搜集、分析、存储数据三大功能；是一套开放REST和JAVA API等结构提供高效搜索功能，可扩展的分布式系统。它构建于Apache Lucene搜索引擎库之上。&emsp;&emsp;Logs">
+
+
+
+  <meta name="description" content="&amp;emsp;&amp;emsp;ELK是Elasticsearch、Logstash、Kibana的简称，这三者是核心套件，但并非全部。&amp;emsp;&amp;emsp;Elasticsearch是实时全文搜索和分析引擎，提供搜集、分析、存储数据三大功能；是一套开放REST和JAVA API等结构提供高效搜索功能，可扩展的分布式系统。它构建于Apache Lucene搜索引擎库之上。&amp;emsp;&amp;emsp;Logs">
 <meta name="keywords" content="企业级应用,ELK,Elasticsearch,Logstash,Kibana">
 <meta property="og:type" content="article">
 <meta property="og:title" content="企业级应用——ELK（一）：ELK的部署">
 <meta property="og:url" content="https://wudihechao.github.io/blog/a1b53f63.html">
 <meta property="og:site_name" content="BOHC!">
-<meta property="og:description" content="&emsp;&emsp;ELK是Elasticsearch、Logstash、Kibana的简称，这三者是核心套件，但并非全部。&emsp;&emsp;Elasticsearch是实时全文搜索和分析引擎，提供搜集、分析、存储数据三大功能；是一套开放REST和JAVA API等结构提供高效搜索功能，可扩展的分布式系统。它构建于Apache Lucene搜索引擎库之上。&emsp;&emsp;Logs">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;ELK是Elasticsearch、Logstash、Kibana的简称，这三者是核心套件，但并非全部。&amp;emsp;&amp;emsp;Elasticsearch是实时全文搜索和分析引擎，提供搜集、分析、存储数据三大功能；是一套开放REST和JAVA API等结构提供高效搜索功能，可扩展的分布式系统。它构建于Apache Lucene搜索引擎库之上。&amp;emsp;&amp;emsp;Logs">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20200103144832731.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20200103161950993.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
@@ -58,9 +71,11 @@
 <meta property="og:updated_time" content="2020-01-06T12:10:25.882Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="企业级应用——ELK（一）：ELK的部署">
-<meta name="twitter:description" content="&emsp;&emsp;ELK是Elasticsearch、Logstash、Kibana的简称，这三者是核心套件，但并非全部。&emsp;&emsp;Elasticsearch是实时全文搜索和分析引擎，提供搜集、分析、存储数据三大功能；是一套开放REST和JAVA API等结构提供高效搜索功能，可扩展的分布式系统。它构建于Apache Lucene搜索引擎库之上。&emsp;&emsp;Logs">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;ELK是Elasticsearch、Logstash、Kibana的简称，这三者是核心套件，但并非全部。&amp;emsp;&amp;emsp;Elasticsearch是实时全文搜索和分析引擎，提供搜集、分析、存储数据三大功能；是一套开放REST和JAVA API等结构提供高效搜索功能，可扩展的分布式系统。它构建于Apache Lucene搜索引擎库之上。&amp;emsp;&amp;emsp;Logs">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200103144832731.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
   <link rel="canonical" href="https://wudihechao.github.io/blog/a1b53f63">
+
+
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
@@ -71,7 +86,17 @@
     isArchive: false
   };
 </script>
+
   <title>企业级应用——ELK（一）：ELK的部署 | BOHC!</title>
+  
+
+
+
+
+
+
+
+
   <noscript>
   <style>
   .use-motion .brand,
@@ -83,23 +108,31 @@
   .use-motion .post-header,
   .use-motion .post-body,
   .use-motion .collection-header { opacity: initial; }
+
   .use-motion .logo,
   .use-motion .site-title,
   .use-motion .site-subtitle {
     opacity: initial;
     top: initial;
   }
+
   .use-motion .logo-line-before i { left: initial; }
   .use-motion .logo-line-after i { right: initial; }
   </style>
 </noscript>
+
 <script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "https://hm.baidu.com/hm.js?a0d4e217e26da03ea5ca2acc76d543ae";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();</script>
+
+
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="/dist/APlayer.min.css" class="aplayer-style-marker">
 <script src="/dist/APlayer.min.js" class="aplayer-script-marker"></script>
 </head>
+
 <body oncontextmenu=self.event.returnValue=false>
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+
         <div id="aplayer" class="aplayer aplayer-withlist  aplayer-fixed aplayer-narrow" style="position: fixed; z-index: 5; left: 0px; width: 400px;">
             <pre class="aplayer-lrc-content"></pre>
         </div>
@@ -172,6 +205,7 @@
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-meta">
+
     <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
@@ -180,7 +214,9 @@
       </a>
     </div>
         <h1 class="site-subtitle" itemprop="description">blog of hechao!</h1>
+      
   </div>
+
   <div class="site-nav-toggle">
     <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
@@ -189,31 +225,147 @@
     </button>
   </div>
 </div>
+
+
 <nav class="site-nav">
+  
   <ul id="menu" class="menu">
+      
+      
+      
+        
         <li class="menu-item menu-item-home">
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i>首页</a>
+      
+    
+      
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-home&quot;&gt;&lt;&#x2F;i&gt;首页</a>
+
   </li>
+      
+      
+      
+        
         <li class="menu-item menu-item-about">
-    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i>关于</a>
+      
+    
+      
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/about/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-user&quot;&gt;&lt;&#x2F;i&gt;关于</a>
+
   </li>
+      
+      
+      
+        
         <li class="menu-item menu-item-tags">
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">90</span></a>
+      
+    
+      
+      
+        
+      
+        
+      
+        
+          
+        
+      
+    
+
+    <a href="/tags/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-tags&quot;&gt;&lt;&#x2F;i&gt;标签&lt;span class=&quot;badge&quot;&gt;90&lt;&#x2F;span&gt;</a>
+
   </li>
+      
+      
+      
+        
         <li class="menu-item menu-item-categories">
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">7</span></a>
+      
+    
+      
+      
+        
+      
+        
+          
+        
+      
+        
+      
+    
+
+    <a href="/categories/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-th&quot;&gt;&lt;&#x2F;i&gt;分类&lt;span class=&quot;badge&quot;&gt;7&lt;&#x2F;span&gt;</a>
+
   </li>
+      
+      
+      
+        
         <li class="menu-item menu-item-archives">
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">45</span></a>
+      
+    
+      
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/archives/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-archive&quot;&gt;&lt;&#x2F;i&gt;归档&lt;span class=&quot;badge&quot;&gt;45&lt;&#x2F;span&gt;</a>
+
   </li>
+      
+      
+      
+        
         <li class="menu-item menu-item-friends">
-    <a href="/friends/" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i>友链</a>
+      
+    
+      
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <a href="/friends/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-link&quot;&gt;&lt;&#x2F;i&gt;友链</a>
+
   </li>
       <li class="menu-item menu-item-search">
         <a href="javascript:;" rel="external nofollow noreferrer" class="popup-trigger">
+        
           <i class="menu-item-icon fa fa-search fa-fw"></i>搜索</a>
       </li>
+    
   </ul>
+
+    
+
 </nav>
   <div class="site-search">
     <div class="popup search-popup">
@@ -231,83 +383,143 @@
   </span>
 </div>
 <div id="search-result"></div>
+
 </div>
 <div class="search-pop-overlay"></div>
+
   </div>
 </div>
     </header>
+
+    
   <div class="back-to-top">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
   <div class="reading-progress-bar"></div>
   <a class="book-mark-link book-mark-link-fixed" href="#"></a>
-  <a href="https://github.com/wudihechao" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener external nofollow noreferrer" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+  <a href="https://github.com/wudihechao" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener external nofollow noreferrer" target="_blank">&lt;svg width=&quot;80&quot; height=&quot;80&quot; viewBox=&quot;0 0 250 250&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z&quot;&gt;&lt;&#x2F;path&gt;&lt;path d=&quot;M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2&quot; fill=&quot;currentColor&quot; style=&quot;transform-origin: 130px 106px;&quot; class=&quot;octo-arm&quot;&gt;&lt;&#x2F;path&gt;&lt;path d=&quot;M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z&quot; fill=&quot;currentColor&quot; class=&quot;octo-body&quot;&gt;&lt;&#x2F;path&gt;&lt;&#x2F;svg&gt;</a>
+
+
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
           <div id="content" class="content">
+            
+
   <div id="posts" class="posts-expand">
       <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
   <div class="post-block post">
     <link itemprop="mainEntityOfPage" href="https://wudihechao.github.io/blog/a1b53f63.html">
+
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hechao">
       <meta itemprop="description" content="BOHC is just a blog of hechao.">
       <meta itemprop="image" content="/images/touxiang.gif">
     </span>
+
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="BOHC!">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">企业级应用——ELK（一）：ELK的部署
+
+          
         </h2>
+
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
+
+
+              
+                
+              
+
               <time title="创建时间：2020-01-03 18:00:54" itemprop="dateCreated datePublished" datetime="2020-01-03T18:00:54+08:00">2020-01-03</time>
             </span>
+          
             <span class="post-meta-item">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
+
+              
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/linux进阶/" itemprop="url" rel="index"><span itemprop="name">linux进阶</span></a></span>
+
+                
+                
+              
             </span>
+          
+
+          
             <span id="/blog/a1b53f63.html" class="post-meta-item leancloud_visitors" data-flag-title="企业级应用——ELK（一）：ELK的部署" title="阅读次数">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
+
               <span class="leancloud-visitors-count"></span>
               <span>℃</span>
             </span>
+          
+
               <span class="post-meta-divider">•</span>
+  
   <span class="post-meta-item">
+    
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
     <a title="valine" href="/blog/a1b53f63.html#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/blog/a1b53f63.html" itemprop="commentCount"></span></a>
   </span>
+  
+  
+          
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-file-word-o"></i>
               </span>
+              
+
+              
               <span>11k</span>
             </span>
+          
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
+              
+
+              
               <span>27 分钟</span>
             </span>
+          
+
         </div>
       </header>
+
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
+
+      
         <p>&emsp;&emsp;ELK是Elasticsearch、Logstash、Kibana的简称，这三者是核心套件，但并非全部。<br>&emsp;&emsp;Elasticsearch是实时全文搜索和分析引擎，提供搜集、分析、存储数据三大功能；是一套开放REST和JAVA API等结构提供高效搜索功能，可扩展的分布式系统。它构建于Apache Lucene搜索引擎库之上。<br>&emsp;&emsp;Logstash是一个用来搜集、分析、过滤日志的工具。它支持几乎任何类型的日志，包括系统日志、错误日志和自定义应用程序日志。它可以从许多来源接收日志，这些来源包括 syslog、消息传递（例如 RabbitMQ）和JMX，它能够以多种方式输出数据，包括电子邮件、websockets和Elasticsearch。<br>&emsp;&emsp;Kibana是一个基于Web的图形界面，用于搜索、分析和可视化存储在 Elasticsearch指标中的日志数据。它利用Elasticsearch的REST接口来检索数据，不仅允许用户创建他们自己的数据的定制仪表板视图，还允许他们以特殊的方式查询和过滤数据。<br><a id="more"></a></p>
 <h2 id="ELK架构"><a href="#ELK架构" class="headerlink" title="ELK架构"></a>ELK架构</h2><p>&emsp;&emsp;通常来说，只使用这三个组件就可以进行日志收集了，不过在企业实际生产中，需要用到ELK做集中日志收集的话，日志的产生量都是惊人的，所以通常情况下会需要缓存层来防止elasticsearch被压垮。架构如下图所示。（也可以通过filebeat来收集日志。）<br><img src="https://img-blog.csdnimg.cn/20200103144832731.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="ELK架构"></p>
 <h2 id="ELK的部署"><a href="#ELK的部署" class="headerlink" title="ELK的部署"></a>ELK的部署</h2><p>&emsp;&emsp;需要注意的是，ELK的这三个组件版本要一致，否则可能会出现一些不必要的问题。我们这里选用最新版本7.5.1为例，演示主机均为ubuntu1804。</p>
@@ -326,101 +538,180 @@
 <p>&emsp;&emsp;或者安装oracle的jdk，生产环境还是推荐使用oracle公司的jdk，更加稳定。然后安装logstash<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">dpkg</span> <span class="selector-tag">-i</span> <span class="selector-tag">logstash-7</span><span class="selector-class">.5</span><span class="selector-class">.1</span><span class="selector-class">.deb</span></span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;对于logstash的配置也很少,不做修改也可以使用，不过我们这里同样还是修改一下数据目录和日志目录<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@logstash1:~# <span class="keyword">grep</span> <span class="string">"^[a-Z]"</span> /etc/logstash/logstash.yml</span><br><span class="line">path.dat<span class="variable">a:</span> /logstash/data</span><br><span class="line">path.<span class="built_in">log</span><span class="variable">s:</span> /logstash/logs</span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;修改属主<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">mkdir</span> -p /logstash/&#123;<span class="class"><span class="keyword">data</span>,logs&#125;</span></span><br><span class="line"><span class="title">chown</span> -<span class="type">R</span> /logstash</span><br></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;logstash的默认执行程序路径为<code>/usr/share/logstash/bin/logstash</code>，这其实也是一个shell脚本文件，脚本中调用java的类库。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">root@logstash1:~<span class="comment"># /usr/share/logstash/bin/logstash --help</span></span><br><span class="line">Thread.exclusive is deprecated, <span class="keyword">use</span> <span class="keyword">Thread</span>::<span class="keyword">Mutex</span></span><br><span class="line"><span class="keyword">WARNING</span>: Could <span class="keyword">not</span> find logstash.yml which <span class="keyword">is</span> typically located <span class="keyword">in</span> </span><br><span class="line">$LS_HOME/config <span class="keyword">or</span> /etc/logstash. You can specify the <span class="keyword">path</span> <span class="keyword">using</span> <span class="comment">--path.settings.</span></span><br><span class="line"> Continuing <span class="keyword">using</span> the <span class="keyword">defaults</span></span><br><span class="line"><span class="keyword">Usage</span>:</span><br><span class="line">    <span class="keyword">bin</span>/logstash [OPTIONS]</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">    -n, <span class="comment">--node.name NAME          Specify the name of this logstash instance, </span></span><br><span class="line">                                  <span class="keyword">if</span> <span class="keyword">no</span> <span class="keyword">value</span> <span class="keyword">is</span> given</span><br><span class="line">                                  it will <span class="keyword">default</span> <span class="keyword">to</span> the <span class="keyword">current</span> hostname.</span><br><span class="line">                                   (<span class="keyword">default</span>: <span class="string">"logstash1"</span>)</span><br><span class="line">    -f, <span class="comment">--path.config CONFIG_PATH Load the logstash config from a specific file</span></span><br><span class="line">                                  <span class="keyword">or</span> directory.  <span class="keyword">If</span> a <span class="keyword">directory</span> <span class="keyword">is</span> given, <span class="keyword">all</span></span><br><span class="line">                                  files <span class="keyword">in</span> that <span class="keyword">directory</span> will be concatenated</span><br><span class="line">                                  <span class="keyword">in</span> lexicographical <span class="keyword">order</span> <span class="keyword">and</span> <span class="keyword">then</span> parsed <span class="keyword">as</span> a</span><br><span class="line">                                  single config file. You can also specify</span><br><span class="line">                                  wildcards (globs) <span class="keyword">and</span> <span class="keyword">any</span> <span class="keyword">matched</span> files will</span><br><span class="line">                                  be loaded <span class="keyword">in</span> the <span class="keyword">order</span> described above.</span><br><span class="line">    -e, <span class="comment">--config.string CONFIG_STRING Use the given string as the configuration</span></span><br><span class="line">                                  data. Same syntax <span class="keyword">as</span> the config file. <span class="keyword">If</span> <span class="keyword">no</span></span><br><span class="line">                                  <span class="keyword">input</span> <span class="keyword">is</span> specified, <span class="keyword">then</span> the <span class="keyword">following</span> <span class="keyword">is</span></span><br><span class="line">                                  used <span class="keyword">as</span> the <span class="keyword">default</span> <span class="keyword">input</span>:</span><br><span class="line">                                  <span class="string">"input &#123; stdin &#123; type => stdin &#125; &#125;"</span></span><br><span class="line">                                  <span class="keyword">and</span> <span class="keyword">if</span> <span class="keyword">no</span> <span class="keyword">output</span> <span class="keyword">is</span> specified, <span class="keyword">then</span> the</span><br><span class="line">                                  <span class="keyword">following</span> <span class="keyword">is</span> used <span class="keyword">as</span> the <span class="keyword">default</span> <span class="keyword">output</span>:</span><br><span class="line">                                  <span class="string">"output &#123; stdout &#123; codec => rubydebug &#125; &#125;"</span></span><br><span class="line">                                  <span class="keyword">If</span> you wish <span class="keyword">to</span> <span class="keyword">use</span> <span class="keyword">both</span> <span class="keyword">defaults</span>, please <span class="keyword">use</span></span><br><span class="line">                                  the <span class="keyword">empty</span> <span class="keyword">string</span> <span class="keyword">for</span> the <span class="string">'-e'</span> flag.</span><br><span class="line">                                   (<span class="keyword">default</span>: nil)</span><br></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;不过常用的选项也就<code>-e</code>和<code>-f</code>，分别是通过命令行指定参数或者通过文件来指定配置参数。我们可以使用命令来测试<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/usr/</span>share<span class="regexp">/logstash/</span>bin/logstash -e <span class="string">'input &#123; stdin&#123;&#125; &#125; output &#123; stdout&#123; codec => rubydebug &#125;&#125;'</span></span><br></pre></td></tr></table></figure></p>
-<p><img src="https://img-blog.csdnimg.cn/20200103161950993.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="输出日志"><br>&emsp;&emsp;通过标准输入输入信息，并通过标准输出返回日志信息。同样，我们也可以调用input的file插件和output的file插件实现从文件中读取数据，或者写入文件。这样就可以实现对日志文件的抓取了。我们可以先尝试抓取系统日志如<code>syslog</code>。<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/usr/</span>share<span class="regexp">/logstash/</span>bin<span class="regexp">/logstash -e 'input &#123; file &#123; path => "/</span>var<span class="regexp">/log/</span>syslog<span class="string">"&#125; &#125; output &#123; stdout&#123; codec => rubydebug &#125;&#125;'</span></span><br></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;哈，系统日志如果太多，估计会刷屏的。<br>&emsp;&emsp;不过刚才那些都只是一些基本用法而已，而实际生产中，我们肯定不能使用命令行来手动获取数据，我们需要的是一个可靠的服务，来帮我们自动抓取日志并筛选过滤，这就需要我们使用配置文件来设置了。<br>&emsp;&emsp;例如我们要做的抓取本机的nginx的访问日志、错误日志还有系统日志，并传递至之前配好的elasticsearch中。<br>&emsp;&emsp;那就在路径<code>/etc/logstash/conf.d/</code>目录下，创建一个新的配置文件，使用systemd启动时会自动读取conf.d下的配置文件。<br><figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/logstash/conf.d/nginx.conf</span><br><span class="line"><span class="keyword">input</span> &#123;</span><br><span class="line">  file &#123; </span><br><span class="line">    <span class="attr">path</span> => <span class="string">"/var/log/syslog"</span></span><br><span class="line">    <span class="attr">stat_interval</span> => <span class="number">3</span></span><br><span class="line">    <span class="attr">start_position</span> => <span class="string">"beginning"</span></span><br><span class="line">    <span class="attr">type</span> => <span class="string">"syslog"</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">file</span> &#123; </span><br><span class="line">    <span class="attr">path</span> => <span class="string">"/apps/nginx/logs/access_json.log"</span></span><br><span class="line">    <span class="attr">stat_interval</span> => <span class="number">3</span></span><br><span class="line">    <span class="attr">start_position</span> => <span class="string">"beginning"</span></span><br><span class="line">    <span class="attr">codec</span> => <span class="string">"json"</span></span><br><span class="line">    <span class="attr">type</span> => <span class="string">"nginx_accesslog"</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">file</span> &#123; </span><br><span class="line">    <span class="attr">path</span> => <span class="string">"/apps/nginx/logs/error.log"</span></span><br><span class="line">    <span class="attr">stat_interval</span> => <span class="number">3</span></span><br><span class="line">    <span class="attr">start_position</span> => <span class="string">"beginning"</span></span><br><span class="line">    <span class="attr">type</span> => <span class="string">"nginx_errorlog"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">output</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> [<span class="built_in">type</span>] == <span class="string">"syslog"</span> &#123;</span><br><span class="line">  elasticsearch &#123;</span><br><span class="line">    <span class="attr">hosts</span> => [<span class="string">"192.168.32.41:9200"</span>]</span><br><span class="line">    <span class="attr">index</span> => <span class="string">"syslog-%&#123;+YYYY.MM.dd&#125;"</span></span><br><span class="line">  &#125;&#125;</span><br><span class="line">  if [type] == <span class="string">"nginx_accesslog"</span> &#123;</span><br><span class="line">  <span class="keyword">elasticsearch</span> &#123;</span><br><span class="line">    <span class="attr">hosts</span> => [<span class="string">"192.168.32.41:9200"</span>]</span><br><span class="line">    <span class="attr">index</span> => <span class="string">"nginx_accesslog-%&#123;+YYYY.MM.dd&#125;</span></span><br><span class="line"><span class="string">  &#125;&#125;</span></span><br><span class="line"><span class="string">  if [type] == "</span>nginx_errorlog<span class="string">" &#123;</span></span><br><span class="line"><span class="string">  elasticsearch &#123;</span></span><br><span class="line"><span class="string">    hosts => ["</span><span class="number">192.168</span>.<span class="number">32.41</span>:<span class="number">9200</span><span class="string">"]</span></span><br><span class="line"><span class="string">    index => "</span>nginx_accesslog-%&#123;+YYYY.MM.dd&#125;</span><br><span class="line">  &#125;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;logstash的默认执行程序路径为<code>/usr/share/logstash/bin/logstash</code>，这其实也是一个shell脚本文件，脚本中调用java的类库。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">root@logstash1:~<span class="comment"># /usr/share/logstash/bin/logstash --help</span></span><br><span class="line">Thread.exclusive is deprecated, <span class="keyword">use</span> <span class="keyword">Thread</span>::<span class="keyword">Mutex</span></span><br><span class="line"><span class="keyword">WARNING</span>: Could <span class="keyword">not</span> find logstash.yml which <span class="keyword">is</span> typically located <span class="keyword">in</span> </span><br><span class="line">$LS_HOME/config <span class="keyword">or</span> /etc/logstash. You can specify the <span class="keyword">path</span> <span class="keyword">using</span> <span class="comment">--path.settings.</span></span><br><span class="line"> Continuing <span class="keyword">using</span> the <span class="keyword">defaults</span></span><br><span class="line"><span class="keyword">Usage</span>:</span><br><span class="line">    <span class="keyword">bin</span>/logstash [OPTIONS]</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">    -n, <span class="comment">--node.name NAME          Specify the name of this logstash instance, </span></span><br><span class="line">                                  <span class="keyword">if</span> <span class="keyword">no</span> <span class="keyword">value</span> <span class="keyword">is</span> given</span><br><span class="line">                                  it will <span class="keyword">default</span> <span class="keyword">to</span> the <span class="keyword">current</span> hostname.</span><br><span class="line">                                   (<span class="keyword">default</span>: <span class="string">"logstash1"</span>)</span><br><span class="line">    -f, <span class="comment">--path.config CONFIG_PATH Load the logstash config from a specific file</span></span><br><span class="line">                                  <span class="keyword">or</span> directory.  <span class="keyword">If</span> a <span class="keyword">directory</span> <span class="keyword">is</span> given, <span class="keyword">all</span></span><br><span class="line">                                  files <span class="keyword">in</span> that <span class="keyword">directory</span> will be concatenated</span><br><span class="line">                                  <span class="keyword">in</span> lexicographical <span class="keyword">order</span> <span class="keyword">and</span> <span class="keyword">then</span> parsed <span class="keyword">as</span> a</span><br><span class="line">                                  single config file. You can also specify</span><br><span class="line">                                  wildcards (globs) <span class="keyword">and</span> <span class="keyword">any</span> <span class="keyword">matched</span> files will</span><br><span class="line">                                  be loaded <span class="keyword">in</span> the <span class="keyword">order</span> described above.</span><br><span class="line">    -e, <span class="comment">--config.string CONFIG_STRING Use the given string as the configuration</span></span><br><span class="line">                                  data. Same syntax <span class="keyword">as</span> the config file. <span class="keyword">If</span> <span class="keyword">no</span></span><br><span class="line">                                  <span class="keyword">input</span> <span class="keyword">is</span> specified, <span class="keyword">then</span> the <span class="keyword">following</span> <span class="keyword">is</span></span><br><span class="line">                                  used <span class="keyword">as</span> the <span class="keyword">default</span> <span class="keyword">input</span>:</span><br><span class="line">                                  <span class="string">"input &#123; stdin &#123; type =&gt; stdin &#125; &#125;"</span></span><br><span class="line">                                  <span class="keyword">and</span> <span class="keyword">if</span> <span class="keyword">no</span> <span class="keyword">output</span> <span class="keyword">is</span> specified, <span class="keyword">then</span> the</span><br><span class="line">                                  <span class="keyword">following</span> <span class="keyword">is</span> used <span class="keyword">as</span> the <span class="keyword">default</span> <span class="keyword">output</span>:</span><br><span class="line">                                  <span class="string">"output &#123; stdout &#123; codec =&gt; rubydebug &#125; &#125;"</span></span><br><span class="line">                                  <span class="keyword">If</span> you wish <span class="keyword">to</span> <span class="keyword">use</span> <span class="keyword">both</span> <span class="keyword">defaults</span>, please <span class="keyword">use</span></span><br><span class="line">                                  the <span class="keyword">empty</span> <span class="keyword">string</span> <span class="keyword">for</span> the <span class="string">'-e'</span> flag.</span><br><span class="line">                                   (<span class="keyword">default</span>: nil)</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;不过常用的选项也就<code>-e</code>和<code>-f</code>，分别是通过命令行指定参数或者通过文件来指定配置参数。我们可以使用命令来测试<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/usr/</span>share<span class="regexp">/logstash/</span>bin/logstash -e <span class="string">'input &#123; stdin&#123;&#125; &#125; output &#123; stdout&#123; codec =&gt; rubydebug &#125;&#125;'</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="https://img-blog.csdnimg.cn/20200103161950993.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="输出日志"><br>&emsp;&emsp;通过标准输入输入信息，并通过标准输出返回日志信息。同样，我们也可以调用input的file插件和output的file插件实现从文件中读取数据，或者写入文件。这样就可以实现对日志文件的抓取了。我们可以先尝试抓取系统日志如<code>syslog</code>。<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/usr/</span>share<span class="regexp">/logstash/</span>bin<span class="regexp">/logstash -e 'input &#123; file &#123; path =&gt; "/</span>var<span class="regexp">/log/</span>syslog<span class="string">"&#125; &#125; output &#123; stdout&#123; codec =&gt; rubydebug &#125;&#125;'</span></span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;哈，系统日志如果太多，估计会刷屏的。<br>&emsp;&emsp;不过刚才那些都只是一些基本用法而已，而实际生产中，我们肯定不能使用命令行来手动获取数据，我们需要的是一个可靠的服务，来帮我们自动抓取日志并筛选过滤，这就需要我们使用配置文件来设置了。<br>&emsp;&emsp;例如我们要做的抓取本机的nginx的访问日志、错误日志还有系统日志，并传递至之前配好的elasticsearch中。<br>&emsp;&emsp;那就在路径<code>/etc/logstash/conf.d/</code>目录下，创建一个新的配置文件，使用systemd启动时会自动读取conf.d下的配置文件。<br><figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/logstash/conf.d/nginx.conf</span><br><span class="line"><span class="keyword">input</span> &#123;</span><br><span class="line">  file &#123; </span><br><span class="line">    <span class="attr">path</span> =&gt; <span class="string">"/var/log/syslog"</span></span><br><span class="line">    <span class="attr">stat_interval</span> =&gt; <span class="number">3</span></span><br><span class="line">    <span class="attr">start_position</span> =&gt; <span class="string">"beginning"</span></span><br><span class="line">    <span class="attr">type</span> =&gt; <span class="string">"syslog"</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">file</span> &#123; </span><br><span class="line">    <span class="attr">path</span> =&gt; <span class="string">"/apps/nginx/logs/access_json.log"</span></span><br><span class="line">    <span class="attr">stat_interval</span> =&gt; <span class="number">3</span></span><br><span class="line">    <span class="attr">start_position</span> =&gt; <span class="string">"beginning"</span></span><br><span class="line">    <span class="attr">codec</span> =&gt; <span class="string">"json"</span></span><br><span class="line">    <span class="attr">type</span> =&gt; <span class="string">"nginx_accesslog"</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">file</span> &#123; </span><br><span class="line">    <span class="attr">path</span> =&gt; <span class="string">"/apps/nginx/logs/error.log"</span></span><br><span class="line">    <span class="attr">stat_interval</span> =&gt; <span class="number">3</span></span><br><span class="line">    <span class="attr">start_position</span> =&gt; <span class="string">"beginning"</span></span><br><span class="line">    <span class="attr">type</span> =&gt; <span class="string">"nginx_errorlog"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">output</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> [<span class="built_in">type</span>] == <span class="string">"syslog"</span> &#123;</span><br><span class="line">  elasticsearch &#123;</span><br><span class="line">    <span class="attr">hosts</span> =&gt; [<span class="string">"192.168.32.41:9200"</span>]</span><br><span class="line">    <span class="attr">index</span> =&gt; <span class="string">"syslog-%&#123;+YYYY.MM.dd&#125;"</span></span><br><span class="line">  &#125;&#125;</span><br><span class="line">  if [type] == <span class="string">"nginx_accesslog"</span> &#123;</span><br><span class="line">  <span class="keyword">elasticsearch</span> &#123;</span><br><span class="line">    <span class="attr">hosts</span> =&gt; [<span class="string">"192.168.32.41:9200"</span>]</span><br><span class="line">    <span class="attr">index</span> =&gt; <span class="string">"nginx_accesslog-%&#123;+YYYY.MM.dd&#125;</span></span><br><span class="line"><span class="string">  &#125;&#125;</span></span><br><span class="line"><span class="string">  if [type] == "</span>nginx_errorlog<span class="string">" &#123;</span></span><br><span class="line"><span class="string">  elasticsearch &#123;</span></span><br><span class="line"><span class="string">    hosts =&gt; ["</span><span class="number">192.168</span>.<span class="number">32.41</span>:<span class="number">9200</span><span class="string">"]</span></span><br><span class="line"><span class="string">    index =&gt; "</span>nginx_accesslog-%&#123;+YYYY.MM.dd&#125;</span><br><span class="line">  &#125;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;logstash支持条件判断，多输入以及多输出，设定type规则，来将每一类日志分类在不同的索引，且支持java的时间变量，可以实现根据日期归档每一天的日志，方便查看和统计。<br>&emsp;&emsp;我们可以使用命令来测试脚本的语法是否正确，如果不加<code>-t</code>可以直接以前台进程的方式启动logstash，不过会占据终端，但测试的时候还是蛮方便的。<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/usr/</span>share<span class="regexp">/logstash/</span>bin<span class="regexp">/logstash -f /</span>etc<span class="regexp">/log/</span>logstash<span class="regexp">/conf,d/</span>nginx.conf -t</span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;不过仅仅是这样，是无法统计具体访问时间、访问ip及访问路径的详细信息的，我们需要将nginx的日志序列化，或者说是储存为json格式。<br>&emsp;&emsp;所以修改nginx的配置文件,将日志格式修改一下。<br><figure class="highlight julia"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line"></span><br><span class="line">    include       mime.types;</span><br><span class="line">    default_type  application/octet-stream;</span><br><span class="line"></span><br><span class="line">    <span class="comment">#log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '</span></span><br><span class="line">    <span class="comment">#                  '$status $body_bytes_sent "$http_referer" '</span></span><br><span class="line">    <span class="comment">#                  '"$http_user_agent" "$http_x_forwarded_for"';</span></span><br><span class="line"></span><br><span class="line">    log_format access_json '&#123;<span class="string">"@timestamp"</span>:<span class="string">"<span class="variable">$time_iso8601</span>"</span>,'</span><br><span class="line">        '<span class="string">"host"</span>:<span class="string">"<span class="variable">$server_addr</span>"</span>,'</span><br><span class="line">        '<span class="string">"clientip"</span>:<span class="string">"<span class="variable">$remote_addr</span>"</span>,'</span><br><span class="line">        '<span class="string">"size"</span>:$body_bytes_sent,'</span><br><span class="line">        '<span class="string">"responsetime"</span>:$request_time,'</span><br><span class="line">        '<span class="string">"upstreamtime"</span>:<span class="string">"<span class="variable">$upstream_response_time</span>"</span>,'</span><br><span class="line">        '<span class="string">"upstreamhost"</span>:<span class="string">"<span class="variable">$upstream_addr</span>"</span>,'</span><br><span class="line">        '<span class="string">"http_host"</span>:<span class="string">"<span class="variable">$host</span>"</span>,'</span><br><span class="line">        '<span class="string">"uri"</span>:<span class="string">"<span class="variable">$uri</span>"</span>,'</span><br><span class="line">        '<span class="string">"domain"</span>:<span class="string">"<span class="variable">$host</span>"</span>,'</span><br><span class="line">        '<span class="string">"xff"</span>:<span class="string">"<span class="variable">$http_x_forwarded_for</span>"</span>,'</span><br><span class="line">        '<span class="string">"referer"</span>:<span class="string">"<span class="variable">$http_referer</span>"</span>,'</span><br><span class="line">        '<span class="string">"tcp_xff"</span>:<span class="string">"<span class="variable">$proxy_protocol_addr</span>"</span>,'</span><br><span class="line">        '<span class="string">"http_user_agent"</span>:<span class="string">"<span class="variable">$http_user_agent</span>"</span>,'</span><br><span class="line">        '<span class="string">"status"</span>:<span class="string">"<span class="variable">$status</span>"</span>&#125;';</span><br><span class="line"></span><br><span class="line">    access_log  /apps/nginx/logs/access_json.log  access_json;</span><br></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;PS:加入的属性名称不要有<code>type</code>，否则会影响到logstash做type判断。然后记得在配置文件中注明输入信息为json格式。看到如下信息，则说明日志被成功拆解。<br><figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"http_user_agent"</span> => <span class="string">"Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:69.0) Gecko/20100101 Firefox/69.0"</span>,</span><br><span class="line">               <span class="string">"path"</span> => <span class="string">"/apps/nginx/logs/access_json.log"</span>,</span><br><span class="line">         <span class="string">"@timestamp"</span> => <span class="number">2020</span><span class="number">-01</span><span class="number">-03</span>T08:<span class="number">17</span>:<span class="number">47.000</span>Z,</span><br><span class="line">       <span class="string">"upstreamhost"</span> => <span class="string">"-"</span>,</span><br><span class="line">                <span class="string">"xff"</span> => <span class="string">"-"</span>,</span><br><span class="line">       <span class="string">"responsetime"</span> => <span class="number">0.0</span>,</span><br><span class="line">               <span class="string">"size"</span> => <span class="number">0</span>,</span><br><span class="line">             <span class="string">"status"</span> => <span class="string">"304"</span>,</span><br><span class="line">          <span class="string">"http_host"</span> => <span class="string">"192.168.32.51"</span>,</span><br><span class="line">           <span class="string">"clientip"</span> => <span class="string">"192.168.32.1"</span>,</span><br><span class="line">             <span class="string">"domain"</span> => <span class="string">"192.168.32.51"</span>,</span><br><span class="line">            <span class="string">"tcp_xff"</span> => <span class="string">""</span>,</span><br><span class="line">               <span class="string">"host"</span> => <span class="string">"192.168.32.51"</span>,</span><br><span class="line">           <span class="string">"@version"</span> => <span class="string">"1"</span>,</span><br><span class="line">                <span class="string">"uri"</span> => <span class="string">"/index.html"</span>,</span><br><span class="line">            <span class="string">"referer"</span> => <span class="string">"-"</span>,</span><br><span class="line">       <span class="string">"upstreamtime"</span> => <span class="string">"-"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;PS:加入的属性名称不要有<code>type</code>，否则会影响到logstash做type判断。然后记得在配置文件中注明输入信息为json格式。看到如下信息，则说明日志被成功拆解。<br><figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"http_user_agent"</span> =&gt; <span class="string">"Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:69.0) Gecko/20100101 Firefox/69.0"</span>,</span><br><span class="line">               <span class="string">"path"</span> =&gt; <span class="string">"/apps/nginx/logs/access_json.log"</span>,</span><br><span class="line">         <span class="string">"@timestamp"</span> =&gt; <span class="number">2020</span><span class="number">-01</span><span class="number">-03</span>T08:<span class="number">17</span>:<span class="number">47.000</span>Z,</span><br><span class="line">       <span class="string">"upstreamhost"</span> =&gt; <span class="string">"-"</span>,</span><br><span class="line">                <span class="string">"xff"</span> =&gt; <span class="string">"-"</span>,</span><br><span class="line">       <span class="string">"responsetime"</span> =&gt; <span class="number">0.0</span>,</span><br><span class="line">               <span class="string">"size"</span> =&gt; <span class="number">0</span>,</span><br><span class="line">             <span class="string">"status"</span> =&gt; <span class="string">"304"</span>,</span><br><span class="line">          <span class="string">"http_host"</span> =&gt; <span class="string">"192.168.32.51"</span>,</span><br><span class="line">           <span class="string">"clientip"</span> =&gt; <span class="string">"192.168.32.1"</span>,</span><br><span class="line">             <span class="string">"domain"</span> =&gt; <span class="string">"192.168.32.51"</span>,</span><br><span class="line">            <span class="string">"tcp_xff"</span> =&gt; <span class="string">""</span>,</span><br><span class="line">               <span class="string">"host"</span> =&gt; <span class="string">"192.168.32.51"</span>,</span><br><span class="line">           <span class="string">"@version"</span> =&gt; <span class="string">"1"</span>,</span><br><span class="line">                <span class="string">"uri"</span> =&gt; <span class="string">"/index.html"</span>,</span><br><span class="line">            <span class="string">"referer"</span> =&gt; <span class="string">"-"</span>,</span><br><span class="line">       <span class="string">"upstreamtime"</span> =&gt; <span class="string">"-"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;使用<code>systemctl enable --now logstash</code>启动logstash服务，过一会，日志就写入elasticsearch服务器中了，最好将<code>/etc/systemd/system/logstash.service</code>文件的中启动用户组都改为<code>root</code>，避免因为权限问题，导致无法读取数据。<br>&emsp;&emsp;我记得之前遇到过一次，命令行可以正常使用logstash，不过使用systemd启动就一直报错，<code>logstash: could not find java; set JAVA_HOME or ensure java is in PATH</code>,明明环境变量都是正常的，后来在<code>/usr/share/logstash/bin/logstash</code>脚本文件中加了一个<code>JAVA_HOME=/usr/local/jdk</code>环境变量就好了，而之后配的时候就没有遇到这个问题了，这就很奇怪了。</p>
 <h3 id="Kibana"><a href="#Kibana" class="headerlink" title="Kibana"></a>Kibana</h3><p>&emsp;&emsp;日志信息都已经写到elasticsearch服务器中了，不过我们怎么才可以看到具体的日志信息呢？这就需要借助日志展示工具Kibana了。<br>&emsp;&emsp;虽然elasticsearch可视化工具也有不少，例如head、kopf、cerebro等等，不过他们都是监控elasticsearch集群状态的，对日志做展示分析的还是首推开源的官方组件Kibana。<br>&emsp;&emsp;同样下载kibana7.5.1版本<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http<span class="variable">s:</span>//artifacts.elastic.<span class="keyword">co</span>/downloads/kibana/kibana-<span class="number">7.5</span>.<span class="number">1</span>-amd64.<span class="keyword">deb</span></span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;配置上也很简单，设置监听IP及端口，设置elasticsearch主机地址，最后再将语言环境改为中文就可以启动kibana服务了。<br><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@kibana1:~<span class="meta"># grep "^[a-Z]" /etc/kibana/kibana.yml</span></span><br><span class="line"><span class="symbol">server.port:</span> <span class="number">5601</span></span><br><span class="line"><span class="symbol">server.host:</span> <span class="string">"0.0.0.0"</span></span><br><span class="line"><span class="symbol">elasticsearch.hosts:</span> [<span class="string">"http://192.168.32.41:9200"</span>]</span><br><span class="line"><span class="symbol">i18n.locale:</span> <span class="string">"zh-CN"</span></span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;浏览器访问kibana主机的5601端口。<br>&emsp;&emsp;创建索引模式，依次添加索引。<br><img src="https://img-blog.csdnimg.cn/20200103175631933.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="kibana"><br>&emsp;&emsp;然后点左边第一个（最上面）的那个discover图标，就可以看到数据了。点击更改，选择对应的索引，还可以创建各种视图等一系列功能这里就不再详细讲解了。都比较简单。<br>&emsp;&emsp;至此ELK的初步部署就算完成了。</p>
+
     </div>
+
+    
+    
+    
+          
+            
+          
           <div class="post-tags">
+            
               <a href="/tags/企业级应用/" rel="tag"><i class="fa fa-tag">企业级应用</i></a>
+            
               <a href="/tags/ELK/" rel="tag"><i class="fa fa-tag">ELK</i></a>
+            
               <a href="/tags/Elasticsearch/" rel="tag"><i class="fa fa-tag">Elasticsearch</i></a>
+            
               <a href="/tags/Logstash/" rel="tag"><i class="fa fa-tag">Logstash</i></a>
+            
               <a href="/tags/Kibana/" rel="tag"><i class="fa fa-tag">Kibana</i></a>
+            
           </div>
+        
+
     <div style="text-align:center;color: #ccc;font-size:14px;">------------------------------- The End -------------------------------</div>
+
+
+        
   <div class="post-widgets">
     <div class="wp_rating">
       <div id="wpac-rating"></div>
     </div>
+  
   </div>
+
+        
+      
         <div id="reward-container">
   <div>It's very nice of you to support me.</div>
   <button id="reward-button" disable="enable" onclick="var qr = document.getElementById('qr'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
     打赏
   </button>
   <div id="qr" style="display: none;">
+        
+      
       <div style="display: inline-block">
         <img src="/images/wechat-pay.png" alt="Hechao 微信支付">
         <p>微信支付</p>
       </div>
+
   </div>
 </div>
+
+      
+        
+
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
     <strong>本文作者： </strong>Hechao</li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://wudihechao.github.io/blog/a1b53f63.html" title="企业级应用——ELK（一）：ELK的部署">https://wudihechao.github.io/blog/a1b53f63.html</a>
+    <a href="https://wudihechao.github.io/blog/a1b53f63.html" title="企业级应用——ELK（一）：ELK的部署">https:&#x2F;&#x2F;wudihechao.github.io&#x2F;blog&#x2F;a1b53f63.html</a>
   </li>
   <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank">&lt;i class=&quot;fa fa-fw fa-creative-commons&quot;&gt;&lt;&#x2F;i&gt;BY-NC-SA</a> 许可协议。转载请注明出处！</li>
 </ul>
 </div>
+
+      
+        
+
 <div class="note info" style="background-color: #eff8f0;
     border-left: 3px solid #255188;
     opacity: 0.85;
     padding-left: 11px;
     padding-bottom: 1px;">
+
   <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts" style="margin-top: 10px;
     margin-bottom: 10px;">
     <li class="popular-posts-item">
+      
+      
       <div class="popular-posts-title"><a href="/blog/ee80297c.html" rel="bookmark">企业级应用——ELK（二）：ELK进阶</a></div>
+      
     </li>
+  
     <li class="popular-posts-item">
+      
+      
       <div class="popular-posts-title"><a href="/blog/bd240ad7.html" rel="bookmark">企业级应用——ELK（三）：filebeat</a></div>
+      
     </li>
+  
     <li class="popular-posts-item">
+      
+      
       <div class="popular-posts-title"><a href="/blog/73a033d9.html" rel="bookmark">企业级应用——DevOps（一）gitlab的部署与配置</a></div>
+      
     </li>
+  
     <li class="popular-posts-item">
+      
+      
       <div class="popular-posts-title"><a href="/blog/366b680c.html" rel="bookmark">企业级应用——监控（一）zabbix的部署</a></div>
+      
     </li>
+  
     <li class="popular-posts-item">
+      
+      
       <div class="popular-posts-title"><a href="/blog/6187894.html" rel="bookmark">Docker（五）——Docker镜像仓库</a></div>
+      
     </li>
+  
   </ul>
+
 </div>
+
+      
+
       <footer class="post-footer">
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
+              
                 <a href="/blog/73a033d9.html" rel="next" title="企业级应用——DevOps（一）gitlab的部署与配置">
                   <i class="fa fa-chevron-left"></i> 企业级应用——DevOps（一）gitlab的部署与配置
                 </a>
+              
             </div>
+
             <span class="post-nav-divider"></span>
+
             <div class="post-nav-prev post-nav-item">
+              
                 <a href="/blog/ee80297c.html" rel="prev" title="企业级应用——ELK（二）：ELK进阶">
                   企业级应用——ELK（二）：ELK进阶 <i class="fa fa-chevron-right"></i>
                 </a>
+              
             </div>
           </div>
+        
       </footer>
+    
   </div>
+  
+  
+  
   </article>
+
   </div>
+
+
           </div>
+          
+    
     <div class="comments" id="comments"></div>
+  
+
         </div>
+          
+  
   <div class="sidebar-toggle">
     <div class="sidebar-toggle-line-wrap">
       <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
@@ -428,8 +719,15 @@
       <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
     </div>
   </div>
+
   <aside class="sidebar">
     <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
           文章目录
@@ -438,11 +736,14 @@
           站点概览
         </li>
       </ul>
+
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
           <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ELK架构"><span class="nav-number">1.</span> <span class="nav-text">ELK架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ELK的部署"><span class="nav-number">2.</span> <span class="nav-text">ELK的部署</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Elasticsearch"><span class="nav-number">2.1.</span> <span class="nav-text">Elasticsearch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Logstash"><span class="nav-number">2.2.</span> <span class="nav-text">Logstash</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kibana"><span class="nav-number">2.3.</span> <span class="nav-text">Kibana</span></a></li></ol></li></ol></div>
+        
       </div>
       <!--/noindex-->
+
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image"
@@ -454,23 +755,38 @@
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
+        
           <a href="/archives/">
+        
           <span class="site-state-item-count">45</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
+    
+      
+      
       <div class="site-state-item site-state-categories">
+        
           <a href="/categories/">
+        
         <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
+    
+      
+      
       <div class="site-state-item site-state-tags">
+        
+          
             <a href="/tags/">
+          
+        
         <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
+    
   </nav>
 </div>
   <div class="feed-link motion-element">
@@ -480,15 +796,35 @@
   </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/wudihechao" title="GitHub &rarr; https://github.com/wudihechao" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      
+      
+      
+        
+      
+        <a href="https://github.com/wudihechao" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;wudihechao" rel="noopener external nofollow noreferrer" target="_blank">&lt;i class=&quot;fa fa-fw fa-github&quot;&gt;&lt;&#x2F;i&gt;</a>
       </span>
+    
       <span class="links-of-author-item">
-        <a href="mailto:wudihechao@163.com" title="E-Mail &rarr; mailto:wudihechao@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      
+      
+      
+        
+      
+        <a href="mailto:wudihechao@163.com" title="E-Mail &amp;rarr; mailto:wudihechao@163.com" rel="noopener external nofollow noreferrer" target="_blank">&lt;i class=&quot;fa fa-fw fa-envelope&quot;&gt;&lt;&#x2F;i&gt;</a>
       </span>
+    
       <span class="links-of-author-item">
-        <a href="https://weibo.com/u/1050367191" title="Weibo &rarr; https://weibo.com/u/1050367191" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-weibo"></i></a>
+      
+      
+      
+        
+      
+        <a href="https://weibo.com/u/1050367191" title="Weibo &amp;rarr; https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;1050367191" rel="noopener external nofollow noreferrer" target="_blank">&lt;i class=&quot;fa fa-fw fa-weibo&quot;&gt;&lt;&#x2F;i&gt;</a>
       </span>
+    
   </div>
+
+        
     <div class="links-of-blogroll motion-element links-of-blogroll-block">
       <div class="links-of-blogroll-title" style="padding-left: 10px;">
         <!-- modify icon to fire by szw -->
@@ -496,23 +832,31 @@
         近期文章
       </div>
       <ul class="links-of-blogroll-list" style="padding-left: 30px;">
+        
+        
           <li>
             <a href="/blog/ea0d2f46.html" title="关于游戏服务端的搭建" >关于游戏服务端的搭建</a>
           </li>
+        
           <li>
             <a href="/blog/c1add9f7.html" title="linux使用vmware虚拟机玩LOL" >linux使用vmware虚拟机玩LOL</a>
           </li>
+        
           <li>
             <a href="/blog/a9b6fadd.html" title="K8s进阶——java集群服务搭建" >K8s进阶——java集群服务搭建</a>
           </li>
+        
           <li>
             <a href="/blog/bd240ad7.html" title="企业级应用——ELK（三）：filebeat" >企业级应用——ELK（三）：filebeat</a>
           </li>
+        
           <li>
             <a href="/blog/ee80297c.html" title="企业级应用——ELK（二）：ELK进阶" >企业级应用——ELK（二）：ELK进阶</a>
           </li>
+        
       </ul>
     </div>
+
 <div id="days"></div>
 <script>
 function show_date_time(){
@@ -539,14 +883,27 @@ return i;
 }
 show_date_time();
 </script>
+
   <div class="cc-license motion-element" itemprop="license">
-    <a href="https://hewanyue.com/" class="cc-opacity" rel="noopener external nofollow noreferrer" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+    
+  
+
+    <a href="https://hewanyue.com/" class="cc-opacity" rel="noopener external nofollow noreferrer" target="_blank">&lt;img src=&quot;&#x2F;images&#x2F;cc-by-nc-sa.svg&quot; alt=&quot;Creative Commons&quot;&gt;</a>
   </div>
+
+
+
+
       </div>
+
+
  </aside>
   <div id="sidebar-dimmer"></div>
+
+
       </div>
     </main>
+
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
@@ -560,6 +917,8 @@ show_date_time();
     </span>
     <span title="站点总字数">411k</span>
 </div>
+
+        
 <div class="busuanzi-count">
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
@@ -570,7 +929,9 @@ show_date_time();
         <span id="busuanzi_value_site_uv"></span>
       </span>
     </span>
+  
     <span class="post-meta-divider">|</span>
+  
     <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="fa fa-eye"></i>
@@ -579,10 +940,28 @@ show_date_time();
         <span id="busuanzi_value_site_pv"></span>
       </span>
     </span>
+  
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
       </div>
     </footer>
   </div>
+
+  
+    
+  
   <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
   <script src="/lib/anime.min.js?v=3.1.0"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
@@ -590,6 +969,10 @@ show_date_time();
 <script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
 <script src="/js/schemes/muse.js?v=7.4.0"></script>
 <script src="/js/next-boot.js?v=7.4.0"></script><script src="/js/bookmark.js?v=7.4.0"></script>
+
+
+
+  
   <script>
     (function(){
       var bp = document.createElement('script');
@@ -599,6 +982,11 @@ show_date_time();
       s.parentNode.insertBefore(bp, s);
     })();
   </script>
+
+
+
+
+
   <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
@@ -619,7 +1007,28 @@ show_date_time();
     })();
   }
   </script>
+
+
+
   <script src="/js/local-search.js?v=7.4.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
 <script>
 NexT.utils.getScript('//blog.hewanyue.com/js/Valine.min.js', () => {
   var GUEST = ['nick', 'mail','link'];
@@ -643,6 +1052,7 @@ NexT.utils.getScript('//blog.hewanyue.com/js/Valine.min.js', () => {
   });
 }, window.Valine);
 </script>
+
 </body>
 </html>
   <!-- 页面点击小红心 -->
