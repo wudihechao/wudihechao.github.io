@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-
-
-
-
-
 <html lang="zh-CN">
 <head>
   <meta name="baidu-site-verification" content="vT6Jf980C0" />
@@ -14,13 +9,8 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.ico?v=7.4.0">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.ico?v=7.4.0">
   <link rel="alternate" href="/atom.xml" title="BOHC!" type="application/atom+xml">
-
 <link rel="stylesheet" href="/css/main.css?v=7.4.0">
-
-
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
-
-
 <script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
@@ -54,26 +44,21 @@
     sidebarPadding: 40
   };
 </script>
-
-
-
-  <meta name="description" content="&amp;emsp;&amp;emsp;本文使用kubeasz项目基于二进制方式部署和利用ansible-playbook实现自动化部署K8s。">
+  <meta name="description" content="&emsp;&emsp;本文使用kubeasz项目基于二进制方式部署和利用ansible-playbook实现自动化部署K8s。">
 <meta name="keywords" content="kubernetes,kubeasz,dashboard">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用kubeasz自动化部署K8s">
 <meta property="og:url" content="https://wudihechao.github.io/blog/8f374cb8.html">
 <meta property="og:site_name" content="BOHC!">
-<meta property="og:description" content="&amp;emsp;&amp;emsp;本文使用kubeasz项目基于二进制方式部署和利用ansible-playbook实现自动化部署K8s。">
+<meta property="og:description" content="&emsp;&emsp;本文使用kubeasz项目基于二进制方式部署和利用ansible-playbook实现自动化部署K8s。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191214135719739.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
 <meta property="og:updated_time" content="2020-01-08T12:08:34.251Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用kubeasz自动化部署K8s">
-<meta name="twitter:description" content="&amp;emsp;&amp;emsp;本文使用kubeasz项目基于二进制方式部署和利用ansible-playbook实现自动化部署K8s。">
+<meta name="twitter:description" content="&emsp;&emsp;本文使用kubeasz项目基于二进制方式部署和利用ansible-playbook实现自动化部署K8s。">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20191214135719739.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
   <link rel="canonical" href="https://wudihechao.github.io/blog/8f374cb8">
-
-
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
@@ -84,17 +69,7 @@
     isArchive: false
   };
 </script>
-
   <title>使用kubeasz自动化部署K8s | BOHC!</title>
-  
-
-
-
-
-
-
-
-
   <noscript>
   <style>
   .use-motion .brand,
@@ -106,31 +81,23 @@
   .use-motion .post-header,
   .use-motion .post-body,
   .use-motion .collection-header { opacity: initial; }
-
   .use-motion .logo,
   .use-motion .site-title,
   .use-motion .site-subtitle {
     opacity: initial;
     top: initial;
   }
-
   .use-motion .logo-line-before i { left: initial; }
   .use-motion .logo-line-after i { right: initial; }
   </style>
 </noscript>
-
 <script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "https://hm.baidu.com/hm.js?a0d4e217e26da03ea5ca2acc76d543ae";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();</script>
-
-
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="/dist/APlayer.min.css" class="aplayer-style-marker">
 <script src="/dist/APlayer.min.js" class="aplayer-script-marker"></script>
 </head>
-
 <body oncontextmenu=self.event.returnValue=false>
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
-
-
         <div id="aplayer" class="aplayer aplayer-withlist  aplayer-fixed aplayer-narrow" style="position: fixed; z-index: 5; left: 0px; width: 400px;">
             <pre class="aplayer-lrc-content"></pre>
         </div>
@@ -203,7 +170,6 @@
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-meta">
-
     <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
@@ -212,9 +178,7 @@
       </a>
     </div>
         <h1 class="site-subtitle" itemprop="description">blog of hechao!</h1>
-      
   </div>
-
   <div class="site-nav-toggle">
     <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
@@ -223,147 +187,31 @@
     </button>
   </div>
 </div>
-
-
 <nav class="site-nav">
-  
   <ul id="menu" class="menu">
-      
-      
-      
-        
         <li class="menu-item menu-item-home">
-      
-    
-      
-      
-        
-      
-        
-      
-        
-      
-    
-
-    <a href="/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-home&quot;&gt;&lt;&#x2F;i&gt;首页</a>
-
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i>首页</a>
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-about">
-      
-    
-      
-      
-        
-      
-        
-      
-        
-      
-    
-
-    <a href="/about/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-user&quot;&gt;&lt;&#x2F;i&gt;关于</a>
-
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i>关于</a>
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-tags">
-      
-    
-      
-      
-        
-      
-        
-      
-        
-          
-        
-      
-    
-
-    <a href="/tags/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-tags&quot;&gt;&lt;&#x2F;i&gt;标签&lt;span class=&quot;badge&quot;&gt;90&lt;&#x2F;span&gt;</a>
-
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">90</span></a>
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-categories">
-      
-    
-      
-      
-        
-      
-        
-          
-        
-      
-        
-      
-    
-
-    <a href="/categories/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-th&quot;&gt;&lt;&#x2F;i&gt;分类&lt;span class=&quot;badge&quot;&gt;7&lt;&#x2F;span&gt;</a>
-
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">7</span></a>
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-archives">
-      
-    
-      
-      
-        
-          
-        
-      
-        
-      
-        
-      
-    
-
-    <a href="/archives/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-archive&quot;&gt;&lt;&#x2F;i&gt;归档&lt;span class=&quot;badge&quot;&gt;45&lt;&#x2F;span&gt;</a>
-
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">45</span></a>
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-friends">
-      
-    
-      
-      
-        
-      
-        
-      
-        
-      
-    
-
-    <a href="/friends/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-link&quot;&gt;&lt;&#x2F;i&gt;友链</a>
-
+    <a href="/friends/" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i>友链</a>
   </li>
       <li class="menu-item menu-item-search">
         <a href="javascript:;" rel="external nofollow noreferrer" class="popup-trigger">
-        
           <i class="menu-item-icon fa fa-search fa-fw"></i>搜索</a>
       </li>
-    
   </ul>
-
-    
-
 </nav>
   <div class="site-search">
     <div class="popup search-popup">
@@ -381,143 +229,83 @@
   </span>
 </div>
 <div id="search-result"></div>
-
 </div>
 <div class="search-pop-overlay"></div>
-
   </div>
 </div>
     </header>
-
-    
   <div class="back-to-top">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
   <div class="reading-progress-bar"></div>
   <a class="book-mark-link book-mark-link-fixed" href="#"></a>
-
-  <a href="https://github.com/wudihechao" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener external nofollow noreferrer" target="_blank">&lt;svg width=&quot;80&quot; height=&quot;80&quot; viewBox=&quot;0 0 250 250&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z&quot;&gt;&lt;&#x2F;path&gt;&lt;path d=&quot;M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2&quot; fill=&quot;currentColor&quot; style=&quot;transform-origin: 130px 106px;&quot; class=&quot;octo-arm&quot;&gt;&lt;&#x2F;path&gt;&lt;path d=&quot;M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z&quot; fill=&quot;currentColor&quot; class=&quot;octo-body&quot;&gt;&lt;&#x2F;path&gt;&lt;&#x2F;svg&gt;</a>
-
-
+  <a href="https://github.com/wudihechao" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener external nofollow noreferrer" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
           <div id="content" class="content">
-            
-
   <div id="posts" class="posts-expand">
       <article itemscope itemtype="http://schema.org/Article">
-  
-  
-  
   <div class="post-block post">
     <link itemprop="mainEntityOfPage" href="https://wudihechao.github.io/blog/8f374cb8.html">
-
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hechao">
       <meta itemprop="description" content="BOHC is just a blog of hechao.">
       <meta itemprop="image" content="/images/touxiang.gif">
     </span>
-
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="BOHC!">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">使用kubeasz自动化部署K8s
-
-          
         </h2>
-
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-
-
-              
-                
-              
-
               <time title="创建时间：2019-12-18 15:21:12" itemprop="dateCreated datePublished" datetime="2019-12-18T15:21:12+08:00">2019-12-18</time>
             </span>
-          
             <span class="post-meta-item">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-
-              
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Cloud/" itemprop="url" rel="index"><span itemprop="name">Cloud</span></a></span>
-
-                
-                
-              
             </span>
-          
-
-          
             <span id="/blog/8f374cb8.html" class="post-meta-item leancloud_visitors" data-flag-title="使用kubeasz自动化部署K8s" title="阅读次数">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
-
               <span class="leancloud-visitors-count"></span>
               <span>℃</span>
             </span>
-          
-
               <span class="post-meta-divider">•</span>
-  
   <span class="post-meta-item">
-    
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
-        
-      
-      <span class="post-meta-item-text">Valine：</span>
-    
     <a title="valine" href="/blog/8f374cb8.html#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/blog/8f374cb8.html" itemprop="commentCount"></span></a>
   </span>
-  
-  
-          
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-file-word-o"></i>
               </span>
-              
-
-              
               <span>15k</span>
             </span>
-          
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
-              
-
-              
               <span>37 分钟</span>
             </span>
-          
-
         </div>
       </header>
-
-    
-    
-    
     <div class="post-body" itemprop="articleBody">
-
-      
         <p>&emsp;&emsp;本文使用kubeasz项目基于二进制方式部署和利用ansible-playbook实现自动化部署K8s。<br><a id="more"></a><br>&emsp;&emsp;架构图如下所示<br><img src="https://img-blog.csdnimg.cn/20191214135719739.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>&emsp;&emsp;根据kubeasz官方文档中高可用集群所需节点配置如下</p>
 <table>
 <thead>
@@ -550,8 +338,8 @@
 </tr>
 </tbody>
 </table>
-<h2 id="配置集群环境"><a href="#配置集群环境" class="headerlink" title="配置集群环境"></a>配置集群环境</h2><p>&emsp;&emsp;此次部署节点设置如下：<br>ansible安装节点&amp;master1：172.18.32.18<br>master2：172.18.32.19<br>harbor：172.19.32.20<br>node1：172.18.32.21<br>node2：172.18.32.22<br>etcd1：172.18.32.23<br>etcd2：172.18.32.24<br>etcd3：172.18.32.25<br>haproxy1+keepalived：172.18.32.183<br>haproxy2+keepalived：172.18.32.184  VIP：172.18.32.250</p>
-<h3 id="配置免密登录"><a href="#配置免密登录" class="headerlink" title="配置免密登录"></a>配置免密登录</h3><p>&emsp;&emsp;先将ansible安装节点也就是master1主机（可以不复用主机）的秘钥分发至各个主机。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">vim fenfamiyao.sh</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash">目标主机列表</span></span><br><span class="line">PASSWORD="password"</span><br><span class="line">PORT="22"</span><br><span class="line"></span><br><span class="line">IP="</span><br><span class="line">172.18.32.18</span><br><span class="line">172.18.32.19</span><br><span class="line">172.18.32.20</span><br><span class="line">172.18.32.21</span><br><span class="line">172.18.32.22</span><br><span class="line">172.18.32.23</span><br><span class="line">172.18.32.24</span><br><span class="line">172.18.32.25</span><br><span class="line">"</span><br><span class="line"></span><br><span class="line">[ -a /root/.ssh/id_rsa ] || ssh-keygen -t rsa </span><br><span class="line">which sshpass &amp;&gt; /dev/null || yum install sshpass -y #适用于CentOS</span><br><span class="line"></span><br><span class="line">for node in $&#123;IP&#125;;do</span><br><span class="line">        sshpass -p $PASSWORD ssh-copy-id -p$PORT -o StrictHostKeyChecking=no $&#123;node&#125;</span><br><span class="line"><span class="meta">#</span><span class="bash">        <span class="keyword">if</span> [ $? -eq 0 ];<span class="keyword">then</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">                <span class="built_in">echo</span> <span class="string">"<span class="variable">$&#123;node&#125;</span> 秘钥 copy 完成,准备环境初始化....."</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">                ssh -p<span class="variable">$PORT</span> <span class="variable">$&#123;node&#125;</span> <span class="string">"mkdir /etc/docker/certs.d/harbor.hechao.com -p"</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">                <span class="built_in">echo</span> <span class="string">"Harbor 证书目录创建成功!"</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">                scp -P<span class="variable">$PORT</span> /usr/<span class="built_in">local</span>/src/harbor/certs/harbor-ca.crt <span class="variable">$&#123;node&#125;</span>:/etc/docker/certs.d/harbor.hechao.com/harbor-ca.crt</span></span><br><span class="line"><span class="meta">#</span><span class="bash">                <span class="built_in">echo</span> <span class="string">"Harbor 证书拷贝成功!"</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">                scp -P<span class="variable">$PORT</span> /etc/hosts <span class="variable">$&#123;node&#125;</span>:/etc/hosts</span></span><br><span class="line"><span class="meta">#</span><span class="bash">                <span class="built_in">echo</span> <span class="string">"host 文件拷贝完成"</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">                scp -r -P<span class="variable">$PORT</span> /root/.docker <span class="variable">$&#123;node&#125;</span>:/root/</span></span><br><span class="line"><span class="meta">#</span><span class="bash">                <span class="built_in">echo</span> <span class="string">"Harbor 认证文件拷贝完成!"</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">                scp -r -P<span class="variable">$PORT</span> /etc/resolv.conf <span class="variable">$&#123;node&#125;</span>:/etc/</span></span><br><span class="line">                 echo "镜像加速链接同步!"</span><br><span class="line">                 ssh $&#123;node&#125; "mkdir -p /etc/docker"</span><br><span class="line">                 scp -r -p$PORT /etc/docker/daemon.json $&#123;node&#125;:/etc/docker/daemon.json</span><br><span class="line"><span class="meta">#</span><span class="bash">        <span class="keyword">else</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">                <span class="built_in">echo</span> <span class="string">"<span class="variable">$&#123;node&#125;</span> 秘钥 copy 失败"</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">        <span class="keyword">fi</span></span></span><br><span class="line">done</span><br></pre></td></tr></table></figure></p>
+<h2 id="配置集群环境"><a href="#配置集群环境" class="headerlink" title="配置集群环境"></a>配置集群环境</h2><p>&emsp;&emsp;此次部署节点设置如下：<br>ansible安装节点&master1：172.18.32.18<br>master2：172.18.32.19<br>harbor：172.19.32.20<br>node1：172.18.32.21<br>node2：172.18.32.22<br>etcd1：172.18.32.23<br>etcd2：172.18.32.24<br>etcd3：172.18.32.25<br>haproxy1+keepalived：172.18.32.183<br>haproxy2+keepalived：172.18.32.184  VIP：172.18.32.250</p>
+<h3 id="配置免密登录"><a href="#配置免密登录" class="headerlink" title="配置免密登录"></a>配置免密登录</h3><p>&emsp;&emsp;先将ansible安装节点也就是master1主机（可以不复用主机）的秘钥分发至各个主机。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">vim fenfamiyao.sh</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash">目标主机列表</span></span><br><span class="line">PASSWORD="password"</span><br><span class="line">PORT="22"</span><br><span class="line"></span><br><span class="line">IP="</span><br><span class="line">172.18.32.18</span><br><span class="line">172.18.32.19</span><br><span class="line">172.18.32.20</span><br><span class="line">172.18.32.21</span><br><span class="line">172.18.32.22</span><br><span class="line">172.18.32.23</span><br><span class="line">172.18.32.24</span><br><span class="line">172.18.32.25</span><br><span class="line">"</span><br><span class="line"></span><br><span class="line">[ -a /root/.ssh/id_rsa ] || ssh-keygen -t rsa </span><br><span class="line">which sshpass &> /dev/null || yum install sshpass -y #适用于CentOS</span><br><span class="line"></span><br><span class="line">for node in $&#123;IP&#125;;do</span><br><span class="line">        sshpass -p $PASSWORD ssh-copy-id -p$PORT -o StrictHostKeyChecking=no $&#123;node&#125;</span><br><span class="line"><span class="meta">#</span><span class="bash">        <span class="keyword">if</span> [ $? -eq 0 ];<span class="keyword">then</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">                <span class="built_in">echo</span> <span class="string">"<span class="variable">$&#123;node&#125;</span> 秘钥 copy 完成,准备环境初始化....."</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">                ssh -p<span class="variable">$PORT</span> <span class="variable">$&#123;node&#125;</span> <span class="string">"mkdir /etc/docker/certs.d/harbor.hechao.com -p"</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">                <span class="built_in">echo</span> <span class="string">"Harbor 证书目录创建成功!"</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">                scp -P<span class="variable">$PORT</span> /usr/<span class="built_in">local</span>/src/harbor/certs/harbor-ca.crt <span class="variable">$&#123;node&#125;</span>:/etc/docker/certs.d/harbor.hechao.com/harbor-ca.crt</span></span><br><span class="line"><span class="meta">#</span><span class="bash">                <span class="built_in">echo</span> <span class="string">"Harbor 证书拷贝成功!"</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">                scp -P<span class="variable">$PORT</span> /etc/hosts <span class="variable">$&#123;node&#125;</span>:/etc/hosts</span></span><br><span class="line"><span class="meta">#</span><span class="bash">                <span class="built_in">echo</span> <span class="string">"host 文件拷贝完成"</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">                scp -r -P<span class="variable">$PORT</span> /root/.docker <span class="variable">$&#123;node&#125;</span>:/root/</span></span><br><span class="line"><span class="meta">#</span><span class="bash">                <span class="built_in">echo</span> <span class="string">"Harbor 认证文件拷贝完成!"</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">                scp -r -P<span class="variable">$PORT</span> /etc/resolv.conf <span class="variable">$&#123;node&#125;</span>:/etc/</span></span><br><span class="line">                 echo "镜像加速链接同步!"</span><br><span class="line">                 ssh $&#123;node&#125; "mkdir -p /etc/docker"</span><br><span class="line">                 scp -r -p$PORT /etc/docker/daemon.json $&#123;node&#125;:/etc/docker/daemon.json</span><br><span class="line"><span class="meta">#</span><span class="bash">        <span class="keyword">else</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">                <span class="built_in">echo</span> <span class="string">"<span class="variable">$&#123;node&#125;</span> 秘钥 copy 失败"</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">        <span class="keyword">fi</span></span></span><br><span class="line">done</span><br></pre></td></tr></table></figure></p>
 <h3 id="安装ansible环境"><a href="#安装ansible环境" class="headerlink" title="安装ansible环境"></a>安装ansible环境</h3><p>&emsp;&emsp;因为要使用ansible批量自动化部署K8s集群，每个主机都要先安装ansible环境。<br>&emsp;&emsp;ubuntu默认的python版本是3.6，而ansible需要python2.7。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">apt <span class="keyword">update</span></span><br><span class="line">apt <span class="keyword">install</span> python2<span class="number">.7</span></span><br><span class="line"><span class="keyword">ln</span> -s /usr/<span class="keyword">bin</span>/python2<span class="number">.7</span> /usr/<span class="keyword">bin</span>/python</span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;master1上安装ansible<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt <span class="keyword">install</span> ansible</span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;centos一般是自带python2.X环境，所以一般不需要在进行额外操作。<br>&emsp;&emsp;在master1上检查各节点连通性<br><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible <span class="keyword">all</span> -m ping</span><br></pre></td></tr></table></figure></p>
@@ -562,7 +350,7 @@
 <p>&emsp;&emsp;我们下载2.0.3版本的kubeasz,并给予执行权限<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -C- -fLO --retry <span class="number">3</span> https:<span class="regexp">//gi</span>thub.com<span class="regexp">/easzlab/</span>kubeasz<span class="regexp">/releases/</span>download<span class="regexp">/2.0.3/</span>easzup</span><br><span class="line">chmod +x easzup</span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;可以用<code>file easzup</code>命令看到这是一个ASCII文本文件，其实就是一个shell脚本。<br><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@DockerUbuntu18:~<span class="comment"># file easzup</span></span><br><span class="line"><span class="symbol">easzup:</span> <span class="keyword">Bourne-Again </span><span class="keyword">shell </span><span class="keyword">script, </span>ASCII text executable</span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;用vim编辑修改此文件。<br>&emsp;&emsp;大部分地方无需修改，不过可以设置docker版本为18.09.9和K8s的版本为v1.15.5，其他地方不用动。<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">export</span> <span class="attribute">DOCKER_VER</span>=18.09.9</span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">K8S_BIN_VER</span>=v1.15.5</span><br></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;执行<code>-- help</code>查看脚本使用方法。<br><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">root@DockerUbuntu18:~# ./easzup <span class="comment">--help</span></span><br><span class="line">./easzup: illegal <span class="keyword">option</span> <span class="comment">-- -</span></span><br><span class="line"><span class="keyword">Usage</span>: easzup [<span class="keyword">options</span>] [args]</span><br><span class="line">  <span class="keyword">option</span>: -&#123;DdekSz&#125;</span><br><span class="line">    -C         stop&amp;clean <span class="keyword">all</span> <span class="keyword">local</span> containers</span><br><span class="line">    -D         download <span class="keyword">all</span> <span class="keyword">into</span> /etc/ansible</span><br><span class="line">    -S         <span class="keyword">start</span> kubeasz <span class="keyword">in</span> a container</span><br><span class="line">    -d &lt;ver&gt;   <span class="keyword">set</span> docker-ce <span class="keyword">version</span>, <span class="keyword">default</span> "18.09.9"</span><br><span class="line">    -e &lt;ver&gt;   <span class="keyword">set</span> kubeasz-ext-bin <span class="keyword">version</span>, <span class="keyword">default</span> "0.3.0"</span><br><span class="line">    -k &lt;ver&gt;   <span class="keyword">set</span> kubeasz-k8s-bin <span class="keyword">version</span>, <span class="keyword">default</span> "v1.15.5"</span><br><span class="line">    -m &lt;str&gt;   <span class="keyword">set</span> docker registry mirrors, <span class="keyword">default</span> "CN"(used <span class="keyword">in</span> Mainland,China)</span><br><span class="line">    -p &lt;ver&gt;   <span class="keyword">set</span> kubeasz-sys-pkg <span class="keyword">version</span>, <span class="keyword">default</span> "0.3.2"</span><br><span class="line">    -z &lt;ver&gt;   <span class="keyword">set</span> kubeasz <span class="keyword">version</span>, <span class="keyword">default</span> "2.0.3"</span><br><span class="line">  </span><br><span class="line">see more at https://github.com/kubeasz/dockerfiles</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;执行<code>-- help</code>查看脚本使用方法。<br><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">root@DockerUbuntu18:~# ./easzup <span class="comment">--help</span></span><br><span class="line">./easzup: illegal <span class="keyword">option</span> <span class="comment">-- -</span></span><br><span class="line"><span class="keyword">Usage</span>: easzup [<span class="keyword">options</span>] [args]</span><br><span class="line">  <span class="keyword">option</span>: -&#123;DdekSz&#125;</span><br><span class="line">    -C         stop&clean <span class="keyword">all</span> <span class="keyword">local</span> containers</span><br><span class="line">    -D         download <span class="keyword">all</span> <span class="keyword">into</span> /etc/ansible</span><br><span class="line">    -S         <span class="keyword">start</span> kubeasz <span class="keyword">in</span> a container</span><br><span class="line">    -d <ver>   <span class="keyword">set</span> docker-ce <span class="keyword">version</span>, <span class="keyword">default</span> "18.09.9"</span><br><span class="line">    -e <ver>   <span class="keyword">set</span> kubeasz-ext-bin <span class="keyword">version</span>, <span class="keyword">default</span> "0.3.0"</span><br><span class="line">    -k <ver>   <span class="keyword">set</span> kubeasz-k8s-bin <span class="keyword">version</span>, <span class="keyword">default</span> "v1.15.5"</span><br><span class="line">    -m <str>   <span class="keyword">set</span> docker registry mirrors, <span class="keyword">default</span> "CN"(used <span class="keyword">in</span> Mainland,China)</span><br><span class="line">    -p <ver>   <span class="keyword">set</span> kubeasz-sys-pkg <span class="keyword">version</span>, <span class="keyword">default</span> "0.3.2"</span><br><span class="line">    -z <ver>   <span class="keyword">set</span> kubeasz <span class="keyword">version</span>, <span class="keyword">default</span> "2.0.3"</span><br><span class="line">  </span><br><span class="line">see more at https://github.com/kubeasz/dockerfiles</span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;先将<code>/etc/ansible</code>目录下所有自带的配置文件以及hosts文件删掉<br><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">\rm</span> -rf <span class="regexp">/etc/ansible/</span>*</span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;执行脚本下载所有需要的镜像和二进制文件<br><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">./easzup</span> -D</span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;稍等片刻之后，下载好需要的镜像和二进制文件，此时就可以开始ansible自动部署安装K8s集群了。</p>
@@ -596,7 +384,7 @@
 </ul>
 <p>&emsp;&emsp;这个剧本主要是将几个node节点加到集群中来。流程比较复杂，大致有以下步骤：<br>&emsp;&emsp;1,创建kube-node目录:/var/lib/kubelet、/var/lib/kube-proxy和/etc/cni/net.d目录<br>&emsp;&emsp;2.导入之前准备好的二进制可执行文件kubectl、kubelet、kube-proxy、bridge、host-local和loopback<br>&emsp;&emsp;3.配置haproxy，监听本地的127.0.0.1：6443端口，代理至两个主节点的6443端口<br>&emsp;&emsp;4.生成node节点的kubelet的配置文件，并分发至各个node节点。kubelet连接主节点的apiserver。<br>&emsp;&emsp;5.node节点连接后，对node节点标记为kubernetes.io/role=node</p>
 <p>&emsp;&emsp;这步很容易出现kubelet服务无法启动，或者一直处于loaded状态，返回值为255。这是因为node节点的kubelet的认证失败。可以去node节点主机上查看服务kubelet服务状态。<br><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">systemctl</span> <span class="string">status kubectl</span></span><br><span class="line"><span class="attr">journalctl</span> <span class="string">-u kubelet -e</span></span><br></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;我遇到几次node节点kubelet无法正常启动的情况，但是换了个全新的node节点就可以加进去了，说明问题不是在主节点上，一般将node节点还原至干净系统都可以解决问题。<br>&emsp;&emsp;还有一次返回值255但报错提示是，找不到<code>/run/systemd/resolve/resolv.conf</code>文件，于是创建一个<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir <span class="regexp">/run/</span>systemd<span class="regexp">/resolve/</span>;echo <span class="string">"nameserver 233.5.5.5"</span> &gt; <span class="regexp">/run/</span>systemd<span class="regexp">/resolve/</span>resolv.conf</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;我遇到几次node节点kubelet无法正常启动的情况，但是换了个全新的node节点就可以加进去了，说明问题不是在主节点上，一般将node节点还原至干净系统都可以解决问题。<br>&emsp;&emsp;还有一次返回值255但报错提示是，找不到<code>/run/systemd/resolve/resolv.conf</code>文件，于是创建一个<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir <span class="regexp">/run/</span>systemd<span class="regexp">/resolve/</span>;echo <span class="string">"nameserver 233.5.5.5"</span> > <span class="regexp">/run/</span>systemd<span class="regexp">/resolve/</span>resolv.conf</span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;自己创建一个解析之后问题解决。<br>&emsp;&emsp;顺利的话，使用<code>kubectl get node</code>可以看到主节点和node节点都处于ready状态。<br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">root@</span>DockerUbuntu18:/etc/ansible# kubectl <span class="keyword">get</span> node</span><br><span class="line">NAME           STATUS                     ROLES    AGE   VERSION</span><br><span class="line"><span class="number">172.18</span><span class="number">.32</span><span class="number">.18</span>   Ready,SchedulingDisabled   master   <span class="number">2</span>h   v1<span class="number">.15</span><span class="number">.5</span></span><br><span class="line"><span class="number">172.18</span><span class="number">.32</span><span class="number">.19</span>   Ready,SchedulingDisabled   master   <span class="number">2</span>h   v1<span class="number">.15</span><span class="number">.5</span></span><br><span class="line"><span class="number">172.18</span><span class="number">.32</span><span class="number">.21</span>   Ready                      node     <span class="number">2</span>h   v1<span class="number">.15</span><span class="number">.5</span></span><br><span class="line"><span class="number">172.18</span><span class="number">.32</span><span class="number">.22</span>   Ready                      node     <span class="number">2</span>h   v1<span class="number">.15</span><span class="number">.5</span></span><br></pre></td></tr></table></figure></p>
 <ul>
 <li>06.network.yml</li>
@@ -620,144 +408,79 @@
 <p>&emsp;&emsp;通过命令<code>kubectl cluster-info</code>查看集群信息来查看登陆url<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">kubectl</span> cluster-<span class="literal">info</span></span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;使用命令来获取token<br><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl -n kube-system describe secret <span class="constructor">$(<span class="params">kubectl</span> -<span class="params">n</span> <span class="params">kube</span>-<span class="params">system</span> <span class="params">get</span> <span class="params">secret</span> | <span class="params">grep</span> <span class="params">admin</span>-<span class="params">user</span> | <span class="params">awk</span> '&#123;<span class="params">print</span> $1&#125;')</span></span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;这时就可以登陆web界面查看K8s集群信息了。</p>
-
     </div>
-
-    
-    
-    
-          
-            
-          
           <div class="post-tags">
-            
               <a href="/tags/kubernetes/" rel="tag"><i class="fa fa-tag">kubernetes</i></a>
-            
               <a href="/tags/kubeasz/" rel="tag"><i class="fa fa-tag">kubeasz</i></a>
-            
               <a href="/tags/dashboard/" rel="tag"><i class="fa fa-tag">dashboard</i></a>
-            
           </div>
-        
-
     <div style="text-align:center;color: #ccc;font-size:14px;">------------------------------- The End -------------------------------</div>
-
-
-        
   <div class="post-widgets">
     <div class="wp_rating">
       <div id="wpac-rating"></div>
     </div>
-  
   </div>
-
-        
-      
         <div id="reward-container">
   <div>It's very nice of you to support me.</div>
   <button id="reward-button" disable="enable" onclick="var qr = document.getElementById('qr'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
     打赏
   </button>
   <div id="qr" style="display: none;">
-        
-      
       <div style="display: inline-block">
         <img src="/images/wechat-pay.png" alt="Hechao 微信支付">
         <p>微信支付</p>
       </div>
-
   </div>
 </div>
-
-      
-        
-
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
     <strong>本文作者： </strong>Hechao</li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://wudihechao.github.io/blog/8f374cb8.html" title="使用kubeasz自动化部署K8s">https:&#x2F;&#x2F;wudihechao.github.io&#x2F;blog&#x2F;8f374cb8.html</a>
+    <a href="https://wudihechao.github.io/blog/8f374cb8.html" title="使用kubeasz自动化部署K8s">https://wudihechao.github.io/blog/8f374cb8.html</a>
   </li>
   <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank">&lt;i class=&quot;fa fa-fw fa-creative-commons&quot;&gt;&lt;&#x2F;i&gt;BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
 </ul>
 </div>
-
-      
-        
-
 <div class="note info" style="background-color: #eff8f0;
     border-left: 3px solid #255188;
     opacity: 0.85;
     padding-left: 11px;
     padding-bottom: 1px;">
-
   <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts" style="margin-top: 10px;
     margin-bottom: 10px;">
     <li class="popular-posts-item">
-      
-      
       <div class="popular-posts-title"><a href="/blog/a9b6fadd.html" rel="bookmark">K8s进阶——java集群服务搭建</a></div>
-      
     </li>
-  
     <li class="popular-posts-item">
-      
-      
       <div class="popular-posts-title"><a href="/blog/107b7ce7.html" rel="bookmark">使用kubeadm部署安装K8s</a></div>
-      
     </li>
-  
   </ul>
-
 </div>
-
-      
-
       <footer class="post-footer">
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-              
                 <a href="/blog/107b7ce7.html" rel="next" title="使用kubeadm部署安装K8s">
                   <i class="fa fa-chevron-left"></i> 使用kubeadm部署安装K8s
                 </a>
-              
             </div>
-
             <span class="post-nav-divider"></span>
-
             <div class="post-nav-prev post-nav-item">
-              
                 <a href="/blog/366b680c.html" rel="prev" title="企业级应用——监控（一）zabbix的部署">
                   企业级应用——监控（一）zabbix的部署 <i class="fa fa-chevron-right"></i>
                 </a>
-              
             </div>
           </div>
-        
       </footer>
-    
   </div>
-  
-  
-  
   </article>
-
   </div>
-
-
           </div>
-          
-    
     <div class="comments" id="comments"></div>
-  
-
         </div>
-          
-  
   <div class="sidebar-toggle">
     <div class="sidebar-toggle-line-wrap">
       <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
@@ -765,15 +488,8 @@
       <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
     </div>
   </div>
-
   <aside class="sidebar">
     <div class="sidebar-inner">
-        
-        
-        
-        
-      
-
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
           文章目录
@@ -782,14 +498,11 @@
           站点概览
         </li>
       </ul>
-
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
           <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置集群环境"><span class="nav-number">1.</span> <span class="nav-text">配置集群环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置免密登录"><span class="nav-number">1.1.</span> <span class="nav-text">配置免密登录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装ansible环境"><span class="nav-number">1.2.</span> <span class="nav-text">安装ansible环境</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置kubeasz"><span class="nav-number">2.</span> <span class="nav-text">配置kubeasz</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载kubeasz"><span class="nav-number">2.1.</span> <span class="nav-text">下载kubeasz</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ansible部署K8s"><span class="nav-number">2.2.</span> <span class="nav-text">ansible部署K8s</span></a></li></ol></li></ol></div>
-        
       </div>
       <!--/noindex-->
-
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image"
@@ -801,38 +514,23 @@
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-        
           <a href="/archives/">
-        
           <span class="site-state-item-count">45</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
-    
-      
-      
       <div class="site-state-item site-state-categories">
-        
           <a href="/categories/">
-        
         <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
-    
-      
-      
       <div class="site-state-item site-state-tags">
-        
-          
             <a href="/tags/">
-          
-        
         <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
-    
   </nav>
 </div>
   <div class="feed-link motion-element">
@@ -842,35 +540,15 @@
   </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-      
-      
-      
-        
-      
-        <a href="https://github.com/wudihechao" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;wudihechao" rel="noopener external nofollow noreferrer" target="_blank">&lt;i class=&quot;fa fa-fw fa-github&quot;&gt;&lt;&#x2F;i&gt;</a>
+        <a href="https://github.com/wudihechao" title="GitHub &rarr; https://github.com/wudihechao" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i></a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-      
-        
-      
-        <a href="mailto:wudihechao@163.com" title="E-Mail &amp;rarr; mailto:wudihechao@163.com" rel="noopener external nofollow noreferrer" target="_blank">&lt;i class=&quot;fa fa-fw fa-envelope&quot;&gt;&lt;&#x2F;i&gt;</a>
+        <a href="mailto:wudihechao@163.com" title="E-Mail &rarr; mailto:wudihechao@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-      
-        
-      
-        <a href="https://weibo.com/u/1050367191" title="Weibo &amp;rarr; https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;1050367191" rel="noopener external nofollow noreferrer" target="_blank">&lt;i class=&quot;fa fa-fw fa-weibo&quot;&gt;&lt;&#x2F;i&gt;</a>
+        <a href="https://weibo.com/u/1050367191" title="Weibo &rarr; https://weibo.com/u/1050367191" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-weibo"></i></a>
       </span>
-    
   </div>
-
-        
     <div class="links-of-blogroll motion-element links-of-blogroll-block">
       <div class="links-of-blogroll-title" style="padding-left: 10px;">
         <!-- modify icon to fire by szw -->
@@ -878,31 +556,23 @@
         近期文章
       </div>
       <ul class="links-of-blogroll-list" style="padding-left: 30px;">
-        
-        
           <li>
             <a href="/blog/ea0d2f46.html" title="关于游戏服务端的搭建" >关于游戏服务端的搭建</a>
           </li>
-        
           <li>
             <a href="/blog/c1add9f7.html" title="linux使用vmware虚拟机玩LOL" >linux使用vmware虚拟机玩LOL</a>
           </li>
-        
           <li>
             <a href="/blog/a9b6fadd.html" title="K8s进阶——java集群服务搭建" >K8s进阶——java集群服务搭建</a>
           </li>
-        
           <li>
             <a href="/blog/bd240ad7.html" title="企业级应用——ELK（三）：filebeat" >企业级应用——ELK（三）：filebeat</a>
           </li>
-        
           <li>
             <a href="/blog/ee80297c.html" title="企业级应用——ELK（二）：ELK进阶" >企业级应用——ELK（二）：ELK进阶</a>
           </li>
-        
       </ul>
     </div>
-
 <div id="days"></div>
 <script>
 function show_date_time(){
@@ -929,27 +599,14 @@ return i;
 }
 show_date_time();
 </script>
-
   <div class="cc-license motion-element" itemprop="license">
-    
-  
-
-    <a href="https://hewanyue.com/" class="cc-opacity" rel="noopener external nofollow noreferrer" target="_blank">&lt;img src=&quot;&#x2F;images&#x2F;cc-by-nc-sa.svg&quot; alt=&quot;Creative Commons&quot;&gt;</a>
+    <a href="https://hewanyue.com/" class="cc-opacity" rel="noopener external nofollow noreferrer" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
   </div>
-
-
-
-
       </div>
-
-
  </aside>
   <div id="sidebar-dimmer"></div>
-
-
       </div>
     </main>
-
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
@@ -963,8 +620,6 @@ show_date_time();
     </span>
     <span title="站点总字数">411k</span>
 </div>
-
-        
 <div class="busuanzi-count">
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
@@ -975,9 +630,7 @@ show_date_time();
         <span id="busuanzi_value_site_uv"></span>
       </span>
     </span>
-  
     <span class="post-meta-divider">|</span>
-  
     <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="fa fa-eye"></i>
@@ -986,28 +639,10 @@ show_date_time();
         <span id="busuanzi_value_site_pv"></span>
       </span>
     </span>
-  
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-        
       </div>
     </footer>
   </div>
-
-  
-    
-  
   <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
   <script src="/lib/anime.min.js?v=3.1.0"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
@@ -1015,10 +650,6 @@ show_date_time();
 <script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
 <script src="/js/schemes/muse.js?v=7.4.0"></script>
 <script src="/js/next-boot.js?v=7.4.0"></script><script src="/js/bookmark.js?v=7.4.0"></script>
-
-
-
-  
   <script>
     (function(){
       var bp = document.createElement('script');
@@ -1028,11 +659,6 @@ show_date_time();
       s.parentNode.insertBefore(bp, s);
     })();
   </script>
-
-
-
-
-
   <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
@@ -1053,28 +679,7 @@ show_date_time();
     })();
   }
   </script>
-
-
-
   <script src="/js/local-search.js?v=7.4.0"></script>
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-
-  
-
-
 <script>
 NexT.utils.getScript('//blog.hewanyue.com/js/Valine.min.js', () => {
   var GUEST = ['nick', 'mail','link'];
@@ -1098,7 +703,6 @@ NexT.utils.getScript('//blog.hewanyue.com/js/Valine.min.js', () => {
   });
 }, window.Valine);
 </script>
-
 </body>
 </html>
   <!-- 页面点击小红心 -->

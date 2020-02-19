@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-
-
-
-
-
 <html lang="zh-CN">
 <head>
   <meta name="baidu-site-verification" content="vT6Jf980C0" />
@@ -14,13 +9,8 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.ico?v=7.4.0">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.ico?v=7.4.0">
   <link rel="alternate" href="/atom.xml" title="BOHC!" type="application/atom+xml">
-
 <link rel="stylesheet" href="/css/main.css?v=7.4.0">
-
-
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
-
-
 <script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
@@ -54,16 +44,13 @@
     sidebarPadding: 40
   };
 </script>
-
-
-
-  <meta name="description" content="&amp;emsp;&amp;emsp;跨主机互联是说 A 宿主机的容器可以访问 B 主机上的容器，但是前提是保证各宿主机之间的网络是可以相互通信的， 然后各容器才可以通过宿主机访问到对方的容器， 实现原理是在宿主机做一个网络路由就可以实现 A 宿主机的容器访问 B主机的容器的目的， 复杂的网络或者大型的网络可以使用 google 开源的 k8s 进行互联。本文之后将详细介绍docker网络配置，并演示容器跨主机">
+  <meta name="description" content="&emsp;&emsp;跨主机互联是说 A 宿主机的容器可以访问 B 主机上的容器，但是前提是保证各宿主机之间的网络是可以相互通信的， 然后各容器才可以通过宿主机访问到对方的容器， 实现原理是在宿主机做一个网络路由就可以实现 A 宿主机的容器访问 B主机的容器的目的， 复杂的网络或者大型的网络可以使用 google 开源的 k8s 进行互联。本文之后将详细介绍docker网络配置，并演示容器跨主机">
 <meta name="keywords" content="Docker,企业级应用,容器,跨主机通信,容器网络">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker（四）——容器跨主机网络配置">
 <meta property="og:url" content="https://wudihechao.github.io/blog/7e3785f.html">
 <meta property="og:site_name" content="BOHC!">
-<meta property="og:description" content="&amp;emsp;&amp;emsp;跨主机互联是说 A 宿主机的容器可以访问 B 主机上的容器，但是前提是保证各宿主机之间的网络是可以相互通信的， 然后各容器才可以通过宿主机访问到对方的容器， 实现原理是在宿主机做一个网络路由就可以实现 A 宿主机的容器访问 B主机的容器的目的， 复杂的网络或者大型的网络可以使用 google 开源的 k8s 进行互联。本文之后将详细介绍docker网络配置，并演示容器跨主机">
+<meta property="og:description" content="&emsp;&emsp;跨主机互联是说 A 宿主机的容器可以访问 B 主机上的容器，但是前提是保证各宿主机之间的网络是可以相互通信的， 然后各容器才可以通过宿主机访问到对方的容器， 实现原理是在宿主机做一个网络路由就可以实现 A 宿主机的容器访问 B主机的容器的目的， 复杂的网络或者大型的网络可以使用 google 开源的 k8s 进行互联。本文之后将详细介绍docker网络配置，并演示容器跨主机">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191207153539950.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191207155538522.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
@@ -73,11 +60,9 @@
 <meta property="og:updated_time" content="2019-12-09T02:47:35.879Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker（四）——容器跨主机网络配置">
-<meta name="twitter:description" content="&amp;emsp;&amp;emsp;跨主机互联是说 A 宿主机的容器可以访问 B 主机上的容器，但是前提是保证各宿主机之间的网络是可以相互通信的， 然后各容器才可以通过宿主机访问到对方的容器， 实现原理是在宿主机做一个网络路由就可以实现 A 宿主机的容器访问 B主机的容器的目的， 复杂的网络或者大型的网络可以使用 google 开源的 k8s 进行互联。本文之后将详细介绍docker网络配置，并演示容器跨主机">
+<meta name="twitter:description" content="&emsp;&emsp;跨主机互联是说 A 宿主机的容器可以访问 B 主机上的容器，但是前提是保证各宿主机之间的网络是可以相互通信的， 然后各容器才可以通过宿主机访问到对方的容器， 实现原理是在宿主机做一个网络路由就可以实现 A 宿主机的容器访问 B主机的容器的目的， 复杂的网络或者大型的网络可以使用 google 开源的 k8s 进行互联。本文之后将详细介绍docker网络配置，并演示容器跨主机">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20191207153539950.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70">
   <link rel="canonical" href="https://wudihechao.github.io/blog/7e3785f">
-
-
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
@@ -88,17 +73,7 @@
     isArchive: false
   };
 </script>
-
   <title>Docker（四）——容器跨主机网络配置 | BOHC!</title>
-  
-
-
-
-
-
-
-
-
   <noscript>
   <style>
   .use-motion .brand,
@@ -110,31 +85,23 @@
   .use-motion .post-header,
   .use-motion .post-body,
   .use-motion .collection-header { opacity: initial; }
-
   .use-motion .logo,
   .use-motion .site-title,
   .use-motion .site-subtitle {
     opacity: initial;
     top: initial;
   }
-
   .use-motion .logo-line-before i { left: initial; }
   .use-motion .logo-line-after i { right: initial; }
   </style>
 </noscript>
-
 <script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "https://hm.baidu.com/hm.js?a0d4e217e26da03ea5ca2acc76d543ae";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();</script>
-
-
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="/dist/APlayer.min.css" class="aplayer-style-marker">
 <script src="/dist/APlayer.min.js" class="aplayer-script-marker"></script>
 </head>
-
 <body oncontextmenu=self.event.returnValue=false>
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
-
-
         <div id="aplayer" class="aplayer aplayer-withlist  aplayer-fixed aplayer-narrow" style="position: fixed; z-index: 5; left: 0px; width: 400px;">
             <pre class="aplayer-lrc-content"></pre>
         </div>
@@ -207,7 +174,6 @@
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-meta">
-
     <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
@@ -216,9 +182,7 @@
       </a>
     </div>
         <h1 class="site-subtitle" itemprop="description">blog of hechao!</h1>
-      
   </div>
-
   <div class="site-nav-toggle">
     <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
@@ -227,147 +191,31 @@
     </button>
   </div>
 </div>
-
-
 <nav class="site-nav">
-  
   <ul id="menu" class="menu">
-      
-      
-      
-        
         <li class="menu-item menu-item-home">
-      
-    
-      
-      
-        
-      
-        
-      
-        
-      
-    
-
-    <a href="/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-home&quot;&gt;&lt;&#x2F;i&gt;首页</a>
-
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i>首页</a>
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-about">
-      
-    
-      
-      
-        
-      
-        
-      
-        
-      
-    
-
-    <a href="/about/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-user&quot;&gt;&lt;&#x2F;i&gt;关于</a>
-
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i>关于</a>
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-tags">
-      
-    
-      
-      
-        
-      
-        
-      
-        
-          
-        
-      
-    
-
-    <a href="/tags/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-tags&quot;&gt;&lt;&#x2F;i&gt;标签&lt;span class=&quot;badge&quot;&gt;90&lt;&#x2F;span&gt;</a>
-
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i>标签<span class="badge">90</span></a>
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-categories">
-      
-    
-      
-      
-        
-      
-        
-          
-        
-      
-        
-      
-    
-
-    <a href="/categories/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-th&quot;&gt;&lt;&#x2F;i&gt;分类&lt;span class=&quot;badge&quot;&gt;7&lt;&#x2F;span&gt;</a>
-
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i>分类<span class="badge">7</span></a>
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-archives">
-      
-    
-      
-      
-        
-          
-        
-      
-        
-      
-        
-      
-    
-
-    <a href="/archives/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-archive&quot;&gt;&lt;&#x2F;i&gt;归档&lt;span class=&quot;badge&quot;&gt;45&lt;&#x2F;span&gt;</a>
-
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i>归档<span class="badge">45</span></a>
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-friends">
-      
-    
-      
-      
-        
-      
-        
-      
-        
-      
-    
-
-    <a href="/friends/" rel="section">&lt;i class=&quot;menu-item-icon fa fa-fw fa-link&quot;&gt;&lt;&#x2F;i&gt;友链</a>
-
+    <a href="/friends/" rel="section"><i class="menu-item-icon fa fa-fw fa-link"></i>友链</a>
   </li>
       <li class="menu-item menu-item-search">
         <a href="javascript:;" rel="external nofollow noreferrer" class="popup-trigger">
-        
           <i class="menu-item-icon fa fa-search fa-fw"></i>搜索</a>
       </li>
-    
   </ul>
-
-    
-
 </nav>
   <div class="site-search">
     <div class="popup search-popup">
@@ -385,143 +233,83 @@
   </span>
 </div>
 <div id="search-result"></div>
-
 </div>
 <div class="search-pop-overlay"></div>
-
   </div>
 </div>
     </header>
-
-    
   <div class="back-to-top">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
   <div class="reading-progress-bar"></div>
   <a class="book-mark-link book-mark-link-fixed" href="#"></a>
-
-  <a href="https://github.com/wudihechao" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener external nofollow noreferrer" target="_blank">&lt;svg width=&quot;80&quot; height=&quot;80&quot; viewBox=&quot;0 0 250 250&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z&quot;&gt;&lt;&#x2F;path&gt;&lt;path d=&quot;M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2&quot; fill=&quot;currentColor&quot; style=&quot;transform-origin: 130px 106px;&quot; class=&quot;octo-arm&quot;&gt;&lt;&#x2F;path&gt;&lt;path d=&quot;M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z&quot; fill=&quot;currentColor&quot; class=&quot;octo-body&quot;&gt;&lt;&#x2F;path&gt;&lt;&#x2F;svg&gt;</a>
-
-
+  <a href="https://github.com/wudihechao" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener external nofollow noreferrer" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
           <div id="content" class="content">
-            
-
   <div id="posts" class="posts-expand">
       <article itemscope itemtype="http://schema.org/Article">
-  
-  
-  
   <div class="post-block post">
     <link itemprop="mainEntityOfPage" href="https://wudihechao.github.io/blog/7e3785f.html">
-
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hechao">
       <meta itemprop="description" content="BOHC is just a blog of hechao.">
       <meta itemprop="image" content="/images/touxiang.gif">
     </span>
-
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="BOHC!">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">Docker（四）——容器跨主机网络配置
-
-          
         </h2>
-
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-
-
-              
-                
-              
-
               <time title="创建时间：2019-12-07 19:32:04" itemprop="dateCreated datePublished" datetime="2019-12-07T19:32:04+08:00">2019-12-07</time>
             </span>
-          
             <span class="post-meta-item">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-
-              
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Cloud/" itemprop="url" rel="index"><span itemprop="name">Cloud</span></a></span>
-
-                
-                
-              
             </span>
-          
-
-          
             <span id="/blog/7e3785f.html" class="post-meta-item leancloud_visitors" data-flag-title="Docker（四）——容器跨主机网络配置" title="阅读次数">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
-
               <span class="leancloud-visitors-count"></span>
               <span>℃</span>
             </span>
-          
-
               <span class="post-meta-divider">•</span>
-  
   <span class="post-meta-item">
-    
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
-        
-      
-      <span class="post-meta-item-text">Valine：</span>
-    
     <a title="valine" href="/blog/7e3785f.html#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/blog/7e3785f.html" itemprop="commentCount"></span></a>
   </span>
-  
-  
-          
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-file-word-o"></i>
               </span>
-              
-
-              
               <span>6.2k</span>
             </span>
-          
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-divider">•</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
-              
-
-              
               <span>15 分钟</span>
             </span>
-          
-
         </div>
       </header>
-
-    
-    
-    
     <div class="post-body" itemprop="articleBody">
-
-      
         <p>&emsp;&emsp;跨主机互联是说 A 宿主机的容器可以访问 B 主机上的容器，但是前提是保证各宿主机之间的网络是可以相互通信的， 然后各容器才可以通过宿主机访问到对方的容器， 实现原理是在宿主机做一个网络路由就可以实现 A 宿主机的容器访问 B主机的容器的目的， 复杂的网络或者大型的网络可以使用 google 开源的 k8s 进行互联。本文之后将详细介绍docker网络配置，并演示容器跨主机通信的实现。<br><a id="more"></a></p>
 <h2 id="docker网络基础"><a href="#docker网络基础" class="headerlink" title="docker网络基础"></a>docker网络基础</h2><p>&emsp;&emsp;之前我们说过，当我们安装完docker应用后，就会自动添加一块虚拟的docker0网卡，并基于docker0网卡，提供了3种可选网络类型供创建的容器使用，分别是bridge(桥接)，host(主机)，none(无外部网络)。其中默认是采用桥接模式，容器中的网卡桥接在docker的网桥上，且通过DHCP自动分配IP，与docker0在同一网段。<br>&emsp;&emsp;当我们每创建一个容器，宿主机上就会新建一个网卡与容器中的网卡相对应，如下图所示。<br><img src="https://img-blog.csdnimg.cn/20191207153539950.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="网桥"><br>&emsp;&emsp;容器桥接模式跨网络访问的结构示意图如下图所示<br><img src="https://img-blog.csdnimg.cn/20191207155538522.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01pY2VQcm8=,size_16,color_FFFFFF,t_70" alt="docker跨主机通信"><br>&emsp;&emsp;想实现不同宿主机上的容器跨主机肯定要经过宿主机来做网络转发，通过设置宿主机静态路由或者修改iptables规则来实现，可这时就面临一个问题：所有的容器服务默认的DHCP网段都是172.17.0.0/16网段，如果node1上的容器想直接访问node2宿主机上的容器，就会被直接当做docker0网桥的内部网段，数据报文根本都不会从node1主机的eth0网卡发出去，也根本到不了node2主机上。这种情况下，无论我们怎么修改iptables规则或者路由规则都无济于事的。所以我们想实现容器跨主机访问，首先要将不同宿主机上的容器分到不同的网段，然后才可以通过路由规则或者iptables进行跳转或转发。</p>
 <h3 id="修改docker网络的网段"><a href="#修改docker网络的网段" class="headerlink" title="修改docker网络的网段"></a>修改docker网络的网段</h3><p>&emsp;&emsp;我们可以对每一个宿主机上的docker配置文件进行修改，实现每个宿主机的docker容器都在不同网段的目的,可以通过以下方式修改（未避免影响， 先在各服务器删除之前创建的所有容器，<code>docker rm -f `docker ps -a -q`</code>）。</p>
@@ -532,11 +320,11 @@
 <p>&emsp;&emsp;在<code>ExecStart=</code>选项结尾加上<code>--bip=10.1.0.1/24</code>，就指定了10.1.0.0/24网段，然后执行命令重新加载配置文件和重启服务。<br><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">systemctl</span> <span class="string">daemon-reload</span></span><br><span class="line"><span class="attr">systemctl</span> <span class="string">restart docker</span></span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;<strong>注意:<code>不能写10.1.0.0/24，会报错</code></strong>，虽然写网段结尾是0，如10.1.0.0/24更符合我们的习惯，不过确实会报错，报错信息如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Dec 07 16:27:58 DockerUbuntu dockerd[14794]: failed to <span class="keyword">start</span> daemon: <span class="keyword">Error</span> initializing network controller: <span class="keyword">Error</span> creating <span class="keyword">default</span> <span class="string">"bridge"</span> network: <span class="keyword">failed</span> <span class="keyword">to</span> <span class="keyword">allocate</span> gateway (<span class="number">10.10</span><span class="number">.0</span><span class="number">.0</span>): Address already <span class="keyword">in</span> <span class="keyword">use</span></span><br><span class="line"><span class="built_in">Dec</span> <span class="number">07</span> <span class="number">16</span>:<span class="number">27</span>:<span class="number">58</span> DockerUbuntu systemd[<span class="number">1</span>]: docker.service: <span class="keyword">Main</span> process exited, code=exited, <span class="keyword">status</span>=<span class="number">1</span>/<span class="keyword">FAILURE</span></span><br><span class="line"><span class="built_in">Dec</span> <span class="number">07</span> <span class="number">16</span>:<span class="number">27</span>:<span class="number">58</span> DockerUbuntu systemd[<span class="number">1</span>]: docker.service: <span class="keyword">Failed</span> <span class="keyword">with</span> <span class="keyword">result</span> <span class="string">'exit-code'</span>.</span><br><span class="line"><span class="built_in">Dec</span> <span class="number">07</span> <span class="number">16</span>:<span class="number">27</span>:<span class="number">58</span> DockerUbuntu systemd[<span class="number">1</span>]: <span class="keyword">Failed</span> <span class="keyword">to</span> <span class="keyword">start</span> Docker Application <span class="keyword">Container</span> Engine.</span><br><span class="line"><span class="comment">-- Subject: Unit docker.service has failed</span></span><br><span class="line"><span class="comment">-- Defined-By: systemd</span></span><br></pre></td></tr></table></figure></p>
 <ul>
-<li>也可以修改daemon.json文件，在里面添加<code>&quot;bip&quot;: &quot;10.2.0.1/24&quot;</code>，如下所示（上面那个是我的阿里云加速器链接，注册阿里账号免费获取，<a href="https://blog.csdn.net/MicePro/article/details/103411387#t0" rel="noopener external nofollow noreferrer" target="_blank">之前文章</a>有详细介绍，需改成自己的或者删掉）：<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/docker/daemon.json</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">        <span class="string">"registry-mirrors"</span>: [<span class="string">"https://xxxxxxxx.mirror.aliyuncs.com"</span>,<span class="string">"https://registry.docker-cn.com"</span>],</span><br><span class="line">        <span class="string">"bip"</span>: <span class="string">"10.1.0.1/24"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<li>也可以修改daemon.json文件，在里面添加<code>"bip": "10.2.0.1/24"</code>，如下所示（上面那个是我的阿里云加速器链接，注册阿里账号免费获取，<a href="https://blog.csdn.net/MicePro/article/details/103411387#t0" rel="noopener external nofollow noreferrer" target="_blank">之前文章</a>有详细介绍，需改成自己的或者删掉）：<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/docker/daemon.json</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">        <span class="string">"registry-mirrors"</span>: [<span class="string">"https://xxxxxxxx.mirror.aliyuncs.com"</span>,<span class="string">"https://registry.docker-cn.com"</span>],</span><br><span class="line">        <span class="string">"bip"</span>: <span class="string">"10.1.0.1/24"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <p>&emsp;&emsp;<strong>daemon.json文件是json数据格式，需要遵守json语法，换行记得要加<code>,</code>逗号。</strong><br>&emsp;&emsp;直接重启docker服务后生效<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">systemctl restart docker</span></span><br></pre></td></tr></table></figure></p>
-<p>&emsp;&emsp;此时看网卡的ip就已经变为了我们设置的网段，之后创建的容器服务器就会自动获取我们设置好的网段中的IP了。<br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">root@</span>DockerUbuntu:~# ifconfig</span><br><span class="line">docker0: flags=<span class="number">4099</span>&lt;UP,BROADCAST,MULTICAST&gt;  mtu <span class="number">1500</span></span><br><span class="line">        inet <span class="number">10.10</span><span class="number">.0</span><span class="number">.1</span>  netmask <span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span>  broadcast <span class="number">10.10</span><span class="number">.0</span><span class="number">.255</span></span><br><span class="line">        inet6 fe80::<span class="number">42</span>:<span class="number">25f</span>f:fe2b:ecbc  prefixlen <span class="number">64</span>  scopeid <span class="number">0x20</span>&lt;link&gt;</span><br><span class="line">        ether <span class="number">02</span>:<span class="number">42</span>:<span class="number">25</span>:<span class="number">2</span>b:ec:bc  txqueuelen <span class="number">0</span>  (Ethernet)</span><br><span class="line">        RX packets <span class="number">0</span>  bytes <span class="number">0</span> (<span class="number">0.0</span> B)</span><br><span class="line">        RX errors <span class="number">0</span>  dropped <span class="number">0</span>  overruns <span class="number">0</span>  frame <span class="number">0</span></span><br><span class="line">        TX packets <span class="number">41</span>  bytes <span class="number">3526</span> (<span class="number">3.5</span> KB)</span><br><span class="line">        TX errors <span class="number">0</span>  dropped <span class="number">0</span> overruns <span class="number">0</span>  carrier <span class="number">0</span>  collisions <span class="number">0</span></span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;此时看网卡的ip就已经变为了我们设置的网段，之后创建的容器服务器就会自动获取我们设置好的网段中的IP了。<br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">root@</span>DockerUbuntu:~# ifconfig</span><br><span class="line">docker0: flags=<span class="number">4099</span><UP,BROADCAST,MULTICAST>  mtu <span class="number">1500</span></span><br><span class="line">        inet <span class="number">10.10</span><span class="number">.0</span><span class="number">.1</span>  netmask <span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span>  broadcast <span class="number">10.10</span><span class="number">.0</span><span class="number">.255</span></span><br><span class="line">        inet6 fe80::<span class="number">42</span>:<span class="number">25f</span>f:fe2b:ecbc  prefixlen <span class="number">64</span>  scopeid <span class="number">0x20</span><link></span><br><span class="line">        ether <span class="number">02</span>:<span class="number">42</span>:<span class="number">25</span>:<span class="number">2</span>b:ec:bc  txqueuelen <span class="number">0</span>  (Ethernet)</span><br><span class="line">        RX packets <span class="number">0</span>  bytes <span class="number">0</span> (<span class="number">0.0</span> B)</span><br><span class="line">        RX errors <span class="number">0</span>  dropped <span class="number">0</span>  overruns <span class="number">0</span>  frame <span class="number">0</span></span><br><span class="line">        TX packets <span class="number">41</span>  bytes <span class="number">3526</span> (<span class="number">3.5</span> KB)</span><br><span class="line">        TX errors <span class="number">0</span>  dropped <span class="number">0</span> overruns <span class="number">0</span>  carrier <span class="number">0</span>  collisions <span class="number">0</span></span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;同样的操作，将node2宿主机中的docker0网段设置为10.2.0.0/24</p>
 <h3 id="修改静态路由"><a href="#修改静态路由" class="headerlink" title="修改静态路由"></a>修改静态路由</h3><p>&emsp;&emsp;我这里node1的eth0网卡ip为192.168.32.19，node2的eth0网卡ip为192.168.32.20，且两个宿主机之前网络是可以通过eth0网卡相互连接的。添加路由规则如下：<br>&emsp;&emsp;在node1上添加静态路由<br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip r add <span class="number">10.2</span><span class="number">.0</span><span class="number">.0</span>/<span class="number">24</span> via <span class="number">192.168</span><span class="number">.32</span><span class="number">.20</span> dev eth0</span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;在node2上添加静态路由<br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip r add <span class="number">10.1</span><span class="number">.0</span><span class="number">.0</span>/<span class="number">24</span> via <span class="number">192.168</span><span class="number">.32</span><span class="number">.19</span> dev eth0</span><br></pre></td></tr></table></figure></p>
@@ -546,169 +334,90 @@
 <p>&emsp;&emsp;例如我们在node1创建一个名为web1的桥接网络，网段为10.10.0.0/24,设置网关为10.10.0.1（可设置为此网段内任意ip）。<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">root@DockerUbuntu:~# docker<span class="built_in"> network </span>create -d<span class="built_in"> bridge </span>--subnet 10.10.0.0/24 --gateway 10.10.0.1 web1</span><br><span class="line">a817cf36502eea3469e1cb4b9b7577044f8dce96f015ba57a47f6809c00d72c7</span><br><span class="line">root@DockerUbuntu:~# docker<span class="built_in"> network </span>ls</span><br><span class="line">NETWORK ID          NAME                DRIVER              SCOPE</span><br><span class="line">afd91b2e1731       <span class="built_in"> bridge </span>            <span class="built_in"> bridge </span>             local</span><br><span class="line">241d3e94a6b3        host                host                local</span><br><span class="line">7cc9cf9eb69e        none                <span class="literal">null</span>                local</span><br><span class="line">a817cf36502e        web1               <span class="built_in"> bridge </span>             local</span><br><span class="line">root@DockerUbuntu:~#</span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;可以用<code>docker network ls</code>(或<code>docker network list</code>)看到网络类型多了一种，也就是我们刚刚创建的web1类型。<br>而用<code>ifconfig</code>或者<code>ip a</code>命令也可以看到我们的网卡设备里多了一个<code>br-a817cf36502e</code>，ip也恰好是我们指定的<code>10.10.0.0/24</code>网段。<br><img src="https://img-blog.csdnimg.cn/20191207192708651.png" alt="自定义网络"><br>&emsp;&emsp;此时我们就可以通过<code>--net</code>选项指定我们刚刚创建的web1网络，来创建并启动容器了。<br><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">root@</span>DockerUbuntu:~# docker run -it -d -p <span class="number">8080</span>:<span class="number">8080</span> -p <span class="number">8009</span>:<span class="number">8009</span> --net=web1 tomcat-app1:v1</span><br><span class="line">afc1e3db8a6a670d30cdd0756af65da74895976ce5ebbf876329b04b452a3710</span><br><span class="line"><span class="symbol">root@</span>DockerUbuntu:~#</span><br></pre></td></tr></table></figure></p>
 <p>&emsp;&emsp;同样，在宿主机node2上也创建一个自定义网络web2，然后新创建的容器，也指定网络为web2，再设置静态路由和修改iptables规则放行，也可以实现容器间跨主机访问。</p>
-
     </div>
-
-    
-    
-    
-          
-            
-          
           <div class="post-tags">
-            
               <a href="/tags/Docker/" rel="tag"><i class="fa fa-tag">Docker</i></a>
-            
               <a href="/tags/企业级应用/" rel="tag"><i class="fa fa-tag">企业级应用</i></a>
-            
               <a href="/tags/容器/" rel="tag"><i class="fa fa-tag">容器</i></a>
-            
               <a href="/tags/跨主机通信/" rel="tag"><i class="fa fa-tag">跨主机通信</i></a>
-            
               <a href="/tags/容器网络/" rel="tag"><i class="fa fa-tag">容器网络</i></a>
-            
           </div>
-        
-
     <div style="text-align:center;color: #ccc;font-size:14px;">------------------------------- The End -------------------------------</div>
-
-
-        
   <div class="post-widgets">
     <div class="wp_rating">
       <div id="wpac-rating"></div>
     </div>
-  
   </div>
-
-        
-      
         <div id="reward-container">
   <div>It's very nice of you to support me.</div>
   <button id="reward-button" disable="enable" onclick="var qr = document.getElementById('qr'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
     打赏
   </button>
   <div id="qr" style="display: none;">
-        
-      
       <div style="display: inline-block">
         <img src="/images/wechat-pay.png" alt="Hechao 微信支付">
         <p>微信支付</p>
       </div>
-
   </div>
 </div>
-
-      
-        
-
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
     <strong>本文作者： </strong>Hechao</li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://wudihechao.github.io/blog/7e3785f.html" title="Docker（四）——容器跨主机网络配置">https:&#x2F;&#x2F;wudihechao.github.io&#x2F;blog&#x2F;7e3785f.html</a>
+    <a href="https://wudihechao.github.io/blog/7e3785f.html" title="Docker（四）——容器跨主机网络配置">https://wudihechao.github.io/blog/7e3785f.html</a>
   </li>
   <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank">&lt;i class=&quot;fa fa-fw fa-creative-commons&quot;&gt;&lt;&#x2F;i&gt;BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
 </ul>
 </div>
-
-      
-        
-
 <div class="note info" style="background-color: #eff8f0;
     border-left: 3px solid #255188;
     opacity: 0.85;
     padding-left: 11px;
     padding-bottom: 1px;">
-
   <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts" style="margin-top: 10px;
     margin-bottom: 10px;">
     <li class="popular-posts-item">
-      
-      
       <div class="popular-posts-title"><a href="/blog/6187894.html" rel="bookmark">Docker（五）——Docker镜像仓库</a></div>
-      
     </li>
-  
     <li class="popular-posts-item">
-      
-      
       <div class="popular-posts-title"><a href="/blog/ddd838e7.html" rel="bookmark">Docker（三）——镜像制作</a></div>
-      
     </li>
-  
     <li class="popular-posts-item">
-      
-      
       <div class="popular-posts-title"><a href="/blog/eaa1ac6e.html" rel="bookmark">Docker（一）——基础概念及部署</a></div>
-      
     </li>
-  
     <li class="popular-posts-item">
-      
-      
       <div class="popular-posts-title"><a href="/blog/5c39f4ef.html" rel="bookmark">Docker（二）——基础命令详解</a></div>
-      
     </li>
-  
     <li class="popular-posts-item">
-      
-      
       <div class="popular-posts-title"><a href="/blog/bd240ad7.html" rel="bookmark">企业级应用——ELK（三）：filebeat</a></div>
-      
     </li>
-  
   </ul>
-
 </div>
-
-      
-
       <footer class="post-footer">
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-              
                 <a href="/blog/5c39f4ef.html" rel="next" title="Docker（二）——基础命令详解">
                   <i class="fa fa-chevron-left"></i> Docker（二）——基础命令详解
                 </a>
-              
             </div>
-
             <span class="post-nav-divider"></span>
-
             <div class="post-nav-prev post-nav-item">
-              
                 <a href="/blog/6187894.html" rel="prev" title="Docker（五）——Docker镜像仓库">
                   Docker（五）——Docker镜像仓库 <i class="fa fa-chevron-right"></i>
                 </a>
-              
             </div>
           </div>
-        
       </footer>
-    
   </div>
-  
-  
-  
   </article>
-
   </div>
-
-
           </div>
-          
-    
     <div class="comments" id="comments"></div>
-  
-
         </div>
-          
-  
   <div class="sidebar-toggle">
     <div class="sidebar-toggle-line-wrap">
       <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
@@ -716,15 +425,8 @@
       <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
     </div>
   </div>
-
   <aside class="sidebar">
     <div class="sidebar-inner">
-        
-        
-        
-        
-      
-
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
           文章目录
@@ -733,14 +435,11 @@
           站点概览
         </li>
       </ul>
-
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
           <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#docker网络基础"><span class="nav-number">1.</span> <span class="nav-text">docker网络基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#修改docker网络的网段"><span class="nav-number">1.1.</span> <span class="nav-text">修改docker网络的网段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改静态路由"><span class="nav-number">1.2.</span> <span class="nav-text">修改静态路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改iptables规则"><span class="nav-number">1.3.</span> <span class="nav-text">修改iptables规则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker网络进阶"><span class="nav-number">2.</span> <span class="nav-text">docker网络进阶</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建自定义网络"><span class="nav-number">2.1.</span> <span class="nav-text">创建自定义网络</span></a></li></ol></li></ol></div>
-        
       </div>
       <!--/noindex-->
-
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image"
@@ -752,38 +451,23 @@
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-        
           <a href="/archives/">
-        
           <span class="site-state-item-count">45</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
-    
-      
-      
       <div class="site-state-item site-state-categories">
-        
           <a href="/categories/">
-        
         <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
-    
-      
-      
       <div class="site-state-item site-state-tags">
-        
-          
             <a href="/tags/">
-          
-        
         <span class="site-state-item-count">90</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
-    
   </nav>
 </div>
   <div class="feed-link motion-element">
@@ -793,35 +477,15 @@
   </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-      
-      
-      
-        
-      
-        <a href="https://github.com/wudihechao" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;wudihechao" rel="noopener external nofollow noreferrer" target="_blank">&lt;i class=&quot;fa fa-fw fa-github&quot;&gt;&lt;&#x2F;i&gt;</a>
+        <a href="https://github.com/wudihechao" title="GitHub &rarr; https://github.com/wudihechao" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-github"></i></a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-      
-        
-      
-        <a href="mailto:wudihechao@163.com" title="E-Mail &amp;rarr; mailto:wudihechao@163.com" rel="noopener external nofollow noreferrer" target="_blank">&lt;i class=&quot;fa fa-fw fa-envelope&quot;&gt;&lt;&#x2F;i&gt;</a>
+        <a href="mailto:wudihechao@163.com" title="E-Mail &rarr; mailto:wudihechao@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-      
-        
-      
-        <a href="https://weibo.com/u/1050367191" title="Weibo &amp;rarr; https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;1050367191" rel="noopener external nofollow noreferrer" target="_blank">&lt;i class=&quot;fa fa-fw fa-weibo&quot;&gt;&lt;&#x2F;i&gt;</a>
+        <a href="https://weibo.com/u/1050367191" title="Weibo &rarr; https://weibo.com/u/1050367191" rel="noopener external nofollow noreferrer" target="_blank"><i class="fa fa-fw fa-weibo"></i></a>
       </span>
-    
   </div>
-
-        
     <div class="links-of-blogroll motion-element links-of-blogroll-block">
       <div class="links-of-blogroll-title" style="padding-left: 10px;">
         <!-- modify icon to fire by szw -->
@@ -829,31 +493,23 @@
         近期文章
       </div>
       <ul class="links-of-blogroll-list" style="padding-left: 30px;">
-        
-        
           <li>
             <a href="/blog/ea0d2f46.html" title="关于游戏服务端的搭建" >关于游戏服务端的搭建</a>
           </li>
-        
           <li>
             <a href="/blog/c1add9f7.html" title="linux使用vmware虚拟机玩LOL" >linux使用vmware虚拟机玩LOL</a>
           </li>
-        
           <li>
             <a href="/blog/a9b6fadd.html" title="K8s进阶——java集群服务搭建" >K8s进阶——java集群服务搭建</a>
           </li>
-        
           <li>
             <a href="/blog/bd240ad7.html" title="企业级应用——ELK（三）：filebeat" >企业级应用——ELK（三）：filebeat</a>
           </li>
-        
           <li>
             <a href="/blog/ee80297c.html" title="企业级应用——ELK（二）：ELK进阶" >企业级应用——ELK（二）：ELK进阶</a>
           </li>
-        
       </ul>
     </div>
-
 <div id="days"></div>
 <script>
 function show_date_time(){
@@ -880,27 +536,14 @@ return i;
 }
 show_date_time();
 </script>
-
   <div class="cc-license motion-element" itemprop="license">
-    
-  
-
-    <a href="https://hewanyue.com/" class="cc-opacity" rel="noopener external nofollow noreferrer" target="_blank">&lt;img src=&quot;&#x2F;images&#x2F;cc-by-nc-sa.svg&quot; alt=&quot;Creative Commons&quot;&gt;</a>
+    <a href="https://hewanyue.com/" class="cc-opacity" rel="noopener external nofollow noreferrer" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
   </div>
-
-
-
-
       </div>
-
-
  </aside>
   <div id="sidebar-dimmer"></div>
-
-
       </div>
     </main>
-
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
@@ -914,8 +557,6 @@ show_date_time();
     </span>
     <span title="站点总字数">411k</span>
 </div>
-
-        
 <div class="busuanzi-count">
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
@@ -926,9 +567,7 @@ show_date_time();
         <span id="busuanzi_value_site_uv"></span>
       </span>
     </span>
-  
     <span class="post-meta-divider">|</span>
-  
     <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
       <span class="post-meta-item-icon">
         <i class="fa fa-eye"></i>
@@ -937,28 +576,10 @@ show_date_time();
         <span id="busuanzi_value_site_pv"></span>
       </span>
     </span>
-  
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-        
       </div>
     </footer>
   </div>
-
-  
-    
-  
   <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
   <script src="/lib/anime.min.js?v=3.1.0"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
@@ -966,10 +587,6 @@ show_date_time();
 <script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
 <script src="/js/schemes/muse.js?v=7.4.0"></script>
 <script src="/js/next-boot.js?v=7.4.0"></script><script src="/js/bookmark.js?v=7.4.0"></script>
-
-
-
-  
   <script>
     (function(){
       var bp = document.createElement('script');
@@ -979,11 +596,6 @@ show_date_time();
       s.parentNode.insertBefore(bp, s);
     })();
   </script>
-
-
-
-
-
   <script>
   if (CONFIG.page.isPost) {
     wpac_init = window.wpac_init || [];
@@ -1004,28 +616,7 @@ show_date_time();
     })();
   }
   </script>
-
-
-
   <script src="/js/local-search.js?v=7.4.0"></script>
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-
-  
-
-
 <script>
 NexT.utils.getScript('//blog.hewanyue.com/js/Valine.min.js', () => {
   var GUEST = ['nick', 'mail','link'];
@@ -1049,7 +640,6 @@ NexT.utils.getScript('//blog.hewanyue.com/js/Valine.min.js', () => {
   });
 }, window.Valine);
 </script>
-
 </body>
 </html>
   <!-- 页面点击小红心 -->
